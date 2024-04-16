@@ -1,0 +1,1 @@
+/home/mikepadiernos/.files/.zsh/themes/sobole/sobole.zsh-theme
