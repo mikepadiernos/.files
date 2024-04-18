@@ -16,30 +16,21 @@ source "$ZSH_THEMES"/typewritten.zsh-theme
 
 HIST_STAMPS="yyyy.mm.dd"
 
-# plugins=(
-# 			check-deps
-# 			ddev
-# 			docker-helpers
-# 			drupal
-# 			fast-syntax-highlighting
-# 			fzf-zsh-plugin
-# 			gh
-# 			git
-# 			lando-alias-zsh
-# 			zsh-alias-finder
-# 			zsh-autocomplete
-# 			zsh-autosuggestions
-# 			zsh-completions
-# 			zsh-eza
-# 			zsh-fzf-history-search
-# 			zsh-history-substring-search
-# 			zsh-syntax-highlighting
-# 		)
+# ddev
+# fzf-zsh-plugin
+# gh
+# git
+# lando-alias-zsh
+# zsh-alias-finder
+
 
 source "$ZSH_PLUGINS"/asdf/asdf.plugin.zsh															# asdf
-source "$ZSH_PLUGINS"/check-deps/check-deps.plugin.zsh												# check-dps
+source "$ZSH_PLUGINS"/check-deps/check-deps.plugin.zsh												# check-deps
+source "$ZSH_PLUGINS"/composer/composer.plugin.zsh													# composer
+source "$ZSH_PLUGINS"/docker-helpers/docker-helpers.plugin.zsh										# docker-helpers
 source "$ZSH_PLUGINS"/drupal/drupal.plugin.zsh														# drupal
 source "$ZSH_PLUGINS"/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh					# fast-syntax-highlighting
+source "$ZSH_PLUGINS"/history-substring-search/history-substring-search.plugin.zsh					# history-substring-search
 source "$ZSH_PLUGINS"/zsh-autocomplete/zsh-autocomplete.plugin.zsh									# zsh-autocomplete
 source "$ZSH_PLUGINS"/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh							# zsh-autosuggestions
 source "$ZSH_PLUGINS"/zsh-completions/zsh-completions.plugin.zsh									# zsh-completions
@@ -53,5 +44,10 @@ bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 
 # alias lzd='lazydocker'
+
+f() {
+	fff "$@"
+	cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
+}
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
