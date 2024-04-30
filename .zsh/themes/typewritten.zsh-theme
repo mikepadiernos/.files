@@ -1,0 +1,1 @@
+/Users/michaelpadiernos/.files/.zsh/themes/typewritten/typewritten.zsh-theme

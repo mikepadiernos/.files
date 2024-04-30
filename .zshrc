@@ -1,13 +1,17 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-fpath+=($HOME/.asdf/completions ${ZSH_CUSTOM:-${ZSH:-~/.omz}/custom}/plugins/zsh-completions/src $fpath)
-# fpath+=(${ASDF_DIR}/completions ${ZSH_CUSTOM:-${ZSH:-~/.omz}/custom}/plugins/zsh-completions/src $fpath)
+ASDF_DIR="$HOME/.files/.asdf"
+
+fpath+=($ASDF_DIR/completions ${ZSH_CUSTOM:-${ZSH:-~/.omz}/custom}/plugins/zsh-completions/src $fpath)
 
 autoload -Uz compinit && compinit
 
 # Path to your oh-my-zsh installation.
 ZSH="$HOME/.files/.omz"
+
+# ZSH_PLUGINS	= "$HOME/.files/.zsh/plugins"
+# ZSH_THEMES	= "$HOME/.files/.zsh/themes"
 
 # ZSH_THEME="robbyrussell"
 # ZSH_THEME="pure"
@@ -30,7 +34,7 @@ HIST_STAMPS="yyyy.mm.dd"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 plugins=(
-			asdf
+#			asdf
 			check-deps
 			ddev
 			docker-helpers
@@ -52,7 +56,8 @@ plugins=(
 		)
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.files/.zsh-magic-dashboard/magic_dashboard.zsh
+source $HOME/.files/.zsh/plugins/asdf/asdf.plugin.zsh
+source $HOME/.files/.zsh/plugins/zsh-magic-dashboard/magic_dashboard.zsh
 
 # zsh aliases
 # alias lzd='lazydocker'
@@ -75,8 +80,10 @@ export LANG=en_US.UTF-8
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # asdf integrations:
-. "$HOME/.asdf/asdf.sh"																# asdf & git
+# . "$HOME/.asdf/asdf.sh"																# asdf & git
 # echo -e "\n. $(brew --prefix asdf)/libexec/asdf.sh" >> ${ZDOTDIR:-~}/.zshrc			# asdf & brew
+# export PATH="/usr/local/opt/php@8.1/bin:$PATH"
+# export PATH="/usr/local/opt/php@8.1/sbin:$PATH"
