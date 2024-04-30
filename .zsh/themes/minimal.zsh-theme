@@ -1,1 +1,0 @@
-/Users/michaelpadiernos/.files/.zsh/themes/minimal/minimal.zsh-theme
