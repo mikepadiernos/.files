@@ -40,8 +40,9 @@ source "$ZSH_PLUGINS"/zsh-history-substring-search/zsh-history-substring-search.
 source "$ZSH_PLUGINS"/zsh-magic-dashboard/zsh-magic-dashboard.plugin.zsh							# zsh-magic-dashboard
 source "$ZSH_PLUGINS"/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh					# zsh-syntax-highlighting
 
-bindkey "^[[H" beginning-of-line
-bindkey "^[[F" end-of-line
+bindkey "^[[H"   beginning-of-line
+bindkey "^[[F"   end-of-line
+bindkey "^[[3~"  delete-char
 
 # alias lzd='lazydocker'
 
