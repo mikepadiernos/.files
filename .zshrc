@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# . "$HOME/.asdf/asdf.sh"
+
 ZSH="$HOME/.files/.zsh"
 ZSH_PLUGINS="$ZSH/plugins"
 ZSH_THEMES="$ZSH/themes"
@@ -31,6 +33,7 @@ source "$ZSH_PLUGINS"/docker-helpers/docker-helpers.plugin.zsh										# docker
 source "$ZSH_PLUGINS"/drupal/drupal.plugin.zsh														# drupal
 source "$ZSH_PLUGINS"/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh					# fast-syntax-highlighting
 source "$ZSH_PLUGINS"/history-substring-search/history-substring-search.plugin.zsh					# history-substring-search
+
 source "$ZSH_PLUGINS"/zsh-autocomplete/zsh-autocomplete.plugin.zsh									# zsh-autocomplete
 source "$ZSH_PLUGINS"/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh							# zsh-autosuggestions
 source "$ZSH_PLUGINS"/zsh-completions/zsh-completions.plugin.zsh									# zsh-completions
@@ -52,3 +55,5 @@ f() {
 }
 
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.1/bin:$PATH"
+# export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.1/sbin:$PATH"

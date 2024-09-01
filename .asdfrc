@@ -1,1 +1,2 @@
 always_keep_download = yes
+asdf_data_dir = $HOME/.files/.asdf
