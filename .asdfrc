@@ -1,2 +1,3 @@
 always_keep_download = yes
-asdf_data_dir = $HOME/.files/.asdf
+# asdf_data_dir = $HOME/.files/.asdf
+ASDF_DATA_DIR = ${HOME}/.asdf

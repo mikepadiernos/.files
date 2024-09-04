@@ -1,0 +1,8 @@
+# lazydocker
+alias lzd='lazydocker'
+
+# lazygit
+alias lzg='lazygit'
+
+# zsh-eza
+alias li='la --icons=always'
