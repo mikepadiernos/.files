@@ -22,8 +22,8 @@ source "$ZSH_PLUGINS"/zsh-docker-helpers/zsh-docker-helpers.plugin.zsh								# 
 source "$ZSH_PLUGINS"/zsh-drupal/zsh-drupal.plugin.zsh												# zsh-drupal
 source "$ZSH_PLUGINS"/zsh-eza/zsh-eza.plugin.zsh													# zsh-eza
 # source "$ZSH_PLUGINS"/zsh-eza-ls-plugin/zsh-eza-ls-plugin.plugin.zsh									# zsh-eza-ls-plugin
-# source "$ZSH_PLUGINS"/zsh-F-Sy-H/zsh-F-Sy-H.plugin.zsh												# zsh-F-Sy-H
-source "$ZSH_PLUGINS"/zsh-fast-syntax-highlighting/zsh-fast-syntax-highlighting.plugin.zsh			# zsh-fast-syntax-highlighting
+source "$ZSH_PLUGINS"/zsh-F-Sy-H/zsh-F-Sy-H.plugin.zsh												# zsh-F-Sy-H
+# source "$ZSH_PLUGINS"/zsh-fast-syntax-highlighting/zsh-fast-syntax-highlighting.plugin.zsh			# zsh-fast-syntax-highlighting
 source "$ZSH_PLUGINS"/zsh-figures/zsh-figures.plugin.zsh											# zsh-figures
 # source "$ZSH_PLUGINS"/zsh-file-manager/zsh-file-manager.plugin.zsh									# zsh-file-manager
 # source "$ZSH_PLUGINS"/zsh-fzf-brew/zsh-fzf-brew.plugin.zsh											# zsh-fzf-brew
