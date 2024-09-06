@@ -1,7 +1,12 @@
 # HOMEBREW
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
+if find /home/linuxbrew/.linuxbrew/bin/brew -mindepth 1 -maxdepth 1 | read; then
+    echo "HOMEBREW installed"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
+else
+    echo "HOMEBREW not installed"
+fi
 
 # # linuxbrew: php@8.1
 # export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/php@8.1/lib"

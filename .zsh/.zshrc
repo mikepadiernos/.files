@@ -13,7 +13,7 @@ ASDF="$FILES/.asdf"
 fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $fpath)
 
 # autoload -Uz compinit && compinit
-# autoload -Uz compinit; compinit
+autoload -Uz compinit; compinit
 
 # direnv allow
 
