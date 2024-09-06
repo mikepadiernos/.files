@@ -1,1 +1,1 @@
-/home/mikepadiernos/.files/.zsh/themes/minimal/minimal.zsh
+minimal/minimal.zsh-theme
