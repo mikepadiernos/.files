@@ -1,2 +1,0 @@
-ALWAYS_KEEP_DOWNLOAD = yes
-ASDF_DATA_DIR = ${HOME}/.asdf
