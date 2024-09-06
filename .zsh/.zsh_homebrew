@@ -1,6 +1,6 @@
 # HOMEBREW
 
-if [ -n "$(find "$DIR_TO_CHECK" -maxdepth 0 -type d -empty 2>/home/linuxbrew/.linuxbrew/bin/brew)" ]; then
+if [ -z "$( ls -A '/home/linuxbrew/.linuxbrew/bin/brew' )" ]; then
     echo "HOMEBREW is not installed"
 else
     echo "HOMEBREW is installed"
