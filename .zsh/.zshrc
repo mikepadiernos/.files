@@ -1,16 +1,19 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-FILES="$HOME/.files"
-CONFIGS="$FILES/configs"
+export FILES="$HOME/.files"
+export CONFIGS="$FILES/configs"
 
-ZSH="$FILES/.zsh"
-ZSH_PLUGINS="$ZSH/plugins"
-ZSH_THEMES="$ZSH/themes"
+export ZSH="$FILES/.zsh"
+export ZSH_PLUGINS="$ZSH/plugins"
+export ZSH_THEMES="$ZSH/themes"
 
-ASDF="$FILES/.asdf"
+export ASDF_DIR="$HOME/.asdf"
+export ASDF="$ASDF_DIR"
 
-fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $fpath)
+export NEOVIM="$FILES/.neovim/bin"
+
+fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $NEOVIM $fpath)
 
 # autoload -Uz compinit && compinit
 autoload -Uz compinit; compinit
