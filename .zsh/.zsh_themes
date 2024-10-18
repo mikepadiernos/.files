@@ -1,0 +1,2 @@
+# source "$ZSH_THEMES"/minimal.zsh-theme
+source "$ZSH_THEMES"/typewritten.zsh-theme

@@ -1,0 +1,23 @@
+# HOMEBREW
+
+if [ -z "$( ls -A '/home/linuxbrew/.linuxbrew/bin/brew' )" ]; then
+    echo "HOMEBREW is not installed"
+else
+    echo "HOMEBREW is installed"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
+fi
+
+# # linuxbrew: php@8.1
+# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/php@8.1/lib"
+# export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/php@8.1/include"
+# export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.1/bin:$PATH"
+# export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.1/sbin:$PATH"
+
+# # linuxbrew: php@8.2
+# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/php@8.2/lib"
+# export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/php@8.2/include"
+# export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.2/bin:$PATH"
+# export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.2/sbin:$PATH"
+
+# END HOMEBREW

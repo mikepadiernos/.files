@@ -1,0 +1,15 @@
+/!historical/
+.idea
+/.idea
+.temp
+/.temp
+.old
+/.old
+.omz
+/.omz
+.nexcloudsync.log
+
+!/.fff/
+/.fff/.git
+!/.fzf/
+/.fzf/.git

@@ -1,0 +1,11 @@
+# zsh-eza
+alias li='la --icons=always'
+
+# lazydocker
+alias lzd='lazydocker'
+
+# lazygit
+alias lzg='lazygit'
+
+# neovim
+alias nvim='$NEOVIM/nvim'
