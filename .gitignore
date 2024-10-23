@@ -1,4 +1,5 @@
 /!historical/
+
 .idea
 /.idea
 .temp
@@ -7,9 +8,19 @@
 /.old
 .omz
 /.omz
+
 .nexcloudsync.log
 
 !/.fff/
 /.fff/.git
 !/.fzf/
 /.fzf/.git
+
+.asdf/data/installs
+/.asdf/data/installs
+
+.kde
+/.kde
+
+.zsh/history/.zsh_history
+/.zsh/history/.zsh_history

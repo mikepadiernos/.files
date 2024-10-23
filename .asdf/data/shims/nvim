@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# asdf-plugin: neovim 0.10.2
+exec /home/mikepadiernos/.asdf/bin/asdf exec "nvim" "$@" # asdf_allow: ' asdf '
