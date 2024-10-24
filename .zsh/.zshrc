@@ -10,6 +10,7 @@ export ZSH_THEMES="$ZSH/themes"
 
 export ASDF_DIR="$HOME/.asdf"
 export ASDF="$ASDF_DIR"
+export ASDF_DATA_DIR="$ASDF"
 
 export NEOVIM="$FILES/.neovim/bin"
 
