@@ -20,7 +20,7 @@ autoload -Uz compinit; compinit
 
 # direnv allow
 
-source "$ZSH"/.zsh_history
+# source "$ZSH"/.zsh_history
 source "$ZSH"/.zsh_themes
 source "$ZSH"/.zsh_plugins
 source "$ZSH"/.zsh_homebrew
@@ -28,6 +28,7 @@ source "$ZSH"/.zsh_bindkeys
 source "$ZSH"/.zsh_aliases
 source "$ZSH"/.zsh_completions
 
+eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 
