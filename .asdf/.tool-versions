@@ -8,7 +8,7 @@ zoxide 0.9.6
 eza 0.20.4
 fzf 0.55.0
 lazygit 0.44.1
-mysql 8.0.34
+mysql system
 asdf-plugin-manager 1.4.0
 ripgrep 14.1.1
 tmux 3.5a
