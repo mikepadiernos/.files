@@ -1,26 +1,22 @@
+.nexcloudsync.log
+
 /!historical/
+
+.old
+/.old
+
+.temp
+/.temp
 
 .idea
 /.idea
-.temp
-/.temp
-.old
-/.old
-.omz
-/.omz
-
-.nexcloudsync.log
-
-!/.fff/
-/.fff/.git
-!/.fzf/
-/.fzf/.git
+.vscode
+/.vscode
 
 .asdf/data/installs
 /.asdf/data/installs
 
-.kde
-/.kde
-
-.zsh/history/.zsh_history
-/.zsh/history/.zsh_history
+.zsh/history/*
+/.zsh/history/*
+.zsh/plugins/zsh*
+/.zsh/plugins/zsh*

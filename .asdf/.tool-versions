@@ -19,3 +19,7 @@ tool-versions-to-env 1.0.8
 atuin 18.3.0
 pipx 1.7.1
 yay system
+yarn 1.22.22
+asdf-helper 0.6.0
+aria2 1.37.0
+assh 2.16.0
