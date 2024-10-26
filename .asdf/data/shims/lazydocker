@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# asdf-plugin: lazydocker 0.23.3
+exec /home/mikepadiernos/.asdf/bin/asdf exec "lazydocker" "$@" # asdf_allow: ' asdf '

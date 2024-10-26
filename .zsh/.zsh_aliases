@@ -8,4 +8,4 @@ alias lzd='lazydocker'
 alias lzg='lazygit'
 
 # neovim
-alias nvim='$NEOVIM/nvim'
+# alias nvim='$NEOVIM/nvim'

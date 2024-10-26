@@ -28,6 +28,7 @@ source "$ZSH"/.zsh_bindkeys
 source "$ZSH"/.zsh_aliases
 source "$ZSH"/.zsh_completions
 
+eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 
