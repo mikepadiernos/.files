@@ -1,5 +1,5 @@
 lazydocker 0.23.3
-github-cli 2.47.0
+github-cli 2.60.1
 git 2.47.0
 gitui 0.26.1
 python 3.12.3
@@ -17,3 +17,5 @@ nodejs system
 mkcert 1.4.4
 tool-versions-to-env 1.0.8
 atuin 18.3.0
+pipx 1.7.1
+yay system
