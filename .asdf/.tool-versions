@@ -12,7 +12,7 @@ mysql system
 asdf-plugin-manager 1.4.0
 ripgrep 14.1.1
 tmux 3.5a
-neovim system
+neovim 0.10.2
 nodejs system
 mkcert 1.4.4
 tool-versions-to-env 1.0.8
@@ -23,3 +23,4 @@ yarn 1.22.22
 asdf-helper 0.6.0
 aria2 1.37.0
 assh 2.16.0
+php system
