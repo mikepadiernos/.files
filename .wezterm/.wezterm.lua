@@ -4,6 +4,7 @@ local wezterm = require("wezterm")
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
+local font_size = 14
 -- local font_default = "ShureTechMono Nerd Font"
 -- local font_default = "Atari ST 8x16 System Font"
 local font_default = "GohuFont 14 Nerd Font Mono"
@@ -16,12 +17,12 @@ config.colors = {
 }
 
 config.font = wezterm.font(font_default)
-config.font_size = 11
+config.font_size = font_size
 config.line_height = 1.75
 
 config.window_frame = {
 	font = wezterm.font({ family = font_default }),
-	font_size = 11,
+	font_size = font_size,
 }
 
 config.window_padding = {
