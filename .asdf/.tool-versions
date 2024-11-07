@@ -4,7 +4,7 @@ atuin 18.3.0
 direnv 2.34.0
 eza 0.20.4
 fzf 0.55.0
-git 2.47.0
+git system
 github-cli 2.60.1
 gitui 0.26.1
 lazydocker 0.23.3
@@ -19,3 +19,4 @@ tmux 3.5a
 tool-versions-to-env 1.0.8
 yarn 1.22.22
 zoxide 0.9.6
+delta 0.18.2

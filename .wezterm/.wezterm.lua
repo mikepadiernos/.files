@@ -8,6 +8,8 @@ local font_size = 14
 -- local font_default = "ShureTechMono Nerd Font"
 -- local font_default = "Atari ST 8x16 System Font"
 local font_default = "GohuFont 14 Nerd Font Mono"
+-- local font_default = "November"
+-- local font_default = "ProggyClean CE Nerd Font"
 -- local font_default = "TerminessTTF Nerd Font"
 -- local font_default = "Mechanical FREE"
 
