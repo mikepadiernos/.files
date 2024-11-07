@@ -24,3 +24,6 @@ asdf-helper 0.6.0
 aria2 1.37.0
 assh 2.16.0
 php system
+cmake system
+delta 0.18.2
+fd 10.2.0
