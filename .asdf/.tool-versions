@@ -17,6 +17,6 @@ python 3.12.3
 ripgrep 14.1.1
 tmux 3.5a
 tool-versions-to-env 1.0.8
-yarn 1.22.22
+yarn system
 zoxide 0.9.6
 delta 0.18.2
