@@ -1,0 +1,469 @@
+version: 7
+profiles:
+  - type: ssh
+    name: 162.216.114.158@root
+    icon: fas fa-desktop
+    options:
+      host: 162.216.114.158
+      algorithms: {}
+      input: {}
+      privateKeys: []
+    weight: -1
+    id: ssh:custom:162.216.114.158@root:7c647e8e-270e-43af-a416-517985bb17d8
+  - type: local
+    name: default
+    options:
+      restoreFromPTYID: null
+      command: /bin/zsh
+      args:
+        - '-l'
+      cwd: /Users/michaelpadiernos
+      env: {}
+      width: null
+      height: null
+      pauseAfterExit: false
+      runAsAdministrator: false
+    id: local:custom:default:8e019208-958a-4485-a622-a4bc4d96be84
+    group: ''
+    icon: fas fa-terminal
+    color: ''
+    disableDynamicTitle: false
+    behaviorOnSessionEnd: auto
+  - type: local
+    name: zsh
+    icon: fas fa-terminal
+    options:
+      command: /bin/zsh
+      args:
+        - '-l'
+      env: {}
+    id: local:custom:zsh:39a8a081-9a14-425d-b70b-10415f2b898c
+  - type: ssh
+    name: spsi.padiernos
+    icon: fas fa-desktop
+    options:
+      host: 104.218.50.155
+      user: padiernos
+      algorithms:
+        hmac:
+          - hmac-sha1
+          - hmac-sha1-etm@openssh.com
+          - hmac-sha2-256
+          - hmac-sha2-256-etm@openssh.com
+          - hmac-sha2-512
+          - hmac-sha2-512-etm@openssh.com
+        kex:
+          - curve25519-sha256
+          - curve25519-sha256@libssh.org
+          - diffie-hellman-group-exchange-sha256
+          - diffie-hellman-group14-sha256
+          - diffie-hellman-group15-sha512
+          - diffie-hellman-group16-sha512
+          - diffie-hellman-group17-sha512
+          - diffie-hellman-group18-sha512
+          - ecdh-sha2-nistp256
+          - ecdh-sha2-nistp384
+          - ecdh-sha2-nistp521
+        cipher:
+          - aes128-ctr
+          - aes128-gcm
+          - aes128-gcm@openssh.com
+          - aes192-ctr
+          - aes256-ctr
+          - aes256-gcm
+          - aes256-gcm@openssh.com
+        serverHostKey:
+          - ecdsa-sha2-nistp256
+          - ecdsa-sha2-nistp384
+          - ecdsa-sha2-nistp521
+          - rsa-sha2-256
+          - rsa-sha2-512
+          - ssh-ed25519
+          - ssh-rsa
+      input: {}
+      privateKeys: []
+      forwardedPorts: []
+      scripts: []
+    weight: -1
+    group: 760477e4-ae65-480c-a5c1-1ae0f42196ce
+    id: ssh:custom:spsc.padiernos:243bcc84-c126-407f-9fbf-a3071c57d43f
+  - type: ssh
+    name: spsi.root
+    icon: fas fa-desktop
+    options:
+      host: 104.218.50.155
+      algorithms:
+        hmac:
+          - hmac-sha1
+          - hmac-sha1-etm@openssh.com
+          - hmac-sha2-256
+          - hmac-sha2-256-etm@openssh.com
+          - hmac-sha2-512
+          - hmac-sha2-512-etm@openssh.com
+        kex:
+          - curve25519-sha256
+          - curve25519-sha256@libssh.org
+          - diffie-hellman-group-exchange-sha256
+          - diffie-hellman-group14-sha256
+          - diffie-hellman-group15-sha512
+          - diffie-hellman-group16-sha512
+          - diffie-hellman-group17-sha512
+          - diffie-hellman-group18-sha512
+          - ecdh-sha2-nistp256
+          - ecdh-sha2-nistp384
+          - ecdh-sha2-nistp521
+        cipher:
+          - aes128-ctr
+          - aes128-gcm
+          - aes128-gcm@openssh.com
+          - aes192-ctr
+          - aes256-ctr
+          - aes256-gcm
+          - aes256-gcm@openssh.com
+        serverHostKey:
+          - ecdsa-sha2-nistp256
+          - ecdsa-sha2-nistp384
+          - ecdsa-sha2-nistp521
+          - rsa-sha2-256
+          - rsa-sha2-512
+          - ssh-ed25519
+          - ssh-rsa
+      input: {}
+      privateKeys: []
+      forwardedPorts: []
+      scripts: []
+    weight: -1
+    group: 760477e4-ae65-480c-a5c1-1ae0f42196ce
+    id: ssh:custom:spsc.padiernos-copy:4d149908-dcc7-461e-ad3d-a65c1364ffd1
+  - type: local
+    name: ssh2sftp_linux_template
+    icon: fas fa-terminal
+    options:
+      command: /usr/bin/sftp
+      env: {}
+      cwd: ''
+      args:
+        - '-oStrictHostKeyChecking=no'
+        - '-oServerAliveInterval=30'
+        - '-oServerAliveCountMax=1051200'
+        - '-oTCPKeepAlive=yes'
+    group: ssh2sftp_template
+    id: local:custom:ssh2sftp_linux_template:6c4bcc75-f690-482a-a882-40e1c9851a3d
+    disableDynamicTitle: true
+    isTemplate: true
+  - type: local
+    name: ssh2sftp_mac_template
+    icon: fas fa-terminal
+    options:
+      command: /usr/local/opt/openssh/bin/sftp
+      args:
+        - '-oStrictHostKeyChecking=no'
+        - '-oServerAliveInterval=30'
+        - '-oServerAliveCountMax=1051200'
+        - '-oTCPKeepAlive=yes'
+      env: {}
+      cwd: ''
+    id: local:custom:ssh2sftp_mac_template:33162a26-7807-4c5e-ac2d-68cd2d9a4a24
+    group: ssh2sftp_template
+    disableDynamicTitle: true
+    isTemplate: true
+  - type: local
+    name: ssh2sftp_win_template
+    icon: fas fa-terminal
+    options:
+      command: c:\Git\usr\bin\sftp.exe
+      env: {}
+      cwd: ''
+      args:
+        - '-oStrictHostKeyChecking=no'
+        - '-oServerAliveInterval=30'
+        - '-oServerAliveCountMax=1051200'
+        - '-oTCPKeepAlive=yes'
+    group: ssh2sftp_template
+    id: local:custom:ssh2sftp_win_template:c617da05-d05c-482d-8ca6-3c7eb99452e9
+    disableDynamicTitle: true
+    isTemplate: true
+groups:
+  - id: 760477e4-ae65-480c-a5c1-1ae0f42196ce
+    name: servers
+configSync:
+  parts: {}
+hotkeys:
+  toggle-window:
+    - Ctrl-Space
+  copy-current-path: []
+  ctrl-c:
+    - Ctrl-C
+  copy:
+    - ⌘-C
+  paste:
+    - ⌘-V
+  clear:
+    - ⌘-K
+  select-all:
+    - ⌘-A
+  zoom-in:
+    - ⌘-=
+    - ⌘-Shift-=
+  zoom-out:
+    - ⌘--
+    - ⌘-Shift--
+  reset-zoom:
+    - ⌘-0
+  home:
+    - ⌘-Left
+    - Home
+  end:
+    - ⌘-Right
+    - End
+  previous-word:
+    - ⌥-Left
+  next-word:
+    - ⌥-Right
+  delete-previous-word:
+    - ⌥-Backspace
+  delete-line:
+    - ⌘-Backspace
+  delete-next-word:
+    - ⌥-Delete
+  search:
+    - ⌘-F
+  pane-focus-all:
+    - ⌘-Shift-I
+  focus-all-tabs:
+    - ⌘-⌥-Shift-I
+  scroll-to-top:
+    - Shift-PageUp
+  scroll-up:
+    - ⌥-PageUp
+  scroll-down:
+    - ⌥-PageDown
+  scroll-to-bottom:
+    - Shift-PageDown
+  restart-telnet-session: []
+  restart-ssh-session: []
+  launch-winscp: []
+  settings-tab: {}
+  settings:
+    - ⌘-,
+  serial:
+    - Alt-K
+  restart-serial-session: []
+  new-tab:
+    - ⌘-T
+  new-window:
+    - ⌘-N
+  profile: {}
+  profile-selectors: {}
+  toggle-fullscreen:
+    - Ctrl+⌘+F
+  close-tab:
+    - ⌘-W
+  reopen-tab:
+    - ⌘-Shift-T
+  toggle-last-tab: []
+  rename-tab:
+    - ⌘-R
+  next-tab:
+    - Ctrl-Tab
+  previous-tab:
+    - Ctrl-Shift-Tab
+  move-tab-left:
+    - ⌘-Shift-Left
+  move-tab-right:
+    - ⌘-Shift-Right
+  rearrange-panes:
+    - Ctrl-Shift
+  tab-1:
+    - ⌘-1
+  tab-2:
+    - ⌘-2
+  tab-3:
+    - ⌘-3
+  tab-4:
+    - ⌘-4
+  tab-5:
+    - ⌘-5
+  tab-6:
+    - ⌘-6
+  tab-7:
+    - ⌘-7
+  tab-8:
+    - ⌘-8
+  tab-9:
+    - ⌘-9
+  tab-10: []
+  duplicate-tab: []
+  restart-tab: []
+  reconnect-tab: []
+  disconnect-tab: []
+  explode-tab:
+    - ⌘-Shift-.
+  combine-tabs:
+    - ⌘-Shift-,
+  tab-11: []
+  tab-12: []
+  tab-13: []
+  tab-14: []
+  tab-15: []
+  tab-16: []
+  tab-17: []
+  tab-18: []
+  tab-19: []
+  tab-20: []
+  split-right:
+    - ⌘-Shift-D
+  split-bottom:
+    - ⌘-D
+  split-left: []
+  split-top: []
+  pane-nav-right: []
+  pane-nav-down:
+    - ⌘-⌥-Down
+  pane-nav-up:
+    - ⌘-⌥-Up
+  pane-nav-left: []
+  pane-nav-previous:
+    - ⌘-⌥-[
+    - ⌘-⌥-Left
+  pane-nav-next:
+    - ⌘-⌥-]
+    - ⌘-⌥-Right
+  pane-nav-1: []
+  pane-nav-2: []
+  pane-nav-3: []
+  pane-nav-4: []
+  pane-nav-5: []
+  pane-nav-6: []
+  pane-nav-7: []
+  pane-nav-8: []
+  pane-nav-9: []
+  pane-maximize:
+    - ⌘-⌥-Enter
+  close-pane:
+    - ⌘-Shift-W
+  pane-increase-vertical: []
+  pane-decrease-vertical: []
+  pane-increase-horizontal: []
+  pane-decrease-horizontal: []
+  profile-selector:
+    - ⌘-E
+  switch-profile:
+    - ⌘-Shift-E
+  command-selector:
+    - ⌘-Shift-P
+  workspace-profile-1: []
+  workspace-profile-2: []
+  workspace-profile-3: []
+  workspace-profile-4: []
+  workspace-profile-5: []
+  open-sftp-tab:
+    - Ctrl-Shift-S
+  quick-restart:
+    - Ctrl-R
+terminal:
+  searchOptions: {}
+  colorScheme:
+    name: IR_Black
+    foreground: '#f1f1f1'
+    background: '#000000'
+    cursor: '#808080'
+    colors:
+      - '#4f4f4f'
+      - '#fa6c60'
+      - '#a8ff60'
+      - '#fffeb7'
+      - '#96cafe'
+      - '#fa73fd'
+      - '#c6c5fe'
+      - '#efedef'
+      - '#7b7b7b'
+      - '#fcb6b0'
+      - '#cfffab'
+      - '#ffffcc'
+      - '#b5dcff'
+      - '#fb9cfe'
+      - '#e0e0fe'
+      - '#ffffff'
+  hideTabIndex: true
+  showTabProfileIcon: true
+  customColorSchemes: []
+  profile: local:binzsh
+  font: GohuFont 14 Nerd Font
+  ligatures: true
+  linePadding: 1
+  autoOpen: false
+ssh:
+  knownHosts:
+    - host: 104.218.50.155
+      port: 22
+      type: ecdsa-sha2-nistp256
+      digest: esZMy7FaQGOMnkt/TqLjUU4mLnh5h9xbVBDQiZCljrs=
+    - host: 162.216.114.158
+      port: 22
+      type: ecdsa-sha2-nistp256
+      digest: 0DV/eFBFrblg3laHu9wQXojy1T6kRuoL/HbYyZtuWzw=
+clickableLinks: {}
+accessibility: {}
+appearance:
+  spaciness: 1.2
+  opacity: 0.9
+  dockFill: 0.83
+  vibrancy: true
+  dock: bottom
+hacks:
+  disableGPU: true
+providerBlacklist: []
+commandBlacklist: []
+profileDefaults:
+  ssh:
+    disableDynamicTitle: true
+profileBlacklist: []
+workspaceManager: {}
+highlightPlugin:
+  highlightProfiles:
+    - id: 60606be0-c0ff-42bc-bf77-de8a2435447f
+      name: Default
+      keywords:
+        - text: ERROR
+          enabled: true
+          background: true
+          backgroundColor: '1'
+        - text: WARN
+          enabled: true
+          background: true
+          backgroundColor: '3'
+        - text: INFO
+          enabled: true
+          background: true
+          backgroundColor: '6'
+        - text: 错误
+          enabled: true
+          background: true
+          backgroundColor: '1'
+        - text: 警告
+          enabled: true
+          background: true
+          backgroundColor: '3'
+        - text: 信息
+          enabled: true
+          background: true
+          backgroundColor: '6'
+  replaceProfiles:
+    - id: 986666dd-dac9-4c7a-a295-9b4aff66abdd
+      name: Default
+      patterns:
+        - enabled: true
+          search: ERROR
+          replace: 出错啦
+        - enabled: true
+          search: WARN
+          replace: 警告警告
+  highlightEnabled: true
+docker: {}
+backgroundPlugin:
+  uiFontEnabled: true
+  uiFontFamily: GohuFont 14 Nerd Font
+enableWelcomeTab: false
+pluginBlacklist: []
+
