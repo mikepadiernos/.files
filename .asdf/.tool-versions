@@ -3,9 +3,9 @@ github-cli 2.60.1
 git 2.47.0
 gitui 0.26.1
 python 3.12.3
-direnv 2.34.0
+direnv 2.35.0
 zoxide 0.9.6
-eza 0.20.4
+eza 0.20.7
 fzf 0.55.0
 lazygit 0.44.1
 mysql system
@@ -24,3 +24,4 @@ asdf-helper 0.6.0
 aria2 1.37.0
 assh 2.16.0
 php system
+fd 10.2.0
