@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg viewBox="0 0 50 50"
+ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.2" baseProfile="tiny">
+<title>Qt SVG Document</title>
+<desc>Generated with Qt</desc>
+<defs>
+</defs>
+<g fill="none" stroke="black" stroke-width="1" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="bevel" >
+
+<g fill="none" stroke="#fbfdff" stroke-opacity="1" stroke-width="1.001" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,2.5,2.5)"
+font-family="Share Tech Mono" font-size="10" font-weight="400" font-style="normal" 
+>
+<image x="0" y="0" width="45" height="45" preserveAspectRatio="none" image-rendering="optimizeSpeed" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA/ElEQVRYhe3YTQqDQAwFYJE5gdfyjj1ZL+GuEEK66IQ+BqVqZ5wE8zaCP8mHiMYZhkgkEjEVYpl6Gw6FWGZiWYhl7m3ZlQx+EYvkrW14AX6ahxfgB7GkvLUJXwGPef9oEr4FhuO24L/AcJ4N+F4wnN8XfhQM1/WBnwXD9dfC/wVDnWvgtcBQry28NhjqtoG3AkP9uvDWYOhTB04sE33GSx1+UmVr2S/Rd8ha6Ow87u5OQ0FfzzQU9vX2gAa+3tPQyNcXERr6mj2gsa8pDwC+5mmA+PpzAZCvf0TNFtwsWLMCt73uoSng9leYNAXcPlhD3lZNNeRtfToSidwgb4Ws43aCPDLVAAAAAElFTkSuQmCC" />
+</g>
+
+<g fill="none" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Share Tech Mono" font-size="10" font-weight="400" font-style="normal" 
+>
+</g>
+</g>
+</svg>
