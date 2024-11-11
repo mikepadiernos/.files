@@ -7,3 +7,5 @@
 ./.zsh/.historical/
 ./.zsh/history/*
 ./.zsh/plugins/zsh-*
+./.zsh/plugins/.temp/
+
