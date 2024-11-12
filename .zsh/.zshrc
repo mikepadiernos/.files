@@ -33,3 +33,8 @@ eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Lando
+# export PATH="/home/mikepadiernos/.lando/bin${PATH+:$PATH}"; #landopath
+
+
