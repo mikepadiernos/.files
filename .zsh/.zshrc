@@ -35,6 +35,5 @@ eval "$(zoxide init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Lando
-# export PATH="/home/mikepadiernos/.lando/bin${PATH+:$PATH}"; #landopath
-
+export PATH="/home/mikepadiernos/.lando/bin${PATH+:$PATH}"; #landopath
 
