@@ -24,13 +24,13 @@ IntensityAmount=0
 IntensityEffect=0
 
 [Colors:Button]
-BackgroundAlternate=15,15,15
-BackgroundNormal=8,8,8
-DecorationFocus=239,209,0
-DecorationHover=239,209,0
-ForegroundActive=255,128,224
+BackgroundAlternate=167,157,0
+BackgroundNormal=0,0,0
+DecorationFocus=239,225,0
+DecorationHover=239,225,0
+ForegroundActive=239,225,0
 ForegroundInactive=136,135,134
-ForegroundLink=0,87,174
+ForegroundLink=239,225,0
 ForegroundNegative=191,3,3
 ForegroundNeutral=176,128,0
 ForegroundNormal=251,253,255
@@ -40,22 +40,26 @@ ForegroundVisited=69,40,134
 [Colors:Complementary]
 BackgroundAlternate=50,52,61
 BackgroundNormal=40,42,51
-DecorationFocus=239,209,0
-DecorationHover=239,209,0
+DecorationFocus=239,225,0
+DecorationHover=239,225,0
+ForegroundActive=239,225,0
+ForegroundLink=239,225,0
 
 [Colors:Header]
 BackgroundNormal=0,0,0
-DecorationFocus=239,209,0
-DecorationHover=239,209,0
+DecorationFocus=239,225,0
+DecorationHover=239,225,0
+ForegroundActive=239,225,0
+ForegroundLink=239,225,0
 
 [Colors:Selection]
-BackgroundAlternate=112,95,0
-BackgroundNormal=239,209,0
-DecorationFocus=239,209,0
-DecorationHover=239,209,0
-ForegroundActive=255,128,224
-ForegroundInactive=97,139,159
-ForegroundLink=0,32,63
+BackgroundAlternate=167,158,0
+BackgroundNormal=167,158,0
+DecorationFocus=239,225,0
+DecorationHover=239,225,0
+ForegroundActive=239,225,0
+ForegroundInactive=0,0,0
+ForegroundLink=255,242,109
 ForegroundNegative=156,14,14
 ForegroundNeutral=64,55,0
 ForegroundNormal=0,0,0
@@ -65,11 +69,11 @@ ForegroundVisited=69,40,134
 [Colors:Tooltip]
 BackgroundAlternate=50,52,61
 BackgroundNormal=40,42,51
-DecorationFocus=239,209,0
-DecorationHover=239,209,0
-ForegroundActive=255,128,224
+DecorationFocus=239,225,0
+DecorationHover=239,225,0
+ForegroundActive=239,225,0
 ForegroundInactive=96,112,128
-ForegroundLink=0,87,174
+ForegroundLink=239,225,0
 ForegroundNegative=191,3,3
 ForegroundNeutral=176,128,0
 ForegroundNormal=211,218,227
@@ -79,11 +83,11 @@ ForegroundVisited=69,40,134
 [Colors:View]
 BackgroundAlternate=16,16,16
 BackgroundNormal=2,3,3
-DecorationFocus=239,209,0
-DecorationHover=239,209,0
-ForegroundActive=255,128,224
+DecorationFocus=239,225,0
+DecorationHover=239,225,0
+ForegroundActive=239,225,0
 ForegroundInactive=136,135,134
-ForegroundLink=0,87,174
+ForegroundLink=239,225,0
 ForegroundNegative=191,3,3
 ForegroundNeutral=176,128,0
 ForegroundNormal=251,253,255
@@ -93,11 +97,11 @@ ForegroundVisited=69,40,134
 [Colors:Window]
 BackgroundAlternate=15,15,15
 BackgroundNormal=0,0,0
-DecorationFocus=239,209,0
-DecorationHover=239,209,0
-ForegroundActive=255,128,224
+DecorationFocus=239,225,0
+DecorationHover=239,225,0
+ForegroundActive=239,225,0
 ForegroundInactive=136,135,134
-ForegroundLink=0,87,174
+ForegroundLink=239,225,0
 ForegroundNegative=191,3,3
 ForegroundNeutral=176,128,0
 ForegroundNormal=251,253,255
@@ -109,14 +113,14 @@ DirSelectDialog Size=1638,686
 History Items[$e]=file:$HOME/.files/.kde/savedesktop,file:$HOME/.files/.kitty,file:$HOME/.files/.tmux,file:$HOME/.files/.neovim/nvim,file:$HOME/.files/.neovim/lua,file:$HOME/.files/.neovim/default,file:$HOME/.files/.neovim/default,file:$HOME/.files/.neovim/lua,file:$HOME/Library/Documents,file:$HOME/Library/Documents,file:///home,file:$HOME/Projects/doslocallawscode,file:$HOME/Library/__ Media/Music,file:$HOME/Library/__ Media/Pictures,file:$HOME/Library/__ Media/Videos,file:$HOME/Library/Templates,file:$HOME/Library/Public,file:$HOME/Library/🎴 __ Media/Music,file:$HOME/Library/🎴 __ Media/Pictures,file:$HOME/Library/🎴 __ Media/Videos,file:$HOME/Library/Downloads,file:$HOME/Library/Documents,file:$HOME/Library/Desktop,file:///media/shared/.android/xiaomi/veux,file:$HOME/Library/Notebooks,file:$HOME/.thunderbird/pji75cua.default-default,file:$HOME/.thunderbird/u5c63wyr.default-beta,file:$HOME/.thunderbird/u5c63wyr.default-beta,file:$HOME/.files/.vivaldi
 
 [General]
+AccentColor=239,225,0
 ColorSchemeHash=a164cfe19c71bdd5cf73f99ab928ea3279f3fe3c
-LastUsedCustomAccentColor=61,212,37
+LastUsedCustomAccentColor=239,225,0
 Name=Breeze Dark
 TerminalApplication=yakuake
 TerminalService=org.kde.yakuake.desktop
 XftHintStyle=hintslight
 XftSubPixel=rgb
-accentColorFromWallpaper=true
 fixed=Atari ST 8x16 System Font,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
 font=DecimaMonoPro,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 menuFont=DecimaMonoPro,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1

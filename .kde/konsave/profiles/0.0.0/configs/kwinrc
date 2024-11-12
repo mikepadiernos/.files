@@ -1,7 +1,8 @@
 [Desktops]
 Id_1=5a6c74c9-7500-4944-9866-23b7e86f4892
 Id_2=85b5779e-fb62-42e3-8d33-42d38f6c1279
-Number=2
+Id_3=65fe1133-322d-4e5e-87d3-b5cb4d9faf3f
+Number=3
 Rows=1
 
 [Effect-overview]
@@ -18,6 +19,7 @@ kinetic_fadingpopupsEnabled=true
 kinetic_scaleEnabled=true
 kinetic_squashEnabled=true
 kwin4_effect_geometry_changeEnabled=true
+kzonesEnabled=true
 maximizeEnabled=false
 mouseclickEnabled=true
 scaleEnabled=false
@@ -30,6 +32,9 @@ wobblywindowsEnabled=true
 
 [Script-center-new-windows]
 applications=krunner\norg.kde.yakuake\n
+
+[Script-kzones]
+layoutsJson=[\n  {\n    "name": "Quadrant Grid",\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 50,\n        "width": 50\n      },\n      {\n        "x": 0,\n        "y": 50,\n        "height": 50,\n        "width": 50\n      },\n      {\n        "x": 50,\n        "y": 50,\n        "height": 50,\n        "width": 50\n      },\n      {\n        "x": 50,\n        "y": 0,\n        "height": 50,\n        "width": 50\n      }\n    ]\n  },\n  {\n    "name": "Priority Grid",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      },\n      {\n        "x": 25,\n        "y": 0,\n        "height": 100,\n        "width": 50\n      },\n      {\n        "x": 75,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      }\n    ]\n  },\n  {\n    "name": "Priority Left",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 75\n      },\n      {\n        "x": 75,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      }\n    ]\n  },\n  {\n    "name": "Priority Right",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      },\n      {\n        "x": 25,\n        "y": 0,\n        "height": 100,\n        "width": 75\n      }\n    ]\n  }\n\n]\n
 
 [Script-temporary-virtual-desktops]
 backHome=true
@@ -63,7 +68,7 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Tiling][b2d18479-3d89-5857-95d2-f0a091ad7ec5]
-tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.34912790697674423},{"width":0.15087209302325577},{"width":0.25}]}
 
 [Tiling][bd996854-a5dd-55a0-9a46-5ee5a61248bf]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}

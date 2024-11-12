@@ -500,7 +500,7 @@ plugin=org.kde.plasma.kicker
 
 [Containments][52][Applets][91][Configuration]
 PreloadWeight=100
-popupHeight=458
+popupHeight=430
 popupWidth=252
 
 [Containments][52][Applets][91][Configuration][ConfigDialog]
@@ -708,7 +708,7 @@ plugin=com.github.exequtic.apdatifier
 PreloadWeight=65
 
 [Containments][65][Applets][126][Configuration][Miscellaneous]
-timestamp=1731345645256
+timestamp=1731385523493
 
 [Containments][65][Applets][128]
 immutability=1
@@ -734,6 +734,7 @@ DialogWidth=720
 
 [Containments][65][Applets][139][Configuration][Pacman]
 aurWrapper=yay
+useFlatpak=true
 
 [Containments][65][Applets][139][Configuration][Unsafe]
 lastList=
@@ -840,8 +841,8 @@ immutability=1
 lastScreen=0
 location=4
 plugin=org.kde.plasma.private.systemtray
-popupHeight=432
-popupWidth=432
+popupHeight=1329
+popupWidth=490
 wallpaperplugin=org.kde.image
 
 [Containments][9][Applets][10][Configuration]
@@ -888,7 +889,7 @@ plugin=com.github.exequtic.apdatifier
 PreloadWeight=70
 
 [Containments][9][Applets][125][Configuration][Miscellaneous]
-timestamp=1731345645223
+timestamp=1731385523492
 
 [Containments][9][Applets][127]
 immutability=1
@@ -1072,4 +1073,4 @@ SlidePaths=/home/mikepadiernos/.local/share/wallpapers/,/usr/share/wallpapers/
 
 [ScreenMapping]
 itemsOnDisabledScreens=
-screenMapping=desktop:/steam.desktop,1,072a6305-9771-447c-b24e-d64c9d02f6bf,desktop:/steam.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e
+screenMapping=desktop:/steam.desktop,1,072a6305-9771-447c-b24e-d64c9d02f6bf,desktop:/steam.desktop,1,c02c80ee-b0fe-4834-9531-569d1cf7a90e
