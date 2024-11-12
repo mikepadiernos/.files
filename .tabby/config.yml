@@ -322,6 +322,8 @@ terminal:
   font: GohuFont 14 Nerd Font Mono
   linePadding: 2
   ligatures: true
+  bell: visual
+  autoOpen: false
 ssh:
   knownHosts:
     - host: 104.218.50.155
@@ -332,8 +334,10 @@ ssh:
       port: 22
       type: ecdsa-sha2-nistp256
       digest: YBG1/h/KZzjQcrVy6AeBOG1E6zQBwvGk1STwJITPlpM=
-clickableLinks: {}
-accessibility: {}
+clickableLinks:
+  modifier: ctrlKey
+accessibility:
+  animations: false
 appearance:
   dock: bottom
   frame: native
@@ -356,5 +360,6 @@ serialTimestampPlugin: {}
 searchInBrowserPlugin: {}
 highlightPlugin: {}
 docker: {}
-backgroundPlugin: {}
-
+backgroundPlugin:
+  uiFontEnabled: true
+  uiFontFamily: GohuFont 14 Nerd Font Mono
