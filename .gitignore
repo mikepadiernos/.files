@@ -1,22 +1,11 @@
 .nexcloudsync.log
 
-/!historical/
+./!historical/
 
-.old
-/.old
+./.asdf/data/installs
 
-.temp
-/.temp
+./.zsh/.historical/
+./.zsh/history/*
+./.zsh/plugins/zsh-*
+./.zsh/plugins/.temp/
 
-.idea
-/.idea
-.vscode
-/.vscode
-
-.asdf/data/installs
-/.asdf/data/installs
-
-.zsh/history/*
-/.zsh/history/*
-.zsh/plugins/zsh*
-/.zsh/plugins/zsh*
