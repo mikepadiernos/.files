@@ -689,7 +689,7 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][60][Applets][88][Configuration][General]
-launchers=
+launchers=applications:org.kde.konsole.desktop
 separateLaunchers=false
 
 [Containments][60][General]

@@ -90,4 +90,5 @@
   <Action name="edit_find"/>
   <Action name="hamburger_menu"/>
  </ToolBar>
+ <ActionProperties scheme="Default"/>
 </gui>

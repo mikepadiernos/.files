@@ -91,4 +91,5 @@
   <Action name="split-view"/>
   <Action name="split-view-top-bottom"/>
  </ToolBar>
+ <ActionProperties scheme="Default"/>
 </gui>
