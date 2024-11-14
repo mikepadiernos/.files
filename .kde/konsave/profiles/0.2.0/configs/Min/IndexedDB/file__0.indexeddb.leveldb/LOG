@@ -1,0 +1,12 @@
+2024/11/13-20:03:21.802 2cdd60 Reusing MANIFEST /home/mikepadiernos/.config/Min/IndexedDB/file__0.indexeddb.leveldb/MANIFEST-000001
+2024/11/13-20:03:21.804 2cdd60 Recovering log #11
+2024/11/13-20:03:21.876 2cdd60 Reusing old log /home/mikepadiernos/.config/Min/IndexedDB/file__0.indexeddb.leveldb/000011.log 
+2024/11/13-20:10:56.567 2cdd46 Level-0 table #16: started
+2024/11/13-20:10:56.625 2cdd46 Level-0 table #16: 1203539 bytes OK
+2024/11/13-20:10:56.642 2cdd46 Delete type=0 #11
+2024/11/13-20:11:02.568 2cdd47 Compacting 1@1 + 1@2 files
+2024/11/13-20:11:02.632 2cdd47 Generated table #17@1: 17180 keys, 1019260 bytes
+2024/11/13-20:11:02.632 2cdd47 Compacted 1@1 + 1@2 files => 1019260 bytes
+2024/11/13-20:11:02.650 2cdd47 compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/11/13-20:11:02.650 2cdd47 Delete type=2 #13
+2024/11/13-20:11:02.650 2cdd47 Delete type=2 #16
