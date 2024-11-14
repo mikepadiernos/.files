@@ -204,8 +204,8 @@ plugin=org.kde.plasma.digitalclock
 
 [Containments][3][Applets][21][Configuration]
 PreloadWeight=100
-popupHeight=450
-popupWidth=810
+popupHeight=453
+popupWidth=814
 
 [Containments][3][Applets][21][Configuration][Appearance]
 autoFontAndSize=false
@@ -215,7 +215,7 @@ dateFormat=custom
 enabledCalendarPlugins=astronomicalevents,holidaysevents,pimevents
 firstDayOfWeek=0
 fontFamily=Atari ST 8x16 System Font
-fontSize=18
+fontSize=24
 fontStyleName=Medium
 fontWeight=500
 showSeconds=Always
