@@ -38,7 +38,7 @@ source "$ZSH_PLUGINS"/zsh-history-substring-search/zsh-history-substring-search.
 source "$ZSH_PLUGINS"/zsh-magic-dashboard/zsh-magic-dashboard.plugin.zsh							            # zsh-magic-dashboard
 # source "$ZSH_PLUGINS"/zsh-ssh/zsh-ssh.plugin.zsh														                    # zsh-ssh
 # source "$ZSH_PLUGINS"/zsh-ssh-agent/zsh-ssh-agent.plugin.zsh											              # zsh-ssh-agent
-source "$ZSH_PLUGINS"/zsh-ssh-completion/zsh-ssh-completion.plugin.zsh									                # zsh-ssh-completion
+# source "$ZSH_PLUGINS"/zsh-ssh-completion/zsh-ssh-completion.plugin.zsh					                # zsh-ssh-completion
 # source "$ZSH_PLUGINS"/zsh-ssh-plugin/zsh-ssh-plugin.zsh												                  # zsh-ssh-plugin
 source "$ZSH_PLUGINS"/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh					        # zsh-syntax-highlighting
 source "$ZSH_PLUGINS"/zsh-you-should-use/zsh-you-should-use.plugin.zsh								            # zsh-you-should-use
