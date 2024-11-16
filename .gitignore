@@ -1,13 +1,13 @@
 /.nexcloudsync.log
 
-/!historical/
+/!historical
 
 /.asdf/data/installs
 
-/.neovim/nvim.modular
+/.neovim/nvim*
 
-/.zsh/.historical/
+/.zsh/.historical
 /.zsh/history/*
 /.zsh/plugins/zsh-*
-/.zsh/plugins/.temp/
+/.zsh/plugins/.temp
 
