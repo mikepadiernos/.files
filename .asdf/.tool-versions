@@ -21,7 +21,7 @@ pipx 1.7.1
 yay system
 yarn 1.22.22
 asdf-helper 0.6.0
-aria2 1.37.0
+aria2 system
 assh 2.16.0
 php system
 cmake 3.31.0

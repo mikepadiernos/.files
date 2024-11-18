@@ -4,7 +4,7 @@ if [ ! -z "$( ls -A '/home/linuxbrew/.linuxbrew/bin/brew' > /dev/null 2>&1 & )" 
   echo "HOMEBREW for Linux installed"
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
-elif [ ! -z "$( ls -A '/usr/local/bin/brew' > /dev/null 2>&1 & )" ]; then
+elif [ ! -z "$( ls -A '/usr/local/bin/brew' > /dev/null 2>&1 )" ]; then
   echo "HOMEBREW for MacOS installed"
   eval "$(/usr/local/bin/brew shellenv)"
   # export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
