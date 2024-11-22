@@ -1,3 +1,6 @@
+# drush
+alias drush='~/public_html/vendor/bin/drush'
+
 # zsh-eza
 alias li='la --icons=always'
 
@@ -9,3 +12,4 @@ alias lzg='lazygit'
 
 # neovim
 # alias nvim='$NEOVIM/nvim'
+

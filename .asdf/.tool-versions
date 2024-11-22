@@ -27,3 +27,5 @@ php system
 cmake 3.31.0
 delta 0.18.2
 fd 10.2.0
+luajit 2.0.5--3.11.1
+lua 5.4.7
