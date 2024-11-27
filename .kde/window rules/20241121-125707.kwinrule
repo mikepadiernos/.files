@@ -1,0 +1,227 @@
+[\x5bAPP\x5d\x5bCOM\x5d telegram]
+Description=[APP][COM] telegram
+noborder=true
+noborderrule=2
+wmclass=Forkgram org.telegram.desktop
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bDEV\x5d jetbrains / phpstorm]
+Description=[APP][DEV] jetbrains / phpstorm
+activity=c02c80ee-b0fe-4834-9531-569d1cf7a90e,072a6305-9771-447c-b24e-d64c9d02f6bf
+activityrule=4
+ignoregeometry=true
+ignoregeometryrule=2
+size=3440,1340
+sizerule=4
+types=2
+wmclass=jetbrains-phpstorm jetbrains-phpstorm
+wmclasscomplete=true
+wmclassmatch=2
+
+[\x5bAPP\x5d\x5bDEV\x5d jetbrains / phpstorm / main]
+Description=[APP][DEV] jetbrains / phpstorm / main
+activity=c02c80ee-b0fe-4834-9531-569d1cf7a90e,072a6305-9771-447c-b24e-d64c9d02f6bf
+activityrule=4
+desktops=d236521c-b6dd-441e-8215-c86ecd0efe85
+desktopsrule=4
+maximizehoriz=true
+maximizehorizrule=4
+maximizevert=true
+maximizevertrule=4
+types=2
+wmclass=jetbrains-phpstorm jetbrains-phpstorm
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bDEV\x5d jetbrains / project manager]
+Description=[APP][DEV] jetbrains / project manager
+activity=c02c80ee-b0fe-4834-9531-569d1cf7a90e,072a6305-9771-447c-b24e-d64c9d02f6bf
+activityrule=4
+types=1
+wmclass=jetbrains-phpstorm jetbrains-phpstorm
+wmclasscomplete=true
+wmclassmatch=2
+
+[\x5bAPP\x5d\x5bDEV\x5d konsole]
+Description=[APP][DEV] konsole
+activity=00000000-0000-0000-0000-000000000000
+activityrule=4
+ignoregeometry=true
+ignoregeometryrule=2
+maximizehoriz=true
+maximizehorizrule=4
+maximizevert=true
+maximizevertrule=4
+screen=1
+screenrule=4
+wmclass=konsole org.kde.konsole
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bDEV\x5d wezterm]
+Description=[APP][DEV] wezterm
+ignoregeometry=true
+ignoregeometryrule=2
+placement=9
+placementrule=2
+wmclass=wezterm-gui org.wezfurlong.wezterm
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bPRD\x5d microsoft / edge]
+Description=[APP][PRD] microsoft / edge
+activity=c02c80ee-b0fe-4834-9531-569d1cf7a90e
+activityrule=2
+ignoregeometry=true
+ignoregeometryrule=2
+noborder=true
+noborderrule=2
+position=4300,32
+positionrule=4
+screenrule=2
+size=2580,1340
+sizerule=4
+types=3
+windowrole=browser
+windowrolematch=3
+wmclass=microsoft-edge Microsoft-edge
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bPRD\x5d microsoft / teams]
+Description=[APP][PRD] microsoft / teams
+aboverule=2
+activity=c02c80ee-b0fe-4834-9531-569d1cf7a90e
+activityrule=2
+fpplevelrule=2
+ignoregeometry=true
+ignoregeometryrule=2
+maximizehoriz=true
+maximizehorizrule=4
+maximizevert=true
+maximizevertrule=4
+placement=9
+placementrule=2
+screen=6
+screenrule=2
+title=classic
+titlematch=1
+types=1
+windowrole=browser-window
+wmclass=microsoft teams - preview Microsoft Teams - Preview
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bPRD\x5d microsoft / teams / conversations]
+Description=[APP][PRD] microsoft / teams / conversations
+above=true
+aboverule=2
+acceptfocus=true
+acceptfocusrule=2
+ignoregeometry=true
+ignoregeometryrule=2
+layer=popup
+layerrule=2
+placementrule=2
+title=| Microsoft Teams
+titlematch=3
+types=2
+wmclass=microsoft teams - preview Microsoft Teams - Preview
+
+[\x5bAPP\x5d\x5bSYS\x5d krusader]
+Description=[APP][SYS] krusader
+activity=072a6305-9771-447c-b24e-d64c9d02f6bf
+activityrule=4
+ignoregeometry=true
+ignoregeometryrule=2
+position=4300,30
+positionrule=4
+screenrule=4
+size=2580,1342
+sizerule=4
+wmclass=krusader org.kde.krusader
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bUTL\x5d webapp / cockpit]
+Description=[APP][UTL] webapp / cockpit
+activity=072a6305-9771-447c-b24e-d64c9d02f6bf
+activityrule=2
+wmclass=firefox WebApp-Cockpit0723
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bWEB\x5d firefox / developer edition / main]
+Description=[APP][WEB] firefox / developer edition / main
+activity=c02c80ee-b0fe-4834-9531-569d1cf7a90e,072a6305-9771-447c-b24e-d64c9d02f6bf
+activityrule=4
+desktops=b66ecd19-1d91-4778-98cc-85d5c3cb3384
+desktopsrule=2
+maximizehoriz=true
+maximizehorizrule=4
+maximizevert=true
+maximizevertrule=4
+screen=1
+screenrule=2
+types=2
+wmclass=firefox firefox-developer-edition
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bWEB\x5d firefox / main]
+Description=[APP][WEB] firefox / main
+noborder=true
+noborderrule=2
+wmclass=firefox
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bWEB\x5d konqueror]
+Description=[APP][WEB] konqueror
+activity=c02c80ee-b0fe-4834-9531-569d1cf7a90e,072a6305-9771-447c-b24e-d64c9d02f6bf
+activityrule=4
+desktops=\\0
+desktopsrule=4
+ignoregeometry=true
+ignoregeometryrule=2
+position=3440,30
+positionrule=4
+screenrule=4
+size=860,1342
+sizerule=4
+types=3
+wmclass=konqueror org.kde.konqueror
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bAPP\x5d\x5bWEB\x5d vivaldi / stable / desktop]
+Description=[APP][WEB] vivaldi / stable / desktop
+ignoregeometry=true
+ignoregeometryrule=2
+noborder=true
+noborderrule=4
+position=4300,30
+positionrule=4
+size=1720,1340
+sizerule=4
+types=3
+wmclass=vivaldi-stable Vivaldi-stable
+wmclasscomplete=true
+wmclassmatch=1
+
+[\x5bGLOBAL\x5d\x5bSYS\x5d apps / frame & toolbars]
+Description=[GLOBAL][SYS] apps / frame & toolbars
+noborder=true
+noborderrule=2
+wmclass=.*
+wmclassmatch=1
+
+[\x5bGLOBAL\x5d\x5bSYS\x5d settings]
+Description=[GLOBAL][SYS] settings
+activity=00000000-0000-0000-0000-000000000000
+activityrule=2
+desktops=\\0
+desktopsrule=2
+wmclass=systemsettings systemsettings
+wmclasscomplete=true
+wmclassmatch=1
