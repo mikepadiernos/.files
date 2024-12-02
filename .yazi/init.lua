@@ -8,7 +8,7 @@ require("yatline"):setup({
 	inverse_separator = { open = " ", close = " " },
 
 	style_a = {
-		fg = "black",
+		fg = "#000000",
 		bg_mode = {
 			normal = "#efe100",
 			select = "#C881E6",
@@ -24,7 +24,7 @@ require("yatline"):setup({
 		-- },
 	},
 	style_c = {
-		fg = "black",
+		fg = "#000000",
 		bg_mode = {
 			normal = "#efe100",
 			select = "#d79921",
@@ -53,16 +53,80 @@ require("yatline"):setup({
 
 	show_background = true,
 
-	display_header_line = true,
-	display_status_line = false,
+	display_header_line = false,
+	display_status_line = true,
 
+	-- header_line = {
+	-- 	left = {
+	-- 		section_a = {
+	-- 			{ type = "line", custom = false, name = "tabs", params = { "left" } },
+	-- 		},
+	-- 		section_b = {
+	-- 			{ type = "string", custom = false, name = "hovered_size" },
+	-- 		},
+	-- 		section_c = {},
+	-- 	},
+	-- 	right = {
+	-- 		section_a = {
+	-- 			{ type = "string", custom = false, name = "tab_mode" },
+	-- 		},
+	-- 		section_b = {
+	-- 			{ type = "coloreds", custom = true, name = { { "󰇥 ", "#efe100" } } },
+	-- 			-- { type = "coloreds", custom = true, name = { { "", "#373737" } } },
+	-- 			{ type = "coloreds", custom = false, name = "count" },
+	-- 			{ type = "coloreds", custom = true, name = { { "-", "#373737" } } },
+	-- 		},
+	-- 		section_c = {
+	-- 			{ type = "coloreds", custom = false, name = "permissions" },
+	-- 		},
+	-- 	},
+	-- },
+	-- status_line = {
+	-- 	left = {
+	-- 		section_a = {
+	-- 			-- { type = "coloreds", custom = true, name = { { " ", "#000000" } } },
+	-- 			{ type = "string", custom = false, name = "tab_mode" },
+	-- 		},
+	-- 		section_b = {
+	-- 			{ type = "string", custom = false, name = "hovered_size" },
+	-- 		},
+	-- 		section_c = {
+	-- 			{ type = "string", custom = false, name = "hovered_name" },
+	-- 			-- { type = "coloreds", custom = false, name = "count" },
+	-- 		},
+	-- 	},
+	-- 	right = {
+	-- 		section_a = {
+	-- 			{ type = "string", custom = false, name = "cursor_position" },
+	-- 		},
+	-- 		section_b = {
+	-- 			{ type = "string", custom = false, name = "cursor_percentage" },
+	-- 		},
+	-- 		section_c = {
+	-- 			{ type = "string", custom = false, name = "hovered_file_extension", params = { true } },
+	-- 			{ type = "coloreds", custom = false, name = "permissions" },
+	-- 		},
+	-- 	},
+	-- },
 	header_line = {
 		left = {
+			section_a = {},
+			section_b = {},
+			section_c = {},
+		},
+		right = {
+			section_a = {},
+			section_b = {},
+			section_c = {},
+		},
+	},
+	status_line = {
+		left = {
 			section_a = {
-				{ type = "line", custom = false, name = "tabs", params = { "left" } },
+				-- { type = "line", custom = false, name = "tabs", params = { "left" }, bold = true },
 			},
 			section_b = {
-				{ type = "string", custom = false, name = "hovered_size" },
+				{ type = "string", custom = false, name = "hovered_path" },
 			},
 			section_c = {},
 		},
@@ -77,33 +141,6 @@ require("yatline"):setup({
 				{ type = "coloreds", custom = true, name = { { "-", "#373737" } } },
 			},
 			section_c = {
-				{ type = "coloreds", custom = false, name = "permissions" },
-			},
-		},
-	},
-	status_line = {
-		left = {
-			section_a = {
-				-- { type = "coloreds", custom = true, name = { { " ", "#000000" } } },
-				{ type = "string", custom = false, name = "tab_mode" },
-			},
-			section_b = {
-				{ type = "string", custom = false, name = "hovered_size" },
-			},
-			section_c = {
-				{ type = "string", custom = false, name = "hovered_name" },
-				-- { type = "coloreds", custom = false, name = "count" },
-			},
-		},
-		right = {
-			section_a = {
-				{ type = "string", custom = false, name = "cursor_position" },
-			},
-			section_b = {
-				{ type = "string", custom = false, name = "cursor_percentage" },
-			},
-			section_c = {
-				{ type = "string", custom = false, name = "hovered_file_extension", params = { true } },
 				{ type = "coloreds", custom = false, name = "permissions" },
 			},
 		},
