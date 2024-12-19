@@ -3,10 +3,12 @@ Allow Tab Scrolling=true
 Auto Hide Tabs=false
 Close After Last=true
 Close documents with window=true
+Cycle To First Tab=true
 Days Meta Infos=30
 Diagnostics Limit=12000
 Diff Show Style=0
 Elide Tab Text=true
+Enable Context ToolView=true
 Expand Tabs=true
 Modified Notification=false
 Mouse back button action=0
@@ -40,9 +42,9 @@ Auto Save=true
 Auto Save Interval=0
 Auto Save On Focus Out=true
 BOM=false
-Backup Local=false
+Backup Local=true
 Backup Prefix=
-Backup Remote=false
+Backup Remote=true
 Backup Suffix=~
 Camel Cursor=true
 Encoding=UTF-8
@@ -51,7 +53,7 @@ Indent On Backspace=true
 Indent On Tab=true
 Indent On Text Paste=true
 Indentation Mode=normal
-Indentation Width=4
+Indentation Width=2
 Keep Extra Spaces=false
 Line Length Limit=10000
 Newline at End of File=true
@@ -69,6 +71,7 @@ Swap Sync Interval=15
 Tab Handling=2
 Tab Width=4
 Trailing Marker Size=1
+Use Editor Config=true
 Word Wrap=false
 Word Wrap Column=80
 
@@ -77,12 +80,12 @@ Encoding Prober Type=1
 Fallback Encoding=UTF-8
 
 [KTextEditor Renderer]
-Animate Bracket Matching=false
+Animate Bracket Matching=true
 Auto Color Theme Selection=false
 Color Theme=A Mole Like Ed
 Line Height Multiplier=1
-Show Indentation Lines=false
-Show Whole Bracket Expression=false
+Show Indentation Lines=true
+Show Whole Bracket Expression=true
 Text Font=Atari ST 8x16 System Font,12,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
 Text Font Features=
 Word Wrap Marker=false
@@ -95,10 +98,10 @@ Auto Completion=true
 Auto Completion Preselect First Entry=true
 Backspace Remove Composed Characters=false
 Bookmark Menu Sorting=0
-Bracket Match Preview=false
+Bracket Match Preview=true
 Chars To Enclose Selection=<>(){}[]'"
 Default Mark Type=1
-Dynamic Word Wrap=true
+Dynamic Word Wrap=false
 Dynamic Word Wrap Align Indent=80
 Dynamic Word Wrap At Static Marker=false
 Dynamic Word Wrap Indicators=1
@@ -126,18 +129,18 @@ Scroll Bar MiniMap=true
 Scroll Bar Preview=true
 Scroll Past End=false
 Search/Replace Flags=140
-Shoe Line Ending Type in Statusbar=false
+Shoe Line Ending Type in Statusbar=true
 Show Documentation With Completion=true
 Show File Encoding=true
 Show Folding Icons On Hover Only=true
-Show Line Count=false
+Show Line Count=true
 Show Scrollbars=1
 Show Statusbar Dictionary=true
 Show Statusbar Highlighting Mode=true
 Show Statusbar Input Mode=true
 Show Statusbar Line Column=true
 Show Statusbar Tab Settings=true
-Show Word Count=false
+Show Word Count=true
 Smart Copy Cut=true
 Statusbar Line Column Compact Mode=true
 Text Drag And Drop=true
@@ -152,10 +155,12 @@ Word Completion Remove Tail=true
 Search History=Options=,debug,tree,icons,nil,update,auto,hig,border,right,plug,li,modules
 
 [MainWindow]
-2 screens: Height=864
-2 screens: Width=2064
 3440x1440 screen: Height=1338
 3440x1440 screen: Width=1720
+ToolBarsMovable=Disabled
+
+[MainWindow][Toolbar mainToolBar]
+ToolButtonStyle=IconOnly
 
 [UiSettings]
 ColorScheme=A Mole Like Ed
