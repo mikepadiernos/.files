@@ -35,8 +35,8 @@ border_symbol = " "
 
 # : Status {{{
 [status]
-# separator_open = " "
-# separator_close = " "
+separator_open = " "
+separator_close = " "
 # sparator_style = { fg = "#000000", bg = "#373737" }  # Blue on Darkened background
 
 # Mode

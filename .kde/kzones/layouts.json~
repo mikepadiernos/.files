@@ -1,16 +1,5 @@
 [
   {
-    "name": "Maximized",
-    "zones": [
-      {
-        "x": 0,
-        "y": 0,
-        "height": 100,
-        "width": 100
-      }
-    ]
-  },
-  {
     "name": "Quadrant Grid",
     "zones": [
       {
