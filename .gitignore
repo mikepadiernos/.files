@@ -9,8 +9,9 @@
 
 .zsh/.historical/
 .zsh/history/
-.zsh/plugins/zsh*/
-.zsh/plugins/.temp/
+.zsh/plugins/
+!.zsh/plugins/git_repoos.txt
+
 .zsh/themes/minimal/
 .zsh/themes/typewritten/
 

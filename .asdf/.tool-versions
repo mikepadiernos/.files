@@ -29,6 +29,6 @@ delta 0.18.2
 fd 10.2.0
 luajit 2.0.5--3.11.1
 lua 5.4.7
-ruby 3.3.6
+ruby system
 jq 1.7.1
 ffmpeg 7.1
