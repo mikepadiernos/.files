@@ -16,7 +16,7 @@ neovim 0.10.2
 nodejs system
 mkcert 1.4.4
 tool-versions-to-env 1.0.8
-atuin 18.3.0
+atuin 18.4.0
 pipx 1.7.1
 yay system
 yarn 1.22.22
@@ -32,3 +32,4 @@ lua 5.4.7
 ruby system
 jq 1.7.1
 ffmpeg 7.1
+lua-language-server 3.13.5
