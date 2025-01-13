@@ -1,7 +1,0 @@
-2024/11/12-15:55:46.241 267b0d Reusing MANIFEST /home/mikepadiernos/.config/tabby/Local Storage/leveldb/MANIFEST-000001
-2024/11/12-15:55:46.242 267b0d Recovering log #7684
-2024/11/12-15:55:46.242 267b0d Level-0 table #7687: started
-2024/11/12-15:55:46.259 267b0d Level-0 table #7687: 31107 bytes OK
-2024/11/12-15:55:46.259 267b0d Recovering log #7686
-2024/11/12-15:55:46.259 267b0d Reusing old log /home/mikepadiernos/.config/tabby/Local Storage/leveldb/007686.log 
-2024/11/12-15:55:46.278 267b0d Delete type=0 #7684

@@ -1,9 +1,0 @@
-2024/11/13-20:03:21.936 2cdd47 Reusing MANIFEST /home/mikepadiernos/.config/Min/Partitions/webcontent/Local Storage/leveldb/MANIFEST-000001
-2024/11/13-20:03:21.938 2cdd47 Recovering log #33
-2024/11/13-20:03:21.944 2cdd47 Reusing old log /home/mikepadiernos/.config/Min/Partitions/webcontent/Local Storage/leveldb/000033.log 
-2024/11/13-20:10:59.138 2cdd47 Level-0 table #38: started
-2024/11/13-20:10:59.156 2cdd47 Level-0 table #38: 14639 bytes OK
-2024/11/13-20:10:59.174 2cdd47 Delete type=0 #33
-2024/11/13-23:09:10.197 2cdd47 Level-0 table #40: started
-2024/11/13-23:09:10.207 2cdd47 Level-0 table #40: 16609 bytes OK
-2024/11/13-23:09:10.225 2cdd47 Delete type=0 #37

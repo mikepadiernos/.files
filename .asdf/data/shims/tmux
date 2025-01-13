@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# asdf-plugin: tmux 3.5a
-exec /home/mikepadiernos/.asdf/bin/asdf exec "tmux" "$@" # asdf_allow: ' asdf '

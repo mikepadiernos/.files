@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# asdf-plugin: lazygit 0.44.1
-exec /home/mikepadiernos/.asdf/bin/asdf exec "lazygit" "$@" # asdf_allow: ' asdf '
