@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# asdf-plugin: mkcert 1.4.4
+exec /home/mikepadiernos/.asdf/bin/asdf exec "mkcert" "$@" # asdf_allow: ' asdf '

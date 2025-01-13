@@ -1,0 +1,67 @@
+2024/11/23 16:08:28 [INFO] [MAIN] Start application
+2024/11/23 16:08:28 [INFO] [MAIN] Version:    v1.2.0
+2024/11/23 16:08:28 [INFO] [MAIN] Commit:     dc3cf8cb
+2024/11/23 16:08:28 [INFO] [MAIN] Branch:     master
+2024/11/23 16:08:28 [INFO] [MAIN] Build date: 2024-09-30
+2024/11/23 16:08:28 [INFO] [APPSTATE] Can't read application state from file 'open /home/mikepadiernos/.config/goto/state.yaml: no such file or directory'
+2024/11/23 16:08:28 [INFO] [STORAGE] Path no found: /home/mikepadiernos/.config/goto/hosts.yaml. Assuming it's not created yet
+2024/11/23 16:08:42 [INFO] [EXEC] Run process: '/usr/bin/ssh -G spsi.padiernos'
+2024/11/23 16:08:42 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G spsi.padiernos
+2024/11/23 16:08:43 [INFO] [EXEC] Run process: '/usr/bin/ssh -G '
+2024/11/23 16:08:43 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 
+2024/11/23 16:08:43 [INFO] [EXEC] Run process: '/usr/bin/ssh'
+2024/11/23 16:08:43 [INFO] [EXEC] Terminate process with reason usage: ssh [-46AaCfGgKkMNnqsTtVvXxYy] [-B bind_interface] [-b bind_address]
+           [-c cipher_spec] [-D [bind_address:]port] [-E log_file]
+           [-e escape_char] [-F configfile] [-I pkcs11] [-i identity_file]
+           [-J destination] [-L address] [-l login_name] [-m mac_spec]
+           [-O ctl_cmd] [-o option] [-P tag] [-p port] [-R address]
+           [-S ctl_path] [-W host:port] [-w local_tun[:remote_tun]]
+           destination [command [argument ...]]
+       ssh [-Q query_option]. Error ignored.
+2024/11/23 16:09:00 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 1'
+2024/11/23 16:09:00 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 1
+2024/11/23 16:09:00 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 10'
+2024/11/23 16:09:00 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 10
+2024/11/23 16:09:01 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 104'
+2024/11/23 16:09:01 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 104
+2024/11/23 16:09:02 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 104.'
+2024/11/23 16:09:02 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 104.
+2024/11/23 16:09:03 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 104.21'
+2024/11/23 16:09:03 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 104.21
+2024/11/23 16:09:03 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 104.218'
+2024/11/23 16:09:03 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 104.218
+2024/11/23 16:09:04 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 104.218.'
+2024/11/23 16:09:04 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 104.218.
+2024/11/23 16:09:05 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 104.218.50'
+2024/11/23 16:09:05 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 104.218.50
+2024/11/23 16:09:06 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 104.218.50.'
+2024/11/23 16:09:06 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 104.218.50.
+2024/11/23 16:09:06 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 104.218.50.1'
+2024/11/23 16:09:06 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 104.218.50.1
+2024/11/23 16:09:07 [INFO] [EXEC] Run process: '/usr/bin/ssh -G 104.218.50.155'
+2024/11/23 16:09:07 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -G 104.218.50.155
+2024/11/23 16:09:27 [INFO] [UI] Save changes for host id: 0
+2024/11/23 16:09:27 [INFO] [STORAGE] Save host with id: 1, title: "spsi.padiernos"
+2024/11/23 16:09:27 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2024/11/23 16:09:27 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2024/11/23 16:09:28 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2024/11/23 16:09:28 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2024/11/23 16:09:31 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
+2024/11/23 16:09:54 [ERRO] [EXEC] Terminate process with reason signal: interrupt
+2024/11/23 16:10:02 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2024/11/23 16:10:02 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2024/11/23 16:10:02 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2024/11/23 16:10:02 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2024/11/23 16:10:03 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
+2024/11/23 16:10:07 [ERRO] [EXEC] Terminate process with reason signal: interrupt
+2024/11/23 16:10:08 [INFO] [MAIN] Close application
+2024/11/23 16:11:52 [INFO] [MAIN] Start application
+2024/11/23 16:11:52 [INFO] [MAIN] Version:    v1.2.0
+2024/11/23 16:11:52 [INFO] [MAIN] Commit:     dc3cf8cb
+2024/11/23 16:11:52 [INFO] [MAIN] Branch:     master
+2024/11/23 16:11:52 [INFO] [MAIN] Build date: 2024-09-30
+2024/11/23 16:11:52 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2024/11/23 16:11:52 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2024/11/23 16:11:53 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
+2024/11/23 16:12:35 [ERRO] [EXEC] Terminate process with reason signal: interrupt
+2024/11/23 16:12:37 [INFO] [MAIN] Close application

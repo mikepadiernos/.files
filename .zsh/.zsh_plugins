@@ -1,0 +1,47 @@
+## ZSH_PLUGINS
+## ---
+
+# composer
+# ddev
+# gh
+# git
+# lando-alias-zsh
+# zeza
+# zsh-alias-finder
+
+source "$ZSH_PLUGINS"/zsh-abbr/zsh-abbr.plugin.zsh							      		    				            # zsh-abbr
+source "$ZSH_PLUGINS"/zsh-asdf-direnv/zsh-asdf-direnv.plugin.zsh			    						            # zsh-asdf-direnv
+# source "$ZSH_PLUGINS"/zsh-autocomplete/zsh-autocomplete.plugin.zsh									            # zsh-autocomplete
+source "$ZSH_PLUGINS"/zsh-autocompletion/zsh-autocompletion.plugin.zsh								            # zsh-autocompletion
+source "$ZSH_PLUGINS"/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh							            # zsh-autosuggestions
+source "$ZSH_PLUGINS"/zsh-check-deps/zsh-check-deps.plugin.zsh								    		            # zsh-check-deps
+source "$ZSH_PLUGINS"/zsh-colors/zsh-colors.plugin.zsh												                    # zsh-colors
+source "$ZSH_PLUGINS"/zsh-completions/zsh-completions.plugin.zsh									                # zsh-completions
+source "$ZSH_PLUGINS"/zsh-doas-zsh-plugin/zsh-doas-zsh-plugin.plugin.zsh							            # zsh-doas-zsh-plugin
+source "$ZSH_PLUGINS"/zsh-docker-helpers/zsh-docker-helpers.plugin.zsh								            # zsh-docker-helpers
+source "$ZSH_PLUGINS"/zsh-drupal/zsh-drupal.plugin.zsh												                    # zsh-drupal
+source "$ZSH_PLUGINS"/zsh-eza/zsh-eza.plugin.zsh													                        # zsh-eza
+# source "$ZSH_PLUGINS"/zsh-eza-ls-plugin/zsh-eza-ls-plugin.plugin.zsh								            # zsh-eza-ls-plugin
+# source "$ZSH_PLUGINS"/zsh-F-Sy-H/zsh-F-Sy-H.plugin.zsh												                  # zsh-F-Sy-H
+# source "$ZSH_PLUGINS"/zsh-fast-syntax-highlighting/zsh-fast-syntax-highlighting.plugin.zsh			# zsh-fast-syntax-highlighting
+source "$ZSH_PLUGINS"/zsh-figures/zsh-figures.plugin.zsh											                    # zsh-figures
+# source "$ZSH_PLUGINS"/zsh-file-manager/zsh-file-manager.plugin.zsh									            # zsh-file-manager
+# source "$ZSH_PLUGINS"/zsh-fzf-brew/zsh-fzf-brew.plugin.zsh											                # zsh-fzf-brew
+# source "$ZSH_PLUGINS"/zsh-fzf-dir-navigator/zsh-fzf-dir-navigator.plugin.zsh							      # zsh-fzf-dir-navigator
+source "$ZSH_PLUGINS"/zsh-fzf-git-branches/zsh-fzf-git-branches.plugin.zsh							          # zsh-fzf-git-branches
+# source "$ZSH_PLUGINS"/zsh-fzf-history-search/zsh-fzf-history-search.plugin.zsh						      # zsh-fzf-history-search
+source "$ZSH_PLUGINS"/zsh-fzf-plugin/zsh-fzf-plugin.plugin.zsh										                # zsh-fzf-plugin
+# source "$ZSH_PLUGINS"/zsh-fzf-tab/zsh-fzf-tab.plugin.zsh												                # zsh-fzf-tab
+# source "$ZSH_PLUGINS"/zsh-fzf-tab-completion/zsh-fzf-tab-completion.plugin.zsh						      # zsh-fzf-tab-completion
+source "$ZSH_PLUGINS"/zsh-history-substring-search/zsh-history-substring-search.plugin.zsh			  # zsh-history-substring-search
+# source "$ZSH_PLUGINS"/zsh-ls/zsh-ls.plugin.zsh														                      # zsh-ls
+source "$ZSH_PLUGINS"/zsh-magic-dashboard/zsh-magic-dashboard.plugin.zsh							            # zsh-magic-dashboard
+# source "$ZSH_PLUGINS"/zsh-ssh/zsh-ssh.plugin.zsh														                    # zsh-ssh
+# source "$ZSH_PLUGINS"/zsh-ssh-agent/zsh-ssh-agent.plugin.zsh											              # zsh-ssh-agent
+# source "$ZSH_PLUGINS"/zsh-ssh-completion/zsh-ssh-completion.plugin.zsh					                # zsh-ssh-completion
+# source "$ZSH_PLUGINS"/zsh-ssh-plugin/zsh-ssh-plugin.zsh												                  # zsh-ssh-plugin
+source "$ZSH_PLUGINS"/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh					        # zsh-syntax-highlighting
+source "$ZSH_PLUGINS"/zsh-you-should-use/zsh-you-should-use.plugin.zsh								            # zsh-you-should-use
+
+## ---
+## END ZSH_PLUGINS

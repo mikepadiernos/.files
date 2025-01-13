@@ -1,0 +1,16 @@
+.DS_store
+.nexcloudsync.log
+
+!historical/
+
+.asdf/data/installs/
+
+.neovim/nvim.modular/
+
+.zsh/.historical/
+.zsh/history/
+.zsh/plugins/zsh*/
+.zsh/plugins/.temp/
+.zsh/themes/minimal/
+.zsh/themes/typewritten/
+

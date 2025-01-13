@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# asdf-plugin: zoxide 0.9.6
+exec /home/mikepadiernos/.asdf/bin/asdf exec "zoxide" "$@" # asdf_allow: ' asdf '

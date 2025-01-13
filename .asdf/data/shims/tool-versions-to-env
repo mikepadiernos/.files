@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# asdf-plugin: tool-versions-to-env 1.0.8
+exec /home/mikepadiernos/.asdf/bin/asdf exec "tool-versions-to-env" "$@" # asdf_allow: ' asdf '
