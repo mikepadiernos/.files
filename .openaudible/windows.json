@@ -1,0 +1,151 @@
+{
+ "main_sash": {"weights": [
+  424,
+  575
+ ]},
+ "book_table": {
+  "sort_direction": 128,
+  "sort_column": "series_name",
+  "columns": [
+   {
+    "visible": true,
+    "width": 25,
+    "index": 0,
+    "id": "File"
+   },
+   {
+    "visible": true,
+    "width": 250,
+    "index": 1,
+    "id": "title"
+   },
+   {
+    "visible": true,
+    "width": 150,
+    "index": 2,
+    "id": "author"
+   },
+   {
+    "visible": true,
+    "width": 150,
+    "index": 3,
+    "id": "narrated_by"
+   },
+   {
+    "visible": true,
+    "width": 50,
+    "index": 4,
+    "id": "duration"
+   },
+   {
+    "visible": true,
+    "width": 90,
+    "index": 5,
+    "id": "purchase_date"
+   },
+   {
+    "visible": true,
+    "width": 90,
+    "index": 6,
+    "id": "release_date"
+   },
+   {
+    "visible": true,
+    "width": 50,
+    "index": 7,
+    "id": "rating_average"
+   },
+   {
+    "visible": false,
+    "width": 2583,
+    "id": "genre"
+   },
+   {
+    "visible": true,
+    "width": 1448,
+    "index": 8,
+    "id": "series_name"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "series_link"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "notes"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "product_id"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "asin"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "key"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "filename"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "read_status"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "abridged"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "ayce"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "language"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "user_id"
+   },
+   {
+    "visible": false,
+    "width": 150,
+    "id": "directory_type"
+   }
+  ],
+  "reverse_sort": false,
+  "order": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ]
+ },
+ "window_pos": {
+  "maximized": false,
+  "x": 4575,
+  "width": 2305,
+  "y": 32,
+  "open": true,
+  "height": 1340
+ }
+}

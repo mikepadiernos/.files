@@ -1,0 +1,9 @@
+[Keyboard]
+NumLock=0
+
+[Libinput][6421][64][ProtoArc EM01 Mouse]
+PointerAcceleration=-0.400
+
+[Mouse]
+cursorSize=36
+cursorTheme=Vimix-white-cursors

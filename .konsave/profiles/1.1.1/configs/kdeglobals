@@ -1,0 +1,174 @@
+[$Version]
+update_info=fonts_global.upd:Fonts_Global,fonts_global_toolbar.upd:Fonts_Global_Toolbar,filepicker.upd:filepicker-remove-old-previews-entry
+
+[ColorEffects:Disabled]
+ChangeSelectionColor=
+Color=112,111,110
+ColorAmount=0
+ColorEffect=0
+ContrastAmount=0.65
+ContrastEffect=1
+Enable=
+IntensityAmount=0.1
+IntensityEffect=0
+
+[ColorEffects:Inactive]
+ChangeSelectionColor=true
+Color=112,111,110
+ColorAmount=0.025
+ColorEffect=2
+ContrastAmount=0.1
+ContrastEffect=2
+Enable=true
+IntensityAmount=0
+IntensityEffect=0
+
+[Colors:Button]
+BackgroundAlternate=15,15,15
+BackgroundNormal=0,0,0
+DecorationFocus=239,209,0
+DecorationHover=239,209,0
+ForegroundActive=255,128,224
+ForegroundInactive=136,135,134
+ForegroundLink=0,87,174
+ForegroundNegative=191,3,3
+ForegroundNeutral=176,128,0
+ForegroundNormal=251,253,255
+ForegroundPositive=0,110,40
+ForegroundVisited=69,40,134
+
+[Colors:Complementary]
+BackgroundAlternate=50,52,61
+BackgroundNormal=40,42,51
+DecorationFocus=239,209,0
+DecorationHover=239,209,0
+
+[Colors:Header]
+BackgroundNormal=0,0,0
+DecorationFocus=239,209,0
+DecorationHover=239,209,0
+
+[Colors:Selection]
+BackgroundAlternate=112,95,0
+BackgroundNormal=239,209,0
+DecorationFocus=239,209,0
+DecorationHover=239,209,0
+ForegroundActive=255,128,224
+ForegroundInactive=97,139,159
+ForegroundLink=0,32,63
+ForegroundNegative=156,14,14
+ForegroundNeutral=64,55,0
+ForegroundNormal=0,0,0
+ForegroundPositive=128,255,128
+ForegroundVisited=69,40,134
+
+[Colors:Tooltip]
+BackgroundAlternate=50,52,61
+BackgroundNormal=40,42,51
+DecorationFocus=239,209,0
+DecorationHover=239,209,0
+ForegroundActive=255,128,224
+ForegroundInactive=96,112,128
+ForegroundLink=0,87,174
+ForegroundNegative=191,3,3
+ForegroundNeutral=176,128,0
+ForegroundNormal=211,218,227
+ForegroundPositive=0,110,40
+ForegroundVisited=69,40,134
+
+[Colors:View]
+BackgroundAlternate=16,16,16
+BackgroundNormal=2,3,3
+DecorationFocus=239,209,0
+DecorationHover=239,209,0
+ForegroundActive=255,128,224
+ForegroundInactive=136,135,134
+ForegroundLink=0,87,174
+ForegroundNegative=191,3,3
+ForegroundNeutral=176,128,0
+ForegroundNormal=251,253,255
+ForegroundPositive=0,110,40
+ForegroundVisited=69,40,134
+
+[Colors:Window]
+BackgroundAlternate=15,15,15
+BackgroundNormal=0,0,0
+DecorationFocus=239,209,0
+DecorationHover=239,209,0
+ForegroundActive=255,128,224
+ForegroundInactive=136,135,134
+ForegroundLink=0,87,174
+ForegroundNegative=191,3,3
+ForegroundNeutral=176,128,0
+ForegroundNormal=251,253,255
+ForegroundPositive=0,110,40
+ForegroundVisited=69,40,134
+
+[General]
+ColorSchemeHash=d5c2039378d5a1d1f2377d8323211a65a9b4d66d
+Name=Breeze
+XftAntialias=true
+XftHintStyle=hintslight
+XftSubPixel=rgb
+fixed=Noto Sans Mono,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+font=Noto Sans Nerd Font,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+menuFont=Noto Sans Nerd Font,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+shadeSortColumn=true
+smallestReadableFont=Noto Sans Nerd Font,8,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+toolBarFont=Noto Sans Nerd Font,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+widgetStyle=Breeze
+
+[KDE]
+AnimationDurationFactor=
+ColorScheme=BreezeLight
+LookAndFeelPackage=org.kde.klassydarktraditional.desktop
+ShowDeleteCommand=true
+ShowIconsInMenuItems=true
+ShowIconsOnPushButtons=true
+SingleClick=false
+contrast=4
+widgetStyle=Lightly
+
+[KFileDialog Settings]
+Allow Expansion=false
+Automatically select filename extension=true
+Breadcrumb Navigation=false
+Decoration position=0
+LocationCombo Completionmode=5
+PathCombo Completionmode=5
+Show Bookmarks=false
+Show Full Path=false
+Show Inline Previews=true
+Show Preview=false
+Show Speedbar=true
+Show hidden files=true
+Sort by=Name
+Sort directories first=true
+Sort hidden files last=false
+Sort reversed=false
+Speedbar Width=200
+View Style=Simple
+listViewIconSize=29
+
+[KShortcutsDialog Settings]
+Dialog Size=600,480
+
+[PreviewSettings]
+EnableRemoteFolderThumbnail=false
+MaximumRemoteSize=0
+
+[QtQuickRendererSettings]
+SceneGraphBackend=opengl
+
+[Toolbar style]
+ToolButtonStyle=TextBesideIcon
+ToolButtonStyleOtherToolbars=TextBesideIcon
+
+[WM]
+activeBackground=8,8,8
+activeBlend=11,11,11
+activeFont=Noto Sans Nerd Font,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+activeForeground=251,253,255
+inactiveBackground=15,16,16
+inactiveBlend=21,21,21
+inactiveForeground=188,188,188

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="24" version="1.1" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs id="defs3051">
+    <style type="text/css" id="current-color-scheme">
+      .ColorScheme-Text {
+        color:#eff0f1;
+      }
+      </style>
+  </defs>
+  <title/>
+  <path d="M 14.352 4.001 L 19 4.001 L 19 20 L 14.352 20 L 14.352 4.001 Z M 5 19.999 L 5 4 L 9.648 4 L 9.648 19.999 L 5 19.999 Z" style="fill:currentColor;fill-opacity:1;stroke:none" class="ColorScheme-Text" bx:origin="0 0"/>
+</svg>

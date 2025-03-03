@@ -1,15 +1,18 @@
 # HOMEBREW
-
-if [ -z "$( ls -A '/home/linuxbrew/.linuxbrew/bin/brew' )" ]; then
-    echo "HOMEBREW is not installed"
+if [ ! -z "$( ls -A '/home/linuxbrew/.linuxbrew/bin/brew'  )" ]; then
+  echo "HOMEBREW for Linux installed"
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
+elif [ ! -z "$( ls -A '/usr/local/bin/brew' )" ]; then
+  echo "HOMEBREW for MacOS installed"
+  eval "$(/usr/local/bin/brew shellenv)"
+  # export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
 else
-    echo "HOMEBREW is installed"
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
+  echo "HOMEBREW not found"
 fi
 
 # # linuxbrew: php@8.1
-# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/php@8.1/lib"
+# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/php@8.1/lib"S
 # export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/php@8.1/include"
 # export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.1/bin:$PATH"
 # export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.1/sbin:$PATH"

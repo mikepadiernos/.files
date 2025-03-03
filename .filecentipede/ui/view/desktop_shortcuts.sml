@@ -1,0 +1,92 @@
+Dialog#main
+{
+    title:"${desktop_shortcuts}"
+
+    layout:VBoxLayout
+    
+    GroupBox
+    {
+        layout:HBoxLayout
+        
+    
+        Button#filec{
+            text:"${software_name_} (filec)"
+        }
+        Button#fileu{
+            text:"${software_name_} (fileu)"
+        }
+        <==>
+    }
+    GroupBox
+    {
+        title:"${tools}"
+        layout:{
+            type:GridLayout
+            column:4
+        }
+        Button{
+            name:http_tool
+            text:"${http_tool}"
+        }
+        Button{
+            name:uri_tool
+            text:"${uri_tool}"
+        }
+        Button{
+            name:base64
+            text:"Base64"
+        }
+        Button{
+            name:regex
+            text:"${regex}"
+        }
+        Button{
+            name:create_address
+            text:"${create_address}"
+        }
+        /*
+        Button{
+            name:create_torrent
+            text:"${create_torrent}"
+        }
+        Button{
+            name:torrent_to_magnet
+            text:"${torrent_to_magnet}"
+        }
+        Button{
+            name:magnet_to_torrent
+            text:"${magnet_to_torrent}"
+        }
+        */
+        Button{
+            name:file_merge
+            text:"${file_merge}"
+        }
+        Button{
+            name:checksum
+            text:"${checksum}"
+        }
+        Button{
+            name:translate
+            text:"${translate}"
+        }
+    }
+    LineEdit#parameter{
+        placeholder:"${parameter}"
+    }
+    HBoxLayout{
+        "${cmd_line}:"
+        LineView#command_line{}
+    }
+    Label{
+        css:"color:gray"
+        "${desktop_shortcuts_desc_}"
+    }
+    Label{
+        css:"color:gray"
+        "${desktop_shortcuts_notice_}"
+    }
+    <==>
+}
+ 
+ 
