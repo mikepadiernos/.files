@@ -7,7 +7,7 @@
 
 .neovim/nvim.modular/
 
-.tmux/plugins/*
+.tmux/plugins/*/
 
 .zsh/.historical/
 .zsh/history/
