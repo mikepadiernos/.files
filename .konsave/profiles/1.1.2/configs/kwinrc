@@ -1,7 +1,7 @@
 [Desktops]
 Id_1=ebb8588a-5867-4c63-b2fd-f9bd8a51d85b
-Id_2=b9f11572-e990-4964-878b-5eaa60485922
-Id_3=f4075f92-caf5-42b3-a505-9680f91cc2cb
+Id_2=f4075f92-caf5-42b3-a505-9680f91cc2cb
+Id_3=b0bfe0bd-df72-480c-9716-57ece47d7f10
 Number=3
 Rows=1
 
@@ -61,6 +61,10 @@ backHome=true
 keepFirst=true
 oneSpare=true
 
+[TabBox]
+OrderMinimizedMode=1
+ShowDesktopMode=1
+
 [Tiling]
 padding=4
 
@@ -73,6 +77,7 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 [Windows]
 BorderlessMaximizedWindows=false
 FocusStealingPreventionLevel=0
+NextFocusPrefersMouse=true
 RollOverDesktops=true
 
 [Xwayland]

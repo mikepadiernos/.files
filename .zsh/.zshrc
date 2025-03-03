@@ -17,7 +17,9 @@ export ASDF="$ASDF_DIR"
 
 export NEOVIM="$FILES/.neovim/bin"
 
-fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $NEOVIM $fpath)
+set OPENAUDIBLE_HOME="$HOME/.files/.openaudible"
+
+fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $NEOVIM $OPENAUDIBLE_HOME $fpath)
 
 # autoload -Uz compinit && compinit
 autoload -Uz compinit; compinit
@@ -40,4 +42,3 @@ eval "$(zoxide init zsh)"
 
 # Lando
 export PATH="/home/mikepadiernos/.lando/bin${PATH+:$PATH}"; #landopath
-

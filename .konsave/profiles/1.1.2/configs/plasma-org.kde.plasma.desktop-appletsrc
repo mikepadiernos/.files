@@ -52,7 +52,7 @@ DialogWidth=720
 ToolBoxButtonState=topcenter
 ToolBoxButtonX=800
 locked=true
-positions={"3440x1440":["2"\\,"31"\\,"desktop:/Return to Monkey Island.desktop"\\,"0"\\,"0"\\,"desktop:/Dwarf Fortress.desktop"\\,"0"\\,"2"\\,"desktop:/HumanitZ.desktop"\\,"1"\\,"0"\\,"desktop:/Project Zomboid.desktop"\\,"1"\\,"1"\\,"desktop:/Guild Wars 2.desktop"\\,"0"\\,"1"]}
+positions={"3440x1440":["2"\\,"31"\\,"desktop:/Project Zomboid.desktop"\\,"1"\\,"1"\\,"desktop:/Guild Wars 2.desktop"\\,"0"\\,"1"\\,"desktop:/HumanitZ.desktop"\\,"1"\\,"0"\\,"desktop:/Dwarf Fortress.desktop"\\,"0"\\,"2"\\,"desktop:/Return to Monkey Island.desktop"\\,"0"\\,"0"]}
 sortMode=-1
 
 [Containments][1][Wallpaper][org.kde.color][General]
@@ -711,7 +711,7 @@ popupHeight=324
 popupWidth=324
 
 [Containments][52][Applets][96][Configuration][General]
-history=#121212,#1d212a,#373737,#5c5a2c,#c881e6,#3e1e20,#070102,#252334,#222740
+history=#ff904d,#121212,#1d212a,#373737,#5c5a2c,#c881e6,#3e1e20,#070102,#252334
 
 [Containments][52][Applets][99]
 immutability=1
@@ -1193,5 +1193,5 @@ knownItems=org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.k
 shownItems=org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.devicenotifier,org.kde.plasma.brightness,KMix,martchus.syncthingplasmoid-qt6
 
 [ScreenMapping]
-itemsOnDisabledScreens=1,072a6305-9771-447c-b24e-d64c9d02f6bf,1,desktop:/silo-primevideo.desktop,0,072a6305-9771-447c-b24e-d64c9d02f6bf,6,desktop:/Return to Monkey Island.desktop,desktop:/Dwarf Fortress.desktop,desktop:/Guild Wars 2.desktop,desktop:/HumanitZ.desktop,desktop:/Project Zomboid.desktop,desktop:/steam.desktop,0,64f77300-8030-47ba-8ae3-634a535b3817,5,desktop:/Steam Linux Runtime 2.0 (soldier).desktop,desktop:/Steam Linux Runtime 1.0 (scout).desktop,desktop:/silo-youtube.desktop,desktop:/silo-netflix.desktop,desktop:/Proton Hotfix.desktop
-screenMapping=desktop:/Return to Monkey Island.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e,desktop:/Project Zomboid.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e,desktop:/Guild Wars 2.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e,desktop:/HumanitZ.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e,desktop:/Dwarf Fortress.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e
+itemsOnDisabledScreens=0,072a6305-9771-447c-b24e-d64c9d02f6bf,6,desktop:/HumanitZ.desktop,desktop:/Project Zomboid.desktop,desktop:/steam.desktop,desktop:/Guild Wars 2.desktop,desktop:/Dwarf Fortress.desktop,desktop:/Return to Monkey Island.desktop,0,64f77300-8030-47ba-8ae3-634a535b3817,5,desktop:/Steam Linux Runtime 1.0 (scout).desktop,desktop:/silo-youtube.desktop,desktop:/Proton Hotfix.desktop,desktop:/silo-netflix.desktop,desktop:/Steam Linux Runtime 2.0 (soldier).desktop,1,072a6305-9771-447c-b24e-d64c9d02f6bf,1,desktop:/silo-primevideo.desktop
+screenMapping=desktop:/Dwarf Fortress.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e,desktop:/Guild Wars 2.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e,desktop:/Return to Monkey Island.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e,desktop:/HumanitZ.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e,desktop:/Project Zomboid.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e

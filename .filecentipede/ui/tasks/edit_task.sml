@@ -1,0 +1,43 @@
+#sml_files
+{
+    http:"ui/tasks/setting_http.sml"
+    ftp:"ui/tasks/setting_ftp.sml"
+    torrent:"ui/tasks/setting_torrent.sml"
+    ed2k:"ui/tasks/setting_ed2k.sml"
+    ssh:"ui/tasks/setting_ssh.sml"
+    stream:"ui/tasks/setting_stream.sml"
+}
+
+Dialog#main
+{
+    title:"${edit_config}"
+    layout:VBoxLayout
+    max-height:500
+
+    Tab#central_widget
+    {
+        {
+            text:"${config}"
+        }
+        {
+            text:"${address}"
+            layout:VBoxLayout
+            TextEdit{
+                name:uri
+            }
+        }
+    }
+
+    HBoxLayout
+    {
+        <==>
+        Button#save{
+            text:"${save}"
+            icon:"icons/16/save.svg"
+        }
+        Button{
+            text:"${cancel}"
+            click:$close{#main}()
+        }
+    }
+}

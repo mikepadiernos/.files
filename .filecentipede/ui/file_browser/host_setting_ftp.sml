@@ -1,0 +1,4 @@
+VBoxLayout#ftp
+{
+
+}

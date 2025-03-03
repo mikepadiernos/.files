@@ -1,0 +1,4 @@
+Dialog#main
+{
+    layout:VBoxLayout
+}

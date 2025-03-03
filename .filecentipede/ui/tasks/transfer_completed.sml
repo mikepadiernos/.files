@@ -1,0 +1,80 @@
+#title_icons
+{
+    download:"icons/16/download.svg"
+    upload:"icons/16/upload.svg"
+}
+
+FramelessDialog#main
+{
+    top-window:true
+    width:420
+    height:80
+    client-class:dialog_lite
+    box-shadow:"#3daee9"
+    layout:VBoxLayout
+    
+    Widget
+    {
+        layout:{
+            type:HBoxLayout
+            margin:0
+        }
+        class:dialog_lite_title
+        Img#title_icon{
+            fixed-width:16
+            fixed-height:16
+        }
+        Label#status{}
+        <==>
+        ToolButton{
+            icon:"icons/16/close.svg"
+            click:$close{#main}()
+        }
+    }
+    Widget
+    {
+        class:dialog_lite_body
+        layout:{
+            type:VBoxLayout
+            margin:0
+        }
+        Widget
+        {
+            layout:{
+                type:HBoxLayout
+                margin:4
+                spacing:2
+            }
+            Img#icon{
+                width:24
+                height:24
+            }
+            LineView{
+                viewonly:true
+                name:file_name
+                value:"test"
+            }
+        }
+        Widget
+        {
+            layout:{
+                type:HBoxLayout
+                margin:4
+            }
+            
+            CheckBox#no_completed_dialog{
+                text:"${dont_show_this_again}"
+            }
+            <==>
+            Button#open{
+                text:"${open}"
+                icon:"icons/16/run.svg"
+            }
+            Button#open_dir{
+                text:"${open_directory}"
+                icon:"icons/16/directory.svg"
+            }
+        }
+    }
+  
+}
