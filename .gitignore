@@ -7,10 +7,11 @@
 
 .neovim/nvim.modular/
 
+.tmux/plugins/*
+
 .zsh/.historical/
 .zsh/history/
-.zsh/plugins/zsh*/
-.zsh/plugins/.temp/
+.zsh/plugins/*/
 .zsh/themes/minimal/
 .zsh/themes/typewritten/
 
