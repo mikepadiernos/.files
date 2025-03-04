@@ -1,5 +1,67 @@
-[plugin]
-deps = [{ use = "yazi-rs/plugins:no-status", rev = "38418dd" }, { use = "yazi-rs/plugins:git", rev = "38418dd" }, { use = "yazi-rs/plugins:mime-ext", rev = "38418dd" }, { use = "Lil-Dank/lazygit", rev = "c82794f" }, { use = "GianniBYoung/rsync", rev = "3f431aa" }, { use = "yazi-rs/plugins:smart-filter", rev = "38418dd" }, { use = "AnirudhG07/plugins-yazi:copy-file-contents", rev = "f871a9c" }, { use = "GrzegorzKozub/mdcat", rev = "1706af4" }, { use = "Tyarel8/video-ffmpeg", rev = "fe26a18" }, { use = "Ape/mediainfo", rev = "c69314e" }, { use = "Sonico98/exifaudio", rev = "855ff05" }, { use = "AnirudhG07/rich-preview", rev = "ee465a5" }, { use = "imsi32/yatline", rev = "600ed1f" }]
+[[plugin.deps]]
+use = "yazi-rs/plugins:no-status"
+rev = "38418dd"
+hash = "f4d72c29cb0ddd9605e78f234216fd4e"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "38418dd"
+hash = "e0764cb89cf5d755041e93d0cac4cea4"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mime-ext"
+rev = "38418dd"
+hash = "db39a88afa6c38c6c6b9196436375ca7"
+
+[[plugin.deps]]
+use = "Lil-Dank/lazygit"
+rev = "c82794f"
+hash = "2b0c33928986f126d5c5a4cac31a6b46"
+
+[[plugin.deps]]
+use = "GianniBYoung/rsync"
+rev = "3f431aa"
+hash = "f17ed1f83b5e6ca464dd5409c61e73af"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-filter"
+rev = "38418dd"
+hash = "ea24edab4a62c94dbd205adfb6f2c08d"
+
+[[plugin.deps]]
+use = "AnirudhG07/plugins-yazi:copy-file-contents"
+rev = "f871a9c"
+hash = "5839e7f19b1c0f4e6150778821463cc9"
+
+[[plugin.deps]]
+use = "GrzegorzKozub/mdcat"
+rev = "1706af4"
+hash = "eb2d998e2e16ea5345f60af2b36e9409"
+
+[[plugin.deps]]
+use = "Tyarel8/video-ffmpeg"
+rev = "fe26a18"
+hash = "17de69d802bf82a04719a7f18d0e65f3"
+
+[[plugin.deps]]
+use = "Ape/mediainfo"
+rev = "c69314e"
+hash = "edbf9c7a6a69c8c09b53f860fd887f5c"
+
+[[plugin.deps]]
+use = "Sonico98/exifaudio"
+rev = "855ff05"
+hash = "ff4e26f6552da19948e3f74d342d06b4"
+
+[[plugin.deps]]
+use = "AnirudhG07/rich-preview"
+rev = "ee465a5"
+hash = "afe934fff53257b4fb4f954069fb7c2b"
+
+[[plugin.deps]]
+use = "imsi32/yatline"
+rev = "600ed1f"
+hash = "fab669582f30943c59e06fe8b3bea1d2"
 
 [flavor]
 deps = []
