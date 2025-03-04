@@ -109,12 +109,12 @@ ColorSchemeHash=d5c2039378d5a1d1f2377d8323211a65a9b4d66d
 Name=Breeze
 XftHintStyle=hintslight
 XftSubPixel=rgb
-fixed=GohuFont 11 Nerd Font,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
-font=Share Tech Mono,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
-menuFont=Share Tech Mono,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+fixed=Blobmoji,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+font=Decima Mono [TIRO],10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+menuFont=Decima Mono [TIRO],10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
 shadeSortColumn=true
-smallestReadableFont=Share Tech Mono,8,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
-toolBarFont=Share Tech Mono,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+smallestReadableFont=Decima Mono [TIRO],8,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+toolBarFont=Decima Mono [TIRO],10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
 widgetStyle=Breeze
 
 [KDE]
@@ -166,7 +166,7 @@ ToolButtonStyleOtherToolbars=TextBesideIcon
 [WM]
 activeBackground=8,8,8
 activeBlend=11,11,11
-activeFont=Share Tech Mono,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+activeFont=Decima Mono [TIRO],10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
 activeForeground=251,253,255
 inactiveBackground=15,16,16
 inactiveBlend=21,21,21

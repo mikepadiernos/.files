@@ -13,6 +13,9 @@ FocusFollowsMouse=true
 RemoveWindowTitleBarAndFrame=true
 UseSingleInstance=true
 
+[MainWindow]
+ToolBarsMovable=Enabled
+
 [MainWindow][Toolbar mainToolBar]
 ToolButtonStyle=IconOnly
 

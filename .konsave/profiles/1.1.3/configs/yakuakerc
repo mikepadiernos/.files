@@ -6,7 +6,7 @@ TerminalHighlightOnManualActivation=true
 Translucency=true
 
 [Desktop Entry]
-DefaultProfile=A Mole Name Ed.profile
+DefaultProfile=Mole.profile
 
 [Dialogs]
 FirstRun=false
