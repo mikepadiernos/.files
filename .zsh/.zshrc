@@ -26,7 +26,7 @@ autoload -Uz compinit; compinit
 
 # direnv allow
 
-source "$ZSH"/.zsh_history
+# source "$ZSH"/.zsh_history
 source "$ZSH"/.zsh_themes
 source "$ZSH"/.zsh_plugins
 source "$ZSH"/.zsh_homebrew
