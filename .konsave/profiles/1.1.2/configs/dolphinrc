@@ -1,14 +1,21 @@
 [$Version]
 update_info=dolphin_detailsmodesettings.upd:rename-leading-padding,dolphin_detailsmodesettings.upd:move-content-display,dolphin_directorysizemode.upd:convert-directorysizecount-to-directorysizemode
 
+[ContextMenu]
+ShowCopyMoveMenu=true
+
 [FileDialogSize]
 2 screens: Height=602
 2 screens: Width=820
 
 [General]
 ConfirmClosingTerminalRunningProgram=false
+DoubleClickViewAction=none
 Version=202
 ViewPropsTimestamp=2024,7,10,13,16,54.554
+
+[IconsMode]
+IconSize=48
 
 [InformationPanel]
 dateFormat=ShortFormat
@@ -18,5 +25,8 @@ previewsShown=false
 Places Icons Auto-resize=false
 Places Icons Static Size=22
 
-[MainWindow]
-ToolBarsMovable=Disabled
+[PreviewSettings]
+Plugins=fontthumbnail,calligraimagethumbnail,calligrathumbnail,appimagethumbnail,audiothumbnail,comicbookthumbnail,cursorthumbnail,directorythumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,opendocumentthumbnail,svgthumbnail,windowsexethumbnail,windowsimagethumbnail,ffmpegthumbs,quithumbnail,blenderthumbnail,gsthumbnail,mobithumbnail,rawthumbnail,mltpreview,pothumbnail,webarchivethumbnail,palathumbcreator,avif,ffmpeg-audio-thumbnailer,gdk-pixbuf-thumbnailer,heif,jxl
+
+[VersionControl]
+enabledPlugins=Git

@@ -167,8 +167,8 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [General]
-count=18
-rules=4,c3db3ce2-abcb-4a35-a25e-adc9c000abe1,1,2,d8ca3d49-9b68-4e0e-b2e5-25b0aaa55bb7,5a9b6973-787d-4c53-9bad-5964da6f4752,3,a91b9fd7-d359-4b1e-81a9-9f794b3be2e2,496d0506-9449-4080-baa3-b942aed5df19,e7ba0b3c-0b3b-4cf3-85bc-8a87b37b4445,f3cca039-8f04-4302-9bf9-cd19c73971f2,273e7eb4-8510-418e-9379-9ce1566b9027,8e1275b6-d611-4d93-9c49-18bd5a86a218,fff20fc4-3359-4fac-b12e-bb1488c5990e,a7e36ab5-3fe3-485f-8abb-68e18eea6219,1575dff1-7278-4eca-b1b5-20e9705d0602,676d2adc-fbac-4f5d-a77e-556eb72c605a,374963e4-5784-436a-b752-82693e164f1f
+count=20
+rules=4,aaddb59e-d647-42b6-b661-aae07eb3e75f,c3db3ce2-abcb-4a35-a25e-adc9c000abe1,1,2,d8ca3d49-9b68-4e0e-b2e5-25b0aaa55bb7,5a9b6973-787d-4c53-9bad-5964da6f4752,3,a91b9fd7-d359-4b1e-81a9-9f794b3be2e2,496d0506-9449-4080-baa3-b942aed5df19,e7ba0b3c-0b3b-4cf3-85bc-8a87b37b4445,f3cca039-8f04-4302-9bf9-cd19c73971f2,273e7eb4-8510-418e-9379-9ce1566b9027,8e1275b6-d611-4d93-9c49-18bd5a86a218,fff20fc4-3359-4fac-b12e-bb1488c5990e,a7e36ab5-3fe3-485f-8abb-68e18eea6219,1575dff1-7278-4eca-b1b5-20e9705d0602,676d2adc-fbac-4f5d-a77e-556eb72c605a,374963e4-5784-436a-b752-82693e164f1f,ae683cfb-86ec-4cf0-bf91-ad69c9fe7ca0
 
 [a7e36ab5-3fe3-485f-8abb-68e18eea6219]
 Description=[APP][WEB] konqueror
@@ -202,6 +202,34 @@ noborderrule=2
 placementrule=2
 types=1
 wmclass=keepassxc KeePassXC
+wmclasscomplete=true
+wmclassmatch=1
+
+[aaddb59e-d647-42b6-b661-aae07eb3e75f]
+Description=[GLOBAL][SYS] dialogs
+ignoregeometry=true
+ignoregeometryrule=2
+noborder=true
+noborderrule=2
+placementrule=2
+types=66336
+wmclass=.*
+wmclassmatch=1
+
+[ae683cfb-86ec-4cf0-bf91-ad69c9fe7ca0]
+Description=[APP][WEB] browsers
+above=true
+aboverule=2
+activity=00000000-0000-0000-0000-000000000000
+activityrule=2
+desktops=\\0
+desktopsrule=2
+ignoregeometry=true
+ignoregeometryrule=2
+placementrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+wmclass=browsers browsers
 wmclasscomplete=true
 wmclassmatch=1
 

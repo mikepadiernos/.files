@@ -6,14 +6,19 @@ HideTitleBar=true
 [Global]
 LookAndFeelSet=org.kde.klassydarktraditional.desktop
 
+[ShadowStyle]
+ShadowColor=22,22,22
+ShadowSize=ShadowNone
+ShadowStrength=128
+
 [Windeco]
 ButtonIconStyle=StyleTraditional
 ButtonShape=ShapeFullHeightRectangle
 CornerRadius=0
-DrawBorderOnMaximizedWindows=true
+WindowCornerRadius=0
 
 [Windeco Exception 0]
-BorderSize=0
+BorderSize=2
 Enabled=true
 ExceptionBorder=true
 ExceptionPreset=
@@ -24,7 +29,21 @@ HideTitleBar=true
 OpaqueTitleBar=false
 PreventApplyOpacityToHeader=false
 
+[Windeco Exception 1]
+BorderSize=0
+Enabled=true
+ExceptionBorder=true
+ExceptionPreset=
+ExceptionProgramNamePattern=
+ExceptionWindowPropertyPattern=zen-beta
+ExceptionWindowPropertyType=0
+HideTitleBar=true
+OpaqueTitleBar=false
+PreventApplyOpacityToHeader=false
+
 [WindowOutlineStyle]
+ThinWindowOutlineStyleActive=WindowOutlineAccentWithContrast
 ThinWindowOutlineThickness=1
-WindowOutlineAccentColorOpacityActive=30
-WindowOutlineAccentWithContrastOpacityInactive=10
+WindowOutlineAccentColorOpacityActive=15
+WindowOutlineAccentWithContrastOpacityActive=0
+WindowOutlineAccentWithContrastOpacityInactive=15

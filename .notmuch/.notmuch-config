@@ -1,0 +1,14 @@
+[database]
+path=/home/mikepadiernos/Library/.mail
+[user]
+name=mike
+primary_email=mike@padiernos.me
+[new]
+tags=unread;inbox;
+ignore=.mbsyncstate;.uidvalidity
+[search]
+exclude_tags=deleted;spam;
+[maildir]
+synchronize_flags=true
+[crypto]
+gpg_path=gpg

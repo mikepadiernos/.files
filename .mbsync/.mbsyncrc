@@ -1,0 +1,26 @@
+
+IMAPStore mike@padiernos.me-remote
+Host mail.padiernos.me
+Port 993
+User mike@padiernos.me
+PassCmd "pass mike@padiernos.me"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore mike@padiernos.me-local
+Subfolders Verbatim
+Path /home/mikepadiernos/.local/share/mail/mike@padiernos.me/
+Inbox /home/mikepadiernos/.local/share/mail/mike@padiernos.me/INBOX
+
+Channel mike@padiernos.me
+Expunge Both
+Master :mike@padiernos.me-remote:
+Slave :mike@padiernos.me-local:
+Patterns * !"[Gmail]/All Mail"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+# End profile
+

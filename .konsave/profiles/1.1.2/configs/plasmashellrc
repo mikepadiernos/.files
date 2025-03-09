@@ -15,6 +15,10 @@ Number of Actions=0
 [PlasmaTransientsConfig]
 PreloadWeight=0
 
+[PlasmaTransientsConfig][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
 [PlasmaViews][Panel 3]
 floating=1
 panelVisibility=0
@@ -36,6 +40,7 @@ thickness=32
 
 [PlasmaViews][Panel 60]
 floating=1
+panelOpacity=2
 
 [PlasmaViews][Panel 60][Defaults]
 offset=0

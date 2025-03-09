@@ -153,9 +153,11 @@ Word Completion Remove Tail=true
 
 [KTextEditor::Search]
 Replace History=,&
-Search History=',stomach,dete,hatch,BaseCampMaxNumInGuild, ,&amp;,: '100,value,-,Options=,debug,tree,icons,nil,update,auto,hig,border,right,plug,li,modules
+Search History=menu,button,',stomach,dete,hatch,BaseCampMaxNumInGuild, ,&amp;,: '100,value,-,Options=,debug,tree,icons,nil,update,auto,hig,border,right,plug,li,modules
 
 [MainWindow]
+2 screens: Height=1340
+2 screens: Width=2305
 3440x1440 screen: Height=1338
 3440x1440 screen: Width=1720
 ToolBarsMovable=Disabled
