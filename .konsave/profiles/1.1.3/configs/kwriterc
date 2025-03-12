@@ -156,6 +156,8 @@ Replace History=,&
 Search History=',stomach,dete,hatch,BaseCampMaxNumInGuild, ,&amp;,: '100,value,-,Options=,debug,tree,icons,nil,update,auto,hig,border,right,plug,li,modules
 
 [MainWindow]
+1778x1000 screen: Height=600
+1778x1000 screen: Width=1066
 3440x1440 screen: Height=1338
 3440x1440 screen: Width=1720
 ToolBarsMovable=Disabled

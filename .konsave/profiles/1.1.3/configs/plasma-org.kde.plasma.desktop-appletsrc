@@ -105,7 +105,7 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][3][Applets][161][Configuration][Miscellaneous]
-timestamp=1741054239939
+timestamp=1741754342596
 
 [Containments][3][Applets][162]
 immutability=1
@@ -162,7 +162,7 @@ plugin=KdeControlStation
 
 [Containments][3][Applets][214][Configuration]
 PreloadWeight=100
-popupHeight=327
+popupHeight=418
 popupWidth=420
 
 [Containments][3][Applets][214][Configuration][Appearance]
@@ -207,7 +207,7 @@ immutability=1
 plugin=org.kde.plasma.icontasks
 
 [Containments][3][Applets][6][Configuration][General]
-launchers=applications:org.kde.konsole.desktop,applications:zen.desktop
+launchers=applications:zen-twilight.desktop,applications:org.qutebrowser.qutebrowser.desktop,applications:org.kde.konsole.desktop
 
 [Containments][3][Applets][7]
 immutability=1
@@ -273,7 +273,7 @@ plugin=org.kde.plasma.kicker
 
 [Containments][40][Applets][160][Configuration]
 PreloadWeight=100
-popupHeight=402
+popupHeight=430
 popupWidth=252
 
 [Containments][40][Applets][160][Configuration][ConfigDialog]
@@ -323,6 +323,7 @@ plugin=org.kde.windowtitle
 
 [Containments][40][Applets][48][Configuration][Appearance]
 altTxt=
+txt=%w
 visible=false
 
 [Containments][40][Applets][48][Configuration][ConfigDialog]
@@ -382,7 +383,7 @@ dotSizeCustom=16
 spacingFactor=15.100000000000001
 
 [Containments][40][General]
-AppletOrder=160;104;50;41;43;48;42;51;140;101;100;212;49
+AppletOrder=160;104;50;41;43;48;42;51;140;101;212;100;49
 
 [Containments][50][Applets][64][Configuration]
 PreloadWeight=1
@@ -413,7 +414,7 @@ immutability=1
 plugin=org.kde.plasma.dockio
 
 [Containments][9][Applets][119][Configuration]
-PreloadWeight=86
+PreloadWeight=96
 
 [Containments][9][Applets][119][Configuration][Appearance]
 showProgressBar=true
@@ -536,12 +537,12 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][9][General]
-extraItems=org.kde.kscreen,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault
+extraItems=org.kde.kscreen,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.kde.plasma.dockio
 hiddenItems=toolbox,Yakuake,Fcitx,org.kde.plasma.keyboardlayout,org.kde.kscreen,KeePassXC,chrome_status_icon_1,PersepolisDM,org.kde.plasma.bluetooth,Package Manager,CopyQ_copyq
 iconSpacing=6
-knownItems=org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.volume,org.kde.plasma.vault,com.github.exequtic.apdatifier,org.kde.kdeconnect
+knownItems=org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.volume,org.kde.plasma.vault,com.github.exequtic.apdatifier,org.kde.kdeconnect,org.kde.plasma.dockio
 shownItems=org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.devicenotifier,org.kde.plasma.brightness,KMix,martchus.syncthingplasmoid-qt6
 
 [ScreenMapping]
-itemsOnDisabledScreens=1,072a6305-9771-447c-b24e-d64c9d02f6bf,1,desktop:/silo-primevideo.desktop,0,072a6305-9771-447c-b24e-d64c9d02f6bf,6,desktop:/HumanitZ.desktop,desktop:/Project Zomboid.desktop,desktop:/steam.desktop,desktop:/Return to Monkey Island.desktop,desktop:/Guild Wars 2.desktop,desktop:/Dwarf Fortress.desktop,0,64f77300-8030-47ba-8ae3-634a535b3817,5,desktop:/Steam Linux Runtime 1.0 (scout).desktop,desktop:/silo-youtube.desktop,desktop:/silo-netflix.desktop,desktop:/Proton Hotfix.desktop,desktop:/Steam Linux Runtime 2.0 (soldier).desktop
+itemsOnDisabledScreens=0,072a6305-9771-447c-b24e-d64c9d02f6bf,6,desktop:/Return to Monkey Island.desktop,desktop:/Dwarf Fortress.desktop,desktop:/Guild Wars 2.desktop,desktop:/HumanitZ.desktop,desktop:/Project Zomboid.desktop,desktop:/steam.desktop,0,64f77300-8030-47ba-8ae3-634a535b3817,5,desktop:/Steam Linux Runtime 2.0 (soldier).desktop,desktop:/Steam Linux Runtime 1.0 (scout).desktop,desktop:/silo-youtube.desktop,desktop:/silo-netflix.desktop,desktop:/Proton Hotfix.desktop,1,072a6305-9771-447c-b24e-d64c9d02f6bf,1,desktop:/silo-primevideo.desktop
 screenMapping=
