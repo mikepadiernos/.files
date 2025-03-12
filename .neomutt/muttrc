@@ -1,0 +1,24 @@
+# vim: filetype=neomuttrc
+source /usr/share/mutt-wizard/mutt-wizard.muttrc
+source /home/mikepadiernos/.config/mutt/accounts/mike@padiernos.me.muttrc
+macro index,pager i1 '<sync-mailbox><enter-command>source /home/mikepadiernos/.config/mutt/accounts/mike@padiernos.me.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to mike@padiernos.me"
+
+# Sidebar mappings
+# set sidebar_visible = yes
+set sidebar_width = 40
+# set sidebar_short_path = yes
+# set sidebar_next_new_wrap = yes
+# set mail_check_stats
+# set sidebar_format = '%D%?F? [%F]?%* %?N?%N/? %?S?%S?'
+# bind index,pager \Ck sidebar-prev
+# bind index,pager \Cj sidebar-next
+# bind index,pager \Co sidebar-open
+# bind index,pager \Cp sidebar-prev-new
+# bind index,pager \Cn sidebar-next-new
+# bind index,pager B sidebar-toggle-visible
+
+# set use_threads=yes sort=date sort_aux=date
+# set use_threads=reverse sort=date sort_aux=date
+set use_threads=threads sort=reverse-last-date sort_aux=reverse-last-date
+# set use_threads=threads sort=last-date sort_aux=date
+
