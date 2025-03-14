@@ -10,6 +10,11 @@ alias lzd='lazydocker'
 # lazygit
 alias lzg='lazygit'
 
+# neomutt
+alias nmt='neomutt'
+
 # neovim
 # alias nvim='$NEOVIM/nvim'
 
+# yazi
+alias yz='yazi'
