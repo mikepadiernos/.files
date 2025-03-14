@@ -11,6 +11,7 @@ Includes config files for the following apps:
 - kde
 - keepassx
 - konsave
+- mbsync
 - neomutt
 - neovim          "https://neovim.io"
 - openaudible
