@@ -65,3 +65,23 @@
 2024/11/23 16:11:53 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
 2024/11/23 16:12:35 [ERRO] [EXEC] Terminate process with reason signal: interrupt
 2024/11/23 16:12:37 [INFO] [MAIN] Close application
+2025/03/14 02:25:24 [INFO] [MAIN] Start application
+2025/03/14 02:25:24 [INFO] [MAIN] Version:    v1.3.0
+2025/03/14 02:25:24 [INFO] [MAIN] Commit:     99b19c11
+2025/03/14 02:25:24 [INFO] [MAIN] Branch:     master
+2025/03/14 02:25:24 [INFO] [MAIN] Build date: 2025-02-26
+2025/03/14 02:25:24 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/14 02:25:24 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/14 02:25:28 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/14 02:25:28 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/14 02:25:32 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/14 02:25:32 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/14 02:25:33 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/14 02:25:33 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/14 02:25:36 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/14 02:25:36 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/14 02:25:36 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/14 02:25:36 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/14 02:25:37 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
+2025/03/14 02:26:18 [ERRO] [EXEC] Terminate process with reason Connection to 104.218.50.155 closed.
+2025/03/14 02:26:30 [INFO] [MAIN] Close application
