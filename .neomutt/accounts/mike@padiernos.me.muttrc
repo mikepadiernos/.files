@@ -4,7 +4,7 @@ set realname = "mike"
 set from = "mike@padiernos.me"
 set sendmail = "msmtp -a mike@padiernos.me"
 alias me mike <mike@padiernos.me>
-set folder = "/home/mikepadiernos/.local/share/mail/mike@padiernos.me"
+set folder = "/home/mikepadiernos/Library/.mail/mike@padiernos.me/"
 set header_cache = /home/mikepadiernos/.cache/mutt-wizard/mike@padiernos.me/headers
 set message_cachedir = /home/mikepadiernos/.cache/mutt-wizard/mike@padiernos.me/bodies
 set mbox_type = Maildir
@@ -14,9 +14,16 @@ set spoolfile = +INBOX
 set postponed = +Drafts
 set trash = +Trash
 set record = +Sent
-
 macro index o "<shell-escape>mw -y mike@padiernos.me<enter>" "run mbsync to sync mike@padiernos.me"
 macro index \eg "<enter-command>unset wait_key<enter><shell-escape>gpg --list-secret-keys; printf 'Enter email ID of user to publish: '; read eID; printf 'Enter fingerprint of GPG key to publish: '; read eFGPT; /usr/libexec/gpg-wks-client --create \$eFGPT \$eID | msmtp --read-envelope-from --read-recipients -a mike@padiernos.me<enter>"  "publish GPG key to WKS provider"
 macro index \eh "<pipe-message>/usr/libexec/gpg-wks-client --receive | msmtp --read-envelope-from --read-recipients -a mike@padiernos.me<enter>" "confirm GPG publication"
 
-mailboxes "=Sent" "=Archive" "=Queue" "=Virus" "=Trash" "=Drafts" "=INBOX"
+# mailboxes "=INBOX" "=Sent" "=Archive" "=Queue" "=Virus" "=Trash" "=Drafts" "=Spam"
+mailboxes +.INBOX
+mailboxes +Drafts
+mailboxes +Archive
+mailboxes +Sent
+mailboxes +Queue
+mailboxes +Virus
+mailboxes +Spam
+mailboxes +Trash

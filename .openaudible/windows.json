@@ -109,6 +109,11 @@
    {
     "visible": false,
     "width": 150,
+    "id": "locked"
+   },
+   {
+    "visible": false,
+    "width": 150,
     "id": "ayce"
    },
    {
@@ -142,10 +147,10 @@
  },
  "window_pos": {
   "maximized": false,
-  "x": 4575,
+  "x": 0,
   "width": 2305,
   "y": 32,
   "open": true,
-  "height": 1340
+  "height": 1336
  }
 }
