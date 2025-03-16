@@ -1,0 +1,12 @@
+account mike@padiernos.me
+host mail.padiernos.me
+port 465
+from mike@padiernos.me
+user mike@padiernos.me
+passwordeval "pass mike@padiernos.me"
+auth on
+tls on
+tls_trust_file	/etc/ssl/certs/ca-certificates.crt
+logfile /home/mikepadiernos/.config/msmtp/msmtp.log
+tls_starttls off
+

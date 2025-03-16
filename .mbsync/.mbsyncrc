@@ -11,7 +11,7 @@ CertificateFile /etc/ssl/certs/ca-certificates.crt
 MaildirStore mike@padiernos.me-local
 Subfolders Verbatim
 Path /home/mikepadiernos/Library/.mail/mike@padiernos.me/
-Inbox /home/mikepadiernos/Library/.mail/mike@padiernos.me/.INBOX
+Inbox /home/mikepadiernos/Library/.mail/mike@padiernos.me/INBOX
 
 Channel mike@padiernos.me
 Expunge Both

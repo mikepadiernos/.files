@@ -41,5 +41,3 @@ set askbcc=yes
 # set use_threads=reverse sort=date sort_aux=date
 set use_threads=threads sort=reverse-last-date sort_aux=reverse-last-date
 # set use_threads=threads sort=last-date sort_aux=date
-
-

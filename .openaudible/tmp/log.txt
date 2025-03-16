@@ -6290,3 +6290,15 @@ This collection gathers No Such Thing As Werewolves, No Mere Zombie, Vampires Do
 
  autoConvert=true</message>
 </record>
+<record>
+  <date>2025-03-15T20:11:38.094036782Z</date>
+  <millis>1742069498094</millis>
+  <nanos>36782</nanos>
+  <sequence>505</sequence>
+  <logger>org.openaudible.desktop.swt.manager.VersionCheck</logger>
+  <level>INFO</level>
+  <class>org.openaudible.desktop.swt.manager.VersionCheck</class>
+  <method>getVersion</method>
+  <thread>56</thread>
+  <message>versionCheck: https://openaudible.org/swt_version.json</message>
+</record>
