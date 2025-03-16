@@ -1,5 +1,15 @@
-q
 save
+set color_separator=232
+set tree_width_percent=20
+set tree_width_percent=15
+set tree_width_percent=25
+save 
+set tree_width_percent=40
+set sort_albums_by_name=true
+set replaygain=smart
+set progress_bar=line
+set progress_bar=
+q
 set color_win_cur_sel_bg=232
 set color_win_inactive_cur_sel_fg=black
 set color_win_inactive_cur_sel_bg=lightyellow
