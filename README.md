@@ -28,4 +28,5 @@ Includes config files for the following apps:
 - yazi              [https://yazi-rs.github.io](https://yazi-rs.github.io)
 - zsh               [https://zsh.sourceforge.io](https://zsh.sourceforge.io)
 
-Utilized method to batch git clone with the following gist: [https://gist.github.com/Lukas238/8d9abbeabfcd7225e3a254d40eb0c080](https://gist.github.com/Lukas238/8d9abbeabfcd7225e3a254d40eb0c080)
+Utilized method to batch git clone with the following gist:
+[https://gist.github.com/Lukas238/8d9abbeabfcd7225e3a254d40eb0c080](https://gist.github.com/Lukas238/8d9abbeabfcd7225e3a254d40eb0c080)
