@@ -14,7 +14,7 @@ gui:
 
   # The number of spaces per tab; used for everything that's shown in the main view, but probably mostly relevant for diffs.
   # Note that when using a pager, the pager has its own tab width setting, so you need to pass it separately in the pager command.
-  tabWidth: 4
+  tabWidth: 2
 
   # If true, capture mouse events.
   # When mouse events are captured, it's a little harder to select text: e.g. requiring you to hold the option key when on macOS.
@@ -34,14 +34,16 @@ gui:
 
   # Fraction of the total screen width to use for the left side section. You may want to pick a small number (e.g. 0.2) if you're using a narrow screen, so that you can see more of the main section.
   # Number from 0 to 1.0.
-  sidePanelWidth: 0.3333
+  # sidePanelWidth: 0.3333
+  sidePanelWidth: 0.3
+
 
   # If true, increase the height of the focused side window; creating an accordion effect.
-  expandFocusedSidePanel: false
+  expandFocusedSidePanel: true
 
   # The weight of the expanded side panel, relative to the other panels. 2 means
   # twice as tall as the other panels. Only relevant if `expandFocusedSidePanel` is true.
-  expandedSidePanelWeight: 2
+  expandedSidePanelWeight: 3
 
   # Sometimes the main window is split in two (e.g. when the selected file has both staged and unstaged changes). This setting controls how the two sections are split.
   # Options are:
@@ -145,16 +147,16 @@ gui:
   showNumstatInFilesView: false
 
   # If true, show a random tip in the command log when Lazygit starts
-  showRandomTip: true
+  showRandomTip: false
 
   # If true, show the command log
   showCommandLog: true
 
   # If true, show the bottom line that contains keybinding info and useful buttons. If false, this line will be hidden except to display a loader for an in-progress action.
-  showBottomLine: true
+  showBottomLine: false
 
   # If true, show jump-to-window keybindings in window titles.
-  showPanelJumps: true
+  showPanelJumps: false
 
   # Deprecated: use nerdFontsVersion instead
   showIcons: false
