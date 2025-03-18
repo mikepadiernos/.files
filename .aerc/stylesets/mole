@@ -1,6 +1,6 @@
 # vim: ft=dosini
 #
-# aerc mole styleset
+# mole: aerc styleset
 #
 
 *.default=true
@@ -8,7 +8,6 @@
 
 #border.bg=#BD93F9
 title.bg=#efe100
-
 title.fg=black
 title.bold=true
 
@@ -18,6 +17,7 @@ header.fg=#efe100
 tab.selected.fg=black
 tab.selected.bg=#efe100
 tab.selected.bold=false
+
 dirlist*.selected.bg=#000000
 dirlist*.selected.fg=#efe100
 dirlist*.selected.bold=false
@@ -32,10 +32,12 @@ statusline_default.bg=#000000
 statusline_default.fg=#efe100
 statusline_error.fg=red
 
-msglist_unread.fg=#ffffff
+msglist_unread.fg=#6f6f6f
 msglist_unread.bold=true
-msglist_deleted.fg=#666666
-msglist_*.selected.bg=#2c2c2c
+msglist_deleted.fg=#aa4444
+; msglist_*.selected.bg=#2c2c2c
+msglist_*.selected.bg=#ffffff
+msglist_*.selected.fg=#000000
 msglist_result.bg=#6272A4
 msglist_marked.fg=black
 msglist_marked.selected.fg=black
@@ -49,7 +51,6 @@ part_*.selected.fg=#ffffff
 part_*.selected.bg=#2c2c2c
 part_filename.selected.bold=true
 
-completion_pill.reverse=false
 selector_focused.bold=false
 selector_focused.bg=#2c2c2c
 selector_focused.fg=white
@@ -62,10 +63,9 @@ default.selected.bg=#000000
 
 completion_default.selected.bg=#2c2c2c
 completion_default.selected.fg=white
+completion_pill.reverse=false
 
 [viewer]
-*.default=true
-*.normal=true
 url.underline=true
 header.bold=true
 signature.dim=true
