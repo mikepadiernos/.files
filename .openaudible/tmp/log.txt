@@ -6302,3 +6302,27 @@ This collection gathers No Such Thing As Werewolves, No Mere Zombie, Vampires Do
   <thread>56</thread>
   <message>versionCheck: https://openaudible.org/swt_version.json</message>
 </record>
+<record>
+  <date>2025-03-16T20:11:38.401224689Z</date>
+  <millis>1742155898401</millis>
+  <nanos>224689</nanos>
+  <sequence>506</sequence>
+  <logger>org.openaudible.desktop.swt.manager.VersionCheck</logger>
+  <level>INFO</level>
+  <class>org.openaudible.desktop.swt.manager.VersionCheck</class>
+  <method>getVersion</method>
+  <thread>56</thread>
+  <message>versionCheck: https://openaudible.org/swt_version.json</message>
+</record>
+<record>
+  <date>2025-03-17T20:11:39.095274488Z</date>
+  <millis>1742242299095</millis>
+  <nanos>274488</nanos>
+  <sequence>507</sequence>
+  <logger>org.openaudible.desktop.swt.manager.VersionCheck</logger>
+  <level>INFO</level>
+  <class>org.openaudible.desktop.swt.manager.VersionCheck</class>
+  <method>getVersion</method>
+  <thread>56</thread>
+  <message>versionCheck: https://openaudible.org/swt_version.json</message>
+</record>

@@ -8,7 +8,7 @@ macro index,pager i1 '<sync-mailbox><enter-command>source /home/mikepadiernos/.c
 set sidebar_width = 35
 set sidebar_short_path = yes
 set sidebar_next_new_wrap = yes
-set sidebar_format = '%D%?F? [%F]?%* %?N?%N /? %?S?%S?'
+set sidebar_format = ' %D%?F? [%F]?%* %?N?%N /? %?S?%S? '
 # set sidebar_format = "%D %?S?[%N/%S]?"
 set sidebar_divider_char = " "
 

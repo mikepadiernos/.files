@@ -93,25 +93,6 @@
 2025/03/14 16:19:58 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
 2025/03/14 16:19:58 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
 2025/03/14 16:20:00 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
-2025/03/17 01:10:30 [INFO] [MAIN] Start application
-2025/03/17 01:10:30 [INFO] [MAIN] Version:    v1.3.0
-2025/03/17 01:10:30 [INFO] [MAIN] Commit:     99b19c11
-2025/03/17 01:10:30 [INFO] [MAIN] Branch:     master
-2025/03/17 01:10:30 [INFO] [MAIN] Build date: 2025-02-26
-2025/03/17 01:10:30 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
-2025/03/17 01:10:30 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
-2025/03/17 01:10:31 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
-2025/03/17 01:16:50 [INFO] [MAIN] Start application
-2025/03/17 01:16:50 [INFO] [MAIN] Version:    v1.3.0
-2025/03/17 01:16:50 [INFO] [MAIN] Commit:     99b19c11
-2025/03/17 01:16:50 [INFO] [MAIN] Branch:     master
-2025/03/17 01:16:50 [INFO] [MAIN] Build date: 2025-02-26
-2025/03/17 01:16:50 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
-2025/03/17 01:16:50 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
-2025/03/17 01:16:51 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
-2025/03/17 20:35:26 [ERRO] [EXEC] Terminate process with reason Read from remote host 104.218.50.155: Connection reset by peer
-Connection to 104.218.50.155 closed.
-client_loop: send disconnect: Broken pipe
-2025/03/17 21:14:45 [ERRO] [EXEC] Terminate process with reason Read from remote host 104.218.50.155: Connection reset by peer
+2025/03/17 01:34:45 [ERRO] [EXEC] Terminate process with reason Read from remote host 104.218.50.155: Connection timed out
 Connection to 104.218.50.155 closed.
 client_loop: send disconnect: Broken pipe
