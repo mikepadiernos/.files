@@ -14,6 +14,7 @@ settings:
         <C-S-: '> tabs.show'
   content.javascript.clipboard:
     https://brew.sh: access-paste
+    https://github.com: access-paste
   downloads.position:
     global: bottom
   editor.command:
