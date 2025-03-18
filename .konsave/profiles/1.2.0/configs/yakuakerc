@@ -1,0 +1,22 @@
+[Appearance]
+HideSkinBorders=true
+Skin=breeze_black
+SkinInstalledWithKns=true
+TerminalHighlightOnManualActivation=true
+Translucency=true
+
+[Desktop Entry]
+DefaultProfile=Mole.profile
+
+[Dialogs]
+FirstRun=false
+
+[Shortcuts]
+split-left-right=Ctrl+(; Ctrl+\\
+
+[Window]
+DynamicTabTitles=true
+Height=70
+ShowTabBar=false
+ShowTitleBar=false
+Width=100

@@ -1,0 +1,57 @@
+[Desktop Entry]
+DefaultProfile=Mole.profile
+
+[FileDialogSize]
+2 screens: Window-Maximized=true
+
+[General]
+ConfigVersion=1
+
+[KonsoleWindow]
+AllowMenuAccelerators=true
+FocusFollowsMouse=true
+RemoveWindowTitleBarAndFrame=true
+UseSingleInstance=true
+
+[MainWindow]
+ToolBarsMovable=Enabled
+
+[MainWindow][Toolbar mainToolBar]
+ToolButtonStyle=IconOnly
+
+[MainWindow][Toolbar sessionToolbar]
+ToolButtonStyle=IconOnly
+
+[Notification Messages]
+CloseAllTabs=true
+ShowPasteHugeTextWarning=false
+
+[SaveHistory Settings]
+Recent URLs[$e]=file:$HOME/Projects/nysca
+
+[SearchSettings]
+SearchNoWrap=true
+SearchRegExpression=true
+
+[SplitView]
+SplitDragHandleSize=SplitDragHandleMedium
+
+[TabBar]
+CloseTabButton=None
+CloseTabOnMiddleMouseButton=true
+ExpandTabWidth=true
+NewTabBehavior=PutNewTabAfterCurrentTab
+TabBarPosition=Bottom
+TabBarVisibility=AlwaysShowTabBar
+
+[ThumbnailsSettings]
+ThumbnailAlt=true
+
+[Toolbar mainToolBar]
+ToolButtonStyle=IconOnly
+
+[Toolbar sessionToolbar]
+ToolButtonStyle=IconOnly
+
+[UiSettings]
+ColorScheme=

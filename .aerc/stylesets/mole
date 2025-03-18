@@ -41,8 +41,8 @@ msglist_*.selected.fg=#000000
 msglist_result.bg=#6272A4
 msglist_marked.fg=black
 msglist_marked.selected.fg=black
-msglist_marked.bg=#BD93F9
-msglist_marked.selected.bg=#9956f5
+msglist_marked.bg=#bf93Ff
+msglist_marked.selected.bg=#8834a0
 msglist_pill.reverse=true
 
 part_*.fg=#ffffff
