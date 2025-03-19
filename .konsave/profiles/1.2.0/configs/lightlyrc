@@ -1,4 +1,5 @@
 [Common]
+ButtonSize=6
 CornerRadius=1
 ShadowColor=28,26,0
 ShadowSize=ShadowVeryLarge

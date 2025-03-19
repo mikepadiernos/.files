@@ -1,3 +1,7 @@
+[CTags]
+GlobalCommand=ctags -R --c++-types=+px --extra=+q --excmd=pattern --exclude=Makefile --exclude=.
+GlobalNumTargets=0
+
 [ColorPicker]
 HexLengths=3,6,9,12
 NamedColors=false
@@ -19,10 +23,12 @@ Allow Tab Scrolling=true
 Auto Hide Tabs=false
 Close After Last=false
 Close documents with window=true
+Cycle To First Tab=true
 Days Meta Infos=30
 Diagnostics Limit=12000
 Diff Show Style=0
 Elide Tab Text=true
+Enable Context ToolView=true
 Expand Tabs=false
 Icon size for left and right sidebar buttons=30
 Modified Notification=false
@@ -99,13 +105,13 @@ Encoding Prober Type=1
 Fallback Encoding=ISO 8859-6
 
 [KTextEditor Renderer]
-Animate Bracket Matching=false
+Animate Bracket Matching=true
 Auto Color Theme Selection=false
 Color Theme=A Mole Like Ed
 Line Height Multiplier=1
 Show Indentation Lines=false
-Show Whole Bracket Expression=false
-Text Font=Hack,10,-1,7,400,0,0,0,0,0,0,0,0,0,0,1
+Show Whole Bracket Expression=true
+Text Font=GohuFont 14 Nerd Font Mono,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Regular
 Text Font Features=
 Word Wrap Marker=false
 
@@ -117,10 +123,10 @@ Auto Completion=true
 Auto Completion Preselect First Entry=true
 Backspace Remove Composed Characters=false
 Bookmark Menu Sorting=0
-Bracket Match Preview=false
+Bracket Match Preview=true
 Chars To Enclose Selection=<>(){}[]'"
 Default Mark Type=1
-Dynamic Word Wrap=true
+Dynamic Word Wrap=false
 Dynamic Word Wrap Align Indent=80
 Dynamic Word Wrap At Static Marker=false
 Dynamic Word Wrap Indicators=1
@@ -152,20 +158,20 @@ Shoe Line Ending Type in Statusbar=false
 Show Documentation With Completion=true
 Show File Encoding=true
 Show Folding Icons On Hover Only=true
-Show Line Count=false
+Show Line Count=true
 Show Scrollbars=0
 Show Statusbar Dictionary=true
 Show Statusbar Highlighting Mode=true
 Show Statusbar Input Mode=true
 Show Statusbar Line Column=true
 Show Statusbar Tab Settings=true
-Show Word Count=false
+Show Word Count=true
 Smart Copy Cut=true
 Statusbar Line Column Compact Mode=true
 Text Drag And Drop=true
 User Sets Of Chars To Enclose Selection=
 Vi Input Mode Steal Keys=false
-Vi Relative Line Numbers=false
+Vi Relative Line Numbers=true
 Word Completion=true
 Word Completion Minimal Word Length=3
 Word Completion Remove Tail=true
@@ -187,6 +193,13 @@ SetEditor=false
 2 screens: Width=1966
 3440x1440 screen: Height=1340
 3440x1440 screen: Width=1718
+ToolBarsMovable=Disabled
+
+[MainWindow][Toolbar gdbplugin]
+ToolButtonStyle=IconOnly
+
+[MainWindow][Toolbar mainToolBar]
+ToolButtonStyle=IconOnly
 
 [PluginSymbolViewer]
 ExpandTree=false
@@ -194,10 +207,13 @@ SortSymbols=false
 TreeView=false
 ViewTypes=false
 
+[debugplugin]
+DAPConfiguration=
+
 [filetree]
 editShade=99,87,1
 listMode=false
-middleClickToClose=false
+middleClickToClose=true
 shadingEnabled=true
 showCloseButton=false
 showFullPathOnRoots=false
@@ -206,24 +222,24 @@ sortRole=0
 viewShade=47,27,91
 
 [lspclient]
-AllowedServerCommandLines=
+AllowedServerCommandLines=/usr/bin/vscode-css-languageserver --stdio
 AutoHover=true
 AutoImport=true
 BlockedServerCommandLines=/home/mikepadiernos/.asdf/installs/lua-language-server/3.13.2/bin/lua-language-server
 CompletionDocumentation=true
 CompletionParens=true
 Diagnostics=true
-FormatOnSave=false
+FormatOnSave=true
 HighlightGoto=true
-IncrementalSync=false
-InlayHints=false
+IncrementalSync=true
+InlayHints=true
 Messages=true
 ReferencesDeclaration=true
 SemanticHighlighting=true
 ServerConfiguration=
 SignatureHelp=true
-SymbolDetails=false
+SymbolDetails=true
 SymbolExpand=true
-SymbolSort=false
+SymbolSort=true
 SymbolTree=true
-TypeFormatting=false
+TypeFormatting=true

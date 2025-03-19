@@ -95,5 +95,7 @@
  </Menu>
  <ActionProperties>
   <Action name="close-session" shortcut="Ctrl+Shift+W; Meta+Ctrl+Backspace"/>
+  <Action name="rename-session" shortcut="Ctrl+&lt;"/>
+  <Action name="edit-current-profile" shortcut="Alt+Shift+Return"/>
  </ActionProperties>
 </gui>

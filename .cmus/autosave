@@ -1,4 +1,4 @@
-set aaa_mode=all
+set aaa_mode=artist
 set altformat_current= %F 
 set altformat_playlist= %f%= %d %{?X!=0?%3X ?    }
 set altformat_title=%f
@@ -112,7 +112,7 @@ set pl_sort=
 set play_library=true
 set play_sorted=true
 set progress_bar=line
-set repeat=true
+set repeat=false
 set repeat_current=false
 set replaygain=smart
 set replaygain_limit=true

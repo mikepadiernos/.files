@@ -44,6 +44,7 @@ DecorationFocus=239,209,0
 DecorationHover=239,209,0
 
 [Colors:Header]
+BackgroundAlternate=0,0,0
 BackgroundNormal=0,0,0
 DecorationFocus=239,209,0
 DecorationHover=239,209,0
@@ -105,20 +106,20 @@ ForegroundPositive=0,110,40
 ForegroundVisited=69,40,134
 
 [DirSelect Dialog]
-DirSelectDialog Size=839,606
-History Items[$e]=file:$HOME/Library/__ Entertainment
+DirSelectDialog Size=871,606
+History Items[$e]=file:$HOME/.library,file:$HOME/.library/__ records,file:$HOME/.library/__ records,file:$HOME/.library,file:///media/pandorum,file:///media/nostromo,file:///media/yautja,file:///media/chojin,file:$HOME/.files/.openaudible,file:$HOME/.files/.openaudible,file:$HOME/Library/__ Media/Entertainment/Music,file:$HOME/Library/__ Media/Entertainment/Music
 
 [General]
-ColorSchemeHash=d5c2039378d5a1d1f2377d8323211a65a9b4d66d
+ColorSchemeHash=7160aadf6fbabfb8142ed0119d673851697c0eab
 Name=Breeze
 XftHintStyle=hintslight
 XftSubPixel=rgb
-fixed=Blobmoji,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
-font=Decima Mono [TIRO],10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
-menuFont=Decima Mono [TIRO],10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+fixed=GohuFont 11 Nerd Font,12,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Regular
+font=Decima Mono Lt,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+menuFont=Decima Mono Lt,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
 shadeSortColumn=true
-smallestReadableFont=Decima Mono [TIRO],8,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
-toolBarFont=Decima Mono [TIRO],10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+smallestReadableFont=Decima Mono Lt,8,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+toolBarFont=Decima Mono Lt,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
 widgetStyle=Breeze
 
 [KDE]
@@ -136,12 +137,12 @@ widgetStyle=Lightly
 Allow Expansion=false
 Automatically select filename extension=true
 Breadcrumb Navigation=false
-Decoration position=0
+Decoration position=2
 LocationCombo Completionmode=5
 PathCombo Completionmode=5
 Show Bookmarks=false
 Show Full Path=false
-Show Inline Previews=false
+Show Inline Previews=true
 Show Preview=false
 Show Speedbar=true
 Show hidden files=true
@@ -154,7 +155,7 @@ View Style=Detail
 listViewIconSize=29
 
 [KShortcutsDialog Settings]
-Dialog Size=600,480
+Dialog Size=1134,480
 
 [PreviewSettings]
 EnableRemoteFolderThumbnail=false
@@ -163,6 +164,12 @@ MaximumRemoteSize=0
 [QtQuickRendererSettings]
 SceneGraphBackend=opengl
 
+[Shortcuts]
+End=Ctrl+End; Meta+Ctrl+Num+1; Meta+Ctrl+Num+End
+Home=Meta+Ctrl+Num+Home; Alt+Home; Home Page; Meta+Ctrl+Num+7
+Reload=Meta+Alt+5; F5; Refresh
+ShowHideHiddenFiles=Alt+.; Ctrl+H; Meta+/
+
 [Toolbar style]
 ToolButtonStyle=TextBesideIcon
 ToolButtonStyleOtherToolbars=TextBesideIcon
@@ -170,7 +177,7 @@ ToolButtonStyleOtherToolbars=TextBesideIcon
 [WM]
 activeBackground=8,8,8
 activeBlend=11,11,11
-activeFont=Decima Mono [TIRO],10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+activeFont=Decima Mono Lt,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
 activeForeground=251,253,255
 inactiveBackground=15,16,16
 inactiveBlend=21,21,21

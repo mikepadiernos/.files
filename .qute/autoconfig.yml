@@ -9,12 +9,24 @@ settings:
   auto_save.session:
     global: true
   bindings.commands:
+    global: null
+  bindings.key_mappings:
     global:
-      normal:
-        <C-S-: '> tabs.show'
+      <Ctrl-6>: <Ctrl-^>
+      <Ctrl-Enter>: <Ctrl-Return>
+      <Ctrl-I>: <Tab>
+      <Ctrl-J>: <Return>
+      <Ctrl-M>: <Return>
+      <Ctrl-[>: <Escape>
+      <Enter>: <Return>
+      <Shift-Enter>: <Return>
+      <Shift-Return>: <Return>
   content.javascript.clipboard:
     https://brew.sh: access-paste
     https://github.com: access-paste
+    https://mail.google.com: access-paste
+  content.register_protocol_handler:
+    https://mail.google.com?extsrc=mailto&url=%25s: true
   downloads.position:
     global: bottom
   editor.command:

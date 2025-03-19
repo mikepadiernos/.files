@@ -95,5 +95,8 @@
   <Action name="move-tab-to-left" shortcut="Ctrl+Alt+Left; Ctrl+Shift+PgUp"/>
   <Action name="move-tab-to-right" shortcut="Ctrl+Alt+Right; Ctrl+Shift+PgDown"/>
   <Action name="new-tab" shortcut="Ctrl+Shift+T; Meta+Ctrl+="/>
+  <Action name="options_configure" shortcut="Ctrl+Return; "/>
+  <Action name="options_configure_keybinding" shortcut="Ctrl+Shift+Return"/>
+  <Action name="manage-profiles" shortcut=""/>
  </ActionProperties>
 </gui>

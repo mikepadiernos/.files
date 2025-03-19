@@ -1,12 +1,15 @@
 [Activities][LastVirtualDesktop]
-22f977ff-989d-4c12-9028-dbb375a8b734=ebb8588a-5867-4c63-b2fd-f9bd8a51d85b
+072a6305-9771-447c-b24e-d64c9d02f6bf=ebb8588a-5867-4c63-b2fd-f9bd8a51d85b
+64f77300-8030-47ba-8ae3-634a535b3817=ebb8588a-5867-4c63-b2fd-f9bd8a51d85b
+8ce37f0e-fb72-4c43-84ba-deca2ba1fd5f=ebb8588a-5867-4c63-b2fd-f9bd8a51d85b
+c02c80ee-b0fe-4834-9531-569d1cf7a90e=ebb8588a-5867-4c63-b2fd-f9bd8a51d85b
 
 [Desktops]
 Id_1=ebb8588a-5867-4c63-b2fd-f9bd8a51d85b
-Id_2=5c7892e0-6eda-4764-b81d-fa0813708bd9
-Id_3=8c25f573-84ff-411d-b14c-89c0f3399995
-Id_4=f40ba265-d35e-46b5-ba62-7741a4f8025d
-Id_5=7ad6c9af-34fe-4b4e-8b71-8ef3d46acb77
+Id_2=6bd07209-c60b-4f1d-b5b4-1b225be9c8e4
+Id_3=e871b971-01be-46aa-ae59-676b63ee8293
+Id_4=4759ece3-1919-4c83-bfce-1248bc6f054d
+Id_5=2c1cdac6-4e40-435c-9124-1559b6f9fbcd
 Name_5=Desktop 6
 Number=5
 Rows=1
@@ -14,6 +17,9 @@ Rows=1
 [Effect-blur]
 BlurStrength=6
 NoiseStrength=0
+
+[Effect-overview]
+BorderActivate=9
 
 [Effect-translucency]
 ComboboxPopups=90
@@ -38,9 +44,12 @@ kinetic_scaleEnabled=true
 kinetic_squashEnabled=true
 klearEnabled=false
 kwin-multiconfEnabled=true
+kwin4_effect_geometry_changeEnabled=true
 kzonesEnabled=true
 maximizeEnabled=false
 maximizetotileEnabled=false
+minimizeallEnabled=true
+morphing_popupsEnabled=true
 mouseclickEnabled=true
 scaleEnabled=false
 shakecursorEnabled=false
@@ -48,6 +57,7 @@ squash2Enabled=false
 squashEnabled=false
 sticky-window-snappingEnabled=true
 temporary-virtual-desktopsEnabled=true
+thumbnailasideEnabled=true
 trackmouseEnabled=true
 translucencyEnabled=true
 wobblywindowsEnabled=true
@@ -57,7 +67,7 @@ userSetOpacity=95
 
 [Script-kzones]
 enableEdgeSnapping=true
-layoutsJson=[\n  {\n    "name": "Maximized",\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 100\n      }\n    ]\n  },\n  {\n    "name": "Quadrant Grid",\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 50,\n        "width": 50\n      },\n      {\n        "x": 0,\n        "y": 50,\n        "height": 50,\n        "width": 50\n      },\n      {\n        "x": 50,\n        "y": 50,\n        "height": 50,\n        "width": 50\n      },\n      {\n        "x": 50,\n        "y": 0,\n        "height": 50,\n        "width": 50\n      }\n    ]\n  },\n  {\n    "name": "Priority Grid",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      },\n      {\n        "x": 25,\n        "y": 0,\n        "height": 100,\n        "width": 50\n      },\n      {\n        "x": 75,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      }\n    ]\n  },\n  {\n    "name": "Priority Left - 25",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 75\n      },\n      {\n        "x": 75,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      }\n    ]\n  },\n  {\n    "name": "Priority Right - 25",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      },\n      {\n        "x": 25,\n        "y": 0,\n        "height": 100,\n        "width": 75\n      }\n    ]\n  },\n  {\n    "name": "Priority Left - 33",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 67\n      },\n      {\n        "x": 67,\n        "y": 0,\n        "height": 100,\n        "width": 33\n      }\n    ]\n  },\n  {\n    "name": "Priority Right - 33",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 33\n      },\n      {\n        "x": 33,\n        "y": 0,\n        "height": 100,\n        "width": 67\n      }\n    ]\n  }\n]\n
+layoutsJson=[\n  {\n    "name": "Maximized",\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 100\n      }\n    ]\n  },\n  {\n    "name": "Quadrant Grid",\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 50,\n        "width": 50\n      },\n      {\n        "x": 0,\n        "y": 50,\n        "height": 50,\n        "width": 50\n      },\n      {\n        "x": 50,\n        "y": 50,\n        "height": 50,\n        "width": 50\n      },\n      {\n        "x": 50,\n        "y": 0,\n        "height": 50,\n        "width": 50\n      }\n    ]\n  },\n  {\n    "name": "Priority Grid",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      },\n      {\n        "x": 25,\n        "y": 0,\n        "height": 100,\n        "width": 50\n      },\n      {\n        "x": 75,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      }\n    ]\n  },\n  {\n    "name": "Priority Left - 25",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 75\n      },\n      {\n        "x": 75,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      }\n    ]\n  },\n  {\n    "name": "Priority Right - 25",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 25\n      },\n      {\n        "x": 25,\n        "y": 0,\n        "height": 100,\n        "width": 75\n      }\n    ]\n  },\n  {\n    "name": "Priority Left - 33",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 67\n      },\n      {\n        "x": 67,\n        "y": 0,\n        "height": 100,\n        "width": 33\n      }\n    ]\n  },\n  {\n    "name": "Priority Right - 33",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 33\n      },\n      {\n        "x": 33,\n        "y": 0,\n        "height": 100,\n        "width": 67\n      }\n    ]\n  },\n  {\n    "name": "Triad",\n    "padding": 0.5,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 33.5\n      },\n      {\n        "x": 33.25,\n        "y": 0,\n        "height": 100,\n        "width": 33\n      },\n      {\n        "x": 67,\n        "y": 0,\n        "height": 100,\n        "width": 33\n      }\n    ]\n  },\n{\n    "name": "Triad - Biased",\n    "padding": 0,\n    "zones": [\n      {\n        "x": 0,\n        "y": 0,\n        "height": 100,\n        "width": 20\n      },\n      {\n        "x": 20,\n        "y": 0,\n        "height": 100,\n        "width": 60 \n      },\n      {\n        "x": 80,\n        "y": 0,\n        "height": 100,\n        "width": 20\n      }\n    ]\n  }\n]\n
 
 [Script-maximizetotile]
 Ignore=true
@@ -74,7 +84,10 @@ ShowDesktopMode=1
 [Tiling]
 padding=4
 
-[Tiling][7a4551b0-c33e-5d1c-ba18-eaa34ac25813]
+[Tiling][0f2a59c5-65e0-5137-9ae3-5d6c903b0a74]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][7184b579-4271-5cc1-bc2d-ca93b5888312]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Tiling][b2d18479-3d89-5857-95d2-f0a091ad7ec5]
@@ -90,10 +103,12 @@ NextFocusPrefersMouse=true
 RollOverDesktops=true
 
 [Xwayland]
-Scale=0.9
+Scale=1
 
 [org.kde.kdecoration2]
-BorderSize=None
+BorderSize=Tiny
 BorderSizeAuto=false
 ButtonsOnLeft=M
 ButtonsOnRight=IAX
+library=org.kde.breeze
+theme=Breeze

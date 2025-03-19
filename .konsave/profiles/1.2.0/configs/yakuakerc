@@ -6,17 +6,28 @@ TerminalHighlightOnManualActivation=true
 Translucency=true
 
 [Desktop Entry]
-DefaultProfile=Mole.profile
+DefaultProfile=A Mole Name Ed.profile
 
 [Dialogs]
 FirstRun=false
 
 [Shortcuts]
-split-left-right=Ctrl+(; Ctrl+\\
+close-active-terminal=Ctrl+Shift+Del
+decrease-window-width=;\s
+increase-window-width=;\s
+move-session-left=Alt+Shift+Left
+move-session-right=Alt+Shift+Right
+new-session-quad=Ctrl+Shift+Num+Left
+next-terminal=Ctrl+Shift+Right
+options_configure=Shift+Return
+options_configure_keybinding=Ctrl+Shift+Return
+previous-terminal=Ctrl+Shift+Left
+split-left-right=Ctrl+Left; Ctrl+Right
+split-top-bottom=Ctrl+Up; Ctrl+Down
 
 [Window]
 DynamicTabTitles=true
-Height=70
+Height=100
 ShowTabBar=false
 ShowTitleBar=false
 Width=100

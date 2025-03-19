@@ -31,5 +31,7 @@
  </Menu>
  <ActionProperties scheme="Default">
   <Action name="close-session" shortcut=""/>
+  <Action name="split-view-left-right" shortcut="; "/>
+  <Action name="split-view-top-bottom" shortcut="; "/>
  </ActionProperties>
 </gui>
