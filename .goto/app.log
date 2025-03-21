@@ -96,3 +96,43 @@
 2025/03/17 01:34:45 [ERRO] [EXEC] Terminate process with reason Read from remote host 104.218.50.155: Connection timed out
 Connection to 104.218.50.155 closed.
 client_loop: send disconnect: Broken pipe
+2025/03/20 13:28:22 [INFO] [MAIN] Start application
+2025/03/20 13:28:22 [INFO] [MAIN] Version:    v1.3.0
+2025/03/20 13:28:22 [INFO] [MAIN] Commit:     99b19c11
+2025/03/20 13:28:22 [INFO] [MAIN] Branch:     master
+2025/03/20 13:28:22 [INFO] [MAIN] Build date: 2025-02-26
+2025/03/20 13:28:22 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/20 13:28:22 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/20 13:28:26 [INFO] [MAIN] Close application
+2025/03/20 13:29:16 [INFO] [MAIN] Start application
+2025/03/20 13:29:16 [INFO] [MAIN] Version:    v1.3.0
+2025/03/20 13:29:16 [INFO] [MAIN] Commit:     99b19c11
+2025/03/20 13:29:16 [INFO] [MAIN] Branch:     master
+2025/03/20 13:29:16 [INFO] [MAIN] Build date: 2025-02-26
+2025/03/20 13:29:16 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/20 13:29:16 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/20 13:29:16 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
+2025/03/20 13:29:19 [INFO] [MAIN] Start application
+2025/03/20 13:29:19 [INFO] [MAIN] Version:    v1.3.0
+2025/03/20 13:29:19 [INFO] [MAIN] Commit:     99b19c11
+2025/03/20 13:29:19 [INFO] [MAIN] Branch:     master
+2025/03/20 13:29:19 [INFO] [MAIN] Build date: 2025-02-26
+2025/03/20 13:29:19 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/20 13:29:19 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/20 13:29:19 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
+2025/03/20 13:30:47 [INFO] [MAIN] Start application
+2025/03/20 13:30:47 [INFO] [MAIN] Version:    v1.3.0
+2025/03/20 13:30:47 [INFO] [MAIN] Commit:     99b19c11
+2025/03/20 13:30:47 [INFO] [MAIN] Branch:     master
+2025/03/20 13:30:47 [INFO] [MAIN] Build date: 2025-02-26
+2025/03/20 13:30:47 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/20 13:30:47 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/20 13:30:47 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
+2025/03/20 13:33:05 [INFO] [MAIN] Start application
+2025/03/20 13:33:05 [INFO] [MAIN] Version:    v1.3.0
+2025/03/20 13:33:05 [INFO] [MAIN] Commit:     99b19c11
+2025/03/20 13:33:05 [INFO] [MAIN] Branch:     master
+2025/03/20 13:33:05 [INFO] [MAIN] Build date: 2025-02-26
+2025/03/20 13:33:05 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos -G 104.218.50.155'
+2025/03/20 13:33:05 [INFO] [EXEC] Terminate process gracefully: /usr/bin/ssh -l padiernos -G 104.218.50.155
+2025/03/20 13:33:06 [INFO] [EXEC] Run process: '/usr/bin/ssh -l padiernos 104.218.50.155'
