@@ -1,0 +1,59 @@
+# vim: filetype=neomuttrc
+
+set editor = "$EDITOR +/^$ +nohlsearch"
+
+# Sidebar mappings
+set sidebar_width = 35
+set sidebar_short_path = yes
+set sidebar_next_new_wrap = yes
+set sidebar_format = ' %D%?F? [%F]?%* %?N?%N /? %?S?%S? '
+# set sidebar_format = "%D %?S?[%N/%S]?"
+set sidebar_divider_char = " "
+set sidebar_delim_chars="./"            # Delete everything up to the last specified character(s)
+set sidebar_folder_indent               # Indent folders whose names we've shortened
+set sidebar_indent_string = " "           # Indent with one space
+
+# Mailboxes to show in sidebar
+set imap_check_subscribed
+
+set status_chars = '—+#~'
+set status_on_top = yes
+
+## status_format - format of summary on the current folder in the index
+# https://www.neomutt.org/guide/reference.html#status-format
+##
+## %?<sequence_char>?<optional_string>? optionally print string, if>0
+## Default: -%r-NeoMutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---
+# set status_format = "%f%r—[%?M?%M/?%m messages, %?n?%n new, ?%?d?%d deleted, ?%?F?%F important, ?%?t?%t selected, ?%?p?%p drafts, ?%l]———(%s/%S)—%>—(%P)———"
+# set status_format = "%D %?u?[ %u] ?%?R?[ %R] ?%?d?[ %d] ?%?t?[ %t] ?%?F?[ %F] ?%?p?[ %p]? \n  \n"
+set status_format = " 󰐣  󰁈    %?u? [ %u ]  ?%?R? [ %R ]  ?%?d? [ %d ]  ?%?t? [ %t ]  ?%?F? [ %F ]  ?%?p? [ %p ]? %> %D  "
+# set status_format = "[ Folder: %f ] [%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]%>─%?p?( %p postponed )?"
+
+# Default is: Mutt with %?m?%m messages&no messages?%?n? [%n NEW]?
+# set ts_enabled
+set ts_status_format = 'mutt %m messages%?n?, %n new?'
+set date_format=" %Y.%m.%d - %H:%M:%S   "
+
+set mail_check_stats
+set mail_check_stats_interval = 10
+set markers = no # Disables the `+` displayed at line wraps
+set mime_forward = yes # attachments are forwarded with mail
+set wait_key = no # mutt won't ask "press key to continue"
+set fast_reply # skip to compose when replying
+set fcc_attach # save attachments with the body
+set forward_format = "Fwd: %s" # format of subject when forwarding
+set forward_quote # include message in forwards
+set reverse_name # reply as whomever it was to
+set include # include message in replies
+set imap_check_subscribed=yes
+set help = false
+set askcc = yes
+set askbcc = yes
+
+set new_mail_command = "\n notify-send --icon='󰒊' 'New Email' '%n new messages, %u unread.' &"
+
+# set use_threads=yes sort=date sort_aux=date
+# set use_threads=reverse sort=date sort_aux=date
+# set use_threads=threads sort=reverse-last-date sort_aux=reverse-last-date
+# set use_threads=threads sort=last-date sort_aux=date
+set use_threads=threads sort=reverse-last-date-received sort_aux=last-date

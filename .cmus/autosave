@@ -64,7 +64,7 @@ set dsp.ao.wav_dir=/home/mikepadiernos
 set dsp.jack.resampling_quality=2
 set dsp.jack.server_name=
 set dsp.oss.device=
-set follow=true
+set follow=false
 set format_clipped_text=…
 set format_current= %a - %l%! - %n. %t%= %y 
 set format_heading_album=%a - %l%= %y %{duration}
@@ -127,7 +127,7 @@ set show_current_bitrate=false
 set show_hidden=true
 set show_playback_position=true
 set show_remaining_time=false
-set shuffle=off
+set shuffle=tracks
 set skip_track_info=false
 set smart_artist_sort=true
 set softvol=false

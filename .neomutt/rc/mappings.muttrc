@@ -1,0 +1,8 @@
+# vim: filetype=neomuttrc
+
+bind index,pager \Cj sidebar-prev
+bind index,pager \Ck sidebar-next
+bind index,pager \Ch sidebar-open
+bind index,pager \Cu sidebar-prev-new
+bind index,pager \Ci sidebar-next-new
+bind index,pager B sidebar-toggle-visible
