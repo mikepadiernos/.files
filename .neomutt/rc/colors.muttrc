@@ -3,5 +3,6 @@
 # color sidebar_indicator black white
 color indicator black brightwhite
 # color message black brightyellow
-color message brightyellow default
+# color message brightyellow default
+color message black black
 
