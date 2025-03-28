@@ -1,19 +1,25 @@
 [database]
-path=~/Library/.mail
+path=/home/mikepadiernos/Library/.mail
 
 [user]
 name=mike
 primary_email=mike@padiernos.me
+other_email=dev@padiernos.io;mike.padiernos@outlook.com;mike.padiernos@gmail.com
 
 [new]
-tags=unread;inbox;
-ignore=.mbsyncstate;.uidvalidity
+tags=unread;inbox;notify
+ignore=.mbsyncstate;.uidvalidity;*.json;*.json.bak;.lock
 
 [search]
-exclude_tags=deleted;spam;
+exclude_tags=deleted;spam;trash
 
 [maildir]
 synchronize_flags=true
 
 [crypto]
 gpg_path=gpg
+
+[query]
+junk=tag:trash OR tag:spam
+lists=tag:Newsletters OR tag:Maillists
+personal=NOT (tag:Work OR query:lists OR query:junk)

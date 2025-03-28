@@ -6,3 +6,7 @@ bind index,pager \Ch sidebar-open
 bind index,pager \Cu sidebar-prev-new
 bind index,pager \Ci sidebar-next-new
 bind index,pager B sidebar-toggle-visible
+
+macro index,pager O "<shell-escape>mbsync -Va<enter>" "Sync mail"
+ # macro index O "<shell-escape>mw -Y<enter>" "run mw -Y to sync all mail"
+

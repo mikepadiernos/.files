@@ -5,16 +5,17 @@
 # source /home/mikepadiernos/.config/mutt/accounts/mike@padiernos.me.muttrc
 
 # mutt-wizard
-source ~/.config/mutt/mutt-wizard.muttrc
+source /home/mikepadiernos/.config/mutt/mutt-wizard.muttrc
 
 # accounts
-source ~/.config/mutt/accounts/mike@padiernos.me.muttrc
-folder-hook $folder 'source ~/.config/mutt/accounts/mike@padiernos.me.muttrc'
+source /home/mikepadiernos/.config/mutt/accounts/mike@padiernos.me.muttrc
+folder-hook $folder 'source /home/mikepadiernos/.config/mutt/accounts/mike@padiernos.me.muttrc'
+# source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@gmail.com.muttrc
+# folder-hook $folder 'source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@gmail.com.muttrc'
 
 # custom configurations
-source ~/.config/mutt/rc/settings.muttrc
-source ~/.config/mutt/rc/colors.muttrc
-source ~/.config/mutt/rc/mappings.muttrc
+source /home/mikepadiernos/.config/mutt/rc/settings.muttrc
+source /home/mikepadiernos/.config/mutt/rc/mappings.muttrc
 
-# macro index,pager i1 '<sync-mailbox><enter-command>source /home/mikepadiernos/.config/mutt/accounts/mike@padiernos.me.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to mike@padiernos.me"
-macro index,pager i1 '<sync-mailbox><enter-command>source ~/.config/mutt/accounts/mike@padiernos.me.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to mike@padiernos.me"
+macro index,pager i1 '<sync-mailbox><enter-command>source /home/mikepadiernos/.config/mutt/accounts/mike@padiernos.me.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to mike@padiernos.me"
+macro index,pager i2 '<sync-mailbox><enter-command>source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@gmail.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to mike.padiernos@gmail.com"

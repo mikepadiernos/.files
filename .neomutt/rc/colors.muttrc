@@ -4,5 +4,5 @@
 color indicator black brightwhite
 # color message black brightyellow
 # color message brightyellow default
-color message black black
+# color message brightwhite brightwhite
 

@@ -22,5 +22,32 @@ Create Both
 SyncState *
 MaxMessages 0
 ExpireUnread no
+# PipelineDepth 1
+# End profile
+
+
+IMAPStore mike.padiernos@gmail.com-remote
+Host imap.gmail.com
+Port 993
+User mike.padiernos@gmail.com
+PassCmd "pass mail/mike.padiernos@gmail.com"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore mike.padiernos@gmail.com-local
+Subfolders Verbatim
+Path /home/mikepadiernos/Library/.mail/mike.padiernos@gmail.com/
+Inbox /home/mikepadiernos/Library/.mail/mike.padiernos@gmail.com/INBOX
+
+Channel mike.padiernos@gmail.com
+Expunge Both
+Master :mike.padiernos@gmail.com-remote:
+Slave :mike.padiernos@gmail.com-local:
+Patterns * !"[Gmail]/All Mail"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
 # End profile
 

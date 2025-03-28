@@ -62,7 +62,7 @@
    },
    {
     "visible": true,
-    "width": 1448,
+    "width": 2581,
     "index": 8,
     "id": "series_name"
    },
@@ -147,10 +147,10 @@
  },
  "window_pos": {
   "maximized": false,
-  "x": 0,
+  "x": 3440,
   "width": 2305,
   "y": 32,
   "open": true,
-  "height": 1336
+  "height": 882
  }
 }
