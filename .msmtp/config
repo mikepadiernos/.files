@@ -22,3 +22,4 @@ tls_trust_file	/etc/ssl/certs/ca-certificates.crt
 logfile /home/mikepadiernos/.config/msmtp/msmtp.log
 # tls_starttls
 
+
