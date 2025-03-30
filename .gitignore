@@ -3,7 +3,7 @@
 
 !historical/
 
-.asdf/data/installs/
+.asdf/data/*/
 
 .neovim/nvim.modular/
 
