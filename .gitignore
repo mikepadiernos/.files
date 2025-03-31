@@ -7,13 +7,15 @@
 
 .atuin/data/
 
-.filecentipede/lib/
+# .filecentipede/lib/
 
 .neovim/nvim.modular/
 
 .openaudible/tmp/
 
 .tmux/plugins/*/
+
+.qute/__pycache__/
 
 .zsh/.historical/
 .zsh/history/
