@@ -5,7 +5,7 @@
  ]},
  "book_table": {
   "sort_direction": 128,
-  "sort_column": "series_name",
+  "sort_column": "narrated_by",
   "columns": [
    {
     "visible": true,
@@ -62,7 +62,7 @@
    },
    {
     "visible": true,
-    "width": 2581,
+    "width": 2583,
     "index": 8,
     "id": "series_name"
    },
