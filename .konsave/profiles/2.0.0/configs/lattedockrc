@@ -1,0 +1,23 @@
+[ScreenConnectors]
+10=DP-6:::3440,0 2560x1440
+11=DP-1:::3440,0 3440x1440
+12=DVI-I-1:::0,0 3440x1440
+
+[UniversalSettings]
+badges3DStyle=false
+canDisableBorders=false
+contextMenuActionsAlwaysShown=_layouts,_preferences,_quit_latte,_separator1,_add_latte_widgets,_add_view
+inAdvancedModeForEditSettings=false
+inConfigureAppletsMode=false
+isAvailableGeometryBroadcastedToPlasma=true
+launchers=
+memoryUsage=0
+metaPressAndHoldEnabled=true
+mouseSensitivity=2
+parabolicSpread=3
+parabolicThicknessMarginInfluence=1
+screenTrackerInterval=2500
+showInfoWindow=true
+singleModeLayoutName=My Layout
+userConfiguredAutostart=true
+version=2

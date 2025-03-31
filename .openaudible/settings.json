@@ -15,11 +15,11 @@
   "region": "US",
   "uid": "1739461650204",
   "language": "",
-  "lastVersion": "4.5.2",
+  "lastVersion": "4.5.3",
   "html": false,
   "disableVersionCheck": false,
-  "browseFileCmd": "",
-  "browseWebCmd": "",
+  "browseFileCmd": "yazi %u",
+  "browseWebCmd": "qutebrowser %u",
   "playFileCmd": "xdg-open",
   "theme": "code_dark",
   "autoPDF": true,
@@ -28,7 +28,7 @@
   "fontName": "Atari ST 8x16 System Font",
   "autoRefreshMinutes": 0,
   "browser": "",
+  "recommendPrompt": "",
   "expert": false,
-  "mp3Quality": "",
-  "splitDuration": ""
+  "mp3Quality": ""
 }

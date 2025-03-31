@@ -1,0 +1,47 @@
+{
+ "queues": {"convertQueue": {
+  "fail": 0,
+  "jobsCompleted": 35,
+  "jobsQueued": 370,
+  "success": 35,
+  "jobs": 3,
+  "threads": 3,
+  "jobsStarted": 38,
+  "items": 335,
+  "queue": 332,
+  "errors": 0
+ }},
+ "last_cmd": 0,
+ "quit": false,
+ "version": "4.5.3",
+ "commands": [
+  "Quit",
+  "Export_Web_Page",
+  "Sync_Quick",
+  "Sync_Full",
+  "Download_All",
+  "Convert_All",
+  "Refresh_Files",
+  "Cancel_All_Jobs"
+ ],
+ "status": {
+  "Downloading": "",
+  "PDFs": "7/7",
+  "AYCE": "12",
+  "Connected": "Yes",
+  "Hours": "5231",
+  "M4B_Files": "370",
+  "License": "Valid",
+  "AAX_Files": "0",
+  "To_Convert": "0",
+  "MP3_Files": "35",
+  "Missing_Links": "0",
+  "To_Download": "0",
+  "Duplicates": "",
+  "Converting": "3 of 335",
+  "Podcasts": "0",
+  "Books": "370",
+  "M4A_Files": "0",
+  "Ignored": "0"
+ }
+}

@@ -1,0 +1,25 @@
+[Common]
+ButtonSize=6
+CornerRadius=1
+ShadowColor=28,26,0
+ShadowSize=ShadowVeryLarge
+ShadowStrength=128
+
+[Style]
+ScrollableMenu=true
+TransparentDolphinView=true
+UnifiedTabBarKonsole=true
+ViewDrawFocusIndicator=false
+WidgetDrawShadow=false
+
+[Windeco]
+DrawBorderOnMaximizedWindows=true
+DrawSizeGrip=true
+
+[Windeco Exception 0]
+BorderSize=0
+Enabled=true
+ExceptionPattern=.*
+ExceptionType=0
+HideTitleBar=true
+Mask=0

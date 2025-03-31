@@ -17,9 +17,11 @@ export ASDF="$ASDF_DIR"
 
 export NEOVIM="$FILES/.neovim/bin"
 
+export CARGO="$HOME/.cargo/bin"
+
 set OPENAUDIBLE_HOME="$HOME/.files/.openaudible"
 
-fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $NEOVIM $OPENAUDIBLE_HOME $fpath)
+fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $NEOVIM $OPENAUDIBLE_HOME $CARGO $fpath)
 
 # autoload -Uz compinit && compinit
 autoload -Uz compinit; compinit

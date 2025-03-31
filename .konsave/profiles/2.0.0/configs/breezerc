@@ -1,0 +1,24 @@
+[Common]
+OutlineCloseButton=false
+OutlineIntensity=OutlineOff
+ShadowColor=94,94,94
+ShadowStrength=26
+
+[Style]
+SliderDrawTickMarks=false
+TabBarDrawCenteredTabs=true
+ToolBarDrawItemSeparator=false
+ViewDrawFocusIndicator=false
+WindowDragMode=WD_FULL
+
+[Windeco]
+ButtonSize=ButtonLarge
+DrawBackgroundGradient=false
+
+[Windeco Exception 0]
+BorderSize=0
+Enabled=true
+ExceptionPattern=.*
+ExceptionType=0
+HideTitleBar=true
+Mask=0
