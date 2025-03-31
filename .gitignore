@@ -5,6 +5,8 @@
 
 .asdf/data/*/
 
+.atuin/data/*
+
 .neovim/nvim.modular/
 
 .tmux/plugins/*/
