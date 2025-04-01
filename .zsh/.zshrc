@@ -23,12 +23,12 @@ set OPENAUDIBLE_HOME="$HOME/.files/.openaudible"
 
 fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $NEOVIM $OPENAUDIBLE_HOME $CARGO $fpath)
 
-# autoload -Uz compinit && compinit
-autoload -Uz compinit; compinit
+# export ZSH_DISABLE_COMPFIX="true"
+
+# autoload -Uz compinit && compinit -i > /dev/null
+# autoload -Uz compinit; compinit
 
 # direnv allow
-
-# source "$ZSH"/.zsh_history
 source "$ZSH"/.zsh_themes
 source "$ZSH"/.zsh_plugins
 source "$ZSH"/.zsh_homebrew
@@ -38,9 +38,13 @@ source "$ZSH"/.zsh_completions
 
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+
+# autoload -Uz compinit && compinit -i > /dev/null
+autoload -Uz compinit; compinit
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Lando
-export PATH="/home/mikepadiernos/.lando/bin${PATH+:$PATH}"; #landopath
+# export PATH="/home/mikepadiernos/.lando/bin${PATH+:$PATH}"; #landopath
