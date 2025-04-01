@@ -16,7 +16,7 @@ alias nmt='neomutt'
 # neovim
 # alias nvim='$NEOVIM/nvim'
 alias vim='nvim'
-
+alias vm='nvim'
 
 # yazi
 alias yz='yazi'
