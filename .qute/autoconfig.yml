@@ -54,22 +54,40 @@ settings:
     global: true
   statusbar.padding:
     global:
-      bottom: 4
-      left: 4
-      right: 4
-      top: 4
+      bottom: 8
+      left: 8
+      right: 8
+      top: 8
   statusbar.show:
-    global: never
+    global: in-mode
+  tabs.favicons.show:
+    global: always
+  tabs.indicator.padding:
+    global:
+      bottom: 6
+      left: 2
+      right: 8
+      top: 6
+  tabs.indicator.width:
+    global: 4
   tabs.max_width:
     global: -1
   tabs.min_width:
     global: -1
   tabs.padding:
     global:
-      bottom: 4
+      bottom: 8
       left: 4
       right: 4
-      top: 4
+      top: 8
+  tabs.select_on_remove:
+    global: prev
+  tabs.title.alignment:
+    global: left
+  tabs.title.format:
+    global: '{aligned_index}: {audio} {current_title}'
+  tabs.title.format_pinned:
+    global: '{aligned_index}'
   window.hide_decoration:
     global: true
   window.transparent:
