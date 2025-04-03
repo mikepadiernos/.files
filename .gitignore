@@ -10,6 +10,8 @@
 
 # .filecentipede/lib/
 
+# .msmtp/*.log
+
 .neovim/nvim.modular/
 
 .openaudible/tmp/
