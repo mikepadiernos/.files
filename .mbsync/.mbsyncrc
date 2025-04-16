@@ -5,7 +5,7 @@ Port 993
 User mike@padiernos.me
 PassCmd "pass mail/mike@padiernos.me"
 AuthMechs LOGIN
-SSLType IMAPS
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 MaildirStore mike@padiernos.me-local
@@ -15,8 +15,8 @@ Inbox /home/mikepadiernos/Library/.mail/mike@padiernos.me/INBOX
 
 Channel mike@padiernos.me
 Expunge Both
-Master :mike@padiernos.me-remote:
-Slave :mike@padiernos.me-local:
+Far :mike@padiernos.me-remote:
+Near :mike@padiernos.me-local:
 Patterns * !"[Gmail]/All Mail"
 Create Both
 SyncState *
@@ -32,7 +32,7 @@ Port 993
 User mike.padiernos@gmail.com
 PassCmd "pass mail/mike.padiernos@gmail.com"
 AuthMechs LOGIN
-SSLType IMAPS
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 MaildirStore mike.padiernos@gmail.com-local
@@ -42,8 +42,8 @@ Inbox /home/mikepadiernos/Library/.mail/mike.padiernos@gmail.com/INBOX
 
 Channel mike.padiernos@gmail.com
 Expunge Both
-Master :mike.padiernos@gmail.com-remote:
-Slave :mike.padiernos@gmail.com-local:
+Far :mike.padiernos@gmail.com-remote:
+Near :mike.padiernos@gmail.com-local:
 Patterns * !"[Gmail]/All Mail"
 Create Both
 SyncState *

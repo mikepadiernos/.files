@@ -222,7 +222,7 @@ sortRole=0
 viewShade=47,27,91
 
 [lspclient]
-AllowedServerCommandLines=/usr/bin/vscode-css-languageserver --stdio
+AllowedServerCommandLines=/usr/bin/vscode-css-languageserver --stdio,/usr/bin/vscode-json-languageserver --stdio
 AutoHover=true
 AutoImport=true
 BlockedServerCommandLines=/home/mikepadiernos/.asdf/installs/lua-language-server/3.13.2/bin/lua-language-server

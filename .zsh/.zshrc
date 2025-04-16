@@ -31,10 +31,12 @@ fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $NEOVIM $OPENAUDI
 # direnv allow
 source "$ZSH"/.zsh_themes
 source "$ZSH"/.zsh_plugins
-source "$ZSH"/.zsh_homebrew
 source "$ZSH"/.zsh_bindkeys
 source "$ZSH"/.zsh_aliases
 source "$ZSH"/.zsh_completions
+
+source "$ZSH"/.zsh_homebrew
+source "$ZSH"/.zsh_drush
 
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"

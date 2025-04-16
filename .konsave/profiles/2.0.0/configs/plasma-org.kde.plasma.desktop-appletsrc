@@ -146,7 +146,7 @@ immutability=1
 lastScreen=0
 location=0
 plugin=org.kde.desktopcontainment
-wallpaperplugin=org.kde.image
+wallpaperplugin=org.kde.color
 
 [Containments][178][ConfigDialog]
 DialogHeight=540
@@ -238,7 +238,7 @@ immutability=1
 lastScreen=0
 location=0
 plugin=org.kde.desktopcontainment
-wallpaperplugin=org.kde.color
+wallpaperplugin=org.kde.image
 
 [Containments][181][ConfigDialog]
 DialogHeight=540
@@ -255,7 +255,7 @@ Color=0,0,0
 [Containments][181][Wallpaper][org.kde.image][General]
 Color=0,0,0
 FillMode=6
-Image=/home/mikepadiernos/Library/Downloads/House-FullLogo_Transparent_NoBuffer.png
+Image=/home/mikepadiernos/.local/share/wallpapers/m-alphabet-colorful-art.jpg
 SlidePaths=/home/mikepadiernos/.local/share/wallpapers/,/usr/share/wallpapers/
 
 [Containments][3]
@@ -276,7 +276,7 @@ immutability=1
 plugin=split-clock
 
 [Containments][3][Applets][255][Configuration]
-PreloadWeight=75
+PreloadWeight=90
 popupHeight=450
 popupWidth=810
 
@@ -371,7 +371,7 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][3][Applets][6][Configuration][General]
-launchers=applications:org.qutebrowser.qutebrowser.desktop,applications:zen-beta.desktop,applications:org.kde.konsole.desktop,applications:org.kde.dolphin.desktop
+launchers=
 maxStripes=2
 reverseMode=true
 
@@ -515,7 +515,7 @@ plugin=org.kde.plasma.kicker
 [Containments][40][Applets][254][Configuration]
 PreloadWeight=100
 popupHeight=486
-popupWidth=724
+popupWidth=252
 
 [Containments][40][Applets][254][Configuration][ConfigDialog]
 DialogHeight=540
@@ -523,7 +523,7 @@ DialogWidth=720
 
 [Containments][40][Applets][254][Configuration][General]
 alphaSort=true
-customButtonImage=manjaro
+customButtonImage=manjaro-settings-manager
 favoriteSystemActions=
 favoritesPortedToKAstats=true
 showIconsRootLevel=true
@@ -797,7 +797,7 @@ plugin=org.kde.plasma.kicker
 [Containments][52][Applets][91][Configuration]
 PreloadWeight=100
 popupHeight=486
-popupWidth=252
+popupWidth=646
 
 [Containments][52][Applets][91][Configuration][ConfigDialog]
 DialogHeight=540
@@ -821,7 +821,7 @@ popupHeight=324
 popupWidth=324
 
 [Containments][52][Applets][96][Configuration][General]
-history=#0b0b0b,#86d687,#feafae,#d6d687,#86d687,#9d9de5,#d786d6,#2f2f2f,#503330
+history=#11110f,#0b0b0b,#86d687,#feafae,#d6d687,#86d687,#9d9de5,#d786d6,#2f2f2f
 
 [Containments][52][General]
 AppletOrder=91;105;89;59;53;55;57;54;220;224;96;165;211;226;243;56
@@ -913,7 +913,7 @@ immutability=1
 plugin=ChatAI-Plasmoid
 
 [Containments][60][Applets][267][Configuration]
-PreloadWeight=60
+PreloadWeight=100
 popupHeight=702
 popupWidth=504
 
@@ -949,7 +949,7 @@ DialogWidth=720
 [Containments][60][Applets][88][Configuration][General]
 groupingAppIdBlacklist=teams.desktop
 groupingLauncherUrlBlacklist=applications:teams.desktop
-launchers=applications:org.qutebrowser.qutebrowser.desktop,applications:org.kde.konsole.desktop,applications:org.kde.dolphin.desktop
+launchers=
 maxStripes=2
 reverseMode=true
 separateLaunchers=false
@@ -967,7 +967,7 @@ immutability=1
 lastScreen=1
 location=5
 plugin=org.kde.plasma.private.systemtray
-popupHeight=1360
+popupHeight=1357
 popupWidth=479
 wallpaperplugin=org.kde.image
 
@@ -991,7 +991,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][65][Applets][128][Configuration]
-PreloadWeight=0
+PreloadWeight=5
 
 [Containments][65][Applets][139][Configuration]
 PreloadWeight=42
@@ -1042,7 +1042,17 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][65][Applets][242][Configuration]
-PreloadWeight=65
+PreloadWeight=75
+
+[Containments][65][Applets][269]
+immutability=1
+plugin=org.kde.plasma.volume
+
+[Containments][65][Applets][269][Configuration]
+PreloadWeight=70
+
+[Containments][65][Applets][269][Configuration][General]
+migrated=true
 
 [Containments][65][Applets][66][Configuration]
 PreloadWeight=42
@@ -1128,11 +1138,11 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][65][General]
-extraItems=org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.kde.kscreen,org.kde.plasma.battery,org.biglinux.micnoise,com.github.exequtic.apdatifier,org.kde.plasma.devicenotifier
+extraItems=org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.kde.kscreen,org.kde.plasma.battery,org.biglinux.micnoise,com.github.exequtic.apdatifier,org.kde.plasma.devicenotifier,org.kde.plasma.volume
 hiddenItems=toolbox,Yakuake,org.kde.plasma.keyboardlayout,org.kde.kscreen,Fcitx,org.kde.plasma.pminhibition,org.kde.plasma.battery,KeePassXC,PersepolisDM,org.kde.plasma.bluetooth,Package Manager,CopyQ_copyq
 iconSpacing=6
 knownItems=org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.kde.plasma.volume,org.kde.kdeconnect,org.biglinux.micnoise,com.github.exequtic.apdatifier,org.kde.plasma.dockio
-shownItems=org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.brightness,KMix,martchus.syncthingplasmoid-qt6,Nextcloud,org.kde.plasma.devicenotifier
+shownItems=org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.brightness,KMix,martchus.syncthingplasmoid-qt6,Nextcloud,org.kde.plasma.devicenotifier,org.kde.plasma.volume
 
 [Containments][9]
 activityId=
@@ -1141,7 +1151,7 @@ immutability=1
 lastScreen=0
 location=6
 plugin=org.kde.plasma.private.systemtray
-popupHeight=1360
+popupHeight=1357
 popupWidth=578
 wallpaperplugin=org.kde.image
 
@@ -1173,7 +1183,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][9][Applets][127][Configuration]
-PreloadWeight=15
+PreloadWeight=35
 
 [Containments][9][Applets][13][Configuration]
 PreloadWeight=42
@@ -1280,10 +1290,20 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][9][Applets][241][Configuration]
-PreloadWeight=75
+PreloadWeight=85
 
 [Containments][9][Applets][25][Configuration]
 PreloadWeight=42
+
+[Containments][9][Applets][268]
+immutability=1
+plugin=org.kde.plasma.volume
+
+[Containments][9][Applets][268][Configuration]
+PreloadWeight=65
+
+[Containments][9][Applets][268][Configuration][General]
+migrated=true
 
 [Containments][9][Applets][35]
 immutability=1
@@ -1303,15 +1323,15 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][9][General]
-extraItems=org.kde.kscreen,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.biglinux.micnoise,com.github.exequtic.apdatifier,org.kde.plasma.devicenotifier
+extraItems=org.kde.kscreen,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.biglinux.micnoise,com.github.exequtic.apdatifier,org.kde.plasma.devicenotifier,org.kde.plasma.volume
 hiddenItems=toolbox,Yakuake,Fcitx,org.kde.plasma.keyboardlayout,org.kde.kscreen,KeePassXC,PersepolisDM,org.kde.plasma.bluetooth,Package Manager,CopyQ_copyq
 iconSpacing=6
 knownItems=org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.volume,org.kde.plasma.vault,org.kde.kdeconnect,org.biglinux.micnoise,com.github.exequtic.apdatifier,org.kde.plasma.dockio
-shownItems=org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.brightness,KMix,martchus.syncthingplasmoid-qt6,Nextcloud,org.kde.plasma.devicenotifier
+shownItems=org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.brightness,KMix,martchus.syncthingplasmoid-qt6,Nextcloud,org.kde.plasma.devicenotifier,org.kde.plasma.volume
 
 [General]
 immutability=1
 
 [ScreenMapping]
-itemsOnDisabledScreens=1,072a6305-9771-447c-b24e-d64c9d02f6bf,1,desktop:/silo-primevideo.desktop,0,64f77300-8030-47ba-8ae3-634a535b3817,5,desktop:/Steam Linux Runtime 2.0 (soldier).desktop,desktop:/silo-netflix.desktop,desktop:/Proton Hotfix.desktop,desktop:/Steam Linux Runtime 1.0 (scout).desktop,desktop:/silo-youtube.desktop,0,072a6305-9771-447c-b24e-d64c9d02f6bf,6,desktop:/Return to Monkey Island.desktop,desktop:/Guild Wars 2.desktop,desktop:/Dwarf Fortress.desktop,desktop:/Project Zomboid.desktop,desktop:/steam.desktop,desktop:/HumanitZ.desktop
-screenMapping=desktop:/Games,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e,desktop:/File Centipede.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e
+itemsOnDisabledScreens=1,072a6305-9771-447c-b24e-d64c9d02f6bf,1,desktop:/silo-primevideo.desktop,0,64f77300-8030-47ba-8ae3-634a535b3817,5,desktop:/Steam Linux Runtime 1.0 (scout).desktop,desktop:/silo-youtube.desktop,desktop:/Proton Hotfix.desktop,desktop:/silo-netflix.desktop,desktop:/Steam Linux Runtime 2.0 (soldier).desktop,0,072a6305-9771-447c-b24e-d64c9d02f6bf,6,desktop:/HumanitZ.desktop,desktop:/Project Zomboid.desktop,desktop:/steam.desktop,desktop:/Dwarf Fortress.desktop,desktop:/Guild Wars 2.desktop,desktop:/Return to Monkey Island.desktop
+screenMapping=desktop:/File Centipede.desktop,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e,desktop:/Games,0,c02c80ee-b0fe-4834-9531-569d1cf7a90e

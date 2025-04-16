@@ -1,10 +1,9 @@
 [Exceptions]
-ExceptionBorder=true
 ExceptionWindowPropertyPattern=.*
 HideTitleBar=true
 
 [Global]
-LookAndFeelSet=org.kde.klassydarktraditional.desktop
+LookAndFeelSet=org.kde.breezedark.desktop
 
 [ShadowStyle]
 ShadowColor=22,22,22

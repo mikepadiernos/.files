@@ -106,10 +106,11 @@ ForegroundPositive=0,110,40
 ForegroundVisited=69,40,134
 
 [DirSelect Dialog]
-DirSelectDialog Size=871,610
-History Items[$e]=file:///media/shared/entertainment/Music/Ringtones,file:///media/shared/entertainment/Music/Notifications,file:///media/shared/entertainment/Music/Collections,file:///media/shared/entertainment/Music/_Unsorted,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/Pictures/Screenshots,file:///media/shared/entertainment/Music,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/Public,file:$HOME/Library/__ Media/__ Entertainment/Shows,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/Videos,file:$HOME/.library,file:$HOME/.library/__ records,file:$HOME/.library/__ records,file:$HOME/.library,file:///media/pandorum,file:///media/nostromo,file:///media/yautja,file:///media/chojin,file:$HOME/.files/.openaudible,file:$HOME/.files/.openaudible,file:$HOME/Library/__ Media/Entertainment/Music,file:$HOME/Library/__ Media/Entertainment/Music
+DirSelectDialog Size=1051,610
+History Items[$e]=file:$HOME/Library/__ Downloads/Torrents,file:$HOME/Library/__ Entertainment/Shows/Beck: Mongolian Chop Squad/01 - 26,file:$HOME/Library/__ Entertainment/Shows/Beck: Mongolian Chop Squad,file:$HOME/Library/__ Entertainment/Music,file:$HOME/Library/__ Entertainment/Music,file:$HOME/Library/__ Downloads,remote:/vps.spsi.padiernos,file:$HOME/.sshfs/%22spsi.padiernos%22,file:///var/lib/os-prober/mount/.sshfs,file:$HOME/Library/Notebooks,file:$HOME/Library/Notebooks,file:$HOME/Library/Notebooks,file:///media/shared/entertainment/Shows,file:///media/shared/entertainment/Movies,file:$HOME/Library/__ Media/__ Entertainment/Movies,file:///media/shared/entertainment/Music/Ringtones,file:///media/shared/entertainment/Music/Notifications,file:///media/shared/entertainment/Music/Collections,file:///media/shared/entertainment/Music/_Unsorted,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/Pictures/Screenshots,file:///media/shared/entertainment/Music,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/Public,file:$HOME/Library/__ Media/__ Entertainment/Shows,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/Videos,file:$HOME/.library,file:$HOME/.library/__ records,file:$HOME/.library/__ records,file:$HOME/.library,file:///media/pandorum,file:///media/nostromo,file:///media/yautja,file:///media/chojin,file:$HOME/.files/.openaudible,file:$HOME/.files/.openaudible,file:$HOME/Library/__ Media/Entertainment/Music,file:$HOME/Library/__ Media/Entertainment/Music
 
 [General]
+ColorScheme=AMoleLikeEd
 ColorSchemeHash=6ed4f9785251b7630ae42ae354180997b95567e2
 LastUsedCustomAccentColor=239,225,0
 Name=Breeze
@@ -124,13 +125,10 @@ smallestReadableFont=Decima Mono Lt,8,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
 toolBarFont=Decima Mono Lt,10,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
 widgetStyle=Breeze
 
-[Icons]
-Theme=Greeze
-
 [KDE]
 AnimationDurationFactor=
 ColorScheme=BreezeLight
-LookAndFeelPackage=org.kde.klassydarktraditional.desktop
+LookAndFeelPackage=org.kde.breezedark.desktop
 ShowDeleteCommand=true
 ShowIconsInMenuItems=true
 ShowIconsOnPushButtons=true

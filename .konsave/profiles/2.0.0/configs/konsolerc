@@ -22,6 +22,9 @@ ToolButtonStyle=IconOnly
 [MainWindow][Toolbar sessionToolbar]
 ToolButtonStyle=IconOnly
 
+[MemorySettings]
+MemoryLimitValue=512
+
 [Notification Messages]
 CloseAllTabs=true
 ShowPasteHugeTextWarning=false

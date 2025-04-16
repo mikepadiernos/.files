@@ -63,5 +63,30 @@ use = "imsi32/yatline"
 rev = "600ed1f"
 hash = "fab669582f30943c59e06fe8b3bea1d2"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:mount"
+rev = "9a09505"
+hash = "dd97eede8e20e59cd2604e8006e470e2"
+
+[[plugin.deps]]
+use = "boydaihungst/pref-by-location"
+rev = "21f0c34"
+hash = "5bb928ef11a87430e5eac6a65f815e21"
+
+[[plugin.deps]]
+use = "Tyarel8/whide"
+rev = "0f3baec"
+hash = "464e9ba49e449049b73341b36bf08dcb"
+
+[[plugin.deps]]
+use = "macydnah/office"
+rev = "bcd9e9e"
+hash = "51ad32b80bc4cd496c55cd82fbfd238a"
+
+[[plugin.deps]]
+use = "boydaihungst/file-extra-metadata"
+rev = "0c061a2"
+hash = "433d4fcb211b823b44bdb00451ef4934"
+
 [flavor]
 deps = []

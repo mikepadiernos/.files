@@ -1,7 +1,5 @@
+require("mime-preview"):setup()
 require("yatline"):setup({
-	-- section_separator = { open = "", close = "" },
-	-- part_separator = { open = "", close = "" },
-	-- inverse_separator = { open = "", close = "" },
 
 	section_separator = { open = " ", close = " " },
 	part_separator = { open = " ", close = " " },
@@ -56,58 +54,6 @@ require("yatline"):setup({
 	display_header_line = false,
 	display_status_line = true,
 
-	-- header_line = {
-	-- 	left = {
-	-- 		section_a = {
-	-- 			{ type = "line", custom = false, name = "tabs", params = { "left" } },
-	-- 		},
-	-- 		section_b = {
-	-- 			{ type = "string", custom = false, name = "hovered_size" },
-	-- 		},
-	-- 		section_c = {},
-	-- 	},
-	-- 	right = {
-	-- 		section_a = {
-	-- 			{ type = "string", custom = false, name = "tab_mode" },
-	-- 		},
-	-- 		section_b = {
-	-- 			{ type = "coloreds", custom = true, name = { { "󰇥 ", "#efe100" } } },
-	-- 			-- { type = "coloreds", custom = true, name = { { "", "#373737" } } },
-	-- 			{ type = "coloreds", custom = false, name = "count" },
-	-- 			{ type = "coloreds", custom = true, name = { { "-", "#373737" } } },
-	-- 		},
-	-- 		section_c = {
-	-- 			{ type = "coloreds", custom = false, name = "permissions" },
-	-- 		},
-	-- 	},
-	-- },
-	-- status_line = {
-	-- 	left = {
-	-- 		section_a = {
-	-- 			-- { type = "coloreds", custom = true, name = { { " ", "#000000" } } },
-	-- 			{ type = "string", custom = false, name = "tab_mode" },
-	-- 		},
-	-- 		section_b = {
-	-- 			{ type = "string", custom = false, name = "hovered_size" },
-	-- 		},
-	-- 		section_c = {
-	-- 			{ type = "string", custom = false, name = "hovered_name" },
-	-- 			-- { type = "coloreds", custom = false, name = "count" },
-	-- 		},
-	-- 	},
-	-- 	right = {
-	-- 		section_a = {
-	-- 			{ type = "string", custom = false, name = "cursor_position" },
-	-- 		},
-	-- 		section_b = {
-	-- 			{ type = "string", custom = false, name = "cursor_percentage" },
-	-- 		},
-	-- 		section_c = {
-	-- 			{ type = "string", custom = false, name = "hovered_file_extension", params = { true } },
-	-- 			{ type = "coloreds", custom = false, name = "permissions" },
-	-- 		},
-	-- 	},
-	-- },
 	header_line = {
 		left = {
 			section_a = {},

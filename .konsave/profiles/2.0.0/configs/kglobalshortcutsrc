@@ -1,39 +1,15 @@
 [ActivityManager]
-_k_friendly_name=System Settings
+_k_friendly_name=Activity Manager
 switch-to-activity-072a6305-9771-447c-b24e-d64c9d02f6bf=Meta+Alt+Num+0\tMeta+Alt+Num+Ins,none,Switch to activity "__"
-switch-to-activity-64f77300-8030-47ba-8ae3-634a535b3817=Meta+Alt+Num+2,none,Switch to activity "02"
+switch-to-activity-64f77300-8030-47ba-8ae3-634a535b3817=Meta+Alt+Num+2\tMeta+Alt+Num+Down,none,Switch to activity "02"
 switch-to-activity-8ce37f0e-fb72-4c43-84ba-deca2ba1fd5f=Meta+Alt+Num+PgDown\tMeta+Alt+Num+3,none,Switch to activity "03"
-switch-to-activity-c02c80ee-b0fe-4834-9531-569d1cf7a90e=Meta+Alt+Num+1,none,Switch to activity "01"
+switch-to-activity-c02c80ee-b0fe-4834-9531-569d1cf7a90e=Meta+Alt+Num+End\tMeta+Alt+Num+1,none,Switch to activity "01"
 
 [KDE Keyboard Layout Switcher]
 Switch keyboard layout to English (US)=none,none,Switch keyboard layout to English (US)
 Switch to Last-Used Keyboard Layout=Meta+Alt+L,Meta+Alt+L,Switch to Last-Used Keyboard Layout
 Switch to Next Keyboard Layout=Meta+Alt+K,Meta+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
-
-[amarok]
-_k_friendly_name=Amarok
-decreaseVolume=none,Meta+-,Decrease Volume
-increaseVolume=none,Meta++,Increase Volume
-loveTrack=none,Meta+L,Last.fm: Love Current Track
-mute=none,Meta+M,Mute Volume
-next=none,none,Next Track
-play_pause=none,none,Play/Pause
-playlist_add=none,Meta+A,Add Media...
-prev=none,none,Previous Track
-rate1=none,Meta+1,Rate Current Track: 1
-rate2=none,Meta+2,Rate Current Track: 2
-rate3=none,Meta+3,Rate Current Track: 3
-rate4=none,Meta+4,Rate Current Track: 4
-rate5=none,Meta+5,Rate Current Track: 5
-replay=none,none,Restart current track
-seek_backward_medium=Meta+Shift+-,Meta+Shift+-,Seek Backward by 10.00 seconds seconds
-seek_forward_medium=Meta+Shift++,Meta+Shift++,Seek Forward by 10.00 seconds seconds
-showNotificationPopup=Meta+O,Meta+O,Show Notification Popup
-skipTrack=none,Meta+S,Last.fm: Skip Current Track
-stop=none,none,Stop
-stop_after_current=Meta+Shift+V,Meta+Shift+V,Stop after current Track
-toggleMainWindow=none,none,Toggle Main Window
 
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
@@ -46,7 +22,7 @@ Toggle Touchpad=Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku,Touchpad Toggle\tTouc
 _k_friendly_name=Touchpad
 
 [kmix]
-_k_friendly_name=KMix
+_k_friendly_name=Audio Volume
 decrease_microphone_volume=Alt+Num+-\tMicrophone Volume Down,Microphone Volume Down,Decrease Microphone Volume
 decrease_volume=Meta+Num+-\tVolume Down,Volume Down,Decrease Volume
 decrease_volume_small=Ctrl+Num+-\tShift+Volume Down,Shift+Volume Down,Decrease Volume by 1%
@@ -71,6 +47,11 @@ Reboot Without Confirmation=none,,Reboot Without Confirmation
 Shut Down=none,,Shut Down
 _k_friendly_name=Session Management
 
+[ktorrent]
+_k_friendly_name=KTorrent
+queue_suspend=Alt+Shift+P,Alt+Shift+P,Suspend Torrents
+show_kt=Alt+Shift+T,Alt+Shift+T,Show/Hide KTorrent
+
 [kwin]
 Activate Window Demanding Attention=Meta+Ctrl+A,Meta+Ctrl+A,Activate Window Demanding Attention
 Alt-F4-Desktop=none,none,Close Window or show Logout Option
@@ -85,38 +66,38 @@ ExposeClassCurrentDesktop=none,none,Toggle Present Windows (Window class on curr
 Grid View=Meta+G,Meta+G,Toggle Grid View
 Increase Opacity=none,,Increase Opacity of Active Window by 5%
 KWin Script: Sticky Window Snapping: enable/disable=Ctrl+Alt+Num+0\tCtrl+Alt+Num+Ins,none,KWin Script: Sticky Window Snapping: enable/disable
-KWin Script: Sticky Window Snapping: enable/disable temporarily=none,none,KWin Script: Sticky Window Snapping: enable/disable temporarily
-KZones: Activate layout 1=Meta+Num+End\tCtrl+Alt+Num+End,none,KZones: Activate layout 1
-KZones: Activate layout 2=Ctrl+Alt+Num+Down\tMeta+Num+Down,none,KZones: Activate layout 2
-KZones: Activate layout 3=Meta+Num+PgDown\tCtrl+Alt+Num+PgDown,none,KZones: Activate layout 3
-KZones: Activate layout 4=Ctrl+Alt+Num+Left\tMeta+Num+Left,none,KZones: Activate layout 4
-KZones: Activate layout 5=Meta+Num+Clear\tCtrl+Alt+Num+Clear,none,KZones: Activate layout 5
-KZones: Activate layout 6=Ctrl+Alt+Num+Right\tMeta+Num+Right,none,KZones: Activate layout 6
-KZones: Activate layout 7=Ctrl+Alt+Num+Home\tMeta+Num+Home,none,KZones: Activate layout 7
-KZones: Activate layout 8=Meta+Num+Up\tCtrl+Alt+Num+Up,none,KZones: Activate layout 8
-KZones: Activate layout 9=Ctrl+Alt+Num+PgUp\tMeta+Num+PgUp,none,KZones: Activate layout 9
-KZones: Cycle layouts=Ctrl+Alt+D\tMeta+],none,KZones: Cycle layouts
-KZones: Cycle layouts (reversed)=Ctrl+Alt+Shift+D\tMeta+[,none,KZones: Cycle layouts (reversed)
+KWin Script: Sticky Window Snapping: enable/disable temporarily=Ctrl+Alt+Shift+Num+Ins,none,KWin Script: Sticky Window Snapping: enable/disable temporarily
+KZones: Activate layout 1=Ctrl+Alt+Num+End\tCtrl+Alt+Num+1\tMeta+Num+End,none,KZones: Activate layout 1
+KZones: Activate layout 2=Meta+Num+Down\tCtrl+Alt+Num+2\tCtrl+Alt+Num+Down,none,KZones: Activate layout 2
+KZones: Activate layout 3=Ctrl+Alt+Num+3\tMeta+Num+PgDown\tCtrl+Alt+Num+PgDown,none,KZones: Activate layout 3
+KZones: Activate layout 4=Ctrl+Alt+Num+4\tCtrl+Alt+Num+Left\tMeta+Num+Left,none,KZones: Activate layout 4
+KZones: Activate layout 5=Ctrl+Alt+Num+Clear\tMeta+Num+Clear\tCtrl+Alt+Num+5,none,KZones: Activate layout 5
+KZones: Activate layout 6=Ctrl+Alt+Num+Right\tMeta+Num+Right\tCtrl+Alt+Num+6,none,KZones: Activate layout 6
+KZones: Activate layout 7=Meta+Num+Home\tCtrl+Alt+Num+7\tCtrl+Alt+Num+Home,none,KZones: Activate layout 7
+KZones: Activate layout 8=Meta+Num+Up\tCtrl+Alt+Num+Up\tCtrl+Alt+Num+8,none,KZones: Activate layout 8
+KZones: Activate layout 9=Ctrl+Alt+Num+9\tMeta+Num+PgUp\tCtrl+Alt+Num+PgUp,none,KZones: Activate layout 9
+KZones: Cycle layouts=Ctrl+Alt+D\tMeta+]\tCtrl+Alt+],none,KZones: Cycle layouts
+KZones: Cycle layouts (reversed)=Meta+[\tCtrl+Alt+[\tCtrl+Alt+Shift+D,none,KZones: Cycle layouts (reversed)
 KZones: Move active window down=none,none,KZones: Move active window down
 KZones: Move active window left=none,none,KZones: Move active window left
 KZones: Move active window right=none,none,KZones: Move active window right
 KZones: Move active window to next zone=Ctrl+Alt+Right,none,KZones: Move active window to next zone
 KZones: Move active window to previous zone=Ctrl+Alt+Left,none,KZones: Move active window to previous zone
-KZones: Move active window to zone 1=none,none,KZones: Move active window to zone 1
-KZones: Move active window to zone 2=none,none,KZones: Move active window to zone 2
-KZones: Move active window to zone 3=none,none,KZones: Move active window to zone 3
-KZones: Move active window to zone 4=none,none,KZones: Move active window to zone 4
-KZones: Move active window to zone 5=none,none,KZones: Move active window to zone 5
-KZones: Move active window to zone 6=none,none,KZones: Move active window to zone 6
-KZones: Move active window to zone 7=none,none,KZones: Move active window to zone 7
-KZones: Move active window to zone 8=none,none,KZones: Move active window to zone 8
-KZones: Move active window to zone 9=none,none,KZones: Move active window to zone 9
+KZones: Move active window to zone 1=Ctrl+Alt+Shift+Num+End,none,KZones: Move active window to zone 1
+KZones: Move active window to zone 2=Ctrl+Alt+Shift+Num+Down,none,KZones: Move active window to zone 2
+KZones: Move active window to zone 3=Ctrl+Alt+Shift+Num+PgDown,none,KZones: Move active window to zone 3
+KZones: Move active window to zone 4=Ctrl+Alt+Shift+Num+Left,none,KZones: Move active window to zone 4
+KZones: Move active window to zone 5=Ctrl+Alt+Shift+Num+Clear,none,KZones: Move active window to zone 5
+KZones: Move active window to zone 6=Ctrl+Alt+Shift+Num+Right,none,KZones: Move active window to zone 6
+KZones: Move active window to zone 7=Ctrl+Alt+Shift+Num+Home,none,KZones: Move active window to zone 7
+KZones: Move active window to zone 8=Ctrl+Alt+Shift+Num+Up,none,KZones: Move active window to zone 8
+KZones: Move active window to zone 9=Ctrl+Alt+Shift+Num+PgUp,none,KZones: Move active window to zone 9
 KZones: Move active window up=none,none,KZones: Move active window up
 KZones: Snap active window=Meta+Shift+Space,none,KZones: Snap active window
 KZones: Snap all windows=Meta+Space,none,KZones: Snap all windows
 KZones: Switch to next window in current zone=none,none,KZones: Switch to next window in current zone
 KZones: Switch to previous window in current zone=none,none,KZones: Switch to previous window in current zone
-KZones: Toggle zone overlay=Ctrl+Alt+C,none,KZones: Toggle zone overlay
+KZones: Toggle zone overlay=none,none,KZones: Toggle zone overlay
 Kill Window=Meta+Ctrl+Esc,Meta+Ctrl+Esc,Kill Window
 KrohnkiteBTreeLayout=none,none,Krohnkite: BTree Layout
 KrohnkiteColumnsLayout=none,none,Krohnkite: Columns Layout
@@ -299,8 +280,8 @@ Window Custom Quick Tile Left=none,,Custom Quick Tile Window to the Left
 Window Custom Quick Tile Right=none,,Custom Quick Tile Window to the Right
 Window Custom Quick Tile Top=none,,Custom Quick Tile Window to the Top
 Window Fullscreen=Meta+Ctrl+Num+5,,Make Window Fullscreen
-Window Grow Horizontal=none,,Expand Window Horizontally
-Window Grow Vertical=none,,Expand Window Vertically
+Window Grow Horizontal=Ctrl+Alt+H,,Expand Window Horizontally
+Window Grow Vertical=Ctrl+Alt+V,,Expand Window Vertically
 Window Lower=none,,Lower Window
 Window Maximize=Ctrl+Alt+Up\tMeta+PgUp,Meta+PgUp,Maximize Window
 Window Maximize Horizontal=none,,Maximize Window Horizontally
@@ -400,7 +381,7 @@ new instance for entry 10=Meta+Ctrl+0,Meta+Ctrl+0,New Instance for Entry 10
 new instance for entry 11=Meta+Ctrl+Z,Meta+Ctrl+Z,New Instance for Entry 11
 new instance for entry 12=none,Meta+Ctrl+X,New Instance for Entry 12
 new instance for entry 13=Meta+Ctrl+C,Meta+Ctrl+C,New Instance for Entry 13
-new instance for entry 14=Meta+Ctrl+V,Meta+Ctrl+V,New Instance for Entry 14
+new instance for entry 14=none,Meta+Ctrl+V,New Instance for Entry 14
 new instance for entry 15=Meta+Ctrl+B,Meta+Ctrl+B,New Instance for Entry 15
 new instance for entry 16=none,Meta+Ctrl+N,New Instance for Entry 16
 new instance for entry 17=none,Meta+Ctrl+M,New Instance for Entry 17
@@ -428,6 +409,17 @@ playmedia=none,,Play media playback
 playpausemedia=Media Play,Media Play,Play/Pause media playback
 previousmedia=Media Previous,Media Previous,Media playback previous
 stopmedia=Media Stop,Media Stop,Stop media playback
+
+[org.chromium.Chromium]
+_k_friendly_name=org.chromium.Chromium
+createTab=none,none,Create new tab
+goBack=none,none,Go back in history
+goForward=none,none,Go forward in history
+previousTab=none,none,Go one tab left
+quickNext=none,none,Go one tab right
+reloadTab=none,none,Reload tab
+userCustomized1=none,none,Custom shortcut 1
+userCustomized2=none,none,Custom shortcut 2
 
 [org_kde_powerdevil]
 Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,Decrease Keyboard Brightness
@@ -494,10 +486,13 @@ _launch=none
 _launch=Ctrl+Num+Ins\tCtrl+Num+0\tMeta+Num+0\tMeta+Num+Ins
 
 [services][org.kde.kcharselect.desktop]
-_launch=Meta+Alt+Ins
+_launch=Meta+Num+Enter\tCtrl+Num+Enter
 
 [services][org.kde.konsole.desktop]
 _launch=Ctrl+Alt+T\tMeta+Ctrl+/
+
+[services][org.keepassxc.KeePassXC.desktop]
+_launch=Ctrl+Num+Del\tMeta+Num+Del\tCtrl+Num+.\tMeta+Num+.
 
 [services][qterminal.desktop]
 Dropdown=Ctrl+Shift+Space
@@ -505,11 +500,25 @@ SoftwareRender=Ctrl+Shift+R
 
 [vivaldi-stable]
 _k_friendly_name=vivaldi-stable
+activate=Alt+P,Alt+P,Pick color from web page (Smart Color Picker)
 autofill_card=none,none,Autofill the last used card for the current website
 autofill_identity=none,none,Autofill the last used identity for the current website
-autofill_login=none,Ctrl+Shift+L,Autofill the last used login for the current website
-generate_password=Ctrl+Shift+9,Ctrl+Shift+9,Generate and copy a new random password to the clipboard
+autofill_login=,Ctrl+Shift+L,Autofill the last used login for the current website
+choose_credential_fields=none,none,Choose Custom Login Fields
+fill_password=Alt+Shift+I,Alt+Shift+I,Fill Password Only
+fill_totp=Alt+Shift+O,Alt+Shift+O,Fill TOTP
+fill_username_password=Alt+Shift+U,Alt+Shift+U,Fill Username and Password
+generate_password=,Ctrl+Shift+9,Generate and copy a new random password to the clipboard
 lock_vault=none,none,Lock the vault
+redetect_fields=none,none,Redetect login fields
+reload_extension=none,none,Reload
+request_autotype=none,none,Request Global Auto-Type
+retrive_credentials_forced=none,none,Reopen database
+saveLargestImage=Ctrl+Shift+L,Ctrl+Shift+L,Save screenshot to Koofr
+save_credentials=none,none,Save Credentials
+screenshot=Ctrl+Shift+K,Ctrl+Shift+K,Save screenshot to Koofr
+show_password_generator=Alt+Shift+G,Alt+Shift+G,Show Password Generator
+toggle-vim-mode=,Alt+V,Toggle plugin activation.
 
 [wacomtablet]
 Map to fullscreen=Meta+Ctrl+F,Meta+Ctrl+F,Map to fullscreen

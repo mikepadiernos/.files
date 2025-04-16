@@ -1,0 +1,20 @@
+# abook addressbook file
+
+[format]
+program=abook
+version=0.6.2
+
+
+[0]
+name=Padiernos, Rachel
+email=rach@padiernos.me,rmpadiernos@gmail.com
+nick=Babe, Mommy
+address=14 Exeter Ave.
+city=Lynbrook
+state=NY
+zip=11563
+country=USA
+mobile=3479716368
+url=https://rach.padiernos.me
+groups=Padiernos Family
+

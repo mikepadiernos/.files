@@ -23,7 +23,7 @@ DialogWidth=720
 positions={"3440x1440":[]}
 
 [PlasmaViews][Panel 3]
-alignment=132
+alignment=2
 floating=0
 panelLengthMode=2
 panelVisibility=2
@@ -61,7 +61,7 @@ thickness=32
 floating=0
 panelLengthMode=2
 panelOpacity=2
-panelVisibility=2
+panelVisibility=0
 
 [PlasmaViews][Panel 60][Defaults]
 maxLength=1408
