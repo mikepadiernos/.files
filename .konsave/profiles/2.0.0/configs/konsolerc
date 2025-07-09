@@ -11,6 +11,7 @@ ConfigVersion=1
 AllowMenuAccelerators=true
 FocusFollowsMouse=true
 RemoveWindowTitleBarAndFrame=true
+ShowWindowTitleOnTitleBar=true
 UseSingleInstance=true
 
 [MainWindow]
@@ -27,6 +28,7 @@ MemoryLimitValue=512
 
 [Notification Messages]
 CloseAllTabs=true
+CloseSingleTab=true
 ShowPasteHugeTextWarning=false
 
 [SaveHistory Settings]
@@ -43,9 +45,8 @@ SplitDragHandleSize=SplitDragHandleMedium
 CloseTabButton=None
 CloseTabOnMiddleMouseButton=true
 ExpandTabWidth=true
-NewTabBehavior=PutNewTabAfterCurrentTab
 TabBarPosition=Bottom
-TabBarVisibility=AlwaysHideTabBar
+TabBarVisibility=AlwaysShowTabBar
 
 [ThumbnailsSettings]
 ThumbnailAlt=true

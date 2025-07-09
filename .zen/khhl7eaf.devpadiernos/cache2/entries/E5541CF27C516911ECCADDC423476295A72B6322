@@ -1,0 +1,456 @@
+$(document).ready(function() {
+	
+	if (window.location.href.indexOf("hindi") > -1) {
+       $jsonFilePath = '../hindi/';
+    } else { 
+	   $jsonFilePath = 'sbijava/';
+	}
+	
+	//RINB Video
+	$(".rinb_video").click(function(){
+		$("#inb-list").toggle("slow");
+	});
+	
+	//Scroll Message
+	setTimeout(function(){
+		$.getJSON($jsonFilePath + 'js/scroll_data.json', function(v){
+			if( v.scroll_message.scroll_value =='' || v.scroll_message.flag === 'false') {
+				$('#message p').hide();
+			} 
+			else {
+				$('#message p').html(v.scroll_message.scroll_description);	
+			}
+		});
+	},300);
+	
+	//Dynamic Banner - Json
+	$.getJSON($jsonFilePath + 'js/banner_data.json', function(data) {
+		var indicators='', inner_items='';
+		var carouselpausebtn = "<li style='background:none; border:none; list-style:none'><button id='pauseButton' type='button' class='btn btn-default btn-xs'  role='button' aria-label='Carousel pause'><span><img src='" + $jsonFilePath +"images/icon-pause.png'alt='Pause'></span></button></li>";
+        var carouselplaybtn = "<li style='background:none; border:none; list-style:none'><button id='playButton' type='button' class='btn btn-default btn-xs'  role='button' aria-label='Carousel play'><span><img src='" + $jsonFilePath + "images/icon-play.png'alt='Play'></span></button></li>";		
+		$.each(data.items, function(_ix, _item) {
+			if(_item.display == 'true') {
+				var _active = (_ix==0 ? 'active' : '');
+				var inner_item = '<div class="carousel-item ' +_active+ '"><div class="fill">';
+				var indicator_title = _item.img_title || 'banner indicator';
+				
+				indicators += '<li data-bs-target="#sbihomeBannerCarousel" data-bs-slide-to="'+ _ix +'" class="'+ _active +'">&nbsp;</li>';
+				
+				if(_item.html_content) {
+					inner_item += _item.html_content;
+				}
+				else {
+					var _src = $jsonFilePath + "images/" +_item.banner_img;
+					var _img = '<img title="'+ _item.img_title +'" alt="'+ _item.img_alt +'" src="'+ _src +'">';
+
+					if(_item.a_href_link) {
+						var a_img = '<a href="'+ _item.a_href_link +'" class="banner_link" target="_blank">'+ _img + '</a>';
+						inner_item += a_img;
+					}
+					else {
+						inner_item += _img;
+					}
+				}
+				inner_item += '</div></div>';
+				inner_items += inner_item;
+			}
+		});
+		//
+		$(".carousel-inner").html( inner_items );
+		$(".carousel-indicators").html(indicators + carouselpausebtn + carouselplaybtn);
+		//
+		const sbihomeBannerCarousel = document.querySelector('#sbihomeBannerCarousel');
+		const carousel = new bootstrap.Carousel(sbihomeBannerCarousel, {interval:8000, ride:'carousel', cycle:true, pause: false});
+		
+		$('#playButton').click(function () {
+			$('#sbihomeBannerCarousel').carousel('cycle');
+			//$('#pauseButton').hide();
+			//	$('#playButton').show();
+		});
+		$('#pauseButton').click(function () {
+			$('#sbihomeBannerCarousel').carousel('pause');
+			//	$('#playButton').show();
+			//$('#pauseButton').hide();
+		});
+	});
+	//Dynamic Banner - Json - Ends
+	
+	//Anchor Tag
+	$('A[rel="_blank"]').each(function(){
+        $(this).attr('target', '_blank');
+    });
+	
+	//Custom Select
+	$(".custom-select").each(function(){
+		$(this).wrap("<span class='select-wrapper'></span>");
+		$(this).after("<span class='holder'></span>");
+	});
+	
+	$(".custom-select").change(function(){
+		var selectedOption = $(this).find(":selected").text();
+		$(this).next(".holder").text(selectedOption);
+	}).trigger('change');
+	
+	// Accordian - Netbanking branches
+	/* $('.useful_link a').click(function(){
+		if($('#netbanking_popup').is(':hidden')) {
+			$('#netbanking_popup').slideDown(400);
+			$('#header').animate({'marginTop':'0px'});
+			$(this).addClass('netbanking_button_up');
+		}else{
+			$('#netbanking_popup').slideUp(400);
+			$('#header').animate({'marginTop':'0px'});
+			$(this).removeClass('netbanking_button_up');
+		}
+	});
+	
+	$('.useful_link_mob a').click(function(){
+		$('#netbanking_popup_mob').css('height','100%');
+	});
+	$('.closebtn').click(function(){
+		$('#netbanking_popup_mob').css('height','0%');
+	}); */
+		
+});
+
+//Corporate Dropdown
+function goToNewPage() {
+	var corporateValue = document.getElementById('target').value;
+	if(corporateValue == "Select") {
+		alert("Please Select Corporate Type");
+	}
+	else {
+		if(document.getElementById('target').value){
+			window.location.href = document.getElementById('target').value;
+		}
+	}
+}
+
+//New User Click
+function fnNewUserClick(){
+      /* var retVal = confirm("If you have already obtained Pre-Printed Kit  from the branch for activating INB facility , please don't proceed  with this link. You can input userid and password given in PPK on normal login screen.");
+      if( retVal == true ){ 
+            window.open('https://retail.onlinesbi.sbi/retail/userdrivenregdetailswin.htm','aboutus','width=920, height=500 ,status=1, scrollbars=1, location=0');
+      } */
+	  
+	  window.open('https://retail.onlinesbi.sbi/retail/newuserreg.htm','aboutus','width=920, height=500 ,status=1, scrollbars=1, location=0');
+	  
+}
+
+//Salary Account
+function salaryClick(){
+	var salVal = confirm("Salary Account  link is meant for opening salary account of such employee(s), whose employer have tie up with SBI under Corporate Salary Package. If your employer does not have such tie-up, please go to Regular Savings Account link.");
+	if( salVal == true ){ 
+		window.open('https://www.sbiyono.sbi/wps/portal/accountopening/digital-account#!/aoCustomerOpenOVD');
+	}
+}
+
+// BOOTSTRAP-5.x current-grid ------------------------------------ STARTS
+var bs5grid = [
+'<div id="bs5-grid" style="visibility:hidden; position:fixed; top:-9876543210px; left:-9876543210px;">',
+	'<div data-bs5-grid="xxl" data-device="desktop" class="bs5-grid d-none d-xxl-block">',
+		'<span class="d-none">CURRENT-BOOOTSTRAP-5.x-GRID = XXL</span>',
+	'</div>',
+	'<div data-bs5-grid="xl"  data-device="desktop" class="bs5-grid d-none d-xl-block d-xxl-none">',
+		'<span class="d-none">CURRENT-BOOOTSTRAP-5.x-GRID = XL</span>',
+	'</div>',
+	'<div data-bs5-grid="lg"  data-device="desktop" class="bs5-grid d-none d-lg-block d-xl-none">',
+		'<span class="d-none">CURRENT-BOOOTSTRAP-5.x-GRID = LG</span>',
+	'</div>',
+	'<div data-bs5-grid="md"  data-device="mobile" class="bs5-grid d-none d-md-block d-lg-none">',
+		'<span class="d-none">CURRENT-BOOOTSTRAP-5.x-GRID = MD</span>',
+	'</div>',
+	'<div data-bs5-grid="sm"  data-device="mobile" class="bs5-grid d-none d-sm-block d-md-none">',
+		'<span class="d-none">CURRENT-BOOOTSTRAP-5.x-GRID = SM</span>',
+	'</div>',
+	'<div data-bs5-grid="xs"  data-device="mobile" class="bs5-grid d-block d-sm-none">',
+		'<span class="d-none">CURRENT-BOOOTSTRAP-5.x-GRID = XS</span>',
+	'</div>',
+'</div>'];
+var $bs5grid = $(bs5grid.join(''));
+
+function get_bs5_grid_name() {
+	window.bs5_grid = $('.bs5-grid:visible').data('bs5Grid');
+	return window.bs5_grid;
+}
+function get_bs5_device() {
+	return $('.bs5-grid:visible').data('device');
+}
+function set_bs5_grid_name() {
+	var gn = get_bs5_grid_name();
+	var dn = get_bs5_device();
+	
+	$('#bs5-grid').data('gridName', gn).attr('data-grid-name', gn);
+	$('#bs5-grid').data('deviceName', dn).attr('data-device-name', dn);
+	
+	$('body').data('gridName', gn).attr('data-grid-name', gn);
+	$('body').data('deviceName', dn).attr('data-device-name', dn);
+}
+
+
+$(document).ready(function() {
+	$('body').append($bs5grid);
+	set_bs5_grid_name();
+	
+	$(window).resize(function() {
+		set_bs5_grid_name();
+	});
+});
+
+// BOOTSTRAP-5.x current-grid ------------------------------------ ENDS
+
+
+// SHOW MORE / LESS ITEMS ---------------------------------------- STARTS
+function setGridColsClasses(_lm) {
+	var $rows		= $(_lm).find('.row');
+	var _lessItems	= $rows.find('.col').length;
+	var _gridObj	= $(_lm).data('lessRowsGridCols').split(/\s+/);
+	var _lessObj 	= {
+						xs: {rows:0, cols:1, items:_lessItems},
+						sm: {rows:0, cols:1, items:_lessItems},
+						md: {rows:0, cols:1, items:_lessItems},
+						lg: {rows:0, cols:1, items:_lessItems},
+						xl: {rows:0, cols:1, items:_lessItems},
+						xxl:{rows:0, cols:1, items:_lessItems}
+	};
+	
+	$(_lm).data('lessItems', _lessItems).attr('data-less-items', _lessItems);
+	
+	$.each(_gridObj, function(ix, val) {
+		var i0 = val.indexOf('-'), i1 = val.lastIndexOf('-');
+		var gn = val.substring(i0+1, i1);
+		var _r = parseInt(val.substring(0, i0));	if(isNaN( _r )) {_r = 0;}
+		var _c = parseInt(val.substring(i1 + 1));	if(isNaN( _c )) {_c = 1;}
+		var _rc = _r * _c;
+		
+		if(_rc <= 0 || _rc >= _lessItems) {
+			_rc = _lessItems;
+		}
+		
+		_lessObj[ gn ] = {rows:_r, cols:_c, items:_rc};
+	});
+	$(_lm).data('lessObj', _lessObj);
+	
+	$.each(_lessObj, function(prop, valObj) {
+		var className = 'row-cols-' + (prop == 'xs' ? '' : prop+'-') + valObj['cols'];
+		$rows.addClass( className );
+	});
+}
+function setLessMoreGroups(_lm) {
+	var gridObj		= $(_lm).data('lessRowsGridCols');
+	var $rows		= $(_lm).find('.row');
+	var $moreGroup	= $(_lm).prepend( $rows.clone().addClass('moreGroup collapse') );
+	var $lessGroup	= $(_lm).prepend( $rows.addClass('lessGroup') );
+	
+	$(_lm).find($(_lm).data( 'btnCollapse' ))
+		.attr('data-bs-toggle', 'collapse')
+		.attr('data-bs-target', _lm + ' .moreGroup');
+}
+function setCollapseBtn(_lm) {
+	var $lm 		 = $(_lm);
+	var $btn = $(_lm).find($(_lm).data( 'btnCollapse' ));
+		$btn.removeClass('d-none');
+	
+	if($btn.length > 0) {
+		var _lessObj = $lm.data('lessObj');
+		var gn = get_bs5_grid_name();
+		
+		//console.log(gn, _lessObj[ gn ]['items'], $(_lm).data('lessItems'));
+		if(_lessObj[ gn ]['items'] >= $(_lm).data('lessItems')) {
+			$btn.addClass('d-none');
+		}
+	}
+}
+function showLessMoreItems(_lm) {
+	var $lm = $(_lm);
+	var gn 	= get_bs5_grid_name();
+	var _lessObj 	= $lm.data('lessObj');
+	//
+	var _len = _lessObj[gn]['items'];
+	//
+	var $lessItems 		= $lm.find('.lessGroup .col');
+	var $moreItems 		= $lm.find('.moreGroup .col');
+	
+	$lessItems.addClass('d-none'), $moreItems.addClass('d-none');
+	
+	if(_len > 0) {
+		$lessItems.slice(0, _len).removeClass('d-none');
+		$moreItems.slice(_len).removeClass('d-none');
+	}
+	else {
+		$lessItems.slice(0, $lessItems.length).removeClass('d-none');
+	}	
+}
+function collapseMoreItems(_lm) {
+	$(_lm).find('.moreGroup').removeClass('show');
+	$(_lm).find($(_lm).data( 'btnCollapse' )).attr('aria-expanded', 'false');
+}
+function startLessMoreItems(_lm) {
+	//
+	setGridColsClasses(_lm);
+	//
+	setLessMoreGroups(_lm);
+	//
+	showLessMoreItems(_lm);
+	//
+	setCollapseBtn(_lm);
+	//
+	$(window).resize(function() {
+		showLessMoreItems(_lm);
+		//
+		collapseMoreItems(_lm);
+		//
+		setCollapseBtn(_lm);
+	});
+}
+$(document).ready(function() {
+	var useful_links = '#useful-links';
+	if( $(useful_links) ) startLessMoreItems( useful_links );
+});
+// SHOW MORE / LESS ITEMS ---------------------------------------- ENDS
+
+
+//<script id="js-bs5.3.3-navbar"> -------------------------------- STARTS
+/*
+function isCollapsible(_navbar) {
+	return $(_navbar).css('flex-direction') == 'column';
+}
+function setCollapsible(_navbar) {
+	var menu = isCollapsible(_navbar) ? 'mobile' : 'desktop';
+	var $navcollapse = $(_navbar).closest('.navbar-collapse');
+	$navcollapse.data('menu', menu).attr('data-menu', menu);
+	
+	setDropdownWidth(_navbar);
+}
+function getOffset($elm, height) {
+	var old;
+	if ($elm.css('display') == 'none') {
+		old = { position: $elm[0].style.position, visibility: $elm[0].style.visibility };
+		$elm.css({ position: 'absolute', visibility: 'hidden' }).show();
+	}
+	var box = $elm[0].getBoundingClientRect && $elm[0].getBoundingClientRect(),
+		val = box && (height ? box.height || box.bottom - box.top : box.width || box.right - box.left);
+	if (!val && val !== 0) {
+		val = height ? $elm[0].offsetHeight : $elm[0].offsetWidth;
+	}
+	if (old) {
+		$elm.hide().css(old);
+	}
+	return val;
+}
+function getUlWidth($elm) {
+	return getOffset($elm);
+}
+function setDropdownWidth(_navbar) {
+	var menu = $(_navbar).closest('.navbar-collapse').data('menu');
+	var minW=140, minWpx='140px';
+	var maxW=280, maxWpx='280px';
+	
+	$('#navigation ul.dropdown-menu').each(function(ix, elt) {
+		var $ul=$(elt), ulW=0;
+		//
+		$ul.addClass('menu-nowrap').css({width:'auto', minWidth:'', maxWidth:''});
+		ulW = getUlWidth($ul);
+		//console.log(ulW, maxW, $ul.find('li:first-child a').text());
+		//
+		if(minW) {
+			$ul.css({minWidth: minWpx});
+		}
+		if(menu == 'desktop') {
+			if(maxW) {
+				$ul.css({maxWidth: maxWpx});
+				//console.log(getUlWidth($ul), );
+				
+				if(ulW > getUlWidth($ul)) {
+					$ul.removeClass('menu-nowrap').css({width:maxWpx});
+				}
+			}
+		}
+	});
+	
+	if(menu == 'mobile') {
+		$('.navbar-collapse[data-menu="mobile"] .dropdown > a').on('click', function() {
+			$(this).closest('.dropdown').toggleClass('open');
+		});
+	}
+}
+$(document).ready(function() {
+	var navbar_nav = '#navigation .navbar-nav';
+	if( $(navbar_nav) ) {
+		setCollapsible(navbar_nav);
+		$(window).on('resize', function() {
+			setCollapsible( navbar_nav );
+		});
+	}
+});
+*/
+//<script id="js-bs5.3.3-navbar"> -------------------------------- ENDS
+
+
+// <script id="js-bs5.3.3-login-options"> ------------------------ STARTS
+function goToInbPage(elt, msg) {
+	var url = '';
+	var $elt = $(elt);
+	
+	if($elt.length == 1) url=$elt.data('value');
+	
+	if(url.length > 10) window.location.href=url;
+	else msg=msg || 'Not a valid selection', alert(msg);
+}
+
+$(document).ready(function() {
+	var login_dropdown = '.bootstrap-select ul.dropdown-menu li a.dropdown-item';
+	if( $(login_dropdown) ) {
+		$(login_dropdown).on('click', function() {
+			var $newDDI = $(this);
+			var newHtml = $newDDI.html();
+			
+			$newDDI.closest('ul.dropdown-menu').find('a.dropdown-item').removeClass('selected');
+			$newDDI.addClass('selected');
+			
+			$newDDI.closest('.bootstrap-select').find('.dropdown-toggle .dropdown-item-selected').html(newHtml+' <span class="bs-caret"><span class="caret"></span></span>');
+		});
+
+		var $corpDropdownItem = $('.bootstrap-select ul.dropdown-menu li a.dropdown-item.selected');
+		if($corpDropdownItem.length == 0) {
+			$corpDropdownItem = $('.bootstrap-select ul.dropdown-menu li:first-child a.dropdown-item');
+		}
+		$corpDropdownItem.trigger('click');
+	}
+});
+// <script id="js-bs5.3.3-login-options"> ------------------------ ENDS
+Ú-”ú^      hT65hT66HP¸¿       v    O^userContextId=1&partitionKey=%28https%2Conlinesbi.sbi%29,:https://www.onlinesbi.sbi/sbijava/js/generic_common.js?v=3 strongly-framed 1 security-info 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 request-method GET response-head HTTP/1.1 200 OK
+Date: Thu, 19 Jun 2025 16:09:26 GMT
+X-Frame-Options: SAMEORIGIN
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Referrer-Policy: strict-origin-when-cross-origin
+X-Content-Type-Options: nosniff
+Last-Modified: Fri, 23 May 2025 12:48:05 GMT
+Accept-Ranges: bytes
+Content-Length: 14426
+Cache-Control: no-cache, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-XSS-Protection: 1; mode=block
+Content-Security-Policy: object-src 'self'; frame-src 'self'; child-src 'none'; frame-ancestors 'none';
+Access-Control-Allow-Origin: onlinesbi.sbi
+Content-Type: application/x-javascript
+ original-response-headers Date: Thu, 19 Jun 2025 16:09:26 GMT
+X-Frame-Options: SAMEORIGIN
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Referrer-Policy: strict-origin-when-cross-origin
+X-Content-Type-Options: nosniff
+Last-Modified: Fri, 23 May 2025 12:48:05 GMT
+Accept-Ranges: bytes
+Content-Length: 14426
+Cache-Control: no-cache, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-XSS-Protection: 1; mode=block
+Content-Security-Policy: object-src 'self'; frame-src 'self'; child-src 'none'; frame-ancestors 'none';
+Access-Control-Allow-Origin: onlinesbi.sbi
+Keep-Alive: timeout=10, max=498
+Connection: Keep-Alive
+Content-Type: application/x-javascript
+Set-Cookie: TS0d7d1705027=08cae1ec9aab2000e6bae60e6b5fd0854a859f2dd12b82c1158681f7279eb1ad7548eb966552ce9008e2ff567e113000b6a2b7483a99bea53fad4e30ad689263e8db26a673c538e06f39b6768df55ef26939e46abfc30759fe8ceafb8ed11964; Path=/
+ ctid 2 uncompressed-len 0 net-response-time-onstart 696 net-response-time-onstop 698   8Z

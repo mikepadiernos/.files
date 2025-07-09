@@ -43,7 +43,6 @@ wmclassmatch=1
 
 [2]
 Description=[APP][PRD] microsoft / teams
-aboverule=2
 activity=c02c80ee-b0fe-4834-9531-569d1cf7a90e
 activityrule=2
 fpplevelrule=2
@@ -78,10 +77,12 @@ wmclassmatch=2
 [3]
 Description=[APP][UTL] webapp / cockpit
 activity=072a6305-9771-447c-b24e-d64c9d02f6bf
-activityrule=2
-wmclass=firefox WebApp-Cockpit0723
+activityrule=4
+title=- mikepadiernos@morefines500
+titlematch=2
+wmclass=brave brave-localhost__-Default
 wmclasscomplete=true
-wmclassmatch=1
+wmclassmatch=3
 
 [374963e4-5784-436a-b752-82693e164f1f]
 Description=[APP][WEB] firefox / developer edition / main
@@ -165,14 +166,21 @@ wmclassmatch=1
 
 [8e1275b6-d611-4d93-9c49-18bd5a86a218]
 Description=[APP][DEV] konsole
+activity=00000000-0000-0000-0000-000000000000
+activityrule=2
+desktops=ebb8588a-5867-4c63-b2fd-f9bd8a51d85b
+desktopsrule=4
 ignoregeometry=true
 ignoregeometryrule=2
-maximizehoriz=true
-maximizehorizrule=4
-maximizevert=true
-maximizevertrule=4
+position=1175,32
+positionrule=4
 screen=1
 screenrule=4
+size=2265,1408
+sizerule=4
+skipswitcherrule=2
+skiptaskbar=true
+skiptaskbarrule=2
 wmclass=konsole org.kde.konsole
 wmclasscomplete=true
 wmclassmatch=1
@@ -260,11 +268,10 @@ above=true
 aboverule=2
 wmclass=copyq com.github.hluk.copyq
 wmclasscomplete=true
+wmclassmatch=1
 
 [d8ca3d49-9b68-4e0e-b2e5-25b0aaa55bb7]
 Description=[APP][PRD] microsoft / teams / conversations
-above=true
-aboverule=2
 acceptfocus=true
 acceptfocusrule=2
 ignoregeometry=true

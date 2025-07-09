@@ -1,5 +1,5 @@
 [Auto Allow]
-kdewallet=kwalletmanager,Akonadi Google,akonadi_migration_agent,Nextcloud,kded6,kiod6,Vivaldi,xdg-desktop-portal,KDE System,konqueror,Brave
+kdewallet=kwalletmanager,Akonadi Google,akonadi_migration_agent,Nextcloud,kded6,kiod6,Vivaldi,xdg-desktop-portal,KDE System,konqueror,Brave,signond,Passwords,Thorium,falkon,okular,Microsoft Edge
 
 [Wallet]
 Close When Idle=false

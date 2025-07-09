@@ -1,0 +1,22 @@
+session: ""
+root: ~
+windows:
+  - name: " "
+    root: .
+    commands:
+      - yz
+
+  - name: " ~"
+    root: .
+    commands:
+      - clear
+
+  - name: " .files"
+    root: .files/
+    commands:
+      - vm
+
+  - name: " .neovim"
+    root: .files/.neovim/nvim.modular/
+    commands:
+      - vm

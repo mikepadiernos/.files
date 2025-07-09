@@ -21,10 +21,14 @@ settings:
       <Enter>: <Return>
       <Shift-Enter>: <Return>
       <Shift-Return>: <Return>
+  content.geolocation:
+    https://locations.visionworks.com: true
+    https://member.healthfirst.org: true
   content.javascript.clipboard:
     https://brew.sh: access-paste
     https://github.com: access-paste
     https://mail.google.com: access-paste
+    https://myappexp.tcsapps.com: access-paste
   content.media.audio_capture:
     https://meet.google.com: true
   content.media.audio_video_capture:

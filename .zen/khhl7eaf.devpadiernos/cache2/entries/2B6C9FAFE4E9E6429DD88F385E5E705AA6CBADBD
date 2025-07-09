@@ -1,0 +1,639 @@
+ÔªøQuest.Search = {};
+Quest.Search.Parking = {};
+Quest.Search.Traffic = {};
+
+Quest.Search.loadSiteInfo = function () {
+    "use strict";
+
+    $.ajax({
+        type: "POST",
+        url: "../api/site/site",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        context: this,
+        success: function (data) {
+            Quest.Search.processSiteInfo(data);
+        },
+        failure: function (errMsg) {
+            alert(errMsg);
+        }
+    });
+};
+
+Quest.Search.processSiteInfo = function (data) {
+    "use strict";
+    $("#divSearchMessage").html(data.sSearchMessage);
+    $("#divSearchMessage2").html(data.sSearchMessage2);
+    if ((data.sSearchPanelHeader.length > 0) && (data.sSearchPanelHeader !== null)) {
+        $("#divSearchPanelHeader").show();
+        $("#divSearchPanelHeader").html(data.sSearchPanelHeader);
+    } else {
+        $("#divSearchPanelHeader").hide();
+    }    
+    /*
+    if (data.bAllowAMEX) {
+        $('#imgAmex').show();
+    } else {
+        $('#imgAmex').hide();
+    }
+    */
+    if (data.bTraffic) {
+        $("#motoristInfo1").show();
+        $("#motoristInfo2").show();
+        $("#motoristInfo3").show();
+        $("#motoristInfo4").show();
+        $("#motoristInfo5").show();
+    } else {
+        $("#motoristInfo1").hide();
+        $("#motoristInfo2").hide();
+        $("#motoristInfo3").hide();
+        $("#motoristInfo4").hide();
+        $("#motoristInfo5").hide();
+    }
+
+    if (data.bTrafficPay) {
+        $("#divTrafficPay").show();
+        $("#divParkingSummonsTitle").hide();
+        $("#divTPParkingSummonsTitle").show();
+        $("#divTrafficPayMsg").show();        
+    } else {
+        $("#divTrafficPay").hide();
+        $("#divParkingSummonsTitle").show();
+        $("#divTrafficPayMsg").hide();
+        $("#divTPParkingSummonsTitle").hide();
+    }
+
+    Quest.Search.trafficPayURL = data.sTrafficPayURL
+};
+
+Quest.Search.reset = function () {
+    "use strict";
+
+    $("#edtLicensePlate").val("");
+
+    var combobox = $("#cbxState").data("kendoComboBox");
+    combobox.value("");
+    combobox.text("");
+
+    $("#edtSummonsNumberTraffic").val("");
+    $("#edtMotoristID").val("");
+
+    combobox = $("#cbxMotoristState").data("kendoComboBox");
+    combobox.value("");
+    combobox.text("");
+
+    $("#edtLastName").val("");
+    $("#edtDOB").val("");
+
+    Quest.Search.clearValidation();
+    Quest.Search.clearMessages();
+};
+
+
+Quest.Search.clearValidation = function () {
+    "use strict";
+    $("#divInput").find("span.k-tooltip-validation").hide();
+    Quest.Search.clearMessages();
+};
+
+
+Quest.Search.clearMessages = function () {
+    "use strict";
+    $("#lblNoTicketsFound").hide();
+    $("#lblSearchProblem").hide();
+    $("#lblSearchDuplicateParking").hide();
+    $("#lblSearchDuplicateTraffic").hide();
+    $("#lblValidation").hide();
+};
+
+Quest.Search.submitIfValid = function () {
+    "use strict";
+    Quest.Search.Traffic.submitIfValid();
+};
+
+/*
+// Parking
+Quest.Search.Parking.submitIfValid = function () {
+    "use strict";
+
+    Quest.Search.clearValidation();
+    if (Quest.Search.Parking.isValid()) {
+        $("#divInput").mask("Searching...");
+        var pi = {
+            searchType: "P",
+            summonsNumber: $("#edtSummonsNumber").val(),
+            licensePlate: $("#edtLicensePlate").val(),
+            licenseState: $("#cbxState").val(),
+        };
+        Quest.Search.Parking.search(pi);
+        Quest.Search.Parking.searchRedirect(pi);
+    };
+};
+
+
+Quest.Search.Parking.search = function (pi) {
+    "use strict";
+
+    $.cookie("summonsNumber", $("#edtSummonsNumber").val(), { expires: 7 });
+    $.cookie("licensePlate", $("#edtLicensePlate").val(), { expires: 7 });
+    $.cookie("licenseState", $("#cbxState").val(), { expires: 7 });
+
+    $.ajax({
+        type: "POST",
+        url: "../api/search/search",
+        data: JSON.stringify(pi),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            Quest.Search.clearMessages();
+
+            if (data.error) {
+                $("#lblSearchProblem").show();
+                $("#divInput").unmask();
+            }
+            else if (data.faultCode === 4) {
+                $("#lblSearchDuplicateParking").show();
+                $("#divInput").unmask();
+            }
+            else if (!data.online) {
+                window.location.href = "search.aspx";
+            }
+            else if (data.ticketCount > 0) {
+                window.location.replace("TicketSelect.aspx");
+            } else {
+                $("#lblNoTicketsFoundText").html("No tickets found")
+                $("#lblNoTicketsFound").show();
+                $("#divInput").unmask();
+            }
+        },
+        error: function (jq, textStatus, errorThrown) {
+            $("#divInput").unmask();
+        }
+    });
+
+};
+
+Quest.Search.Parking.searchRedirect = function (pi) {
+    "use strict";
+
+    $.ajax({
+        type: "POST",
+        url: "../api/search/searchredirect",
+        data: JSON.stringify(pi),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+        },
+        error: function (jq, textStatus, errorThrown) {
+        }
+    });
+
+};
+
+
+Quest.Search.Parking.isValid = function () {
+    "use strict";
+    var cbxState = $("#cbxState").data("kendoComboBox");
+    var isValid =
+               (
+                   (
+                       ($("#edtSummonsNumber").val() === "")
+                       &&
+                       ($("#edtLicensePlate").val() !== "")
+                       &&
+                       (cbxState.value() !== "")
+                   )
+                   ||
+                   (
+                       ($("#edtSummonsNumber").val() !== "")
+                       &&
+                       ($("#edtLicensePlate").val() === "")
+                       &&
+                       (cbxState.value() === "")
+                   )
+               );
+
+    Quest.Search.clearMessages();
+    if (!isValid) {
+        $("#lblValidation").show();
+        $("#lblValidationText").html("Either Summons Number or License Plate and License State are required");
+    }
+
+    return isValid;
+};
+
+Quest.Search.Parking.clearForSummons = function () {
+    "use strict";
+    $("#edtLicensePlate").val("");
+    var combo = $("#cbxState").data("kendoComboBox");
+    combo.text("");
+    combo.value("");
+    Quest.Search.clearValidation();
+
+};
+
+Quest.Search.Parking.clearSummons = function () {
+    "use strict";
+    $("#edtSummonsNumber").val("");
+    Quest.Search.clearValidation();
+
+};
+*/
+
+// Traffic
+Quest.Search.Traffic.clearPlate = function (e) {
+    "use strict";
+    $("#edtLicensePlate").val("");
+    var combo = $("#cbxState").data("kendoComboBox");
+    combo.text("");
+    combo.value("");
+    Quest.Search.clearValidation();
+};
+
+Quest.Search.Traffic.clearMotorist = function (e) {
+    "use strict";
+    debugger;
+    $("#edtMotoristID").val("");
+    $("#edtLastName").val("");
+    var combo = $("#cbxMotoristState").data("kendoComboBox");
+    combo.text("");
+    combo.value("");
+    Quest.Search.clearValidation();
+    $("#edtDOB").val("");
+};
+
+Quest.Search.Traffic.clearSummons = function (e) {
+    "use strict";
+    $("#edtSummonsNumberTraffic").val("");
+    Quest.Search.clearValidation();
+}
+
+Quest.Search.Traffic.submitIfValid = function () {
+    "use strict";
+
+    Quest.Search.clearValidation();
+    if (Quest.Search.Traffic.isValid()) {
+        $("#divInput").mask("Searching...");
+        var pi = {
+            searchType: "P",
+            licensePlate: $("#edtLicensePlate").val(),
+            licenseState: $("#cbxState").val(),
+            summonsNumber: $("#edtSummonsNumberTraffic").val(),
+            motoristID: $("#edtMotoristID").val(),
+            motoristState: $("#cbxMotoristState").val(),
+            lastName: $("#edtLastName").val(),
+            DOB: $("#edtDOB").val(),
+        };
+        Quest.Search.Traffic.search(pi);
+        Quest.Search.Traffic.searchRedirect(pi);
+    };
+};
+
+Quest.Search.Traffic.search = function (pi) {
+    "use strict";
+
+    
+    $.cookie("SummonsNumberTraffic", $("#edtSummonsNumberTraffic").val(), { expires: 7 });
+    $.cookie("MotoristID", $("#edtMotoristID").val(), { expires: 7 });
+    $.cookie("StateTraffic", $("#cbxMotoristState").val(), { expires: 7 });
+    $.cookie("LastName", $("#edtLastName").val(), { expires: 7 });
+    $.cookie("DOB", $("#edtDOB").val(), { expires: 7 });
+    
+    $.ajax({
+        type: "POST",
+        url: "../api/search/search",
+        data: JSON.stringify(pi),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            if (data.error) {
+                $("#lblNoTicketsFound").hide();
+                $("#lblSearchProblem").show();
+                $("#divInput").unmask();
+            }
+            else if (data.faultCode === 4) {
+                $("#lblSearchDuplicateTraffic").show();
+                $("#divInput").unmask();
+            }
+            else if (!data.online) {
+                window.location.href = "search.aspx";
+            }
+            else if (data.faultCode !== 0) {
+                $("#lblNoTicketsFoundText").html("No tickets found")
+                if (data.faultCode === 1) {
+                    $("#lblNoTicketsFoundText").html("Invalid summons number")
+                }
+                else if (data.faultCode === 2) {
+                    $("#lblNoTicketsFoundText").html("Invalid Driver's License Number")
+                }
+                else if (data.faultCode === 3) {
+                    $("#lblNoTicketsFoundText").html("Invalid Date of Birth")
+                }
+                $("#lblNoTicketsFound").show();
+                $("#lblSearchProblem").hide();
+                $("#divInput").unmask();
+            }
+            else if (data.ticketCount > 0) {
+                $("#lblNoTicketsFound").hide();
+                $("#lblSearchProblem").hide();
+                window.location.replace("TicketSelect.aspx");
+            } else {
+                $("#lblNoTicketsFoundText").html("No tickets found")
+                $("#lblNoTicketsFound").show();
+                $("#lblSearchProblem").hide();
+                $("#divInput").unmask();
+            }
+        },
+        error: function (jq, textStatus, errorThrown) {
+            $("#divInput").unmask();
+        }
+    });
+
+};
+
+Quest.Search.Traffic.searchRedirect = function (pi) {
+    "use strict";
+
+    $.ajax({
+        type: "POST",
+        url: "../api/search/searchredirect",
+        data: JSON.stringify(pi),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+        },
+        error: function (jq, textStatus, errorThrown) {
+        }
+    });
+
+};
+
+
+Quest.Search.Traffic.isValid = function () {
+    "use strict";
+    var cbxState = $("#cbxMotoristState").data("kendoComboBox");
+    var cbxPlateState = $("#cbxState").data("kendoComboBox");
+    var isValid =
+  (
+                    // plate & state
+                    (
+                        ($("#edtSummonsNumberTraffic").val() === "")
+                        &&
+                        ($("#edtLicensePlate").val() !== "")
+                        &&
+                        (cbxPlateState.value() !== "")
+                        &&
+                        ($("#edtMotoristID").val() === "")
+                        &&
+                        (cbxState.value() === "")
+                        &&
+                        ($("#edtLastName").val() === "")
+                        &&
+                        ($("#edtDOB").val() === "")
+                    )
+                   ||
+                   // motor state last & dob
+                    (
+                        ($("#edtSummonsNumberTraffic").val() === "")
+                        &&
+                        ($("#edtLicensePlate").val() === "")
+                        &&
+                        (cbxPlateState.value() === "")
+                        &&
+                        ($("#edtMotoristID").val() !== "")
+                        &&
+                        (cbxState.value() !== "")
+                        &&
+                        ($("#edtLastName").val() !== "")
+                        &&
+                        ($("#edtDOB").val() !== "")
+                    )
+                    ||
+                    // summons
+                    (
+                        ($("#edtSummonsNumberTraffic").val() !== "")
+                        &&
+                        ($("#edtLicensePlate").val() === "")
+                        &&
+                        (cbxPlateState.value() === "")
+                        &&
+                        ($("#edtMotoristID").val() === "")
+                        &&
+                        (cbxState.value() === "")
+                        &&
+                        ($("#edtLastName").val() === "")
+                        &&
+                        ($("#edtDOB").val() === "")
+                    )
+                );
+
+    Quest.Search.clearMessages();
+    if (!isValid) {
+        $("#lblValidation").show();
+        $("#lblValidationText").html("Either Summons Number or License Plate and State or Motorist ID, State, Last Name and DOB are required");
+    }
+
+    return isValid;
+};
+
+$(function () {
+    $("#divMultipleSessions").kendoWindow({
+        modal: true,
+        visible: false,
+        title: "Attention"
+    });
+    Quest.Search.winMultipleInstance = $("#divMultipleSessions").data("kendoWindow");
+
+    Quest.Search.loadSiteInfo();
+
+    $("#lblNoTicketsFound").hide();
+    $("#lblSearchProblem").hide();
+
+    $("#btnSearch").on("click", function (event) {
+        Quest.Search.submitIfValid();
+    });
+
+    $("#btnReset").on("click", function (event) {
+        Quest.Search.reset();
+    });
+
+    
+    $("#btnJump").on("click", function (event) {
+        window.location.href = Quest.Search.trafficPayURL + '?tn=' + $("#edtTPSummons").val();
+    });
+
+    $("#edtLicensePlate").kendoAutoComplete();
+    $("#edtSummonsNumberTraffic").bind("keypress", function (e) {
+        //Quest.Search.Traffic.clearMotorist(e);
+        //Quest.Search.Traffic.clearSummons(e);
+    });
+
+    $("#cbxState").kendoComboBox({
+        dataTextField: "sDisplayName",
+        dataValueField: "sAbbr",
+        filter: "contains",
+        suggest: true,
+        dataSource: {
+            transport: {
+                read: {
+                    url: "../api/library/StateList",
+                    dataType: "json"
+                }
+            }
+        },
+        change: function (e) {
+            if (this.value() && this.selectedIndex === -1) {
+                this._filterSource({
+                    value: this.value(),
+                    field: this.options.dataTextField,
+                    operator: "contains"
+                });
+                this.select(0);
+                if (this.selectedIndex === -1) {
+                    this.text("");
+                }
+            }
+        }
+    });
+    $("#cbxState").bind("keypress", function (e) {
+        //Quest.Search.Traffic.clearSummons();
+        //Quest.Search.Traffic.clearMotorist();
+    });
+    $("#cbxState").bind("change", function (e) {
+        //Quest.Search.Traffic.clearSummons();
+        //Quest.Search.Traffic.clearMotorist();
+    });
+
+
+
+    // Traffic Ticket
+    $("#edtSummonsNumberTraffic").kendoAutoComplete();
+
+    $("#edtSummonsNumberTraffic").bind("keypress", function (e) {
+        //Quest.Search.Traffic.clearMotorist();
+        //Quest.Search.Traffic.clearPlate();
+
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code === 13) { //Enter keycode
+            Quest.Search.Traffic.submitIfValid();
+        }
+    });
+
+    $("#edtTPSummons").kendoAutoComplete();
+
+    $("#edtMotoristID").kendoAutoComplete();
+    $("#edtMotoristID").bind("keypress", function (e) {
+        //Quest.Search.Traffic.clearSummons();
+        //Quest.Search.Traffic.clearPlate();
+    });
+
+    $("#cbxMotoristState").kendoComboBox({
+        dataTextField: "sDisplayName",
+        dataValueField: "sAbbr",
+        filter: "contains",
+        suggest: true,
+        dataSource: {
+            transport: {
+                read: {
+                    url: "../api/library/StateList",
+                    dataType: "json"
+                }
+            }
+        },
+        change: function (e) {
+            if (this.value() && this.selectedIndex === -1) {
+                this._filterSource({
+                    value: this.value(),
+                    field: this.options.dataTextField,
+                    operator: "contains"
+                });
+                this.select(0);
+                if (this.selectedIndex === -1) {
+                    this.text("");
+                }
+            }
+        }
+    });
+
+    $("#cbxMotoristState").bind("keypress", function (e) {
+        //Quest.Search.Traffic.clearSummons();
+        //Quest.Search.Traffic.clearPlate();
+    });
+    $("#cbxMotoristState").bind("change", function (e) {
+        //Quest.Search.Traffic.clearSummons();
+        //Quest.Search.Traffic.clearPlate();
+    });
+
+    $("#edtLastName").kendoAutoComplete();
+    $("#edtLastName").bind("keypress", function (e) {
+        //Quest.Search.Traffic.clearSummons();
+        //Quest.Search.Traffic.clearPlate();
+    });
+
+    $("#edtDOB").kendoDatePicker({
+        change: function () {
+            var d = $("#edtDOB").val();
+            //if ( d !== moment( d ). )
+        }
+    });
+    $("#edtDOB").bind("keypress", function (e) {
+        //Quest.Search.Traffic.clearSummons();
+        //Quest.Search.Traffic.clearPlate();
+
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code === 13) { //Enter keycode
+            Quest.Search.Traffic.submitIfValid();
+        }
+    });
+
+
+    Quest.Search.reset();
+
+    
+    if (window.location.host.toLowerCase().indexOf("-dev") !== -1) {
+        if ($.cookie("summonsNumber")) {
+            $("#edtSummonsNumberTraffic").val($.cookie("summonsNumber"));
+        }
+        else {
+            $("#edtLicensePlate").val($.cookie("licensePlate"));
+            $("#cbxState").val($.cookie("licenseState"));
+        }
+    }
+    
+
+    $(".imgTicketInformation").on("click", function (event) {
+        window.open("../nassau/sampletickets.aspx", "_new");
+    });;
+
+
+    $(".imgTicketInformation").kendoTooltip({
+        content: "Sample Tickets",
+        position: "top"
+    });
+    //$('[title!=""]').qtip();
+
+    //Quest.Search.showMultiSessionWarning();
+});
+
+
+Quest.Search.showMultiSessionWarning = function (data) {
+    "use strict";
+    Quest.Search.winMultipleInstance.center();
+    Quest.Search.winMultipleInstance.open();
+};¯hA?D5      hTáhTàHPùÔh]J   q    O^userContextId=1&partitionKey=%28https%2Csurecourt.com%29,:https://rvcny.surecourt.com/epay/EZPay/Search.js?1004 strongly-framed 1 security-info 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 request-method GET response-head HTTP/2 200 
+content-type: application/javascript
+last-modified: Mon, 06 Dec 2021 09:00:26 GMT
+accept-ranges: bytes
+etag: "0b1a5b57fead71:0"
+date: Thu, 19 Jun 2025 13:24:21 GMT
+content-length: 19251
+X-Firefox-Spdy: h2
+ original-response-headers content-type: application/javascript
+last-modified: Mon, 06 Dec 2021 09:00:26 GMT
+accept-ranges: bytes
+etag: "0b1a5b57fead71:0"
+server: 
+date: Thu, 19 Jun 2025 13:24:21 GMT
+content-length: 19251
+X-Firefox-Spdy: h2
+ ctid 2 uncompressed-len 0 net-response-time-onstart 256 net-response-time-onstop 1766   K3

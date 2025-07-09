@@ -189,8 +189,8 @@ RunPrefix=
 SetEditor=false
 
 [MainWindow]
-2 screens: Height=823
-2 screens: Width=1966
+2 screens: Height=1408
+2 screens: Width=1135
 3440x1440 screen: Height=1340
 3440x1440 screen: Width=1718
 ToolBarsMovable=Disabled
@@ -222,7 +222,7 @@ sortRole=0
 viewShade=47,27,91
 
 [lspclient]
-AllowedServerCommandLines=/usr/bin/vscode-css-languageserver --stdio,/usr/bin/vscode-json-languageserver --stdio
+AllowedServerCommandLines=/usr/bin/clangd -log=error --background-index --limit-results=500 --completion-style=bundled,/usr/bin/vscode-css-languageserver --stdio,/usr/bin/vscode-json-languageserver --stdio
 AutoHover=true
 AutoImport=true
 BlockedServerCommandLines=/home/mikepadiernos/.asdf/installs/lua-language-server/3.13.2/bin/lua-language-server
@@ -237,6 +237,7 @@ Messages=true
 ReferencesDeclaration=true
 SemanticHighlighting=true
 ServerConfiguration=
+ShowCompletions=true
 SignatureHelp=true
 SymbolDetails=true
 SymbolExpand=true

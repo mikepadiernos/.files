@@ -1,0 +1,355 @@
+<!DOCTYPE HTML>
+<!DOCTYPE html PUBLIC "" ""><!--[if lt IE 7]>      <html class="adaptive no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> 
+<![endif]--><!--[if IE 7]>         <html class="adaptive no-js lt-ie9 lt-ie8" lang="en"> 
+<![endif]--><!--[if IE 8]>         <html class="adaptive no-js lt-ie9" lang="en"> 
+<![endif]--><!--[if gt IE 8]><!--><HTML 
+class="adaptive no-js" lang="en"><!--<![endif]-->
+<HEAD>
+<META content="IE=11.0000" http-equiv="X-UA-Compatible">		 
+<META charset="utf-8">		 
+<META http-equiv="Content-Language" content="en-US">			    	 
+<META name="robots" content="index, follow">			
+<META http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">		 
+<META name="viewport" content="width=device-width">
+<TITLE>Village Justice Court</TITLE>
+<META name="description" content="The official website of the Village of Rockville Centre">        	 
+<META name="DC.subject.keywords" lang="en-us" content="Village of Rockville Centre, village website">			
+<META name="publisher" content="rvcny.us">				 
+<META name="DC.date" content="2014-08-21" scheme="W3CDTF">		
+<META name="author" content="portal">        		
+<META name="GENERATOR" content="MSHTML 11.00.9600.16476"> 
+<LINK href="http://purl.org/dc/elements/1.1/" rel="schema.DC">
+<LINK href="http://purl.org/dc/terms/" rel="schema.DCTERMS">
+<LINK href="newfiles/main.css" rel="stylesheet">
+<LINK href="newfiles/portal.css" rel="stylesheet">
+<!--[if IE 7]>
+		<link rel="stylesheet" href="newfiles/font-awesome-ie7.css">
+<![endif]-->		
+		
+<SCRIPT src="newfiles/jquery.js"></SCRIPT>
+		 
+<SCRIPT src="newfiles/modernizr-2.6.1.min.js"></SCRIPT>
+		 <!--[if gte IE 9]>
+          <style>
+            #topnav {
+               filter: none;
+            }
+          </style>
+		<![endif]-->
+	 
+	 </HEAD>	 
+<BODY class="portal" background="background_rvc2.jpg"><A id="top"></A>			 <!-- top content here -->			
+<DIV class="outer-container">
+<DIV class="row top-line">
+
+<DIV class="col col6">
+<UL class="rwd-ulhorizontal">
+  <A href="http://www.rvcny.us/"><font color="#808080">Home</font></A>
+<script language="JavaScript" TYPE="text/javascript"><!--
+function GetDay(intDay){
+    var DayArray = new Array("Sunday", "Monday", "Tuesday", "Wednesday", 
+                         "Thursday", "Friday", "Saturday")
+    return DayArray[intDay]
+    }
+
+  function GetMonth(intMonth){
+    var MonthArray = new Array("January", "February", "March",
+                               "April", "May", "June",
+                               "July", "August", "September",
+                               "October", "November", "December") 
+    return MonthArray[intMonth] 	  	 
+    }
+  function getDateStr(){
+    var today = new Date()
+    var year = today.getYear()
+    if(year<1000) year+=1900
+    var todayStr = GetMonth(today.getMonth()) + " " + today.getDate()
+    todayStr += ", " + year
+    return todayStr
+    }
+  function getDateStrWithDOW(){
+    var today = new Date()
+    var year = today.getYear()
+    if(year<1000) year+=1900
+    var todayStr = GetDay(today.getDay()) + ", "
+    todayStr += GetMonth(today.getMonth()) + " " + today.getDate()
+//    todayStr += ", " + year
+    return todayStr
+    }
+
+	document.write("&nbsp;&nbsp;&nbsp;"+getDateStr())
+
+// -->
+		</script>	
+
+  <!--<LI><A href="#">Village A-Z Topics</A></LI>-->
+  <!--<LI class="last"><A href="#">Village Forms</A></LI>-->
+</UL><!-- .rwd-ulhorizontal -->		 
+</DIV><!-- .col .col5 -->		 
+
+<DIV class="col col2 alert-wrap"><!-- alert content here -->	    
+<!--<P class="alert"><IMG class="icon" alt="" src="alert.gif"> -->
+<!--<A href="#"></A> -->
+</P></DIV><!-- .col .col3 .alert-wrap -->				 
+<DIV class="col col4 skip-links">
+  
+</DIV><!-- .col .col4 .skip-links -->
+
+	 </DIV><!-- .row .top-line -->			 
+<DIV class="container">
+<DIV class="row posrel">
+<DIV class="col col6">
+<!--[if IE 8]><script language="JavaScript" TYPE="text/javascript">alert('Please update your browser.\n\nOur website uses the latest technologies that requires Google Chrome or Internet Explorer 9 (or above.)');</script><![endif]-->
+
+<!--[if gt IE 8]><!--> 
+<DIV id="tagline">The Official Website of the Village of Rockville Centre</DIV>
+<IMG id="seal" alt="" src="http://www.rvcny.us/newfiles/header-seal.gif">
+						 
+<DIV id="sitetitle">
+	<A href="http://www.rvcny.us/"><IMG alt="Go to RVCNY.US Home" src="http://www.rvcny.us/newfiles/RVCNYUS_3.gif"></A>
+</DIV><!-- #sitetitle -->
+<!--<![endif]-->
+
+
+<!-- #sitetitle_abc IMG -->
+
+					 </DIV>
+					 	 </DIV><!-- .row --> <!--	END HEADER	-->
+
+<!-- INSERT MENU BAR -->					 		  
+<DIV class="row megadd">
+<!-- <DIV id="nav" role="application"> -->
+<H2 class="accessibility" id="main_menu">Full Menu</H2>
+<UL class="megamenu is-megadd" id="topnav" role="navigation" aria-labelledby="main_menu">
+<a name="VillageGovernment"></a>
+  			 
+ </UL><!-- #topnav -->	   
+<!--  </DIV> -->  <!-- #nav --> 
+ </DIV><!-- .row .megadd -->			
+
+
+<!-- END INSERT MENU -->					 		  
+
+<DIV class="row meta">
+<H1 class="accessibility" id="maincontent">RVCNY.US</H1></DIV><!-- .row .meta - page title --> 
+<!--<p style="width: 100%; background-image: url('titlepage2.gif'); background-repeat:no-repeat;">
+<font face="Arial" color="#000080">Building Department</font></p>-->
+
+<div style="position:relative;"><div style="font-size:12px; font-weight: bold; position:absolute;bottom:0;width:100%; text-align: center; background:url('titlepage2.gif'); no-repeat;">
+Village Justice Court
+</div></div>
+
+
+<!--Start Body-->
+
+<p align="center">
+				<img border="0" src="court.html.gavel.jpg" width="150" height="98"></p>
+<p><font face="Arial" size="4"><b>
+		<font color="#0000A0">Village Justice Court </font></b></font></p>
+
+<script type=text/javascript>
+							var myDate1=new Date();
+							myDate1.setFullYear(2016,6-1,22); var today = new Date();
+							if (today<=myDate1)
+							{
+  								//NEW
+  							//document.write("<div align='center'><table border='1' width='54%' bordercolor='#FF0000'><tr><td><font face='Arial'><b><font color='#800000'>SANITATION NOTE</font></b> - </b><br><br><b><font color='#FF0000'><b>Thursday January 27 sanitation pickup has been suspended.<br><br>Thursday January 27 pickup will be on Friday January 28 along with normal Friday pickup.</b></font></td></tr></table></div>");
+								document.write("<div align='center'><table border='1' width='100%' style='border: 1px solid #FF0000; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px' cellspacing='0' cellpadding='0' bordercolorlight='#FFFFFF' bordercolordark='#FFFFFF'><tr><td><p align='left'><b><font face='Arial' size='4'><u>Please note</u>: The court office will be closing on June 20-22, 2016 during the hours of 11:30-12:30pm.<br>We apologize for any inconvenience. </font></b></p></td></tr></table></div>");
+							}
+						</script>
+
+<p><font face="Arial" size="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				Rockville Centre has one of the busiest village courts in the 
+				state, handling more than 30,000 cases annually. The court has 
+				jurisdiction over the enforcement of local laws, including 
+				parking tickets and zoning code violations, and New York State 
+				vehicle and traffic offenses committed within the Village 
+				boundaries.</font></p>
+		<p class="MsoNormal" align="center" style="text-align: center; line-height: normal">
+		<span style="font-size: 12.0pt; font-family: Arial,sans-serif">William J. Croutier, Jr., and Kevin P. McDonough, two practicing 
+		attorneys, are the elected justices.<br>
+		<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Attorneys serve as deputies 
+		to the Village Attorney to prosecute cases in Village Court. The 
+		deputies are: Susan Boland, F. Scott Carrigan, Christine Gray Ferazani, 
+		Joseph A. Gentile, Kevin Glynn, Charles Lapp III, Jennifer Milone, Mindy 
+		Roman, David Shargel, and Alan Stein. </span></p>
+		<span style="font-size: 12.0pt; line-height: 115%; font-family: Arial,sans-serif">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Court is in session on the first Tuesday evening of each month 
+		and Thursday evenings by appointment at Village Hall. The Court Clerk's 
+		office is open weekdays 8 A.M. to 3:30 P.M. to accept payment of fines 
+		and to provide information about cases. Phone: 678-9289. </span>
+		<font face="Arial"><a href="http://www.rvcny.us/villagedir.html">Click 
+		here for directions to village hall.</a></font><p align="center">
+				<a target="_blank" href="https://rvcny.surecourt.com/epay/EZPay/search.aspx">
+				<img border="0" src="img1/icon-ticket.gif" width="130" height="80"></a> <font face="Arial">
+				<a target="_blank" href="https://rvcny.surecourt.com/epay/EZPay/search.aspx">
+				To pay your Parking of Traffic tickets online - click here.</a>
+				</font></p>
+		<p class="MsoNormal" align="center">
+		<u><span class="auto-style1">Parking Tickets</span></u><p class="auto-style2">
+		<span style="font-size: 12.0pt; line-height: 115%; font-family: Arial,sans-serif">
+		To pay in person - The Village Court is located at: Village Hall, 1 
+		College Place, Rockville Centre, N.Y. 2nd floor (Court). Office Hours: 
+		Monday thru Friday 8:00am - 3:30pm Acceptable forms of payment: Cash, 
+		Money Order, Check or Credit Card-Visa/Mastercard.<br>
+		<br>
+		To pay by mail - Money Order or Check payable to Village Court of 
+		Rockville Centre Mail to: Village Court, 1 College Place, Rockville 
+		Centre, N.Y. 11570-4116 Include your plate number on all correspondence.<br>
+		<br>
+		Parking tickets can also be paid online at
+		<a target="_blank" href="https://rvcny.surecourt.com/epay/EZPay/search.aspx">
+		rvcny.us</a> .</span><span class="auto-style1"><br>
+		</span><span style="font-size:14.0pt"><br></span>
+		<span style="font-size: 12.0pt; line-height: 115%; font-family: Arial,sans-serif">
+		If you are requesting information regarding Traffic Violations, 
+		Appearance tickets or Village Ordinance Violations, please contact the 
+		Court at 678-9289.<br>
+		</span>
+		<br>
+&nbsp;<div align="center">
+<table border="0" width="64%" id="table11" height="214">
+	<tr>
+		<td width="125">
+		<img border="1" src="images/court.html.Croutier.jpg" width="117" height="176"></td>
+		<td>
+		<table border="0" width="100%" id="table14">
+			<tr>
+				<td><font color="#0000A0" face="Arial" size="4"><b>Judge William 
+				J. Croutier, Jr.</b></font></td>
+			</tr>
+		</table>
+		<p class="MsoNormal"><font face="Arial" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font>
+		<font face="Arial">&nbsp;</font><span style="font-size: 12.0pt; line-height: 115%; font-family: Arial,sans-serif">Judge 
+		Croutier was elected to his first term on the Court in 2007. He is a 
+		senior partner in a law firm and a member of numerous professional 
+		associations.&nbsp; He served as the chairman of both the Rockville Centre We 
+		Care September 11th Committee and the Rockville Centre September 11th&nbsp; 
+		Memorial Committee.</span><p class="MsoNormal">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="125">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="125">
+		<img border="1" src="images/court.html.McDonough.jpg" width="115" height="173"></td>
+		<td>
+		<table border="0" width="100%" id="table13">
+			<tr>
+				<td><font color="#0000A0" face="Arial" size="4"><b>Judge Kevin 
+				P. McDonough</b></font></td>
+			</tr>
+		</table>
+		<p class="MsoNormal"><font face="Arial" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font>
+		<font face="Arial">&nbsp;</font><span style="font-size: 12.0pt; line-height: 115%; font-family: Arial,sans-serif">Judge 
+		McDonough was elected to his first term on the Court in 2009. He is a 
+		partner in a Garden City law firm. He was a Deputy Village Attorney for 
+		nine years, served on the Village Planning Board and is president of the 
+		Friends of Senior Services which aids the Sandel Senior Center. He is a 
+		volunteer counsel to the RVC St. Patrick&#8217;s Parade and has coached in 
+		local sports leagues.</span><p class="MsoNormal">&nbsp;</td>
+	</tr>
+</table>
+
+</div>
+<p class="MsoNormal">&nbsp;</p>
+
+  
+<!--End Body-->
+
+
+  <!-- .row .col363-dotted-verts -->   <!--	END PAGE CONTENT	-->				 
+</p>
+<DIV class="row footer" role="contentinfo">
+  <DIV class="col col5">
+ <P class="rwd-small" id="copyright"><SCRIPT LANGUAGE="JavaScript" src="footer2left.js"></script></P>
+</DIV><!-- .col .col5 -->                   
+<DIV class="col col7">
+<UL class="rwd-ulhorizontal rwd-right">
+
+<SCRIPT LANGUAGE="JavaScript" src="footer2.js"></script>
+
+  </UL><!-- .rwd-ulhorizontal .rwd-right -->				  
+  </DIV><!-- .col .col6 --> 
+</DIV><!-- .row .footer -->				
+  </DIV><!-- .container -->		 
+  </DIV><!-- .outer-container -->
+		 
+<SCRIPT src="newfiles/plugins.js"></SCRIPT>
+		 
+<SCRIPT src="newfiles/megadd.js"></SCRIPT>
+		 
+<SCRIPT src="newfiles/responsive.js"></SCRIPT>
+        
+<SCRIPT>
+            jQuery(document).ready(function ($) {
+        
+        	  yepnope([
+                {
+                  //test for presence of slideshow. slideshow css included in <head> to avoid repaint
+                  test: $('.ma_slideshow').length,
+                  yep: ['newfiles/jquery.cycle.all.js',
+                        'newfiles/slideshow.js'],
+                  callback: function(url, result, key) {
+                    if ( url.match('slideshow.js') ) {
+                      $('body').addClass('js');
+                      $('.ma_slideshow').abst( {timeout: 7000} );
+
+        			// display the slideshow control if JS is on.
+        			$('.screenreader').attr('aria-hidden','false');
+        			$('.slides_control').attr('aria-hidden','false');
+        
+        			// aria polite on slides container
+        			$('h2.slideshow').focusin(function () {	
+        				$('div.ma_slideshow  div.slides ul').attr('aria-live', 'polite');
+        			});
+        			$('.screenreader button').click(function () {
+        				// pause the slide show
+        				$('.ma_slideshow div.slides > ul').cycle('pause');
+						// turn off aria-live
+						$('div.ma_slideshow  div.slides ul').attr('aria-live', 'off');
+        				// make all slides visible
+        				$('.ma_slideshow div.slides > li').removeAttr('style');
+        				// hide contole below the slideshow
+        				$('.ma_slideshow div.slides_control').Attr('aria-hidden','true');
+        				// move role="region" from div.ma_lideshow to div.slides ul to prevent a screen reader to read entire div.ma_lideshow whenever slides change.
+        				$('.ma_slideshow').removeAttr('role');
+        				$('.ma_slideshow div.slides ul').Attr('role','region');
+        			});
+					}
+                  }
+                },
+                {
+                  //test for presence of horizontal scrolling slideshow. slideshow css included in <head> to avoid repaint
+                  test: $('.ma_hshow').length,
+                  yep: ['newfiles/jquery.cycle.all.js',
+                        'newfiles/horizontal-slideshow.js'],
+                  callback: function(url, result, key) {
+                    if ( url.match('horizontal-slideshow.js') ) {
+                      $('body').addClass('js');
+                      $('.ma_hshow').absrock( {timeout: 0} );
+                    }
+                  }
+                },
+                
+              ]);
+        
+            });
+        </SCRIPT>
+        <SCRIPT type=text/javascript language=JavaScript src="_overlib.js"></SCRIPT>
+			</BODY></HTML>
+m·ŽŸ&ñ      hThTHPžIhT   T    O^userContextId=1&partitionKey=%28http%2Crvcny.us%29,:http://www.rvcny.us/court.html strongly-framed 1 request-method GET response-head HTTP/1.1 200 OK
+Date: Thu, 19 Jun 2025 13:26:32 GMT
+Server: Apache
+Accept-Ranges: bytes
+Content-Type: text/html
+ original-response-headers Date: Thu, 19 Jun 2025 13:26:32 GMT
+Server: Apache
+Accept-Ranges: bytes
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+Content-Type: text/html
+ ctid 1 uncompressed-len 0 net-response-time-onstart 278 net-response-time-onstop 309   ;û

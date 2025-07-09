@@ -1,7 +1,0 @@
-alias den   = 'drush -y en'
-alias dun   = 'drush -y pmu'
-
-alias dcr   = 'drush -y cr'
-alias dcri  = 'drush -y cr && drush -y updb && drush -y cim && drush -y cr'
-alias dcrx  = 'drush -y cr && drush -y updb && drush -y cex && drush -y cr'
-

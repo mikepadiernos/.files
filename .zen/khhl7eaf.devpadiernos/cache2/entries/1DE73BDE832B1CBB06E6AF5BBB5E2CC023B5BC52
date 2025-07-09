@@ -1,0 +1,453 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="X-UA-Compatible" content="IE=Edge" /><title>
+	Payment | The Village of Rockville Centre
+</title>
+    <script type="text/javascript">
+        var console = console || { "log": function () { } };
+        var Quest = {};
+    </script>
+
+
+    
+    <link href="/epay/content/jquery.loadmask.css" rel="stylesheet"/>
+
+    <link href="/epay/content/kendo/kendo.common.min.css" rel="stylesheet"/>
+<link href="/epay/content/kendo/kendo.default.min.css" rel="stylesheet"/>
+
+
+    <script src="/epay/scripts/jquery/jquery-1.11.0.min.js"></script>
+<script src="/epay/scripts/jquery_plugin/jquery.cookie.js"></script>
+<script src="/epay/scripts/jquery_plugin/jquery.loadmask.js"></script>
+<script src="/epay/scripts/jquery_plugin/jquery.number.js"></script>
+<script src="/epay/scripts/json2.js"></script>
+<script src="/epay/scripts/moment.js"></script>
+<script src="/epay/scripts/bowser.js"></script>
+
+    <script src="/epay/bower_components/better-dom/dist/better-dom.js"></script>
+<script src="/epay/bower_components/better-placeholder-polyfill/dist/better-placeholder-polyfill.js"></script>
+
+    <script src="/epay/scripts/kendo/kendo.web.min.js"></script>
+
+
+    <script type="text/javascript">
+        var bAllowAMEX = true;
+    </script>
+    <script src="EZPay.js?1004" type="text/javascript"></script>
+    <script src="MakePayment.js?1004" type="text/javascript"></script>
+
+    <script src="../lib/master.js" type="text/javascript"></script>
+    <link id="ctl00_lnkThemeStyle" href="../theme/Rockville/styles.css" rel="stylesheet" /><link id="ctl00_lnkStandardStyle" href="../styles/styles.css" rel="stylesheet" />
+    <style id="antiClickjack">body{display:none !important;}</style>
+    <script>
+        if (self === top) {
+            var antiClickjack = document.getElementById("antiClickjack");
+            antiClickjack.parentNode.removeChild(antiClickjack);
+        } else {
+            top.location = self.location;
+        }
+
+        var theme = "";
+
+        if ( bowser.msie && bowser.version <= 7 ) {
+            window.location = "../ezpay/browser.aspx";
+        }
+    </script>
+
+
+
+</head>
+<body>
+    
+
+    <form method="post" action="./MakePayment.aspx" id="aspnetForm">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTk4MjE3NTM5MA8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBZGTq0Ma3PKt/VNC6rw3FNV0F2GsQoBPmGqJdxCtg8Ob6Mg==" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8665BB13" />
+</div>
+        <div id="divScreenBox" style="width: 950px; box-shadow: 2px 2px 5px black;" class="screen-shade screen-box rounded-corners-lower">
+            <!--
+            <div style="width:656px;height:150px;" class="div-center">
+                <img src="../theme/Rockville/Banner.png" style="height:150px;" />
+            </div>
+
+
+            -->
+            <div style="width: 950px; margin-top: 0px; text-align: center; height: 100px;">
+                <div id="divHeaderInner" style="z-index: 4; position: absolute; width: 950px; margin-top: 0px; text-align: center; height: 90px;" class="light-shade rounded-corners-lower">
+                    <img src="../theme/Rockville/logo.png" id="ctl00_imgLogo" class="Logo" />
+                    <div class="SplashDiv">
+                        <span id="ctl00_spnWelcomeTo" class="WelcomeTo">Welcome to</span><br />
+                        <span id="ctl00_spnSplashMessage" class="SplashMessage">The Village of Rockville Centre</span>
+                    </div>
+                </div>
+                <div id="div1" style="z-index: 3; position: absolute; width: 950px; margin-top: 0px; text-align: center; height: 100px; box-shadow: 5px 5px 5px black;" class="dark-shade rounded-corners-lower">
+                </div>
+            </div>
+            <div id="divTimer" style="width:100%;margin-top:15px;font-size:10px;height:20px;text-align:center;"></div>
+
+            
+    <div id="divInput">
+        <div style="width: 915px; margin-top: 5px;" class="light-shade box rounded-corners">
+            <div style="width: 915px; height: 10px;" class="dark-shade box-title-box rounded-corners-upper">
+            </div>
+            <div style="padding: 10px;">
+                <table class="TicketSelect">
+                    <tr>
+                        <td><span id="lblLicensePlateAndState" class="LabelHeader">License Plate:</span>
+                            <span id="divLicensePlate"></span>&nbsp;<span id="divLicenseState"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="width: 915px; overflow: auto;" class="center-div">
+            <div id="divTicketList" style="width: 450px; margin-top: 15px; margin-bottom: 5px; float: right" class="light-shade box rounded-corners">
+                <div style="width: 450px; height: 30px;" class="dark-shade box-title-box rounded-corners-upper">
+                    <div class="box-title">Tickets Selected to Pay</div>
+                </div>
+                <div id="divTicketDetail" style="padding: 10px;">
+
+                    <script id="ticketDetailTemplate" type="text/x-kendo-template">
+            <table class="TicketSelect" style="width: 100%">
+            # for (var i = 0; i < data.length; i++) { #
+                <tr>
+                    <tr>
+                        <td><span class="LabelHeader">Summons:</span> #= data[i].sSummonsNumber #</td>
+                        <td><span class="LabelHeader">Balance:</span> #= data[i].sBalance #</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><span class="LabelHeader">Violation Code:</span> #= data[i].sCurrentViolation #:  #= data[i].sCurrentViolationDescription #</td>
+                    </tr>
+                    # if ( i < data.length - 1 ) { #
+                    <tr>
+                        <td colspan="2" style="border-bottom: 1px solid black">
+                            <div style="height: 2px"></div>
+                        </td>
+                    </tr>
+                    # } #
+            # } #
+             </table>
+                    </script>
+                </div>
+            </div>
+            <div id="divCreditCardInfo" style="width: 450px; margin-top: 15px; margin-right: 5px; margin-bottom: 5px; float: left" class="light-shade box rounded-corners">
+                <div style="width: 450px; height: 30px;" class="dark-shade box-title-box rounded-corners-upper">
+                    <div class="box-title">Credit Card Billing Information</div>
+                </div>
+                <div style="padding: 10px;">
+
+                    <table style="width: 100%" border="0">
+                        <tr>
+                            <td>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="vertical-align: bottom;">
+                                            <div style="display: flex;">
+                                                <div>
+                                                    <span class="subtle_label">Credit Card Number</span><br />
+                                                    <input id="edtCardNumber" name="CardNumber" placeholder="Credit Card Number *" maxlength="16" required="required" style="width: 200px;" />
+                                                </div>
+
+                                                <div style="margin-left:5px;padding-top:15px;display: flex; justify-content: flex-start; align-items: center;">
+                                                    <img id="imgMC" style="margin-left:5px;width: 40px;" src="../images/Mastercard2.png" alt="Mastercard" />
+                                                    <img id="imgVISA" style="margin-left:5px;width: 40px;" src="../images/Visa2.png" alt="VISA" />
+                                                    <img id="imgDISC" style="margin-left:5px;width: 40px;" src="../images/Discover2.png" alt="Discover" />
+                                                    <img id="imgAmex" style="margin-left:5px;width: 40px;" src="../images/Amex2.png" alt="American Express" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <span class="subtle_label">Month</span><br />
+                                            <input id="cbxMonth" name="Month" required="required" style="width: 100px" placeholder="Month *" maxlength="20" />
+                                        </td>
+                                        <td>
+                                            <span class="subtle_label">Year</span><br />
+                                            <input id="cbxYear" name="Year" required="required" style="width: 100px" placeholder="Year *" maxlength="20" />
+                                        </td>
+                                        <td>
+
+                                            <span class="subtle_label">CVV</span><br />
+                                            <input id="edtCVV" name="CVV" style="width: 100px" required="required" placeholder="CVV *" maxlength="4" />
+                                            <img id="imgCVV2" src="../images/Help2-16x16.png" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <span class="subtle_label">First Name</span><br />
+                                            <input id="edtFirstNameOnCard" name="FirstNameOnCard" maxlength="50" placeholder="First Name" />
+                                        </td>
+                                        <td>
+                                            <span class="subtle_label">Last Name</span><br />
+                                            <input id="edtLastNameOnCard" name="LastNameOnCard" required="required" maxlength="50" placeholder="Last Name *" style="width: 200px;" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>
+                                            <span class="subtle_label">Billing Address</span><br />
+                                            <input id="edtBillingAddress" name="BillingAddress" style="width: 400px;" required="required" placeholder="Billing Address *" maxlength="255" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+
+                                        <td>
+                                            <span class="subtle_label">City</span><br />
+                                            <input id="edtBillingCity" name="BillingCity" required="required" maxlength="255" placeholder="City *" />
+                                        </td>
+                                        <td>
+                                            <span class="subtle_label">State</span><br />
+                                            <input id="cbxBillingState" name="BillingState" required="required" placeholder="State *" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <span class="subtle_label">Billing Zipcode</span><br />
+                                            <input id="edtBillingZip" name="BillingZip" required="required" style="width: 80px;" maxlength="5" placeholder="Zip Code *" />
+                                        </td>
+                                        <td style="padding-left: 10px;">
+                                            <span class="subtle_label">E-Mail</span><br />
+                                            <input id="edtEM" name="em" style="width: 250px" placeholder="E-Mail Address" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td style="padding-left: 10px;">
+                                            <span class="subtle_label">Please enter address if you would like to receive confirmation via email</span><br />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="divAuthorization" style="width: 915px; margin-top: 15px;" class="light-shade box rounded-corners">
+            <div style="width: 915px; height: 10px;" class="dark-shade box-title-box rounded-corners-upper">
+            </div>
+            <div style="padding: 10px;">
+                <table style="width: 100%;" border="0" class="Authorization">
+                    <tr>
+                        <td>
+                            <input id="chbAuthorize" type="checkbox" class="ticketselectcheckbox" name="Authorization" />
+                        </td>
+                        <td>I hereby state that I am listed as an authorized signatory on the credit card account
+                                        entered above.
+                        &nbsp;<span class="k-invalid-msg" data-for="Authorization"></span>
+                        </td>
+                    </tr>
+                    <tr style="display: none;">
+                        <td>
+                            <input id="chbChargeBack" type="checkbox" class="ticketselectcheckbox" name="ChargebackHold" />
+                        </td>
+                        <td>I hereby accept that any post-payment transaction disputes or chargebacks may result in the
+                             reinstatement of the obligations paid in this transaction
+                            and in an additional charge to cover the cost of the dispute.
+                        &nbsp;<span class="k-invalid-msg" data-for="Permission"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="chbCharge" type="checkbox" class="ticketselectcheckbox" name="Permission" />
+                        </td>
+                        <td>I hereby grant permission for <span id="spnCityName"></span> to charge my credit
+                                        card account for the fine amount <strong>PLUS</strong> a
+                                        <span id="ctl00_ContentPlaceHolder1_lblCreditCardFee"></span>
+                            convenience fee.
+                        &nbsp;<span class="k-invalid-msg" data-for="Permission"></span>
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+
+        </div>
+
+        <div id="divButtons" style="width: 915px; margin-top: 15px;" class="light-shade box rounded-corners">
+            <div style="width: 915px; height: 10px;" class="dark-shade box-title-box rounded-corners-upper">
+            </div>
+            <div style="padding: 10px;">
+                <table border="0">
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td class="LabelHeader" style="text-align: right">Total Balance to Pay:
+                                    </td>
+                                    <td style="text-align: right; width: 100px;">
+                                        <span id="spnAmountToPay"></span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="LabelHeader" style="text-align: right">Convenience Fee:
+                                    </td>
+                                    <td style="text-align: right">
+                                        <span id="spnProcessingCharge"></span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <span id="spnProcessingFee"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="LabelHeader" style="text-align: right"></td>
+                                    <td style="text-align: right;">
+                                        <div style="width: 100px; border-top: 2px solid black"></div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="LabelHeader" style="text-align: right">Final Payment Amount:
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <span id="spnFinalPaymentAmount"></span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <!-- (c) 2005, 2013. Authorize.Net is a registered trademark of CyberSource
+Corporation -->
+                                        <div class="AuthorizeNetSeal">
+                                            <script
+                                                type="text/javascript" language="javascript">var
+                                                    ANS_customer_id = "fe516600-8833-4ae8-8dd2-f672aff4a4fe";</script>
+                                            <script
+                                                type="text/javascript" language="javascript"
+                                                src="//verify.authorize.net/anetseal/seal.js"></script>
+                                            <a
+                                                href="http://www.authorize.net/" id="A1"
+                                                target="_blank">Secure Online Payments</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div style="padding-top: 5px; float: left">
+                                <button id="btnBack" type="button" class="standardbutton k-button k-button-icontext"><span class='icon_base icon_back'></span>Back</button>
+                            </div>
+
+                            <div style="padding-top: 5px; padding-left: 15px; float: left">
+                                <button id="btnOk" type="button" class="paymentbutton k-button k-button-icontext"><span class='icon_base icon_creditcard'></span>Confirm Payment</button>
+                            </div>
+
+                            <div style="padding-top: 5px; padding-left: 15px; float: left">
+                                <button id="btnCancel" type="button" class="standardbutton k-button k-button-icontext"><span class='icon_base icon_cancel'></span>Cancel</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="dialog-message"></div>
+        <div id="divMessage"></div>
+        <div id="divConfirmPayent">
+            <div style="margin: 10px 0px 10px 10px;">
+                Confirm payment of <span id="spnConfirmPaymentAmount"></span> to <span id="divLicensePlate2"></span>&nbsp;<span id="divLicenseState2"></span>
+            </div>
+            <div style="padding-left: 10px; padding-top: 5px; float: left">
+                <button id="btnConfirmPayment" type="button" class="paymentbutton k-button k-button-icontext"><span class='icon_base icon_creditcard'></span>Submit Payment</button>
+            </div>
+
+            <div style="padding-top: 5px; padding-left: 15px; float: left">
+                <button id="btnCancelConfirmPayment" type="button" class="paymentbutton k-button k-button-icontext"><span class='icon_base icon_cancel'></span>Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+
+            <div id="divFooter" style="width: 950px; margin-top: 20px; text-align: center" class="dark-shade footer rounded-corners-lower">
+                <div class="footer-title"><span id="lblTermsOfService" class="pointer">Terms of Service</span> | <span id="lblContact" class="pointer">Business Contact Information</span> | <span id="lblRefund" class="pointer">Refund Policy</span></div>
+                <div class="footer-copyright">A Quest Computer Products solution powered by SureCourt - Copyright Â© 2012-<span id="ctl00_spnCopyrightDate">2025</span> - SCR <span id="ctl00_spnScreenNumber">4.0</span>, <span id="ctl00_spnVersion">V2021.0.0.18</span></div>
+            </div>
+        </div>
+        
+    </form>
+
+    <script>
+        ( function ( i, s, o, g, r, a, m ) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                ( i[r].q = i[r].q || [] ).push( arguments )
+            }, i[r].l = 1 * new Date(); a = s.createElement( o ),
+            m = s.getElementsByTagName( o )[0]; a.async = 1; a.src = g; m.parentNode.insertBefore( a, m )
+        } )( window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga' );
+
+        ga( 'create', '', 'auto' );
+    ga( 'send', 'pageview' );
+    </script>
+    <table style="width: 100%;">
+        <tr>
+            <td style="text-align: center;">
+                <span id="siteseal">
+                </span>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+ß´B6®b      hT«hT«HPž	hT«   s    O^userContextId=1&partitionKey=%28https%2Csurecourt.com%29,:https://rvcny.surecourt.com/epay/EZPay/MakePayment.aspx strongly-framed 1 security-info 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 request-method GET response-head HTTP/2 200 
+cache-control: private
+content-type: text/html; charset=utf-8
+date: Thu, 19 Jun 2025 13:24:57 GMT
+content-length: 24062
+X-Firefox-Spdy: h2
+ original-response-headers cache-control: private
+content-type: text/html; charset=utf-8
+server: 
+date: Thu, 19 Jun 2025 13:24:57 GMT
+content-length: 24062
+X-Firefox-Spdy: h2
+ ctid 1 uncompressed-len 0 net-response-time-onstart 128 net-response-time-onstop 216   ]þ

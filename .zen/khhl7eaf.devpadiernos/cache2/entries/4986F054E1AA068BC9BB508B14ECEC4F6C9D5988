@@ -1,0 +1,514 @@
+var MakePayment = (function () {
+    function MakePayment() {
+        this.regCC = new RegExp("^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$");
+        this.regAMEX = new RegExp("^3[47][0-9]{13}$");
+        this.regVISA = new RegExp("^4[0-9]{12}(?:[0-9]{3})?$");
+        this.regMC = new RegExp("^5[1-5][0-9]{14}$");
+        this.regD = new RegExp("^6(?:011|5[0-9]{2})[0-9]{12}$");
+        this.regCVV_AMEX = new RegExp("^[0-9]{4}$");
+        this.regCVV_VMD = new RegExp("^[0-9]{3}$");
+        this.paymentSubmitted = false;
+    }
+    MakePayment.prototype.validate = function () {
+        var validatable = this.getValidationObject();
+        return validatable.validate();
+    };
+
+    MakePayment.prototype.submitIfValid = function () {
+        //var validatable = this.getValidationObject();
+        /*
+        $('#divButtons').mask("Submitting...");
+        $('#divCreditCardInfo').mask("Submitting...");
+        $('#divAuthorization').mask("Submitting...");
+        */
+        if (this.validate()) {
+            this.confirmPayment();
+        } else {
+            //alert('Please review your entries');
+            //$('#divButtons').unmask();
+            //$('#divCreditCardInfo').unmask();
+            //$('#divAuthorization').unmask();
+        }
+    };
+
+    MakePayment.prototype.submitPayment = function () {
+        if (this.paymentSubmitted) {
+            return;
+        }
+        this.paymentSubmitted = true;
+
+        $('#divConfirmPayent').mask('Sending Payment...');
+
+        var pi = this.paymentInfo();
+        $.ajax({
+            type: 'POST',
+            url: '../api/Payment/Payment',
+            data: JSON.stringify(pi),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            context: this,
+            success: function (data) {
+                if (data.PaymentExists) {
+                    window.location.href = 'Receipt.aspx?p=' + data.gPaymentID;
+                } else if (!data.bError) {
+                    this.paymentSuccessful(data);
+                } else {
+                    window.location.href = 'Search.aspx';
+                }
+            },
+            error: function (jq, textStatus, errorThrown) {
+                window.location.href = 'Search.aspx';
+            }
+        });
+    };
+
+    MakePayment.prototype.getValidationObject = function () {
+        return $("#divInput").kendoValidator({
+            rules: {
+                custom: function (input) {
+                    if (input.is("[name=Authorization]") || input.is("[name=Permission]")) {
+                        return $('.ticketselectcheckbox:checked').length === 2;
+                    }
+
+                    return true;
+                },
+                email: function (input) {
+                    if (input.is("[name=Email]")) {
+                        var regEmail = new RegExp("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$");
+                        return regEmail.test(input.val().toUpperCase());
+                    }
+                    return true;
+                },
+                billingZip: function (input) {
+                    if (input.is("[name=BillingZip]")) {
+                        return $('#edtBillingZip').val().length === 5;
+                    }
+
+                    return true;
+                },
+                billingState: function (input) {
+                    if (input.is("[name=BillingState]")) {
+                        return $('#cbxBillingState').val().length === 2;
+                    }
+
+                    return true;
+                },
+                cardNumber: function (input) {
+                    if (input.is("[name=CardNumber]")) {
+                        return makePayment.validateCard();
+                    }
+
+                    return true;
+                },
+                CVV: function (input) {
+                    if (input.is("[name=CVV]")) {
+                        return makePayment.validateCVV();
+                    }
+                    return true;
+                }
+            },
+            messages: {
+                custom: "Please accept mandatory terms",
+                billingZip: "Billing Zip must be a length of five",
+                cardNumber: "Invalid card number",
+                CVV: "Invalid CVV Code"
+            }
+        }).data("kendoValidator");
+    };
+
+    MakePayment.prototype.validateCard = function () {
+        var CC = $('#edtCardNumber').val() + "";
+        CC = CC.replace(" ", "");
+        CC = CC.replace(new RegExp(' ', 'g'), '');
+        $("#edtCardNumber").val(CC);
+
+        var regCC = new RegExp("^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$");
+
+        var regAMEX = new RegExp("^3[47][0-9]{13}$");
+        var regVISA = new RegExp("^4[0-9]{12}(?:[0-9]{3})?$");
+        var regMC = new RegExp("^5[1-5][0-9]{14}$");
+        var regD = new RegExp("^6(?:011|5[0-9]{2})[0-9]{12}$");
+        
+        if (bAllowAMEX && regAMEX.test(CC)) {
+            makePayment.hideAllCards();
+            $('#imgAmex').show();
+            $("#imgCVV2").kendoTooltip({
+                content: "This is a four digit card security code located in the upper left of your AMEX card",
+                position: "top"
+            });
+        } else if (regVISA.test(CC)) {
+            makePayment.hideAllCards();
+            $('#imgVISA').show();
+            $("#imgCVV2").kendoTooltip({
+                content: "Your CVV number is a 3-digit number located after your account number on the signature strip on the back of your card.",
+                position: "top"
+            });
+        } else if (regMC.test(CC)) {
+            makePayment.hideAllCards();
+            $('#imgMC').show();
+            $("#imgCVV2").kendoTooltip({
+                content: "Your CVV number is a 3-digit number located after your account number on the signature strip on the back of your card.",
+                position: "top"
+            });
+        } else if (regD.test(CC)) {
+            makePayment.hideAllCards();
+            $('#imgDISC').show();
+            $("#imgCVV2").kendoTooltip({
+                content: "Your CVV number is a 3-digit number located after your account number on the signature strip on the back of your card.",
+                position: "top"
+            });
+        } else {
+            makePayment.showAllCards();
+            return false;
+        }
+        return true;
+    };
+
+    MakePayment.prototype.validateCVV = function () {
+        var ret = false;
+        var CC = $('#edtCardNumber').val();
+        var CVV = $('#edtCVV').val();
+
+        var regAMEX = new RegExp("^3[47][0-9]{13}$");
+        var regVISA = new RegExp("^4[0-9]{12}(?:[0-9]{3})?$");
+        var regMC = new RegExp("^5[1-5][0-9]{14}$");
+        var regD = new RegExp("^6(?:011|5[0-9]{2})[0-9]{12}$");
+        var regCVV_AMEX = new RegExp("^[0-9]{4}$");
+        var regCVV_VMD = new RegExp("^[0-9]{3}$");
+
+
+        if (bAllowAMEX && regAMEX.test(CC)) {
+            ret = regCVV_AMEX.test(CVV);
+            EZPay.log("getValidationObject:CVV", "AMEX Card Detected - checking AMEX CVV" + CVV + " " + ret);
+            return ret;
+        }
+        if (regVISA.test(CC) || regMC.test(CC) || regD.test(CC)) {
+            ret = regCVV_VMD.test(CVV);
+            EZPay.log("getValidationObject:CVV", "V/M/D Card Detected - checking V/M/D CVV " + CVV + " " + ret);
+            return ret;
+        }
+
+        EZPay.log("getValidationObject:CVV", "No Valid Card Type Detected");
+
+        return ret;
+    };
+
+    MakePayment.prototype.showAllCards = function () {
+        $('#imgMC').show();
+        $('#imgVISA').show();
+        $('#imgDISC').show();
+        $('#imgAmex').show();
+    };
+
+    MakePayment.prototype.hideAllCards = function () {
+        $('#imgMC').hide();
+        $('#imgVISA').hide();
+        $('#imgDISC').hide();
+        $('#imgAmex').hide();
+    };
+
+    MakePayment.prototype.paymentSuccessful = function (data) {
+        if (data.PaymentExists) {
+            window.location.href = 'Receipt.aspx?p=' + data.gPaymentID;
+        } else if (!data.Successful) {
+            this.paymentSubmitted = false;
+            this.winConfirmPayment.close();
+            $('#divConfirmPayent').unmask();
+
+            var pop = $("#divMessage").data("kendoWindow");
+            pop.title(data.Title);
+            pop.content(data.Text);
+            pop.center();
+            pop.open();
+
+            /*
+            $('#divButtons').unmask();
+            $('#divCreditCardInfo').unmask();
+            $('#divAuthorization').unmask();
+            */
+            if (!data.Online) {
+                window.location.replace("offline.aspx");
+            }
+            if (data.Maintenance) {
+                window.location.replace("Maintenance.aspx");
+            }
+        } else {
+            window.location.replace("receipt.aspx?p=" + data.gPaymentID);
+        }
+    };
+
+    MakePayment.prototype.paymentInfo = function () {
+        var ret = {
+            FirstName: $('#edtFirstNameOnCard').val(),
+            LastName: $('#edtLastNameOnCard').val(),
+            Address: $('#edtBillingAddress').val(),
+            City: $('#edtBillingCity').val(),
+            State: $('#cbxBillingState').val(),
+            Zip: $('#edtBillingZip').val(),
+            CardNumber: $('#edtCardNumber').val(),
+            ExpirationMonth: $('#cbxMonth').val(),
+            ExpirationYear: $('#cbxYear').val(),
+            CVV: $('#edtCVV').val(),
+            EMail: $('#edtEM').val()
+        };
+
+        return ret;
+    };
+
+    MakePayment.prototype.confirmPayment = function () {
+        this.winConfirmPayment.center();
+        this.winConfirmPayment.open();
+    };
+
+    MakePayment.prototype.cancel = function () {
+        window.location.replace("Search.aspx");
+    };
+
+    MakePayment.prototype.back = function () {
+        window.location.replace("TicketSelect.aspx");
+    };
+
+    MakePayment.prototype.showTicketList = function () {
+        $('#divTicketList').mask('Loading...');
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/payment/information',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            context: this,
+            success: function (data) {
+                if (data.bError) {
+                    window.location.replace("Search.aspx");
+                    return;
+                }
+
+                if (data.TicketType === "P") {
+                    $('#divLicensePlate').html(data.LicensePlate);
+                    $('#divLicenseState').html(data.LicenseState);
+                    $('#divLicensePlate2').html(data.LicensePlate);
+                    $('#divLicenseState2').html(data.LicenseState);
+                    $("#lblLicensePlateAndState").html("License Plate:");
+                } else {
+                    $('#divLicensePlate').html(data.MotoristID);
+                    $('#divLicenseState').html(data.MotoristState);
+                    $('#divLicensePlate2').html(data.MotoristID);
+                    $('#divLicenseState2').html(data.MotoristState);
+                    $("#lblLicensePlateAndState").html("Motorist ID:");
+                }
+
+                //$('#divLicensePlate').html(data.LicensePlate);
+                //$('#divLicenseState').html(data.LicenseState);
+                //$('#divLicensePlate2').html(data.LicensePlate);
+                //$('#divLicenseState2').html(data.LicenseState);
+                $('#spnAmountToPay').html(data.AmountToPay);
+                $('#spnProcessingCharge').html(data.ProcessingCharge);
+
+                //$('#spnProcessingFee').html(data.ProcessingFee);
+                $('#spnFinalPaymentAmount').html(data.FinalPaymentAmount);
+                $('#spnConfirmPaymentAmount').html(data.FinalPaymentAmount);
+                $('#spnCityName').html(data.CityName);
+            },
+            error: function (jq, textStatus, errorThrown) {
+                window.location.replace("Search.aspx");
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/ticket/TicketSelectedList',
+            //data: JSON.stringify(pi),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            context: this,
+            success: function (data) {
+                if (data === null) {
+                    window.location.replace("Search.aspx");
+                    return;
+                }
+
+                var template = kendo.template($("#ticketDetailTemplate").html());
+                var result = template(data);
+                $("#divTicketDetail").html(result); //Append the result
+
+                $('#divTicketList').unmask();
+            },
+            error: function (jq, textStatus, errorThrown) {
+                window.location.replace("Search.aspx");
+            }
+        });
+    };
+
+    MakePayment.prototype.buildUI = function () {
+        this.showTicketList();
+        
+        if (bAllowAMEX) {
+            $('#imgAmex').show();
+        } else {
+            $('#imgAmex').hide();
+        }
+
+        $("#cbxMonth").kendoComboBox({
+            dataTextField: "sMonth",
+            dataValueField: "iMonth",
+            filter: "contains",
+            suggest: true,
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "../api/library/MonthList",
+                        dataType: "json"
+                    }
+                }
+            }
+        });
+
+        $("#cbxYear").kendoComboBox({
+            dataTextField: "sYear",
+            dataValueField: "iYear",
+            filter: "contains",
+            suggest: true,
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "../api/library/YearList",
+                        dataType: "json"
+                    }
+                }
+            }
+        });
+
+        $('#edtFirstNameOnCard').kendoAutoComplete();
+
+        $('#edtLastNameOnCard').kendoAutoComplete();
+        //$('#edtLastNameOnCard').on("keyup", function () {
+        //    makePayment.validate();
+        //});
+
+        $('#edtBillingAddress').kendoAutoComplete();
+        //$('#edtBillingAddress').on("keyup", function () {
+        //    makePayment.validate();
+        //});
+
+        $('#edtBillingCity').kendoAutoComplete();
+        //$('#edtBillingCity').on("keyup", function () {
+        //    makePayment.validate();
+        //});
+
+        $("#cbxBillingState").kendoComboBox({
+            dataTextField: "sDisplayName",
+            dataValueField: "sAbbr",
+            filter: "contains",
+            suggest: true,
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "../api/library/StateList",
+                        dataType: "json"
+                    }
+                }
+            },
+            change: function (e) {
+                if (this.value() && this.selectedIndex === -1) {
+                    this._filterSource({
+                        value: this.value(),
+                        field: this.options.dataTextField,
+                        operator: "contains"
+                    });
+                    this.select(0);
+                    if (this.selectedIndex === -1) {
+                        this.text("");
+                    }
+                }
+            }
+        });
+
+        $('#edtBillingZip').kendoAutoComplete();
+        //$('#edtBillingZip').on("keyup blur change mouseout", function () {
+        //    makePayment.validate();
+
+        //});
+
+        $('#edtCardNumber').kendoAutoComplete();
+        $('#edtCardNumber').on("keyup blur change mouseout", function () {
+            makePayment.validateCard();
+        });
+
+        $('#edtCVV').kendoAutoComplete();
+        //$('#edtCVV').on("keyup", function () {
+        //    makePayment.validate();
+        //});
+
+        $('#edtEM').kendoAutoComplete();
+
+        $("#imgCVV2").kendoTooltip({
+            content: "Your CVV number is a 3-digit number located after your account number on the signature strip on the back of your card.",
+            position: "top"
+        });
+
+        $('#btnBack').on('click', function (event) {
+            makePayment.back();
+        });
+        $('#btnOk').on('click', function (event) {
+            makePayment.submitIfValid();
+        });
+        $('#btnCancel').on('click', function (event) {
+            makePayment.cancel();
+        });
+
+        $('#btnTestWindow').on('click', function (event) {
+            makePayment.confirmPayment();
+        });
+
+        $("#divMessage").kendoWindow({
+            modal: true,
+            visible: false,
+            width: 500,
+            height: 200,
+            title: 'Information'
+        });
+
+        $("#divConfirmPayent").kendoWindow({
+            modal: true,
+            visible: false,
+            width: 500,
+            height: 100,
+            title: 'Confirm Payment'
+        });
+        $('#btnConfirmPayment').on('click', function (event) {
+            makePayment.submitPayment();
+        });
+        $('#btnCancelConfirmPayment').on('click', function (event) {
+            makePayment.winConfirmPayment.close();
+        });
+        this.winConfirmPayment = $("#divConfirmPayent").data("kendoWindow");
+    };
+    return MakePayment;
+})();
+;
+
+var makePayment = new MakePayment();
+
+$(function () {
+    makePayment.buildUI();
+});
+/// <reference path="../ts.definitions/devexpress.d.ts"/>
+/// <reference path="../ts.definitions/kendo.web.d.ts"/>
+/// <reference path="../ts.definitions/jquery.d.ts" />
+/// <reference path="../ts.definitions/jquery.plugin.d.ts" />JÍ²^      hT«hT¬HPž	h]J)   v    O^userContextId=1&partitionKey=%28https%2Csurecourt.com%29,:https://rvcny.surecourt.com/epay/EZPay/MakePayment.js?1004 strongly-framed 1 security-info FnhllAKWRHGAlo+ESXykKAAAAAAAAAAAwAAAAAAAAEaphjojH6pBabDSgSnsfLHeAAAAAgAAAAAAAAAAAAAAAAAAAAEAOQFmCjImkVxP+7sgiYWmMt8FvcOXmlQiTNWFiWlrbpbqgwAAAAAAAAaWMIIGkjCCBXqgAwIBAgIIUgZvX5unWDwwDQYJKoZIhvcNAQELBQAwgbQxCzAJBgNVBAYTAlVTMRAwDgYDVQQIEwdBcml6b25hMRMwEQYDVQQHEwpTY290dHNkYWxlMRowGAYDVQQKExFHb0RhZGR5LmNvbSwgSW5jLjEtMCsGA1UECxMkaHR0cDovL2NlcnRzLmdvZGFkZHkuY29tL3JlcG9zaXRvcnkvMTMwMQYDVQQDEypHbyBEYWRkeSBTZWN1cmUgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IC0gRzIwHhcNMjQxMTAyMTQ1NjU4WhcNMjUxMjA0MTQ1NjU4WjAaMRgwFgYDVQQDDA8qLnN1cmVjb3VydC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC9dc5Kzi4xmKnEhTcgr5K5FjXbHC4+PZ+/mfZ7yYIG94xCxtLb5T9jdjK6pBZt4b9ufty9NCWkQk/eeu7AD18Ae4jQbavuaBmr8e4aVFRB5wNihNS/EuzovewjB6Jw8XHjs2pB+Ix/YjJFoU490nwkp5+T3BeIyFbuEsVTM3NcsJQpX4qS8YZe6V5dGAFxKQnFRuXkLcAMXMm56xolpOeThveJJ0TwwXTl54TUHA38V38xwBeGfYiY5BK8fGOKm6sOvhJHkelhoeNsr4e1Uuh3qKKNCecsIzH+YQuI3qYKnuc+kk0B6xY0vfYGFPztMH3j6cG60tT8sDANfIehHclFAgMBAAGjggM/MIIDOzAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCBaAwOQYDVR0fBDIwMDAuoCygKoYoaHR0cDovL2NybC5nb2RhZGR5LmNvbS9nZGlnMnMxLTMyMDM0LmNybDBdBgNVHSAEVjBUMEgGC2CGSAGG/W0BBxcBMDkwNwYIKwYBBQUHAgEWK2h0dHA6Ly9jZXJ0aWZpY2F0ZXMuZ29kYWRkeS5jb20vcmVwb3NpdG9yeS8wCAYGZ4EMAQIBMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZ29kYWRkeS5jb20vMEAGCCsGAQUFBzAChjRodHRwOi8vY2VydGlmaWNhdGVzLmdvZGFkZHkuY29tL3JlcG9zaXRvcnkvZ2RpZzIuY3J0MB8GA1UdIwQYMBaAFEDCvSeOzDSDMKIz1/tss/C0LIDOMCkGA1UdEQQiMCCCDyouc3VyZWNvdXJ0LmNvbYINc3VyZWNvdXJ0LmNvbTAdBgNVHQ4EFgQU79MAg7tpI5kBoUT97VXURvNRoyQwggF9BgorBgEEAdZ5AgQCBIIBbQSCAWkBZwB1ABLxTjS9U3JMhAYZw48/ehP457Vih4icbTAFhOvlhiY6AAABku1hInMAAAQDAEYwRAIgYuZtz3VxNV/QsMcBXQvqA3K/ljU1Cbke1r/agDdKscICIAcZTuUGKRQf78Ee90llhCWJYdP4rYtaoOA/q0zrnDPbAHUAfVkeEuF4KnscYWd8Xv340IdcFKBOlZ65Ay/ZDowuebgAAAGS7WEjEwAABAMARjBEAiAA4y8zs9vzQO1VQILOv+BmSyJ6ukmxS7X/GYJJnPA+3QIgWbBZGI790kD1bd5iVblGeAZ3phcwX7wgRJZO6E/icEIAdwDM+w9qhXEJZf6Vm1PO6bJ8IumFXA2XjbapflTA/kwNsAAAAZLtYSOYAAAEAwBIMEYCIQC6L7E+b+6hxZSz5OSwT6KQ2aKaHz4/mxXL8yeJIxD5mAIhAOMLMJdNGn51Iwe9Smub5jOKWNt2vUYAMQ+dIPVTzx6QMA0GCSqGSIb3DQEBCwUAA4IBAQAzeCAcfnGZXB1Fr+dS1RW6Xgl2FOvWfP0P3QcZHrZjgYdpDiMMoq6Yif71TUApCENcHRNfMQQ+Yz31TSDk+zDfS2ESAQdeDA6kASj18EAPf8ehgtzVf3B+OXE2Wx+lkgOL8dwghKoFEfhcvbxYt2rZY6Z8IbluYJPIs2Fgd2m/DeLkLmSR0quu1JEs61XmAaQjmbNpSXVPT8E1rATODBlMAs6NyQ3PWNYet3oYypInDw4wtgSvLsdsMCXiZg1fjdU9Ak3g/yYqMTTskdavHvJ+GaMihF8LhDRJZx7nMoBrI8pMIqKIOabk1b2cqUPu0O12x1K7m4nq7lOXiR59ef9zEwIABAAAAAAAAQEAAAUAAAAGeDI1NTE5AAAADlJTQS1QU1MtU0hBMjU2AANmCjImkVxP+7sgiYWmMt8FvcOXmlQiTNWFiWlrbpbqgwAAAAAAAAaWMIIGkjCCBXqgAwIBAgIIUgZvX5unWDwwDQYJKoZIhvcNAQELBQAwgbQxCzAJBgNVBAYTAlVTMRAwDgYDVQQIEwdBcml6b25hMRMwEQYDVQQHEwpTY290dHNkYWxlMRowGAYDVQQKExFHb0RhZGR5LmNvbSwgSW5jLjEtMCsGA1UECxMkaHR0cDovL2NlcnRzLmdvZGFkZHkuY29tL3JlcG9zaXRvcnkvMTMwMQYDVQQDEypHbyBEYWRkeSBTZWN1cmUgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IC0gRzIwHhcNMjQxMTAyMTQ1NjU4WhcNMjUxMjA0MTQ1NjU4WjAaMRgwFgYDVQQDDA8qLnN1cmVjb3VydC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC9dc5Kzi4xmKnEhTcgr5K5FjXbHC4+PZ+/mfZ7yYIG94xCxtLb5T9jdjK6pBZt4b9ufty9NCWkQk/eeu7AD18Ae4jQbavuaBmr8e4aVFRB5wNihNS/EuzovewjB6Jw8XHjs2pB+Ix/YjJFoU490nwkp5+T3BeIyFbuEsVTM3NcsJQpX4qS8YZe6V5dGAFxKQnFRuXkLcAMXMm56xolpOeThveJJ0TwwXTl54TUHA38V38xwBeGfYiY5BK8fGOKm6sOvhJHkelhoeNsr4e1Uuh3qKKNCecsIzH+YQuI3qYKnuc+kk0B6xY0vfYGFPztMH3j6cG60tT8sDANfIehHclFAgMBAAGjggM/MIIDOzAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCBaAwOQYDVR0fBDIwMDAuoCygKoYoaHR0cDovL2NybC5nb2RhZGR5LmNvbS9nZGlnMnMxLTMyMDM0LmNybDBdBgNVHSAEVjBUMEgGC2CGSAGG/W0BBxcBMDkwNwYIKwYBBQUHAgEWK2h0dHA6Ly9jZXJ0aWZpY2F0ZXMuZ29kYWRkeS5jb20vcmVwb3NpdG9yeS8wCAYGZ4EMAQIBMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZ29kYWRkeS5jb20vMEAGCCsGAQUFBzAChjRodHRwOi8vY2VydGlmaWNhdGVzLmdvZGFkZHkuY29tL3JlcG9zaXRvcnkvZ2RpZzIuY3J0MB8GA1UdIwQYMBaAFEDCvSeOzDSDMKIz1/tss/C0LIDOMCkGA1UdEQQiMCCCDyouc3VyZWNvdXJ0LmNvbYINc3VyZWNvdXJ0LmNvbTAdBgNVHQ4EFgQU79MAg7tpI5kBoUT97VXURvNRoyQwggF9BgorBgEEAdZ5AgQCBIIBbQSCAWkBZwB1ABLxTjS9U3JMhAYZw48/ehP457Vih4icbTAFhOvlhiY6AAABku1hInMAAAQDAEYwRAIgYuZtz3VxNV/QsMcBXQvqA3K/ljU1Cbke1r/agDdKscICIAcZTuUGKRQf78Ee90llhCWJYdP4rYtaoOA/q0zrnDPbAHUAfVkeEuF4KnscYWd8Xv340IdcFKBOlZ65Ay/ZDowuebgAAAGS7WEjEwAABAMARjBEAiAA4y8zs9vzQO1VQILOv+BmSyJ6ukmxS7X/GYJJnPA+3QIgWbBZGI790kD1bd5iVblGeAZ3phcwX7wgRJZO6E/icEIAdwDM+w9qhXEJZf6Vm1PO6bJ8IumFXA2XjbapflTA/kwNsAAAAZLtYSOYAAAEAwBIMEYCIQC6L7E+b+6hxZSz5OSwT6KQ2aKaHz4/mxXL8yeJIxD5mAIhAOMLMJdNGn51Iwe9Smub5jOKWNt2vUYAMQ+dIPVTzx6QMA0GCSqGSIb3DQEBCwUAA4IBAQAzeCAcfnGZXB1Fr+dS1RW6Xgl2FOvWfP0P3QcZHrZjgYdpDiMMoq6Yif71TUApCENcHRNfMQQ+Yz31TSDk+zDfS2ESAQdeDA6kASj18EAPf8ehgtzVf3B+OXE2Wx+lkgOL8dwghKoFEfhcvbxYt2rZY6Z8IbluYJPIs2Fgd2m/DeLkLmSR0quu1JEs61XmAaQjmbNpSXVPT8E1rATODBlMAs6NyQ3PWNYet3oYypInDw4wtgSvLsdsMCXiZg1fjdU9Ak3g/yYqMTTskdavHvJ+GaMihF8LhDRJZx7nMoBrI8pMIqKIOabk1b2cqUPu0O12x1K7m4nq7lOXiR59ef9zZgoyJpFcT/u7IImFpjLfBb3Dl5pUIkzVhYlpa26W6oMAAAAAAAAE1DCCBNAwggO4oAMCAQICAQcwDQYJKoZIhvcNAQELBQAwgYMxCzAJBgNVBAYTAlVTMRAwDgYDVQQIEwdBcml6b25hMRMwEQYDVQQHEwpTY290dHNkYWxlMRowGAYDVQQKExFHb0RhZGR5LmNvbSwgSW5jLjExMC8GA1UEAxMoR28gRGFkZHkgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkgLSBHMjAeFw0xMTA1MDMwNzAwMDBaFw0zMTA1MDMwNzAwMDBaMIG0MQswCQYDVQQGEwJVUzEQMA4GA1UECBMHQXJpem9uYTETMBEGA1UEBxMKU2NvdHRzZGFsZTEaMBgGA1UEChMRR29EYWRkeS5jb20sIEluYy4xLTArBgNVBAsTJGh0dHA6Ly9jZXJ0cy5nb2RhZGR5LmNvbS9yZXBvc2l0b3J5LzEzMDEGA1UEAxMqR28gRGFkZHkgU2VjdXJlIENlcnRpZmljYXRlIEF1dGhvcml0eSAtIEcyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAueDLENSvdr3Uk2LrMGS4gQhswwTZYheOL/8+Zc+PzmLmPFIc2hZFS1WreGtjg2KQzg9pbJnIGhSLTMxFM+qI3J6jryv+gGGdeVfEzy70PzA8XUf8mha8wzeWQVGOEUtU+Ci+0Iy+8DA4HvOwJvhmR2Nt3nEmR484R1PRRh2049wA6kWsvbxx2apvANvbzTA6eU9fTEf4He9bwsSdYDuxskOR2KQzTuqz1idPrSWKpcb01dCmrnQFZFeItURV1C0qOj74uL3pMgoClGTEFjpQ8Uqu53kzrwwgB3/o3wQ5wmkCbGNS+nfBG8h0h8i5kxhQVDVLaU68O9NJLh/cwdJS+wIDAQABo4IBGjCCARYwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYwHQYDVR0OBBYEFEDCvSeOzDSDMKIz1/tss/C0LIDOMB8GA1UdIwQYMBaAFDqahQcQZyi27/a9BUFuIMGU2g/eMDQGCCsGAQUFBwEBBCgwJjAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZ29kYWRkeS5jb20vMDUGA1UdHwQuMCwwKqAooCaGJGh0dHA6Ly9jcmwuZ29kYWRkeS5jb20vZ2Ryb290LWcyLmNybDBGBgNVHSAEPzA9MDsGBFUdIAAwMzAxBggrBgEFBQcCARYlaHR0cHM6Ly9jZXJ0cy5nb2RhZGR5LmNvbS9yZXBvc2l0b3J5LzANBgkqhkiG9w0BAQsFAAOCAQEACH5skxDIOLiWqZBL/6FfTwTvbD6ciAbJUI+mc/dXMRu+vOQv2/i601vgtOfmeWIODKLXamNzMbX1qEikOwgtol2Q17R8JU8RVjDEtkSdeyyd5V7m7wxhqr/kKhvuhJ64g33BQ85EpxNwDZEf9MgTrYNg2dhyqHMkHrWsIg7KF4liWEQbq4klAQAPzcQbYttRtNMPUSqb9Lxz/HbONqTN2dgs6q6b9SqykNFNdRiKP4pBkCN9W0v+pANYm0ayw2Bgg/h9UEHOwqGQw7vvAi/SFVTuRBXZCq6nijPtsS12NibcBOuf92EfFdyHb+5GliitoSZ9CgmnLgSjjbz4vAQwAWYKMiaRXE/7uyCJhaYy3wW9w5eaVCJM1YWJaWtuluqDAAAAAAAAA8kwggPFMIICraADAgECAgEAMA0GCSqGSIb3DQEBCwUAMIGDMQswCQYDVQQGEwJVUzEQMA4GA1UECBMHQXJpem9uYTETMBEGA1UEBxMKU2NvdHRzZGFsZTEaMBgGA1UEChMRR29EYWRkeS5jb20sIEluYy4xMTAvBgNVBAMTKEdvIERhZGR5IFJvb3QgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IC0gRzIwHhcNMDkwOTAxMDAwMDAwWhcNMzcxMjMxMjM1OTU5WjCBgzELMAkGA1UEBhMCVVMxEDAOBgNVBAgTB0FyaXpvbmExEzARBgNVBAcTClNjb3R0c2RhbGUxGjAYBgNVBAoTEUdvRGFkZHkuY29tLCBJbmMuMTEwLwYDVQQDEyhHbyBEYWRkeSBSb290IENlcnRpZmljYXRlIEF1dGhvcml0eSAtIEcyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv3FiCPH6WTT3G8kYo/eASVjpIoMTpsUgQwE7hPHmhUmfJ+r2hBtOoLTbcJjHMgGxBT4HTu70+k8vWTAi56sZVmvigAf88xZ1gDlRe+X5NbZ0TqmNghPktj+pA4P6or6KFWp/3gvDthkUBcrqw6gElDtGfDIN8wBmIsiNaW02jBEYt9OyHGC0OPoCjM7T3UYH3go+6118yHz7sCtTpJJiaVElBWEaRIGMLKlDliPfrDqBmg4pxRyp6V0etp6eMAo5zvGIgPtLXcwy7IViQyU0AlYnAZG0O3AqP26x6JyIAX2f1PnbU21gnb8s51iruF9G/M7EGwM8CetJMVxpRrPgRwIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBBjAdBgNVHQ4EFgQUOpqFBxBnKLbv9r0FQW4gwZTaD94wDQYJKoZIhvcNAQELBQADggEBAJnbXXnV+ZdZZwNh8X47BjF1LaEgjk9lh7T3ppy82Okv0Nta7s90jHO0OELaBXv4AnW4/aWx1672194Ty1MQfopG0Zf6ty4rEauQsCeA+eifWuk3n6vk32yzhRedPdkkT3mRNdZfBOuAg6uaAi21EPTYkMcEc0DtciWgqZ/snqtoEplXxo8SOgmkvUT9BhU3wZvkMqPtOOjYZPMsfhT8Auqfzf8HaBfbIpA4LXqN0VTxaeNfM8p6PXsK48p/Xznl4nW6xXYYM84s8C9Mrfex585PqMSbSlQGxX991QgP4hz+fhe4rF721BayQwkMTfana7SZhGXKeoji4kS+XPfqHPUAAAABAAAAAmgyAAEAAAAAY3Rsc2ZsYWdzMHgwMDAwMDAwMDpydmNueS5zdXJlY291cnQuY29tOjQ0M151c2VyQ29udGV4dElkPTEmcGFydGl0aW9uS2V5PSUyOGh0dHBzJTJDc3VyZWNvdXJ0LmNvbSUyOQAB request-method GET response-head HTTP/2 200 
+content-type: application/javascript
+last-modified: Fri, 03 Dec 2021 09:02:52 GMT
+accept-ranges: bytes
+etag: "0466e8d24e8d71:0"
+date: Thu, 19 Jun 2025 13:24:58 GMT
+content-length: 18228
+X-Firefox-Spdy: h2
+ original-response-headers content-type: application/javascript
+last-modified: Fri, 03 Dec 2021 09:02:52 GMT
+accept-ranges: bytes
+etag: "0466e8d24e8d71:0"
+server: 
+date: Thu, 19 Jun 2025 13:24:58 GMT
+content-length: 18228
+X-Firefox-Spdy: h2
+ ctid 2 uncompressed-len 0 net-response-time-onstart 347 net-response-time-onstop 438   G4

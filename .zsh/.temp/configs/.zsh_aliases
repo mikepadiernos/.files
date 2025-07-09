@@ -1,0 +1,35 @@
+# drush
+alias drush='~/public_html/vendor/bin/drush'
+
+# git
+alias gst='git status'
+alias gdf='git diff'
+alias gad='git add'
+alias gct='git commit'
+alias gps='git push'
+alias gpl='git pull'
+alias glg='git log'
+alias gbr='git branch'
+alias gin='git init'
+alias gcl='git clone'
+
+# lazydocker
+alias lzd='lazydocker'
+
+# lazygit
+alias lzg='lazygit'
+
+# neomutt
+alias nmt='neomutt'
+
+# neovim
+# alias nvim='$NEOVIM/nvim'
+alias vim='nvim'
+alias vm='nvim'
+
+# yazi
+alias yz='yazi'
+
+# zsh-eza
+alias li='la --icons=always'
+

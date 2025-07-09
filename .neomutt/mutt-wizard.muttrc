@@ -61,7 +61,7 @@ bind index,pager,browser d half-down
 bind index,pager,browser u half-up
 bind index,pager S sync-mailbox
 bind index,pager R group-reply
-bind index \031 previous-undeleted	# Mouse wheel
+bind index \031 previous-undeleted	# Mouse wheel!j.karter715MP
 bind index \005 next-undeleted		# Mouse wheel
 bind pager \031 previous-line		# Mouse wheel
 bind pager \005 next-line		# Mouse wheel

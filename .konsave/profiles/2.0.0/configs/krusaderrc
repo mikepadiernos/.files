@@ -11,6 +11,9 @@ AutoMount=true
 [Archives]
 Supported Packers=tar,gzip,bzip2,lzma,xz,unzip,zip,cbz,lha,cpio,unrar,rar,cbr,arj,unarj,unace,dpkg,7z,rpm
 
+[Custom Selection Mode]
+QT Selection=false
+
 [Dependencies]
 7z=/usr/bin/7z
 arj=/usr/bin/arj
@@ -28,10 +31,11 @@ krename=/usr/bin/krename
 lha=/usr/bin/lha
 locate=/usr/bin/locate
 lzma=/usr/bin/lzma
-mailer=/usr/bin/thunderbird
+mailer=/usr/bin/kmail
 md5sum=/usr/bin/md5sum
 mount=/usr/bin/mount
 rar=/usr/bin/unrar
+rm=/usr/bin/rm
 rpm=/usr/bin/rpm
 rpm2cpio=/usr/bin/rpm2cpio
 sha1sum=/usr/bin/sha1sum
@@ -76,9 +80,10 @@ Forward Button Visible=true
 Home Button Visible=true
 Insert Tabs After Current=true
 Minimize To Tray=true
+Mouse Selection=0
 New Tab Button Duplicates=true
 Numeric permissions=true
-Show Hidden=false
+Show Hidden=true
 Show New Tab Button=true
 Show Size In Bytes=true
 Single Instance Mode=true
@@ -92,22 +97,27 @@ Window Maximized=false
 Window Width=1353
 
 [PanelLayout]
+FrameColor=none
+FrameShadow=Plain
+FrameShape=NoFrame
 Layout=krusader:default
 
 [Private]
-PopularUrls=file:///home/mikepadiernos/Library/__ Entertainment/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/,file:///home/mikepadiernos/Library/,file:///home/,file:///,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/tests/,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/tests/scripts/,file:///home/mikepadiernos/,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/docroot/webny-protected-content/,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/docroot/,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/,file:///home/mikepadiernos/Projects/
-PopularUrlsRank=20,19,17,15,14,4,1,0,0,0,0,0
+NewFolder Completion list=Starbirds:1,Moon Madness (Tayna Jiteley Luny):1,Warrior's Gate (2016):1,.temp:1,Death Of A Unicorn (2025):1
+NewFolder History list=Death Of A Unicorn (2025),.temp,Warrior's Gate (2016),Moon Madness (Tayna Jiteley Luny),Starbirds
+PopularUrls=mtp:/POCO X5 5G/,file:///media/shared/entertainment/Movies/Death Of A Unicorn (2025)/,file:///media/shared/entertainment/Movies/,webdav://webdav.opendrive.com/,file:///media/shared/entertainment/Books/,file:///media/shared/entertainment/.cache/Popcorn Time/The Argument (2020) [1080p] [BluRay] [5.1] [YTS.MX]/,file:///media/shared/entertainment/.cache/Popcorn Time/The Protege (2021) [1080p] [BluRay] [5.1] [YTS.MX]/,file:///media/shared/entertainment/.cache/Popcorn Time/,file:///media/shared/entertainment/.cache/,file:///home/mikepadiernos/Library/__ Entertainment/.temp/,file:///media/shared/entertainment/,file:///home/mikepadiernos/Library/__ Entertainment/.cache/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Mickey Donald Goofy The Three Musketeers (2004) [1080p] [BluRay] [5.1] [YTS.MX]/,file:///home/mikepadiernos/.files/.zen/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/They Live (1988) [1080p]/,file:///media/shared/entertainment/.cache/Popcorn Time/They Live (1988) [2160p] [4K] [BluRay] [5.1] [YTS.MX]/,file:///home/mikepadiernos/.files/.zen/khhl7eaf.devpadiernos/,file:///media/shared/,file:///home/mikepadiernos/.files/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/,file:///home/mikepadiernos/Library/__ Entertainment/,file:///home/mikepadiernos/.zen/y2p1s580.Default (release)/,file:///home/mikepadiernos/.zen/,file:///home/mikepadiernos/,file:///media/shared/entertainment/.cache/Popcorn Time/Warrior's Gate (2016) [1080p] [YTS.AG]/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Warrior's Gate (2016)/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/Thunderbolts [2025].trickplay/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/Thunderbolts [2025].trickplay/320 - 10x10/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Guardians.of.the.Galaxy.Vol.3.[2023].HD-CAM.x264.AC3.(UKB)/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Sinners (2025) DS4K 1080p iT WEBRip AV1 Opus 5.1 [RAV1NE]/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Sinners.2025.2160p.WEB-DL.DDP5.1.Atmos.SDR.H265-AOC/,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Sinners.2025.2160p.WEB-DL.DDP5.1.Atmos.SDR.H265-AOC/Sinners.2025.2160p.WEB-DL.DDP5.1.Atmos.SDR.H265-AOC.trickplay/,file:///media/shared/entertainment/.cache/Popcorn Time/Sinners (2025) [1080p] [WEBRip] [5.1] [YTS.MX]/
+PopularUrlsRank=20,18,17,14,6,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Start Position=0,0
 Start Size=3380,1408
 cmdline history=
 
 [Startup]
-Left Side Is Active=true
+Left Side Is Active=false
 Show Cmd Line=false
 Show FN Keys=true
 Show Terminal Emulator=false
 Show status bar=false
-Splitter Sizes=1690,1689
+Splitter Sizes=1691,1688
 Start To Tray=true
 State=\x00\x00\x00\xff\x00\x00\x00\x00\xfd\x00\x00\x00\x00\x00\x00\r4\x00\x00\x05D\x00\x00\x00\x04\x00\x00\x00\x04\x00\x00\x00\x08\x00\x00\x00\x08\xfc\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x00\x03\x00\x00\x00\x16\x00m\x00a\x00i\x00n\x00T\x00o\x00o\x00l\x00B\x00a\x00r\x01\x00\x00\x00\x00\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x14\x00j\x00o\x00b\x00T\x00o\x00o\x00l\x00B\x00a\x00r\x01\x00\x00\x02\xc2\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1c\x00a\x00c\x00t\x00i\x00o\x00n\x00s\x00T\x00o\x00o\x00l\x00B\x00a\x00r\x01\x00\x00\x03\x81\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00
 Terminal Emulator Splitter Sizes=912,369
@@ -120,12 +130,12 @@ ActiveTab=0
 PinnedUrl=
 Properties=0
 Type=0
-Url=file:///home/mikepadiernos/Library/__ Entertainment
+Url=mtp:/POCO X5 5G/Internal shared storage
 
 [Startup][Left Tab Bar][Tabs][Tab0][History]
-CurrentIndex=1
-CurrentItems=..,Music,__ Entertainment,Library,..,webny-protected-content,docroot,..,..,webny-protected-content,docroot,workforcedevelopmentnygov,Projects
-Entrys=file:///home/mikepadiernos/Library/__ Entertainment/Movies,file:///home/mikepadiernos/Library/__ Entertainment,file:///home/mikepadiernos/Library,file:///home/mikepadiernos,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/docroot/webny-protected-content,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/docroot,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/docroot,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/docroot/webny-protected-content,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/docroot,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov,file:///home/mikepadiernos/Projects,file:///home/mikepadiernos
+CurrentIndex=0
+CurrentItems=,Internal shared storage,The Argument (2020) [1080p] [BluRay] [5.1] [YTS.MX],..,The Protege (2021) [1080p] [BluRay] [5.1] [YTS.MX],..,Sinners (2025) DS4K 1080p iT WEBRip AV1 Opus 5.1 [RAV1NE],..,Sinners (2025),Popcorn Time,..,entertainment,..
+Entrys=mtp:/POCO X5 5G/Internal shared storage,mtp:/POCO X5 5G,file:///media/shared/entertainment/.cache/Popcorn Time,file:///media/shared/entertainment/.cache/Popcorn Time/The Protege (2021) [1080p] [BluRay] [5.1] [YTS.MX],file:///media/shared/entertainment/.cache/Popcorn Time,file:///media/shared/entertainment/.cache/Popcorn Time/Sinners (2025) DS4K 1080p iT WEBRip AV1 Opus 5.1 [RAV1NE],file:///media/shared/entertainment/.cache/Popcorn Time,file:///media/shared/entertainment/.cache/Popcorn Time/Sinners (2025),file:///media/shared/entertainment/.cache/Popcorn Time,file:///media/shared/entertainment/.cache,file:///media/shared/entertainment,file:///media/shared,file:///media/shared/entertainment
 
 [Startup][Left Tab Bar][Tabs][Tab0][View]
 AutoResizeColumns=true
@@ -133,33 +143,75 @@ Descending Sort Order=0
 Filter=3
 FilterApplysToDirs=false
 IconSize=22
-Saved State=\x00\x00\x00\xff\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0b\xa8\x07\x00\x00\x00\x06\x00\x00\x00\x03\x00\x00\x00d\x00\x00\x00\x07\x00\x00\x00d\x00\x00\x00\x05\x00\x00\x00d\x00\x00\x00\t\x00\x00\x00d\x00\x00\x00\x08\x00\x00\x00d\x00\x00\x00\n\x00\x00\x00d\x00\x00\x06\x90\x00\x00\x00\x0b\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00d\xff\xff\xff\xff\x00\x00\x00\x81\x00\x00\x00\x00\x00\x00\x00\x0b\x00\x00\x05}\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00/\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00F\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00x\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00&\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x03\xe8\x00\x00\x00\x00d\x00\x00\x00\x00
+Saved State=\x00\x00\x00\xff\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x04\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0b\xa8\x07\x00\x00\x00\x06\x00\x00\x00\t\x00\x00\x00d\x00\x00\x00\x08\x00\x00\x00d\x00\x00\x00\x05\x00\x00\x00d\x00\x00\x00\n\x00\x00\x00d\x00\x00\x00\x07\x00\x00\x00d\x00\x00\x00\x03\x00\x00\x00d\x00\x00\x06\x91\x00\x00\x00\x0b\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00d\xff\xff\xff\xff\x00\x00\x00\x81\x00\x00\x00\x00\x00\x00\x00\x0b\x00\x00\x05~\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00/\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00F\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00x\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00&\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x03\xe8\x00\x00\x00\x00d\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01
 ShowPreviews=false
-Sort Column=0
+Sort Column=4
 
-[Startup][Right Tab Bar]
-ActiveTab=0
-
-[Startup][Right Tab Bar][Tabs][Tab0]
+[Startup][Left Tab Bar][Tabs][Tab1]
 PinnedUrl=
 Properties=0
 Type=0
-Url=file:///home/mikepadiernos
+Url=file:///media/shared/entertainment/.cache/Popcorn Time
 
-[Startup][Right Tab Bar][Tabs][Tab0][History]
+[Startup][Left Tab Bar][Tabs][Tab1][History]
 CurrentIndex=0
-CurrentItems=OpenAudible,mikepadiernos,home,..,home,..,home,..,home,mikepadiernos,..,scripts,tests
-Entrys=file:///home/mikepadiernos,file:///home,file:///,file:///home,file:///,file:///home,file:///,file:///home,file:///,file:///home,file:///home/mikepadiernos,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov/tests,file:///home/mikepadiernos/Projects/workforcedevelopmentnygov
+CurrentItems=Snowpiercer (2013) [1080p],Popcorn Time,.cache,entertainment,cookies.sqlite,y2p1s580.Default (release),.zen,ucyuzbesyuz,..,Sinners (2025) DS4K 1080p iT WEBRip AV1 Opus 5.1 [RAV1NE],..,Sinners (2025),Popcorn Time
+Entrys=file:///media/shared/entertainment/.cache/Popcorn Time,file:///media/shared/entertainment/.cache,file:///media/shared/entertainment,file:///media/shared,file:///home/mikepadiernos/.zen/y2p1s580.Default (release),file:///home/mikepadiernos/.zen,file:///home/mikepadiernos,file:///media/shared/entertainment/.cache/Popcorn Time,file:///media/shared/entertainment/.cache/Popcorn Time/Sinners (2025) DS4K 1080p iT WEBRip AV1 Opus 5.1 [RAV1NE],file:///media/shared/entertainment/.cache/Popcorn Time,file:///media/shared/entertainment/.cache/Popcorn Time/Sinners (2025),file:///media/shared/entertainment/.cache/Popcorn Time,file:///media/shared/entertainment/.cache
 
-[Startup][Right Tab Bar][Tabs][Tab0][View]
+[Startup][Left Tab Bar][Tabs][Tab1][View]
 AutoResizeColumns=true
 Descending Sort Order=0
 Filter=3
 FilterApplysToDirs=false
 IconSize=22
-Saved State=\x00\x00\x00\xff\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0b\xa8\x07\x00\x00\x00\x06\x00\x00\x00\x03\x00\x00\x00d\x00\x00\x00\x07\x00\x00\x00d\x00\x00\x00\x05\x00\x00\x00d\x00\x00\x00\t\x00\x00\x00d\x00\x00\x00\x08\x00\x00\x00d\x00\x00\x00\n\x00\x00\x00d\x00\x00\x06\x8f\x00\x00\x00\x0b\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00d\xff\xff\xff\xff\x00\x00\x00\x81\x00\x00\x00\x00\x00\x00\x00\x0b\x00\x00\x05|\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00/\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00F\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00x\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00&\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x03\xe8\x00\x00\x00\x00d\x00\x00\x00\x00
+Saved State=\x00\x00\x00\xff\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0b\xa8\x07\x00\x00\x00\x06\x00\x00\x00\t\x00\x00\x00d\x00\x00\x00\x08\x00\x00\x00d\x00\x00\x00\x05\x00\x00\x00d\x00\x00\x00\n\x00\x00\x00d\x00\x00\x00\x07\x00\x00\x00d\x00\x00\x00\x03\x00\x00\x00d\x00\x00\x06\x91\x00\x00\x00\x0b\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00d\xff\xff\xff\xff\x00\x00\x00\x81\x00\x00\x00\x00\x00\x00\x00\x0b\x00\x00\x05~\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00/\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00F\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00x\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00&\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x03\xe8\x00\x00\x00\x00d\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01
 ShowPreviews=false
 Sort Column=0
+
+[Startup][Right Tab Bar]
+ActiveTab=1
+
+[Startup][Right Tab Bar][Tabs][Tab0]
+PinnedUrl=
+Properties=0
+Type=0
+Url=file:///home/mikepadiernos/Library/__ Entertainment/Movies
+
+[Startup][Right Tab Bar][Tabs][Tab0][History]
+CurrentIndex=1
+CurrentItems=..,Persona 3 The Movie 2 Midsummer Knights Dream (2014) [1080p] [BluRay] [5.1] [YTS.MX],..,..,320 - 10x10,Thunderbolts [2025].trickplay,..,Thunderbolts [2025].trickplay,Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB),Movies,..,Movies,__ Entertainment
+Entrys=file:///home/mikepadiernos/Library/__ Entertainment/Movies/They Live (1988) [1080p],file:///home/mikepadiernos/Library/__ Entertainment/Movies,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/Thunderbolts [2025].trickplay,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/Thunderbolts [2025].trickplay/320 - 10x10,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/Thunderbolts [2025].trickplay,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB),file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/Thunderbolts [2025].trickplay,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB),file:///home/mikepadiernos/Library/__ Entertainment/Movies,file:///home/mikepadiernos/Library/__ Entertainment,file:///home/mikepadiernos/Library/__ Entertainment/Movies,file:///home/mikepadiernos/Library/__ Entertainment,file:///home/mikepadiernos/Library
+
+[Startup][Right Tab Bar][Tabs][Tab0][View]
+AutoResizeColumns=true
+Descending Sort Order=512
+Filter=3
+FilterApplysToDirs=false
+IconSize=22
+Saved State=\x00\x00\x00\xff\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x01\x00\x00\x00\x04\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0b\xa8\x07\x00\x00\x00\x06\x00\x00\x00\t\x00\x00\x00d\x00\x00\x00\x08\x00\x00\x00d\x00\x00\x00\x05\x00\x00\x00d\x00\x00\x00\n\x00\x00\x00d\x00\x00\x00\x07\x00\x00\x00d\x00\x00\x00\x03\x00\x00\x00d\x00\x00\x06\x97\x00\x00\x00\x0b\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00d\xff\xff\xff\xff\x00\x00\x00\x81\x00\x00\x00\x00\x00\x00\x00\x0b\x00\x00\x05\x84\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00/\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00F\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00x\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00&\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x03\xe8\x00\x00\x00\x00d\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01
+ShowPreviews=false
+Sort Column=4
+
+[Startup][Right Tab Bar][Tabs][Tab1]
+PinnedUrl=
+Properties=0
+Type=0
+Url=file:///home/mikepadiernos/Library/__ Entertainment/Movies
+
+[Startup][Right Tab Bar][Tabs][Tab1][History]
+CurrentIndex=0
+CurrentItems=,Kubo And The Two Strings (2016) [1080p] [YTS.AG],..,Persona 3 The Movie 2 Midsummer Knights Dream (2014) [1080p] [BluRay] [5.1] [YTS.MX],..,..,320 - 10x10,Thunderbolts [2025].trickplay,..,Thunderbolts [2025].trickplay,Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB),Movies
+Entrys=file:///media/yautja,file:///home/mikepadiernos/Library/__ Entertainment/Movies,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Mickey Donald Goofy The Three Musketeers (2004) [1080p] [BluRay] [5.1] [YTS.MX],file:///home/mikepadiernos/Library/__ Entertainment/Movies,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/Thunderbolts [2025].trickplay,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/Thunderbolts [2025].trickplay/320 - 10x10,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/Thunderbolts [2025].trickplay,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB),file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB)/Thunderbolts [2025].trickplay,file:///home/mikepadiernos/Library/__ Entertainment/Movies/Thunderbolts [2025] 1080p SDRip x264 AC3 (UKB),file:///home/mikepadiernos/Library/__ Entertainment/Movies,file:///home/mikepadiernos/Library/__ Entertainment
+
+[Startup][Right Tab Bar][Tabs][Tab1][View]
+AutoResizeColumns=true
+Descending Sort Order=512
+Filter=3
+FilterApplysToDirs=false
+IconSize=22
+Saved State=\x00\x00\x00\xff\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x01\x00\x00\x00\x04\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0b\xa8\x07\x00\x00\x00\x06\x00\x00\x00\t\x00\x00\x00d\x00\x00\x00\x08\x00\x00\x00d\x00\x00\x00\x05\x00\x00\x00d\x00\x00\x00\n\x00\x00\x00d\x00\x00\x00\x07\x00\x00\x00d\x00\x00\x00\x03\x00\x00\x00d\x00\x00\x06y\x00\x00\x00\x0b\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00d\xff\xff\xff\xff\x00\x00\x00\x81\x00\x00\x00\x00\x00\x00\x00\x0b\x00\x00\x05f\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00/\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00F\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00x\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00&\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x03\xe8\x00\x00\x00\x00d\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01
+ShowPreviews=false
+Sort Column=4
 
 [UserActions]
 Normal Font=Atari ST 8x16 System Font,11,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
@@ -167,3 +219,6 @@ Use Fixed Font=true
 
 [ViewerModule]
 FirstRun=false
+
+[kio_krarc]
+EnableWrite=true

@@ -1,0 +1,2939 @@
+/**
+ * Scripting for common MEGA WP manager and helper classes.
+ */
+
+const $ = jQuery;
+
+/**
+ * Remove and re-add the given event listener to the given event
+ * to ensure there is just one instance of the given listener bound.
+ *
+ * @param event
+ * @param listener
+ * @returns {*|jQuery}
+ */
+$.fn.rebind = function (event, listener) {
+    return this.off(event, listener).on(event, listener);
+};
+
+/* region Polyfills */
+
+/* For Safari */
+if (!window.requestIdleCallback) {
+    window.requestIdleCallback = function (callable) {
+        setTimeout(callable, 0); // just call it on the next event loop iteration
+    }
+}
+
+
+if (!RegExp.escape) {
+    // Courtesy of https://stackoverflow.com/a/3561711
+    // Not as effective as the new RegExp.escape() static method but good enough
+    RegExp.escape = (string) => string.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&');
+}
+
+/* endregion */
+
+/**
+ * Bag of utility functions.
+ */
+class Utils {
+    /**
+     * Sleep for the given amount of milliseconds.
+     *
+     * @param ms duration in milliseconds.
+     * @returns {Promise<unknown>}
+     */
+    static async sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    /**
+     * Similar to {@link String.replace} but with asynchronous callback support.
+     * The resulting string is returned after all matches are replaced.
+     * Courtesy of {@link https://stackoverflow.com/questions/33631041/javascript-async-await-in-replace Chris Morgan}
+     *
+     * @param string
+     * @param regexp
+     * @param replacerFunction
+     * @returns {Promise<*>}
+     */
+    static async replaceAsync(string, regexp, replacerFunction) {
+        const replacements = await Promise.all(
+            Array.from(string.matchAll(regexp),
+                match => replacerFunction(...match)));
+        let i = 0;
+        return string.replace(regexp, () => replacements[i++]);
+    }
+
+    /**
+     * Convert a string to an {@link ArrayBuffer}.
+     *
+     * @param {string} b
+     *
+     * @returns {ArrayBuffer}
+     */
+    static strToAb(b) {
+        let ab = new ArrayBuffer((b.length + 15) & -16);
+        let u8 = new Uint8Array(ab);
+
+        for (let i = b.length; i--;) {
+            u8[i] = b.charCodeAt(i);
+        }
+
+        return ab;
+    }
+
+    /**
+     * Scrolls the given element into view, but only if out of view.
+     * FIXME: may need tweaking for use-cases other than document scrolling, tweak as needed.
+     *
+     * @param element The element to scroll into view.
+     * @param options The options for scrolling. Supports position: 'start', 'center', 'end'
+     */
+    static scrollIntoViewIfNeeded(element, options = { position: 'start' }) {
+        const topHeight = parseInt($(':root').css('--top-height').trim());
+
+        const rect = element.getBoundingClientRect();
+        const inViewVertically = rect.top >= topHeight && rect.bottom <= window.innerHeight;
+        const inViewHorizontally = rect.left >= 0 && rect.right <= window.innerWidth;
+
+        if (!inViewVertically || !inViewHorizontally) {
+            const end = ['start', 'center', 'end'].includes(options.position) ? options.position : 'end';
+
+            element.scrollIntoView({ block: end, inline: end });
+        }
+    }
+
+    /**
+     * Convert a base64 string to an {@link ArrayBuffer}.
+     *
+     * @param {string} a
+     * @returns {ArrayBuffer}
+     */
+    static base64ToAb(a) {
+        return Utils.strToAb(Utils.base64UrlDecode(a));
+    }
+
+    /**
+     * Encode a string as Base64 URL.
+     *
+     * @param {string} string
+     * @returns {string}
+     */
+    static base64UrlEncode(string) {
+        string = unescape(encodeURIComponent(string)); // Unicode to UTF-8
+        string = btoa(string); // To base64
+        // Replace characters according to the Base64 URL specifications
+        return string.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+    }
+
+    /**
+     * Decode a base64-encoded string.
+     *
+     * @param {string} data
+     * @returns {string}
+     */
+    static base64UrlDecode(data) {
+        data += '=='.substr((2 - data.length * 3) & 3);
+        data = data.replace(/\-/g, '+').replace(/_/g, '/').replace(/,/g, '');
+
+        try {
+            return atob(data);
+        }
+        catch (e) {
+            return '';
+        }
+    }
+
+    /**
+     * Encode a string as URL-safe Base64.
+     *
+     * @param {string} str
+     * @returns {string}
+     */
+    static base64UrlEncodeUtf8(str) {
+        const utf8Bytes = new TextEncoder().encode(str);
+        const base64 = btoa(String.fromCharCode(...utf8Bytes));
+
+        // // Replace characters according to the Base64 URL specifications
+        return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    /**
+     * Decode a url-safe base64-encoded string.
+     *
+     * @param {string} str
+     * @returns {string}
+     */
+    static base64UrlDecodeUtf8(str) {
+        // URL-safe base64 to base64
+        str = str.replace(/-/g, '+').replace(/_/g, '/') + '=='.substr((2 - str.length * 3) & 3);
+
+        const base64Bytes = atob(str).split('').map(c => c.charCodeAt(0));
+        return new TextDecoder().decode(new Uint8Array(base64Bytes));
+    }
+
+    /**
+     * Floors a number to the specified number of significant figures.
+     *
+     * @param {number} number
+     * @param {number} sigFigs
+     *
+     * @returns {number}
+     */
+    static floorToSigFigs(number, sigFigs) {
+        if (number === 0) return 0;
+
+        const factor = Math.pow(10, Math.floor(Math.log10(Math.abs(number))) - (sigFigs - 1));
+        return Math.floor(number / factor) * factor;
+    }
+
+    /**
+     * Check if a {@link URL} has a filename - e.g. /downloads/mega.exe
+     *
+     * @param {URL} url
+     * @returns {boolean} true if the URL looks like a filename
+     */
+    static hasFilename(url) {
+        return /\/[^\/]+\.[^\/]+$/.test(url.pathname);
+    }
+
+    /**
+     * Scroll the given element into view, horizontally.
+     * Assumes the element's immediate parent is the scroll container.
+     * Similar to scrollIntoView() with behavior: 'smooth' and inline: 'nearest' options, but only operates on the X axis.
+     * Consider adding an options object parameter if different behavior or inline option values are desired.
+     * @param {HTMLElement} element
+     */
+    static scrollIntoViewX(element) {
+        const container = element.parentElement;
+
+        if (container.offsetWidth >= container.scrollWidth) return; // No scrolling required. All content is in view.
+
+        const scrollTo = (leftOffset) => {
+            container.scrollTo({
+                left: leftOffset,
+                behavior: 'smooth',
+            });
+        };
+
+        const maskLeft = container.scrollLeft;
+        const maskRight = container.scrollLeft + container.offsetWidth;
+
+        const styles = getComputedStyle(element);
+        const scrollMarginLeft = parseInt(styles.scrollMarginInlineStart, 10) || 0;
+        const scrollMarginRight = parseInt(styles.scrollMarginInlineEnd, 10) || 0;
+
+        const elementLeft = element.offsetLeft - container.offsetLeft - scrollMarginLeft;
+        const elementRight = element.offsetLeft - container.offsetLeft + element.offsetWidth + scrollMarginRight;
+
+        if (elementLeft <= maskLeft) {
+            scrollTo(elementLeft);
+        }
+        else if (elementRight > maskRight) {
+            scrollTo(elementRight - container.clientWidth);
+        }
+    }
+
+    static generateGuid() {
+        // Courtesy of https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid/2117523#2117523
+        return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
+            (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+        );
+    }
+}
+
+/** Helper utilities from webclient */
+class WebclientUtils {
+    // From webclient copyright.js validateUrl()
+    /**
+     * Parse the given URL to validate as a MEGA share link, and check what type of link (file, folder etc.)
+     *
+     * @param {string} link
+     */
+    static parseMegaUrl(link) {
+        let url = '';
+
+        try {
+            url = new URL(link);
+        }
+        catch (e) {
+            return false;
+        }
+
+        if (!url) {
+            return null;
+        }
+
+        const s4Match = /(?<bucket>[\w-]*)\.?(?:s3\.(?<region>[\w-]+)\.s4\.mega\.io)\/(?<path>\S+)/i.exec(url.href);
+        if (s4Match) {
+            return ['s4', s4Match.groups];
+        }
+
+        const ext = String(url.protocol).endsWith('-extension:');
+
+        const ourDomains = { 'mega.co.nz': 1, 'mega.nz': 1, 'mega.io': 1 };
+
+        if (!ourDomains[url.host] && !ext) {
+            return null;
+        }
+        let path = (ext ? '' : url.pathname) + url.hash;
+
+        if (url.hash) {
+            const hash = String(url.hash).replace('#', '');
+
+            if (hash[0] === '!' || hash[0] === 'F' && hash[1] === '!') {
+                path = hash[0] === 'F'
+                    ? hash.replace('F!', '/folder/').replace('!', '#').replace('!', '/folder/').replace('?', '/file/')
+                    : hash.replace('!', '/file/').replace('!', '#');
+            }
+            else if (hash[0] === 'P' && hash[1] === '!') {
+                const a = Utils.base64UrlDecode(hash.substring(2));
+                const b = String.fromCharCode(a.charCodeAt(2))
+                    + String.fromCharCode(a.charCodeAt(3))
+                    + String.fromCharCode(a.charCodeAt(4))
+                    + String.fromCharCode(a.charCodeAt(5))
+                    + String.fromCharCode(a.charCodeAt(6))
+                    + String.fromCharCode(a.charCodeAt(7));
+                path = '/file/' + Utils.base64UrlEncode(b);
+            }
+        }
+
+        const match = path.match(/^[#/]*(file|folder|embed|collection|album)[!#/]+([\w-]{8})\b/i);
+
+        if (!match) {
+            return null;
+        }
+        const result = [match[1], match[2]];
+
+        if (match[1] === 'folder') {
+            const ffmatch = path.replace(match[0], '').match(/(file|folder)\/([\w-]{8})/i) || [];
+            if (ffmatch[1] === 'file') {
+                result[0] = 'file';
+            }
+            result.push(ffmatch[2]);
+        }
+        return result;
+    }
+}
+
+/* region Managers, Helpers */
+
+/**
+ * An event object for simple event listener registration and invocation to
+ * provide events without requiring attachment to DOM elements.
+ * For global events, consider using Reactor.
+ *
+ * @see Reactor
+ */
+class Event {
+    constructor() {
+        this._callbacks = new Set();
+    }
+
+    invoke(...eventArgs) {
+        for (const callback of this._callbacks) {
+            callback(...eventArgs);
+        }
+    }
+
+    addListener(callback) {
+        this._callbacks.add(callback);
+    }
+
+    removeListener(callback) {
+        this._callbacks.delete(callback);
+    }
+}
+
+/**
+ * A simple event system to provide events without requiring attachment to DOM elements.
+ * Reactor is intended for global events. For scoped events, you can just instantiate an Event.
+ *
+ * Inspired by https://stackoverflow.com/questions/15308371/custom-events-model-without-using-dom-events-in-javascript
+ * Courtesy of Mohsen
+ *
+ * @see Event
+ */
+class Reactor {
+    static events = {};
+
+    static registerEvent(eventName) {
+        Reactor.events[eventName] = new Event();
+    }
+
+    static dispatchEvent(eventName, eventArgs) {
+        const event = Reactor.events[eventName];
+        if (!event) {
+            console.warn(`An attempt was made to dispatch a non-existent event '${eventName}'.`);
+            return;
+        }
+
+        console.log(`Dispatching '${eventName}' event.`);
+        event.invoke(eventArgs);
+    }
+
+    static addEventListener(eventName, callback) {
+        const event = Reactor.events[eventName];
+        if (!event) {
+            console.warn(`An attempt was made to register an event listener to a non-existent event '${eventName}'.`);
+            return;
+        }
+
+        event.addListener(callback);
+    }
+
+    static removeEventListener(eventName, callback) {
+        const event = Reactor.events[eventName];
+        if (!event) {
+            console.warn(`An attempt was made to remove an event listener from a non-existent event '${eventName}'.`);
+            return;
+        }
+
+        event.removeListener(callback);
+    }
+}
+
+class MemoryStorage {
+    constructor() {
+        this._data = {};
+    }
+
+    get length() {
+        return Object.keys(this._data).length;
+    }
+
+    key(index) {
+        const keys = Object.keys(this._data);
+        return keys[index] || null;
+    }
+
+    /** @returns {string|null} */
+    getItem(key) {
+        return this._data.hasOwnProperty(key) ? this._data[key] : null;
+    }
+
+    setItem(key, value) {
+        this._data[key] = String(value);
+    }
+
+    removeItem(key) {
+        delete this._data[key];
+    }
+
+    clear() {
+        this._data = {};
+    }
+}
+
+class Storage {
+    /** Get localStorage, or fall back to sessionStorage or even in-memory storage if not available. */
+    static get local() {
+        if (this.isLocalAvailable()) return window.localStorage;
+        if (this.isSessionAvailable()) return window.sessionStorage;
+
+        this.memoryStorage = this.memoryStorage || new MemoryStorage();
+        return this.memoryStorage;
+    }
+
+    /** Get sessionStorage or fall back to in-memory storage if not available. */
+    static get session() {
+        if (this.isSessionAvailable()) return window.sessionStorage;
+
+        this.memoryStorage = this.memoryStorage || new MemoryStorage();
+        return this.memoryStorage;
+    }
+
+    static isLocalAvailable() {
+        if (this._isLsAvailable !== undefined) return this._isLsAvailable;
+
+        try {
+            localStorage.setItem('test.ls', '1');
+            this._isLsAvailable = localStorage.getItem('test.ls') === '1';
+            localStorage.removeItem('test.ls');
+        }
+        catch (e) {
+            this._isLsAvailable = false;
+        }
+
+        return this._isLsAvailable;
+    }
+
+    static isSessionAvailable() {
+        if (this._isSsAvailable !== undefined) return this._isSsAvailable;
+
+        try {
+            sessionStorage.setItem('test.ss', '1');
+            this._isSsAvailable = sessionStorage.getItem('test.ss') === '1';
+            sessionStorage.removeItem('test.ss');
+        }
+        catch (e) {
+            this._isSsAvailable = false;
+        }
+
+        return this._isSsAvailable;
+    }
+}
+
+class CookieSettings {
+    static onConsentChanged = new Event();
+
+    static isPrefsAllowed() {
+        return !!this.getConsent().preferences;
+    }
+
+    static isAnalyticsAllowed() {
+        return !!this.getConsent().analytics;
+    }
+
+    static isMarketingAllowed() {
+        return !!this.getConsent().marketing;
+    }
+
+    static isConsentSet() {
+        const consent = this.getConsent();
+
+        return Object.keys(consent).length > 0;
+    }
+
+    /** @returns {object} */
+    static getConsent() {
+        if (this._consent) return this._consent;
+
+        const consent = Cookies.get('cookieConsent');
+        try {
+            this._consent = JSON.parse(consent);
+        }
+        catch {
+            this._consent = {};
+        }
+
+        if (!this._consent || typeof this._consent !== 'object') {
+            this._consent = {};
+        }
+
+        return this._consent;
+    }
+
+    /** @param {object} value */
+    static setConsent(value) {
+        const oldConsent = this._consent;
+
+        this._consent = value;
+
+        Cookies.set('cookieConsent', JSON.stringify(value), 365);
+        this.onConsentChanged.invoke(this._consent, oldConsent);
+    }
+}
+
+class Cookies {
+    static get(name) {
+        const cookies = document.cookie.split(';');
+        for (const cookie of cookies) {
+            const [key, value] = cookie.trim().split('=');
+
+            if (key === name) {
+                return value;
+            }
+        }
+    }
+
+    static set(name, value, days) {
+        const properties = new Map();
+        properties.set(name, value);
+
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+            properties.set('Expires', date.toUTCString());
+        }
+
+        const host = (new URL(window.location)).hostname;
+        properties.set('Domain', host.endsWith('mega.io') ? 'mega.io' : host);
+        properties.set('Path', '/');
+        properties.set('SameSite', 'Strict; Secure');
+
+        let cookie = '';
+        for (const [key, value] of properties.entries()) {
+            cookie += `${key}=${value};`;
+        }
+
+        document.cookie = cookie;
+    }
+}
+
+class Prefs {
+    static init() {
+        CookieSettings.onConsentChanged.addListener(this._onConsentChanged.bind(this));
+    }
+
+    static remove(pref) {
+        const key = `pref.${pref}`;
+
+        Storage.local.removeItem(key);
+        Storage.session.removeItem(key);
+    }
+
+    /** @returns {string|null} */
+    static get(pref) {
+        const key = `pref.${pref}`;
+
+        const storage = CookieSettings.isPrefsAllowed() ? Storage.local : Storage.session;
+
+        return storage.getItem(key);
+    }
+
+    static set(pref, value) {
+        const key = `pref.${pref}`;
+
+        const storage = CookieSettings.isPrefsAllowed() ? Storage.local : Storage.session;
+
+        storage.setItem(key, value);
+    }
+
+    static _onConsentChanged(newConsent, oldConsent) {
+        // Move preferences to sessionStorage or localStorage on preference cookie setting change.
+        let newStorage;
+        let oldStorage;
+
+        if (newConsent.preferences && !oldConsent.preferences) {
+            newStorage = Storage.local;
+            oldStorage = Storage.session;
+        }
+        else if (!newConsent.preferences && oldConsent.preferences) {
+            newStorage = Storage.session;
+            oldStorage = Storage.local;
+        }
+        else return;
+
+        for (let i = 0; i < oldStorage.length; i++) {
+            const key = oldStorage.key(i);
+            if (!key.startsWith('pref.')) continue;
+
+            const value = oldStorage.getItem(key);
+            newStorage.setItem(key, value);
+        }
+    }
+}
+
+/**
+ * Communicate with the MEGA API servers.
+ * {@link https://confluence.developers.mega.co.nz/display/API/API+Overview View API Documentation}
+ * @see ApiErrors
+ */
+class Api {
+    static get domain() {
+        return Storage.local.getItem('d.api.domain') || 'https://g.api.mega.co.nz/';
+    }
+
+    static get csUrl() {
+        Api._csUrl ||= this._getCsUrl();
+
+        return Api._csUrl.href;
+    }
+
+    /** @param {string} domain */
+    static setDomain(domain) {
+        if (!domain) {
+            Storage.local.removeItem('d.api.domain');
+            return;
+        }
+
+        if (typeof domain !== 'string') {
+            console.warn(`[API] Unexpected request URL domain value "${domain}". Expecting a non-empty string.`);
+            return;
+        }
+
+        Storage.local.setItem('d.api.domain', domain);
+    }
+
+    /** @param {object} params */
+    static setRequestUrlParams(params) {
+        if (!params) {
+            Storage.local.removeItem('d.api.requestParams');
+            return;
+        }
+
+        if (typeof params !== 'object') {
+            console.warn('[API] Unexpected request URL parameters value. Expecting a non-empty object.');
+            return;
+        }
+
+        Storage.local.setItem('d.api.requestParams', JSON.stringify(params));
+    }
+
+    /**
+     * Send a single request to the API servers.
+     * Returns a promise.
+     *
+     * @param {Object} request
+     * @returns {Promise<*>}
+     */
+    static async request(request) {
+        const response = await Api._sendRequest(request);
+
+        return Api._handleResponse(response);
+    }
+
+    static async _sendRequest(request) {
+        const maxRetries = 4;
+
+        // Send the request to the API.
+        // If network error encountered, retry with exponential backoff.
+        // If HTTP error encountered, retry with exponential backoff.
+        // If max retries reached, throw error.
+
+        for (let i = 1; i <= maxRetries; i++) {
+            let response;
+
+            try {
+                response = await fetch(Api.csUrl, {
+                    method: 'POST',
+                    body: JSON.stringify([request]),
+                });
+            }
+            catch (e) {
+                // Network error encountered.
+                console.warn(`[API] Network error encountered for API request (attempt ${i} of ${maxRetries}).`);
+
+                if (i >= maxRetries) {
+                    console.error(`[API] Couldn't send an API request after ${maxRetries} attempts.`);
+                    console.debug(e);
+                    throw new ApiRequestError(`[API] Sending the API request failed after ${maxRetries} attempts (network error).`);
+                }
+
+                // Let's retry w/ exponential backoff
+                await Utils.sleep((i ** 2) * 1000);
+                continue;
+            }
+
+            if (response.ok) return response;
+
+            // HTTP error encountered.
+            console.warn(`[API] HTTP error ${response.status} (${response.statusText}) encountered for API request (attempt ${i} of ${maxRetries}).`);
+
+            if (i >= maxRetries) {
+                console.error(`[API] Max retries reached on API request (HTTP error ${response.status}, ${response.statusText}).`);
+                throw new ApiRequestError(`[API] The API request failed after ${maxRetries} attempts (HTTP error ${response.status}, ${response.statusText}).`);
+            }
+
+            // Let's retry w/ exponential backoff
+            await Utils.sleep((i ** 2) * 1000);
+        }
+    }
+
+    static async _handleResponse(response) {
+        let responseBody;
+        try {
+            responseBody = await response.json();
+        }
+        catch (e) {
+            console.error('[API] Couldn\'t decode an API response as json.', e);
+            throw new ApiRequestError('Decoding the API response failed.');
+        }
+
+        // If the API just returns a negative integer and not json, there is an issue with this api layer.
+        if (Number.isInteger(responseBody)) {
+            console.error(`[API] API error ${responseBody}: ${ApiErrors.getMessage(responseBody)}`);
+            throw new ApiRequestError('API error.');
+        }
+
+        if (!Array.isArray(responseBody) || responseBody.length < 1) {
+            console.error('[API] API returned something unexpected.');
+            throw new ApiRequestError('API returned unexpected response.');
+        }
+
+        return responseBody[0];
+    }
+
+    static _getCsUrl() {
+        const url = new URL(Api.domain);
+        url.pathname = '/cs';
+
+        let customUrlParams = Storage.local.getItem('d.api.requestParams');
+        try {
+            customUrlParams = JSON.parse(customUrlParams);
+        }
+        catch (e) {
+            console.warn('[API] Unable to parse custom API request URL parameters. Expecting valid JSON.');
+            return url;
+        }
+
+        if (!customUrlParams) return url;
+
+        if (typeof customUrlParams !== 'object') {
+            console.warn('[API] Unable to load custom API request URL parameters. Expecting an object.')
+            return url;
+        }
+
+        url.search = new URLSearchParams(customUrlParams).toString();
+
+        return url;
+    }
+
+    /**
+     * @param {number} id
+     * @param {string} [message]
+     * @returns {Promise<*>}
+     */
+    static async log(id, message) {
+        const request = { a: 'log', e: id, ms: Date.now() };
+
+        if (message) {
+            request.m = message;
+        }
+
+        const jid = await JourneyTracker.getJid();
+        if (jid) {
+            request.j = jid;
+            request.v = JourneyTracker.getViewId();
+        }
+
+        let response;
+        try {
+            response = await Api.request(request);
+        }
+        catch (e) {
+            console.error(`[API] Unable to log event "${id}".`, e.message);
+            return false;
+        }
+
+        if (response !== 0) {
+            console.error(`[API] API returned unexpected response when logging event "${id}".`,
+                Number.isInteger(response) ? `Code: ${response} (${ApiErrors.getMessage(response)})` : '');
+            return false;
+        }
+
+        return true;
+    }
+}
+
+/**
+ * Stub error (add properties like error code as needed)
+ *
+ * @see Api
+ */
+class ApiRequestError extends Error {}
+
+/**
+ * Definitions for errors returned by the API servers.
+ * {@link https://confluence.developers.mega.co.nz/display/SUPPORT/Api_error_codes View API Codes Documentation}
+ * @see Api
+ */
+class ApiErrors {
+    /** -1 */ static EINTERNAL = -1;
+    /** -2 */ static EARGS = -2;
+    /** -3 */ static EAGAIN = -3;
+    /** -4 */ static ERATELIMIT = -4;
+    /** -5 */ static EFAILED = -5;
+    /** -6 */ static ETOOMANY = -6;
+
+    /** -8 */ static EEXPIRED = -8;
+    /** -9 */ static ENOENT = -9;
+
+    /** -11 */ static EACCESS = -11;
+    /** -12 */ static EEXIST = -12;
+
+    /** -15 */ static ESID = -15;
+    /** -16 */ static EBLOCKED = -16;
+
+    /** -18 */ static ETEMPUNAVAIL = -18;
+    /** -19 */ static ETOOMANYCONNECTIONS = -19;
+
+    /** -26 */ static EMFAREQUIRED = -26;
+
+    // Generic messages when reasons more specific for a command aren't available
+    static messages = {
+        [ApiErrors.EINTERNAL]: 'An unexpected error occurred in the API.',
+        [ApiErrors.EARGS]: 'The required arguments provided to the API command were invalid or missing.',
+        [ApiErrors.EAGAIN]: 'The API dropped the request. Try again later.',
+        [ApiErrors.ERATELIMIT]: 'API rate limit exceeded.',
+        [ApiErrors.EFAILED]: 'The API failed to handle the request.',
+        [ApiErrors.ETOOMANY]: 'Too many actions done recently.',
+        [ApiErrors.EEXPIRED]: 'The resource has expired.',
+
+        [ApiErrors.ENOENT]: 'The API could not find the requested entity.',
+        [ApiErrors.EEXIST]: 'The API has already performed this action.',
+
+        [ApiErrors.EACCESS]: 'The request was not authorised.',
+
+        [ApiErrors.ESID]: ' The session authentication is invalid and is required for the command, or the command is otherwise not available.',
+        [ApiErrors.EBLOCKED]: 'The API refused the request.',
+
+        [ApiErrors.ETEMPUNAVAIL]: 'The API cannot handle this request at the time. Try again later.',
+        [ApiErrors.ETOOMANYCONNECTIONS]: 'The API refused the request because there are too many connections.',
+
+        [ApiErrors.EMFAREQUIRED]: 'Multi-factor authentication is required.',
+    };
+
+    static getMessage(code) {
+        return ApiErrors.messages[code] || `Unknown error, code '${code}'.`;
+    }
+}
+
+/**
+ * Represents a layout breakpoint to define layout at a particular screen width.
+ */
+class Breakpoint {
+    static XL = new Breakpoint('XL', 1320, Infinity);
+    static LG = new Breakpoint('LG', 1080, 1320);
+    static MD = new Breakpoint('MD', 768, 1080);
+    static SM = new Breakpoint('SM', 0, 768);
+    static SM_Old = new Breakpoint('SM_Old', 576, 768);
+    static XS_Old = new Breakpoint('XS_Old', 0, 576);
+
+    name;
+    min;
+    max;
+
+    constructor(name, min, max) {
+        this.name = name;
+        this.min = min;
+        this.max = max;
+        Object.freeze(this);
+    }
+
+    /* Override operators in JS, when? */
+
+    eq(breakpoint) {
+        return this.min === breakpoint.min;
+    }
+
+    lt(breakpoint) {
+        return this.min < breakpoint.min;
+    }
+
+    gt(breakpoint) {
+        return this.min > breakpoint.min;
+    }
+
+    lteq(breakpoint) {
+        return this.min <= breakpoint.min;
+    }
+
+    gteq(breakpoint) {
+        return this.min >= breakpoint.min;
+    }
+
+    isWidthInside(width) {
+        return width >= this.min && width <= this.max;
+    }
+
+    toString() {
+        return this.name;
+    }
+}
+
+/**
+ * Simple static class to handle page layout breakpoint scripting.
+ */
+class Breakpointer {
+    static breakpoints = [Breakpoint.XL, Breakpoint.LG, Breakpoint.MD, Breakpoint.SM];
+
+    static currentBreakpoint = Breakpoint.XL;
+
+    static breakpointChangedEvent = new Event();
+    static initialisedEvent = new Event();
+
+    static _isInitialised = false;
+
+    static init() {
+        Reactor.registerEvent('breakpoint-changed');
+
+        document.addEventListener('load', () => Breakpointer._listen());
+        window.addEventListener('resize', () => Breakpointer._listen());
+    }
+
+    /**
+     * Get the appropriate breakpoint from the given width.
+     */
+    static fromWidth(width) {
+        for (const breakpoint of this.breakpoints) {
+            if (breakpoint.isWidthInside((width))) {
+                return breakpoint;
+            }
+        }
+
+        return Breakpoint.XL;
+    }
+
+    /**
+     * Updates the current breakpoint based on the window's size.
+     */
+    static setCurrent() {
+        const newBreakpoint = this.fromWidth(window.innerWidth);
+        if (newBreakpoint.eq(this.currentBreakpoint)) return;
+
+        this.currentBreakpoint = newBreakpoint;
+        Reactor.dispatchEvent('breakpoint-changed', this.currentBreakpoint);
+        this.breakpointChangedEvent.invoke(this.currentBreakpoint);
+        console.log(`New breakpoint set: ${this.currentBreakpoint}.`);
+    }
+
+    static _listen() {
+        Breakpointer.setCurrent();
+
+        if (!this._isInitialised) {
+            this.initialisedEvent.invoke(Breakpointer.currentBreakpoint);
+            this._isInitialised = true;
+        }
+    }
+}
+
+/**
+ * Simple static class to handle themes
+ */
+class ThemeManager {
+    static themes = [];
+    static currentTheme;
+    static deviceColorScheme;
+
+    static themeChangedEvent = new Event();
+
+    static init() {
+        // Set the theme ASAP (when <body> is added) to eliminate white-screen flash.
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                for (const node of mutation.addedNodes) {
+                    if (node.tagName === 'BODY') {
+                        ThemeManager.applyTheme();
+                        observer.disconnect();
+                    }
+                }
+            }
+        });
+
+        observer.observe(document.documentElement, { childList: true });
+
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                // Check for and apply theme changes when showing a cached page
+                ThemeManager.currentTheme = null; // preferred theme now unknown
+                ThemeManager.applyTheme();
+            }
+        });
+
+        this.initPrintEventListeners();
+    }
+
+    static get preferredTheme() {
+        return Prefs.get('theme');
+    }
+
+    static registerThemes(themes) {
+        if (!Array.isArray(themes)) {
+            console.warn('Provided themes parameter is not an array. Not registering themes.');
+        }
+
+        ThemeManager.themes = [...ThemeManager.themes, ...themes];
+    }
+
+    static getTheme() {
+        return ThemeManager.currentTheme;
+    }
+
+    static setTheme(theme) {
+        if (!theme) {
+            console.warn('Missing or invalid theme parameter given. Not setting theme.');
+            return;
+        }
+
+        if (!ThemeManager.themes.includes(theme)) {
+            console.warn(`Unrecognised theme '${theme}'. Not setting theme.`);
+            return;
+        }
+
+        if (theme === ThemeManager.currentTheme) {
+            console.warn(`Theme '${theme}' already set.`);
+            return;
+        }
+
+        ThemeManager.currentTheme = theme;
+        ThemeManager.applyTheme();
+    }
+
+    static applyTheme() {
+        // Determine by current set theme or user preference, if set
+        if (!ThemeManager.currentTheme) {
+            ThemeManager.currentTheme = ThemeManager.preferredTheme;
+        }
+
+        // or default to OS/browser setting, if available
+        if (!ThemeManager.currentTheme && window.matchMedia) {
+            ThemeManager.deviceColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            ThemeManager.currentTheme = ThemeManager.deviceColorScheme.matches ? 'dark' : 'light';
+
+            ThemeManager.deviceColorScheme.removeEventListener('change', ThemeManager.onDeviceSchemeChange);
+            ThemeManager.deviceColorScheme.addEventListener('change', ThemeManager.onDeviceSchemeChange);
+        }
+
+        if (!ThemeManager.currentTheme) {
+            console.warn(`Unable to determine theme to apply.`);
+            return;
+        }
+
+        document.body.classList.remove(...ThemeManager.themes.map(name => `theme-${name}`));
+        document.body.classList.add(`theme-${ThemeManager.currentTheme}`);
+
+        ThemeManager.themeChangedEvent.invoke(ThemeManager.currentTheme);
+        console.log(`Theme '${ThemeManager.currentTheme}' applied.`);
+    }
+
+    static savePreference() {
+        Prefs.set('theme', ThemeManager.currentTheme);
+        console.log(`Theme preference saved as '${ThemeManager.preferredTheme}'.`);
+    }
+
+    static removePreference() {
+        const storedValue = Prefs.get('theme');
+        Prefs.remove('theme');
+        console.log(`Theme preference of '${storedValue}' removed.`);
+    }
+
+    static onDeviceSchemeChange() {
+        if (ThemeManager.preferredTheme) {
+            // User has now set a preferred theme, which always overrides browser/OS setting.
+            ThemeManager.deviceColorScheme.removeEventListener('change', ThemeManager.onDeviceSchemeChange);
+            return;
+        }
+
+        ThemeManager.setTheme(ThemeManager.deviceColorScheme.matches ? 'dark' : 'light');
+    }
+
+    static initPrintEventListeners() {
+        let theme;
+        window.addEventListener('beforeprint', () => {
+            theme = ThemeManager.getTheme();
+            if (theme !== 'light') {
+                ThemeManager.setTheme('light');
+            }
+        });
+
+        window.addEventListener('afterprint', () => {
+            if (theme && theme !== ThemeManager.getTheme()) {
+                ThemeManager.setTheme(theme);
+            }
+        });
+    }
+}
+
+/**
+ * Simple class to facilitate modal registrations with which the codebase can fetch modals by name.
+ */
+class ModalRegister {
+    /** @var HTMLElement */
+    static get modalContainer() {
+        this._modalContainer = this._modalContainer || document.body.querySelector(':scope > .modals');
+        return this._modalContainer;
+    };
+
+    static _modalContainer;
+    static _modals = {};
+
+    /**
+     *
+     * @param {Modal} modal
+     */
+    static registerModal(modal) {
+        if (!(modal instanceof Modal)) {
+            console.warn('An attempt was made to register a modal that was not of type \'Modal\'.');
+            return;
+        }
+
+        ModalRegister._modals[modal.getName()] = modal;
+    }
+
+    /**
+     *
+     * @param modalName
+     * @returns {Modal}
+     */
+    static getModal(modalName) {
+        return ModalRegister._modals[modalName] || null;
+    }
+}
+
+class L10n {
+    /** Default currency */
+    static currency = 'EUR';
+    static currencySymbol = '‚Ç¨';
+
+    /** Invoked when the user selects a different currency */
+    static onCurrencyPrefChanged = new Event();
+
+    /** User's local currency based on IP via API */
+    static _localCurrency;
+    static _localCurrencySymbol;
+
+    /** User's preferred currency */
+    static _preferredCurrency;
+
+    /** User's country code based on IP via API */
+    static _countryCode;
+    static _siteLocale;
+
+    static _numberFormatter;
+
+    /**
+     * Locale of the site content. Not to be confused with the user's preferred browser locale.
+     * Some locales don't include the region, like "th".
+     * */
+    static get siteLocale() {
+        return this._siteLocale ||= document.documentElement.lang;
+    }
+
+    /**
+     * Get a set of all supported locales based on the language links in the <head>.
+     *
+     * @returns {Set<string>}
+     */
+    static get supportedLocales() {
+        if (!this._supportedLocales) {
+            this._parseAlternateLinks();
+        }
+
+        return this._supportedLocales;
+    }
+
+    /** @returns {Map<string, string>} hreflang => href */
+    static get alternateLocalePaths() {
+        if (!this._hreflangs) {
+            this._parseAlternateLinks();
+        }
+
+        return this._hreflangs;
+    }
+
+    static _parseAlternateLinks() {
+        this._supportedLocales = new Set();
+        this._hreflangs = new Map();
+
+        for (const link of document.head.querySelectorAll(':scope > link[rel="alternate"]')) {
+            const hreflang = link.getAttribute('hreflang');
+            const href = link.getAttribute('href');
+
+            if (hreflang && href) {
+                this._hreflangs.set(hreflang, href);
+
+                if (hreflang !== 'x-default') {
+                    this._supportedLocales.add(hreflang);
+                }
+            }
+        }
+    }
+
+    static async getLocalCurrency() {
+        await (this._initPromise ||= this._ensureInit());
+
+        return this._localCurrency;
+    }
+
+    static async getLocalCurrencySymbol() {
+        await (this._initPromise ||= this._ensureInit());
+
+        return this._localCurrencySymbol;
+    }
+
+    static async getPreferredCurrency() {
+        return this._preferredCurrency || await this.getLocalCurrency();
+    }
+
+    static setPreferredCurrency(value) {
+        this._preferredCurrency = value;
+        this.onCurrencyPrefChanged.invoke(this._preferredCurrency);
+    }
+
+    static formatNumber(value) {
+        this._numberFormatter ||= new Intl.NumberFormat(this.getFormatLocale());
+
+        value = typeof value === 'string' ? parseFloat(value) : value;
+
+        return this._numberFormatter.format(value);
+    }
+
+    static async _ensureInit() {
+        if (!this._localCurrency) {
+            let details = {};
+            try {
+                details = await Api.request({ a: 'lcc', amount: 1 });
+            }
+            catch (e) {
+                console.error('Couldn\'t request local currency details from API. Defaulting to euros.', e.message);
+            }
+
+            this._countryCode = details.country;
+            this._localCurrency = details.name || this.currency;
+            this._localCurrencySymbol = details.symbol || this.currencySymbol;
+        }
+    }
+
+    /**
+     * Get the user's country code as determined by the API.
+     * Null if the code couldn't be determined.
+     * @return {string|null}
+     * */
+    static async getCountry() {
+        await this._ensureInit();
+        return this._countryCode || null;
+    }
+
+    /**
+     * Get the user's site locale preference,or their first preferred browser-set locale that is supported.
+     * This is not necessarily the same as the current site locale.
+     * For that, use {@linkcode L10n.siteLocale}, {@linkcode L10n.getLocale()} or {@linkcode L10n.getFormatLocale()}.
+     *
+     * @returns {string|null} their preferred locale, or null if none of their preferred locales are supported.
+     */
+    static tryGetPreferredLocale() {
+        let preferredLocale = Prefs.get('language');
+        if (!L10n.supportedLocales.has(preferredLocale)) {
+            if (preferredLocale) {
+                console.warn(`[L10n] Unsupported or invalid locale preference "${preferredLocale}". Removing.`);
+                Prefs.remove('language');
+            }
+
+            preferredLocale = this.tryGetBrowserLocale();
+        }
+
+        return preferredLocale;
+    }
+
+    /**
+     * Get the user's first preferred browser locale that is supported, if it exists.
+     *
+     * @returns {string|null} user's preferred browser locale if it exists, or null
+     */
+    static tryGetBrowserLocale() {
+        // First look for an exact locale match, language and region
+        // Then strip region from both supported and browser locales to get the first locale where the languages match
+
+        if (!this._supportedLanguages) {
+            this._supportedLanguages = new Map();
+            for (const locale of this.supportedLocales) {
+                this._supportedLanguages.set(new Intl.Locale(locale).language, locale);
+            }
+        }
+
+        for (const locale of navigator.languages) {
+            if (L10n.supportedLocales.has(locale)) {
+                return locale;
+            }
+
+            const intlLocale = new Intl.Locale(locale);
+            if (L10n.supportedLocales.has(intlLocale.language)) {
+                return intlLocale.language;
+            }
+            if (this._supportedLanguages.has(intlLocale.language)) {
+                return this._supportedLanguages.get(intlLocale.language);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Identify the most appropriate locale for the site.
+     * The locale of the site content is matched against the user's browser locale preferences.
+     *
+     * @returns {string} The user's preferred locale compatible with the locale of the site content, or the site content locale.
+     */
+    static getLocale() {
+        let locale = L10n.siteLocale;
+
+        if (navigator.languages) {
+            if (locale.includes('-') && navigator.languages.includes(locale)) { // e.g. site locale zh-CN => zh-CN
+                return locale; // Site locale (language and region) matched with a browser locale
+            }
+
+            // No site locale and browser locale match; try without region
+            locale = locale.replace(/-.*/, '');
+            let matchedLocale = navigator.languages.filter(l => l.startsWith(`${locale}-`))[0]; // e.g. ar => ar-EG
+            if (matchedLocale) {
+                return matchedLocale; // Browser locale with site language and browser region found
+            }
+
+            matchedLocale = navigator.languages.filter(l => l.startsWith(locale))[0]; // ar => ar
+            if (matchedLocale) {
+                return matchedLocale;
+            }
+        }
+
+        // Default to the locale of the site content if no compatible browser-set locale found.
+        return locale;
+    }
+
+    /** Get locale appropriate for formatting */
+    static getFormatLocale() {
+        const locale = this.getLocale();
+
+        // Ensure Western Arabic numerals if locale region for Arabic is not defined.
+        return locale === 'ar' ? 'ar-AE' : locale;
+    }
+}
+
+class LinkManager {
+    /**
+     * Returns a cached map of {@link HTMLAnchorElement}s and their parsed {@link URL}s found on the current page.
+     *
+     * @returns {Map<HTMLAnchorElement, URL>}
+     */
+    static getLinks() {
+        if (this._allLinks) return this._allLinks;
+
+        this._allLinks = new Map();
+
+        for (const a of document.getElementsByTagName('a')) {
+            if (!a || !a.href) continue;
+
+            let url;
+            try {
+                url = new URL(a.href);
+            }
+            catch (e) {
+                console.warn('Element with invalid href found.');
+                console.trace(a);
+                continue;
+            }
+
+            this._allLinks.set(a, url);
+        }
+
+        return this._allLinks;
+    }
+
+    /**
+     * Returns a cached map of {@link HTMLAnchorElement}s and their parsed {@link URL}s
+     * for all webclient links found on the current page.
+     *
+     * @returns {Map<HTMLAnchorElement, URL>}
+     */
+    static getWebclientLinks() {
+        if (this._webclientLinks) return this._webclientLinks;
+
+        this._webclientLinks = new Map();
+
+        for (const [a, url] of LinkManager.getLinks().entries()) {
+            if (url.hostname !== 'mega.nz') continue;
+            if (Utils.hasFilename(url)) continue; // Don't include MEGA package download links - such links are not part of webclient
+            if (url.pathname.startsWith('/linux')) continue; // Linux downloads directory explorer is not webclient
+
+            this._webclientLinks.set(a, url);
+        }
+
+        return this._webclientLinks;
+    }
+
+    /**
+     * Returns a cached map of {@link HTMLAnchorElement}s and their parsed {@link URL}s
+     * for all app store links of known MEGA apps found on the current page.
+     *
+     * @returns {Map<any, any>}
+     */
+    static getAppStoreLinks() {
+        if (this._appStoreLinks) return this._appStoreLinks;
+
+        const knownApps = new Map([
+            ['apps.apple.com', ['/app/mega/id706857885', '/app/mega-vpn-privacy-online/id6456784858']],
+            ['play.google.com', ['mega.privacy.android.app', 'mega.vpn.android.app']],
+        ]);
+
+        this._appStoreLinks = new Map();
+
+        for (const [a, url] of LinkManager.getLinks().entries()) {
+            if (url.hostname === 'apps.apple.com' && knownApps.get(url.hostname).includes(url.pathname)) {
+                this._appStoreLinks.set(a, url);
+            }
+            else if (url.hostname === 'play.google.com'
+                    && url.pathname.includes('/store/apps/details')
+                    && knownApps.get(url.hostname).includes(url.searchParams.get('id'))) {
+                this._appStoreLinks.set(a, url);
+            }
+        }
+
+        return this._appStoreLinks;
+    }
+}
+
+/**
+ * Instance of a placeholder within the content.
+ */
+class Placeholder {
+    /** Unique key for this placeholder. The placeholder can be used more than once. */
+    key;
+
+    /** Cached value */
+    value;
+
+    /**
+     * Get a new Placeholder instance from Object.
+     *
+     * @param {Object} object
+     * @returns {Placeholder}
+     */
+    static fromObject(object) {
+        const placeholder = new Placeholder(object.key);
+        Object.assign(placeholder, object);
+
+        return placeholder;
+    }
+
+    constructor(key) {
+        this.key = key;
+    }
+
+    /**
+     * Asynchronously get the value of this placeholder. Returns a cached result if available.
+     *
+     * @returns {Promise<string>}
+     */
+    async getValue() {
+        if (this.value !== undefined) return this.value;
+
+        this._fetchPromise = this._fetchPromise || this._fetchValue();
+        this.value = await this._fetchPromise;
+
+        return this.value;
+    }
+
+    async _fetchValue() { }
+}
+
+/**
+ * Find placeholders within the content and populate them with values.
+ */
+class PlaceholderPopulator {
+    static _searchLocations = ['.page-container'];
+
+    static regex = /!{(\w+)}/g;
+
+    static _placeholders = {};
+
+    static _unregisteredMatches = new Set();
+
+    static init() {
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!Object.keys(this._placeholders).length) return;
+
+            this.populatePlaceholders(); // Async fire and forget.
+
+            if (this._unregisteredMatches.size > 0) {
+                const matches = [...this._unregisteredMatches].map(match => `"!{${match}}"`).join(', ');
+                console.warn(`Unregistered placeholders ${matches} detected. Ignoring.`);
+            }
+        });
+    }
+
+    /**
+     * From the given placeholder data as an array of objects,
+     * instantiate {@link Placeholder} objects and register them.
+     *
+     * @param {object[]} placeholders
+     */
+    static registerPlaceholders(placeholders) {
+        if (typeof placeholders !== 'object') {
+            console.warn(`Placeholders must be an object, got ${typeof placeholders}`);
+            return;
+        }
+
+        for (const placeholder of placeholders) {
+            this.registerPlaceholder(Placeholder.fromObject(placeholder));
+        }
+    }
+
+    /**
+     * Register a single {@link Placeholder} instance, if the key is available.
+     * @param {Placeholder} placeholder
+     */
+    static registerPlaceholder(placeholder) {
+        if (this._placeholders[placeholder.key]) {
+            console.warn(`Attempted to register placeholder with key "${placeholder.key}", but it is already in use. Ignoring.`);
+            return;
+        }
+
+        this._placeholders[placeholder.key] = Placeholder.fromObject(placeholder);
+    }
+
+    /**
+     * Get the placeholder, if it exists.
+     *
+     * @param {string} key
+     * @returns {Placeholder|undefined}
+     */
+    static getPlaceholder(key) {
+        return this._placeholders[key];
+    }
+
+    /**
+     * Find placeholders within the defined search locations and replace them with values.
+     */
+    static async populatePlaceholders() {
+        // Asynchronously check each location for text node strings with placeholders.
+        await Promise.allSettled(this._searchLocations.map((location) =>
+            this.populateElement(document.querySelector(location))));
+    }
+
+    /**
+     * Find placeholders in text nodes within the given element and replace them with values.
+     * @param {Node} element
+     */
+    static async populateElement(element) {
+        let textNodes = this.getTextNodes(element);
+        textNodes = textNodes.map((node) => {
+            const matches = [...node.nodeValue.matchAll(this.regex)].map(match => match[1]);
+
+            const placeholders = [];
+            for (const match of matches) {
+                const placeholder = this._placeholders[match];
+                if (!(placeholder instanceof Placeholder)) {
+                    this._unregisteredMatches.add(match);
+                    continue;
+                }
+
+                placeholders.push(placeholder);
+            }
+
+            return {
+                node: node,
+                placeholders: placeholders,
+            };
+        });
+
+        textNodes = textNodes.filter(data => data.placeholders.length > 0);
+
+        // Update each string as soon as all placeholder values are available.
+        await Promise.allSettled(textNodes.map(async ({ node, placeholders }) => {
+            // Consider adding these classes at PHP render time if still not sufficient.
+            node.parentElement.classList.add('skeleton');
+            node.parentElement.parentElement.classList.add('loading');
+            await this.populateNode(node, placeholders);
+            node.parentElement.parentElement.classList.remove('loading');
+        }));
+    }
+
+    /**
+     * Get an array of viable text nodes found descending the given element.
+     *
+     * @param {Node} element
+     * @returns {Text[]}
+     */
+    static getTextNodes(element) {
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT,
+            (node) => node.nodeValue.length > 3 && node.nodeValue.includes('!{')
+                ? NodeFilter.FILTER_ACCEPT
+                : NodeFilter.FILTER_REJECT);
+
+        const textNodes = [];
+
+        let node;
+        while (node = walker.nextNode()) {
+            textNodes.push(node);
+        }
+
+        return textNodes;
+    }
+
+    /**
+     * Replace the placeholders in the given node with the values of the given placeholder objects.
+     *
+     * @param {Node} node
+     * @param {Placeholder[]} placeholders
+     * @returns {Promise<void>}
+     */
+    static async populateNode(node, placeholders) {
+        const values = await Promise.all(placeholders.map((placeholder) => placeholder.getValue()));
+
+        let nodeValue = node.nodeValue;
+        placeholders.forEach((placeholder, index) => {
+            nodeValue = nodeValue.split(`!{${placeholder.key}}`).join(values[index]);
+        });
+
+        node.nodeValue = nodeValue;
+    }
+}
+
+/**
+ * A class to redirect a page to the user's preferred language. If they're viewing the
+ * website in a language which isn't English, then no redirections will occur.
+ */
+class LanguageRedirector {
+    static redirect() {
+        const currentLocale = L10n.siteLocale;
+        const preferredLocale = L10n.tryGetPreferredLocale();
+
+        // No redirection if no preference
+        if (!preferredLocale) return;
+
+        // No redirection if we're already on the preferred page
+        if (currentLocale === preferredLocale) return;
+
+        // No redirection if we don't support their preference
+        if (!L10n.supportedLocales.has(preferredLocale)) return;
+
+        // No redirection if their site preference is not set and their browser preference is matched to our default
+        if (!Prefs.get('language') && preferredLocale === 'en-NZ') return;
+
+        this.redirectTo(preferredLocale);
+    }
+
+    static redirectTo(locale) {
+        const target = L10n.alternateLocalePaths.get(locale);
+        if (!target) return;
+
+        this.isRedirecting = true;
+
+        window.location.replace(target);
+    }
+}
+
+class CampaignTagger {
+    static init() {
+        this.tag = this.tryGetTagFromUrl() || Storage.session.getItem('mct');
+        if (!this.tag) return;
+
+        if (CookieSettings.isAnalyticsAllowed()) {
+            this.sendTag();
+        }
+        else {
+            Storage.session.setItem('mct', this.tag);
+            CookieSettings.onConsentChanged.addListener(this.consentListener.bind(this));
+        }
+    }
+
+    /** @returns {string|null} */
+    static tryGetTagFromUrl() {
+        const url = new URL(window.location);
+
+        if (url.searchParams.has('mct')) {
+            const tag = url.searchParams.get('mct');
+            url.searchParams.delete('mct');
+            window.history.replaceState({}, '', url.toString());
+
+            return tag;
+        }
+
+        return null;
+    }
+
+    static consentListener() {
+        if (CookieSettings.isAnalyticsAllowed()) {
+            CookieSettings.onConsentChanged.removeListener(this.consentListener);
+            this.sendTag();
+        }
+    }
+
+    static async sendTag() {
+        await Api.log(99988, this.tag);
+        Storage.session.removeItem('mct');
+    }
+}
+
+/** Urchin, Matomo tagging */
+class CampaignTracker {
+    static validPeriod = 86400 * 90;
+
+    static init() {
+        const tags = this.tryGetTagsFromUrl();
+        if (tags) {
+            const event = JSON.stringify({
+                tags,
+                ts: Math.floor(Date.now() / 1000),
+            });
+
+            Storage.session.setItem('ct_utm_mtm', event);
+        }
+
+        this.updateLinkTargets();
+    }
+
+    /** @returns {object|null} */
+    static tryGetTagsFromUrl() {
+        const tags = { };
+
+        const url = new URL(window.location);
+        for (const [key, value] of url.searchParams.entries()) {
+            if (key.startsWith('utm_') || key.startsWith('mtm_')) {
+                tags[key] = value;
+            }
+        }
+
+        for (const key of Object.keys(tags)) {
+            url.searchParams.delete(key);
+        }
+        window.history.replaceState({ }, '', url.toString());
+
+        return Object.keys(tags).length > 0 ? tags : null;
+    }
+
+    /** @returns {object|null} */
+    static _tryGetEventFromSession() {
+        const eventStr = Storage.session.getItem('ct_utm_mtm');
+        if (!eventStr) return null;
+
+        let event;
+        try {
+            event = JSON.parse(eventStr);
+        }
+        catch (e) {
+            console.error("Couldn't parse tracking data.");
+            console.trace(e, eventStr);
+            return null;
+        }
+
+        if (!event.ts || Math.floor(Date.now() / 1000) - event.ts > this.validPeriod) {
+            Storage.session.removeItem('ct_utm_mtm');
+            return null;
+        }
+
+        // Try to promote to local storage
+        if (CookieSettings.isAnalyticsAllowed()) {
+            Storage.local.setItem('ct_utm_mtm', eventStr);
+            Storage.session.removeItem('ct_utm_mtm');
+        }
+        else {
+            // Listen for cookie acceptance
+            const listener = () => {
+                if (CookieSettings.isAnalyticsAllowed()) {
+                    Storage.local.setItem('ct_utm_mtm', eventStr);
+                    Storage.session.removeItem('ct_utm_mtm');
+                    CookieSettings.onConsentChanged.removeListener(listener);
+                }
+            }
+            CookieSettings.onConsentChanged.addListener(listener);
+        }
+
+        return event;
+    }
+
+    /** @returns {object|null} */
+    static _tryGetEventFromLocal() {
+        let event = Storage.local.getItem('ct_utm_mtm');
+        if (!event) return null;
+
+        try {
+            event = JSON.parse(event);
+        }
+        catch (e) {
+            console.error("Couldn't parse tracking data.");
+            console.trace(e, event);
+            return null;
+        }
+
+        if (!event.ts || Math.floor(Date.now() / 1000) - event.ts > this.validPeriod) {
+            Storage.local.removeItem('ct_utm_mtm');
+            return null;
+        }
+
+        return event;
+    }
+
+    static updateLinkTargets() {
+        const event = this._tryGetEventFromSession() || this._tryGetEventFromLocal();
+        if (!event) return;
+
+        const tags = Object.entries(event.tags || { });
+        for (const [a, url] of LinkManager.getWebclientLinks().entries()) {
+            for (const [key, value] of tags) {
+                url.searchParams.set(key, value);
+            }
+
+            a.href = url.href;
+        }
+
+        let storeReferrer = new URLSearchParams();
+        for (const [key, value] of tags) {
+            storeReferrer.set(key, value);
+        }
+
+        for (const[a, url] of LinkManager.getAppStoreLinks().entries()) {
+            // Note that Apple app store may not support the same referral system as the Play Store (or at all?)
+            url.searchParams.set('referrer', storeReferrer.toString());
+            a.href = url.href;
+        }
+    }
+}
+
+class JourneyTracker {
+    static init() {
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (await this.getJid()) {
+                this.updateWebclientLinks();
+            }
+        });
+    }
+
+    static async getJid() {
+        this._jid = this._jid || Storage.local.getItem('jid') || (await MegaFlags.get()).jid;
+
+        if (this._jid) {
+            Storage.local.setItem('jid', this._jid);
+        }
+
+        return this._jid;
+    }
+
+    static getViewId() {
+        return this._viewId = this._viewId || this.generateViewId();
+    }
+
+    static generateViewId() {
+        // webclient's implementation
+        return (Date.now() / 1e3 >>> 0).toString(16).slice(-8) + Utils.generateGuid().slice(-8);
+    }
+
+    static updateWebclientLinks() {
+        for (const [a, url] of LinkManager.getWebclientLinks().entries()) {
+            url.searchParams.set('miojid', this._jid);
+            a.href = url.href;
+        }
+    }
+}
+
+/** Allow an object to change state based on the URL fragment. */
+class FragmentMonitor {
+    /** @param {string} fragment The fragment string to monitor */
+    constructor(fragment) {
+        this.fragment = fragment;
+
+        this.onFragmentChanged = new Event();
+        window.addEventListener('popstate', () => this.onFragmentChanged.invoke(this.isMatch));
+    }
+
+    /** @return true if the URL fragment matches this fragment */
+    get isMatch() { return window.location.hash === this.fragment }
+
+    /**
+     * Add this fragment to the URL.
+     * This should only be called when the object is activated programmatically and not via <a> links with #fragments.
+     */
+    addFragment() {
+        if (window.location.hash !== this.fragment) {
+            history.pushState({ fragmentMonitor: 'add' }, null, this.fragment);
+        }
+    }
+
+    /** Clear the fragment from the URL. */
+    removeFragment() {
+        if (window.location.hash === this.fragment) {
+            history.pushState({ fragmentMonitor: 'remove' }, null, window.location.pathname);
+        }
+    }
+}
+
+class WebclientLinker {
+    static init() {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.addLangInfoToURL();
+            this._trySetHost();
+        });
+    }
+
+    static getLinks() {
+        return LinkManager.getWebclientLinks().entries();
+    }
+
+    static addLangInfoToURL() {
+        if (!Prefs.get('language')) return; // Only localise webclient urls if user has explicitly set a preferred language
+
+        for (const [a, url] of this.getLinks()) {
+            // Unable to localise MEGA share links as webclient expects it as part of the path, not a query param
+            // TODO - consider updating webclient to support a l10n query param instead
+            if (WebclientUtils.parseMegaUrl(url.href)) continue;
+
+            this.localiseWebclientUrl(url);
+            a.href = url.href;
+        }
+    }
+
+    /** @param {URL} url */
+    static localiseWebclientUrl(url) {
+        if (!Prefs.get('language')) return; // Only localise webclient urls if user has explicitly set a preferred language
+
+        if (url.hostname === 'mega.nz') {
+            const mappedLang = this.wpLocaleToWebclient(L10n.siteLocale);
+            if (mappedLang) {
+                const path = url.pathname.endsWith('/') ? url.pathname.slice(0, -1) : url.pathname;
+                url.pathname = `${path}/lang_${mappedLang}`;
+            }
+        }
+    }
+
+    static wpLocaleToWebclient(locale) {
+        const mappings = {
+            'zh-CN': 'cn',
+            'zh-TW': 'ct',
+        };
+
+        if (mappings[locale]) return mappings[locale];
+
+        locale = locale.replace(/-.*/, ''); // en-NZ => en
+        return locale;
+    }
+
+    /** @param {String} host */
+    static setHost(host) {
+        if (host) {
+            Storage.local.setItem('d.webclienthost', host);
+        }
+        else {
+            Storage.local.removeItem('d.webclienthost');
+        }
+
+        this._trySetHost();
+    }
+
+    static _trySetHost() {
+        const host = Storage.local.getItem('d.webclienthost') || 'mega.nz';
+
+        for (const [a, url] of this.getLinks()) {
+            url.host = host;
+            a.href = url.href;
+        }
+    }
+}
+
+class Formatter {
+    static get numberFormatter() {
+        return Formatter._numberFormatter ||= new Intl.NumberFormat(L10n.getFormatLocale());
+    }
+
+    static get percentFormatter() {
+        return Formatter._percentFormatter ||= new Intl.NumberFormat(L10n.getFormatLocale(), {
+            style: 'percent',
+        });
+    }
+
+    static get monthsFormatter() {
+        return Formatter._monthsFormatter ||= new Intl.NumberFormat(L10n.getFormatLocale(), {
+            style: 'unit',
+            unit: 'month',
+            unitDisplay: 'long',
+        });
+    }
+
+    static get yearsFormatter() {
+        return Formatter._yearsFormatter ||= new Intl.NumberFormat(L10n.getFormatLocale(), {
+            style: 'unit',
+            unit: 'year',
+            unitDisplay: 'long',
+        });
+    }
+
+    static get currencyFormatter() {
+        return Formatter._currencyFormatter ||= new Intl.NumberFormat(L10n.getFormatLocale(), {
+            style: 'currency',
+            currency: Plans.instance.localCurrency,
+        });
+    }
+
+    static get gbFormatter() {
+        return Formatter._gbFormatter ||= new Intl.NumberFormat(L10n.getFormatLocale(), {
+            style: 'unit',
+            unit: 'gigabyte',
+            unitDisplay: 'short',
+        });
+    }
+
+    static get tbFormatter() {
+        return Formatter._tbFormatter ||= new Intl.NumberFormat(L10n.getFormatLocale(), {
+            style: 'unit',
+            unit: 'terabyte',
+            unitDisplay: 'short',
+        });
+    }
+
+    static get pbFormatter() {
+        return Formatter._pbFormatter ||= new Intl.NumberFormat(L10n.getFormatLocale(), {
+            style: 'unit',
+            unit: 'petabyte',
+            unitDisplay: 'short',
+        });
+    }
+
+    static formatNumber(number) {
+        return Formatter.numberFormatter.format(number);
+    }
+
+    static formatMonths(months) {
+        return Formatter.monthsFormatter.format(months);
+    }
+
+    static formatYears(years) {
+        return Formatter.yearsFormatter.format(years);
+    }
+
+    static formatPercent(percent) {
+        const percentStr = Formatter.percentFormatter.format(percent);
+
+        if (Formatter.percentFormatter.resolvedOptions().locale.startsWith('de')) {
+            return percentStr.replace(/\u00A0/g, '\u202F');
+        }
+
+        return percentStr;
+    }
+
+    static formatCurrency(amount) {
+        return Formatter.currencyFormatter.format(amount);
+    }
+
+    static formatGb(gb) {
+        return Formatter.gbFormatter.format(gb);
+    }
+
+    static formatTb(tb) {
+        return Formatter.tbFormatter.format(tb);
+    }
+
+    static formatPb(pb) {
+        return Formatter.pbFormatter.format(pb);
+    }
+}
+
+class SkeletonLoader {
+    static init() {
+        document.addEventListener('DOMContentLoaded', () => {
+            document.documentElement.style.setProperty('--skeleton-play-state', 'running');
+        });
+    }
+}
+
+/** Agnostic text scaler that uses CSS transform to make text fit in its parent element */
+class TextScaler {
+    static get instance() {
+        return this._instance ||= new TextScaler();
+    }
+
+    constructor() {
+        this.elements = new Set();
+        this.transformOrigin = document.documentElement.dir === 'rtl' ? 'right' : 'left';
+
+        this._onResize = this._onResize.bind(this);
+        this._resizeScale = this._resizeScale.bind(this);
+
+        this.observer = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting) {
+                    requestAnimationFrame(() => this._scale(entry.target))
+                    this.observer.unobserve(entry.target); // job done
+                }
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (this.elements > 20) { // arbitrary
+                clearTimeout(this.resizeDebounce);
+                this.resizeDebounce = setTimeout(this._onResize, 100);
+            }
+            else {
+                this._resizeScale();
+            }
+        });
+    }
+
+    /** Scale text size to fit in its parent element */
+    scale(element) {
+        if (!(element instanceof HTMLElement) || !element.parentElement) return;
+
+        this.elements.add(element);
+
+        requestAnimationFrame(() => this._scale(element));
+    }
+
+    _scale(element) {
+        if (element.parentElement.offsetWidth === 0 || element.scrollWidth === 0) {
+            // Assume not visible; apply scaling when visible
+            this.observer.observe(element);
+            return;
+        }
+
+        const scaleFactorX = element.parentElement.offsetWidth / element.scrollWidth;
+        const scaleFactorY = element.parentElement.offsetHeight / element.scrollHeight;
+        const scaleFactor = Math.min(Math.max(Math.min(scaleFactorX, scaleFactorY), 0.3), 1);
+
+        element.style.transformOrigin = getComputedStyle(element).textAlign === 'center' ? 'center' : this.transformOrigin;
+        element.style.transform = `scale(${scaleFactor})`;
+    }
+
+    _resizeScale() {
+        for (const element of this.elements) {
+            this._scale(element);
+        }
+    }
+
+    _onResize() {
+        requestAnimationFrame(this._resizeScale);
+    }
+}
+
+/**
+ * Dynamically replace flag emojis with inline images.
+ *
+ * Some operating systems like Windows and possibly some Linux distributions choose not to render flag emojis.
+ */
+class FlagEmojiReplacer {
+    static init() {
+        document.addEventListener('DOMContentLoaded', () => {
+            const nodesInfo = this._getNodes();
+            if (nodesInfo.length > 0) {
+                this._replaceEmojis(nodesInfo);
+            }
+        });
+    }
+
+    static _getNodes() {
+        const pageContainer = document.querySelector('.page-container');
+        if (!pageContainer) return [];
+
+        const walker = document.createTreeWalker(pageContainer, NodeFilter.SHOW_TEXT);
+        const nodesInfo = [];
+        let node;
+        while (node = walker.nextNode()) {
+            const matches = Array.from(node.nodeValue.matchAll(/\p{Regional_Indicator}{2}/gu));
+            if (matches.length <= 0) continue;
+
+            const matchInfo = matches.map(match => ({
+                startIndex: match.index,
+                endIndex: match.index + match[0].length,
+                image: this.createImageForEmoji(match[0]),
+            }));
+            nodesInfo.push({ node, matchInfo });
+        }
+
+        return nodesInfo;
+    }
+
+    static _replaceEmojis(nodesInfo) {
+        for (const { node, matchInfo } of nodesInfo) {
+            const loadPromises = matchInfo.map(info => new Promise((resolve, reject) => {
+                if (!info.image) {
+                    reject();
+                }
+
+                if (info.image.complete) {
+                    if (info.image.naturalWidth !== 0) {
+                        resolve();
+                    }
+                    else {
+                        reject();
+                    }
+                }
+                else {
+                    info.image.onload = resolve;
+                    info.image.onerror = reject;
+                }
+            }));
+
+            Promise.allSettled(loadPromises).then(() => this._updateTextNode(node, matchInfo));
+        }
+    }
+
+    static _updateTextNode(node, matchInfo) {
+        const fragment = document.createDocumentFragment();
+        let lastIndex = 0;
+
+        for (const info of matchInfo) {
+            fragment.appendChild(document.createTextNode(node.nodeValue.slice(lastIndex, info.startIndex)));
+            fragment.appendChild(info.image && info.image.naturalWidth !== 0
+                ? info.image
+                : document.createTextNode(node.nodeValue.slice(info.startIndex, info.endIndex)));
+
+            lastIndex = info.endIndex;
+        }
+
+        if (lastIndex < node.nodeValue.length) {
+            fragment.appendChild(document.createTextNode(node.nodeValue.slice(lastIndex)));
+        }
+
+        node.parentNode.replaceChild(fragment, node);
+    }
+
+    static createImageForEmoji(emoji) {
+        const countryCode = this.emojiToCountryCode(emoji);
+
+        if (!countryCode) return null;
+
+        const img = document.createElement('img');
+        img.classList.add('inline-emoji');
+        img.src = `/wp-content/themes/megapages/megalib/icons/flags/${countryCode}.png`;
+
+        return img;
+    }
+
+    static emojiToCountryCode(emoji) {
+        if (Array.from(emoji).length !== 2) return null
+        if (!/^\p{Regional_Indicator}{2}$/u.test(emoji)) return null;
+
+        return Array.from(emoji)
+            .map(char => String.fromCharCode(0x41 + (char.codePointAt(0) - 0x1F1E6)))
+            .join('').toLowerCase();
+    }
+}
+
+class BillingPeriod {
+    static Monthly = 1;
+    static Yearly = 12;
+}
+
+/**
+ * Abstract class for plans.
+ *
+ * See also {@linkcode Plans} plans manager and child plan types
+ * {@linkcode StandardPlan}, {@linkcode FeaturePlan}, {@linkcode BusinessPlan}, {@linkcode ProFlexiPlan}
+ */
+class Plan {
+    /** Unique ID for this plan */
+    id;
+    /** Description of this plan */
+    description;
+    /** Item this plan purchases, e.g. pro = 0, business/flexi = 1 */
+    item;
+    /** How many months this plan covers */
+    months;
+    /** User account level as per {@link Plans.AccountLevels} */
+    accountLevel;
+
+    static fromApiResponse(response) {
+        let plan;
+
+        if (response.al === Plans.AccountLevels.Business) {
+            plan = BusinessPlan.fromApiResponse(response);
+        }
+        else if (response.al === Plans.AccountLevels.ProFlexi) {
+            plan = ProFlexiPlan.fromApiResponse(response);
+        }
+        else if (response.al === Plans.AccountLevels.Feature) {
+            plan = FeaturePlan.fromApiResponse(response);
+        }
+        else {
+            plan = StandardPlan.fromApiResponse(response);
+        }
+
+        plan.id = response.id;
+        plan.description = response.d;
+        plan.item = response.it;
+        plan.months = response.m;
+        plan.accountLevel = response.al;
+
+        return plan;
+    }
+}
+
+/**
+ * Regular plan like Pro Lite, Pro II, etc.
+ * @see Plan
+ * @see Plans
+ */
+class StandardPlan extends Plan {
+    storage;
+    transfer;
+    price;
+    localPrice;
+    monthlyBasePrice;
+
+    static fromApiResponse(response) {
+        const plan = new StandardPlan();
+
+        plan.storage = response.s;
+        plan.transfer = response.t;
+        plan.price = response.p / 100;
+        plan.localPrice = response.lp ? (response.lp / 100) : plan.price;
+        plan.monthlyBasePrice = response.mbp / 100;
+
+        return plan;
+    }
+}
+
+/**
+ * Feature plan for a standalone feature like e.g. VPN
+ * {@linkcode Plan}, {@linkcode Plans}
+ */
+class FeaturePlan extends Plan {
+    features = { };
+    price;
+    localPrice;
+    monthlyBasePrice;
+    trial = {};
+
+    static fromApiResponse(response) {
+        const plan = new FeaturePlan();
+
+        plan.features = response.f;
+        plan.price = response.p / 100;
+        plan.localPrice = response.lp ? (response.lp / 100) : plan.price;
+        plan.monthlyBasePrice = response.mbp / 100;
+        plan.trial = response.trial;
+
+        return plan;
+    }
+}
+
+/**
+ * Business plan.
+ * @see Plan
+ * @see Plans
+ */
+class BusinessPlan extends Plan {
+    minUsers;
+    base = {};
+    extra = {};
+
+    static fromApiResponse(response) {
+        const plan = new BusinessPlan();
+
+        plan.minUsers = response.bd.minu;
+
+        plan.base = {
+            storage: response.bd.ba.s,
+            transfer: response.bd.ba.t,
+        };
+
+        plan.extra = {};
+        plan.extra.storagePrice = response.bd.sto.p / 100;
+        plan.extra.storageLocalPrice = response.bd.sto.lp ? (response.bd.sto.lp / 100) : plan.extra.storagePrice;
+        plan.extra.transferPrice = response.bd.trns.p / 100;
+        plan.extra.transferLocalPrice = response.bd.trns.lp ? (response.bd.trns.lp / 100) : plan.extra.transferPrice;
+        plan.extra.userPrice = response.bd.us.p / 100;
+        plan.extra.userLocalPrice = response.bd.us.lp ? (response.bd.us.lp / 100) : plan.extra.userPrice;
+
+        return plan;
+    }
+}
+
+/**
+ * Pro Flexi plan.
+ * @see Plan
+ * @see Plans
+ */
+class ProFlexiPlan extends Plan {
+    base = {};
+    extra = {};
+
+    static fromApiResponse(response) {
+        const plan = new ProFlexiPlan();
+
+        plan.base = {};
+        plan.base.storage = response.bd.ba.s;
+        plan.base.transfer = response.bd.ba.t;
+        plan.base.price = response.bd.ba.p / 100;
+        plan.base.localPrice = response.bd.ba.lp ? (response.bd.ba.lp / 100) : plan.base.price;
+
+        plan.extra = {};
+        plan.extra.storagePrice = response.bd.sto.p / 100;
+        plan.extra.storageLocalPrice = response.bd.sto.lp ? (response.bd.sto.lp / 100) : plan.extra.storagePrice;
+        plan.extra.transferPrice = response.bd.trns.p / 100;
+        plan.extra.transferLocalPrice = response.bd.trns.lp ? (response.bd.trns.lp / 100) : plan.extra.transferPrice;
+
+        return plan;
+    }
+}
+
+/**
+ * Singleton to manage MEGA plans.
+ * @see Plan
+ */
+class Plans {
+    static AccountLevels = {
+        Free: 0,
+        ProLite: 4,
+        ProI: 1,
+        ProII: 2,
+        ProIII: 3,
+        ProFlexi: 101,
+        Business: 100,
+        Feature: 99999,
+    };
+
+    static Names = {
+        [Plans.AccountLevels.Free]: 'Free',
+        [Plans.AccountLevels.ProLite]: 'Pro¬†Lite',
+        [Plans.AccountLevels.ProI]: 'Pro¬†I',
+        [Plans.AccountLevels.ProII]: 'Pro¬†II',
+        [Plans.AccountLevels.ProIII]: 'Pro¬†III',
+        [Plans.AccountLevels.ProFlexi]: 'Pro¬†Flexi',
+        [Plans.AccountLevels.Business]: 'Business',
+    };
+
+    static _instance;
+
+    _plans;
+    _allPlans;
+    _fetchPromise;
+    _fetchAllPromise;
+
+    currency = 'EUR';
+    currencySymbol = '‚Ç¨';
+    localCurrency = 'EUR';
+    localCurrencySymbol = '‚Ç¨';
+
+    /** @returns {Plans} */
+    static get instance() {
+        if (!Plans._instance) {
+            Plans._instance = new Plans();
+        }
+
+        return Plans._instance;
+    }
+
+    /**
+     * Get MEGA plans appropriate for the user's market.
+     * Will fetch from API first if not already fetched.
+     * Use {@link getAll} to get all plans, including plans not appropriate for the user's market.
+     * @returns {Promise<Array>}
+     */
+    async get() {
+        if (this._plans == null) {
+            this._fetchPromise ||= this._fetchFromApi();
+            this._plans = await this._fetchPromise;
+        }
+
+        return this._plans || [];
+    }
+
+    /**
+     * Get all MEGA plans.
+     * Will fetch from API first if not already fetched.
+     * Use {@link get} to get only plans appropriate for the user's market.
+     * @returns {Promise<Array>}
+     */
+    async getAll() {
+        if (this._allPlans == null) {
+            this._fetchAllPromise ||= this._fetchAllFromApi();
+            this._allPlans = await this._fetchAllPromise;
+        }
+
+        return this._allPlans || [];
+    }
+
+    /**
+     * Asynchronously fetch market-appropriate plans from the API.
+     * @returns {Promise<Array|null>}
+     */
+    async _fetchFromApi() {
+        const fetchPromise = Api.request({
+            a: 'utqa', // get a list of plans
+            nf: 2, // extended format
+            b: 1, // also show business plans
+            p: 1, // include the Pro Flexi plan
+            ft: 1, // include feature plans like VPN
+        });
+
+        return this._handleResponsePromise(fetchPromise);
+    }
+
+    /**
+     * Asynchronously fetch all plans from the API.
+     * @returns {Promise<Array|null>}
+     */
+    async _fetchAllFromApi() {
+        const fetchPromise = Api.request({
+            a: 'utqa', // get a list of plans
+            nf: 2, // extended format
+            b: 1, // also show business plans
+            p: 1, // include the Pro Flexi plan
+            ft: 1, // include feature plans like VPN
+            r: 1, // all plans (include plans hidden from user's market, like Pro Lite)
+        });
+
+        return this._handleResponsePromise(fetchPromise);
+    }
+
+    /** @returns {Promise<Array|null>} */
+    async _handleResponsePromise(response) {
+        try {
+            response = await response;
+        }
+        catch (e) {
+            console.error('Couldn\'t request plans from API.', e.message);
+            return null;
+        }
+
+        if (!Array.isArray(response)) {
+            console.error('API response to plans request is something unexpected.');
+            return null;
+        }
+
+        const currencyData = response[0].l;
+
+        this.currency = currencyData.c;
+        this.currencySymbol = currencyData.cs;
+        this.localCurrency = currencyData.lc || this.currency;
+        this.localCurrencySymbol = currencyData.lcs || this.currencySymbol;
+
+        return response.filter(obj => !obj.l).map(planDetails => Plan.fromApiResponse(planDetails));
+    }
+
+    /**
+     * Convert the given amount into the user's local currency, as detected by the API.
+     * @return {Promise<Object>}
+     * */
+    static async localCurrencyConvert(amount) {
+        const fallback = {
+            amount: amount,
+            sign: '‚Ç¨',
+            name: 'EUR',
+            country: 'ISO',
+        };
+
+        let response;
+        try {
+            response = await Api.request({ a: 'lcc', 'amount': amount });
+        }
+        catch (e) {
+            console.error(`Couldn't get the amount "${amount}" in user's local currency via the API.`, e.message);
+            return fallback;
+        }
+
+        if (!response || typeof response !== 'object') {
+            console.error(`API returned unexpected response when getting the amount "${amount}" in user's local currency.`,
+                Number.isInteger(response) ? `Code: ${response} (${ApiErrors.getMessage(response)})` : '');
+            return fallback;
+        }
+
+        return response;
+    }
+
+    /**
+     * Get all payment providers.
+     * @returns {Promise<Array>}
+     */
+    static async getPaymentProviders() {
+        let response = {};
+        try {
+            response = await Api.request({ a: 'ufpqfull', t: 0});
+        }
+        catch (e) {
+            console.error('Couldn\'t request payment provider details from API.', e.message);
+        }
+
+        return response;
+    }
+}
+
+/**
+ * A class for localizing price values / currencies.
+ *
+ * Used by the pricing-page/plan-price-calculator and product-comparison modules, and
+ * any future modules which require price values / currencies to be formatted.
+ */
+class CurrencyLocalizer {
+    currency;
+    display;
+    noDecimals;
+    locale;
+
+    constructor(currency, display, noDecimals) {
+        this.currency = currency || 'EUR';
+        this.display = display || 'symbol';
+        this.noDecimals = noDecimals ?? false;
+        this.locale = L10n.getFormatLocale();
+    }
+
+    /**
+     * Function to format currency with current locale. Adapted from webclient code (locale.js)
+     * @param {Number} value Value to format
+     * @param {String} [currency] Currency to use in currency formatting. Default: 'EUR'
+     * @param {String} [display] display type of currency format, supporting types are below:
+     *                  'symbol' - use a localized currency symbol but with country code such as "NZ$",
+     *                  'narrowSymbol' - use a localized currency symbol without country code such as "$" for "NZ$",
+     *                  'code' - use the ISO currency code such as "NZD",
+     *                  'name' - use a localized currency name such as "dollar"
+     *                  'number' - just number with correct decimal
+     * @param {Boolean} noDecimals If the number should be displayed without decimals
+     * @returns {String} formated currency value
+     */
+    format(value) {
+        value = typeof value === 'string' ? parseFloat(value) : value;
+
+        var narrowSymbol = false;
+
+        if (this.display === 'narrowSymbol') {
+            this.display = 'symbol';
+            narrowSymbol = this.currency !== 'EUR'; // Euro cannot have country
+        }
+
+        const options = { 'style': 'currency', 'currency': this.currency, currencyDisplay: this.display };
+
+        if (this.noDecimals) {
+            options.maximumFractionDigits = 0;
+            options.minimumFractionDigits = 0;
+        }
+
+        let result = value.toLocaleString(this.locale, options);
+
+        // For Safari that 'symbol' result same as 'code', using fallback locale without country code to avoid the bug.
+        if (this.display === 'symbol' && result.indexOf(this.currency.toUpperCase()) !== -1) {
+
+            // Romanian with Euro Symbol currency display is currently buggy on all browsers, so doing this to polyfill it
+            if (this.locale.startsWith('ro')) {
+                result = value.toLocaleString('fr', options);
+            }
+            else {
+                result = value.toLocaleString(L10n.getFormatLocale(), options);
+            }
+        }
+
+        // Polyfill for narrow symbol format as lacking support on Safari and old browers
+        if (narrowSymbol) {
+            // Cover NZ$, $NZ kinds case to just $ and not change something like NZD
+            result = result.replace(/\b[A-Z]{2}\b/, '');
+        }
+
+        if (this.locale === 'fr' && this.display === 'symbol') {
+            result = result.replace(/([^1-9A-Za-z])([A-Z]{2})/, '$1 $2');
+        }
+
+        return result;
+    }
+
+    static formatPrice(price, currency, display, noDecimals) {
+        return (new CurrencyLocalizer(currency, display, noDecimals)).format(price);
+    }
+}
+
+class DailyStats {
+    static _stats;
+
+    static _fetchPromise;
+
+    /** @returns {Promise<Object> | null} */
+    static async get() {
+        await this._ensureInit();
+
+        return this._stats;
+    }
+
+    static async getTimestamp() {
+        await this._ensureInit();
+
+        return this._stats && this._stats.timestamp || 0;
+    }
+
+    static async getTotalUsers() {
+        await this._ensureInit();
+
+        return this._stats && this._stats.confirmedusers && this._stats.confirmedusers.total || 0;
+    }
+
+    static async getDeltaUsers() { } // TODO stub, fill as needed
+
+    static async getTotalFiles() {
+        await this._ensureInit();
+
+        return this._stats && this._stats.files && this._stats.files.total || 0;
+    }
+
+    static async getDeltaFiles() { } // TODO stub
+
+    /** @returns {Promise<Object> | null} */
+    static async _fetchStats() {
+        this._fetchPromise = this._fetchPromise || Api.request({ a: 'dailystats' });
+
+        let response;
+        try {
+            response = await this._fetchPromise;
+        }
+        catch (e) {
+            console.error('Couldn\'t request daily stats from API.', e.message);
+            return null;
+        }
+        finally {
+            this._fetchPromise = null;
+        }
+
+        if (typeof response !== 'object') {
+            console.error('Unexpected response from API when fetching daily stats.',
+                Number.isInteger(response) ? `${response} ${ApiErrors.getMessage(response)}` : '');
+            return null;
+        }
+
+        return response;
+    }
+
+    static async _ensureInit() {
+        if (!this._stats) {
+            this._stats = await this._fetchStats();
+        }
+    }
+}
+
+class MegaFlags {
+    static async get() {
+        await this._ensureInit();
+
+        return { ...this._flags, ...this._getLocalFlags() }; // Shallow, for now
+    }
+
+    static set(key, value) {
+        const flags = this._getLocalFlags();
+
+        if (key && value !== undefined) {
+            flags[key] = value;
+            Storage.local.setItem('d.flags', JSON.stringify(flags));
+        }
+        else if (key) {
+            delete flags[key];
+            Storage.local.setItem('d.flags', JSON.stringify(flags));
+        }
+        else {
+            Storage.local.removeItem('d.flags');
+        }
+    }
+
+    static _getLocalFlags() {
+        let localFlags = Storage.local.getItem('d.flags');
+        if (!localFlags) return { };
+
+        try {
+            localFlags = JSON.parse(localFlags);
+        }
+        catch (e) {
+            console.error("Couldn't parse local flags.");
+            console.trace(e, localFlags);
+            return { };
+        }
+
+        return localFlags;
+    }
+
+    static async _fetchFlags() {
+        this._fetchPromise = this._fetchPromise || Api.request({ a: 'gmf' });
+
+        let response;
+        try {
+            response = await this._fetchPromise;
+        }
+        catch (e) {
+            console.error('Couldn\'t request MEGA flags from API.', e.message);
+            return null;
+        }
+        finally {
+            this._fetchPromise = null;
+        }
+
+        if (typeof response !== 'object') {
+            console.error('Unexpected response from API when fetching MEGA flags.',
+                Number.isInteger(response) ? `${response} ${ApiErrors.getMessage(response)}` : '');
+            return null;
+        }
+
+        return response;
+    }
+
+    static async _ensureInit() {
+        if (!this._flags) {
+            this._flags = (await this._fetchFlags()) || { };
+        }
+    }
+}
+
+/* endregion */
+
+(() => {
+    const placeholders = [
+        {
+            key: 'freePlanStorage',
+            _fetchValue: async () => {
+                let freePlan;
+                try {
+                    freePlan = await Api.request({ a: 'mafu' });
+                }
+                catch (e) {
+                    console.error('Couldn\'t request storage amount of free plan details from API.', e.message);
+                    return Number.NaN;
+                }
+
+                return Formatter.formatGb(Math.floor(freePlan.s / 1073741824));
+            },
+        },
+        {
+            key: 's4StorageValue',
+            _fetchValue: async () => {
+                const s4StorageValue = await Plans.localCurrencyConvert(1000);
+
+                const localisedPrice = CurrencyLocalizer
+                    .formatPrice(s4StorageValue.amount, s4StorageValue.name, 'narrowSymbol', true);
+                return `${localisedPrice} ${s4StorageValue.name}`;
+            },
+        },
+        {
+            key: 's4PerTBPrice',
+            _fetchValue: async () => {
+                const s4PerTBPrice = await Plans.localCurrencyConvert(2.99);
+
+                const localisedPrice = CurrencyLocalizer
+                    .formatPrice(s4PerTBPrice.amount, s4PerTBPrice.name, 'narrowSymbol', true);
+                return `${localisedPrice} ${s4PerTBPrice.name}`;
+            },
+        },
+        {
+            key: 'totalUsersCompactLong',
+            _fetchValue: async () => {
+                const totalUsers = Utils.floorToSigFigs(await DailyStats.getTotalUsers(), 3);
+
+                const formatter = new Intl.NumberFormat(L10n.getFormatLocale(), {
+                    notation: 'compact',
+                    compactDisplay: 'long',
+                });
+
+                return formatter.format(totalUsers);
+            }
+        },
+        {
+            key: 'vpnPriceLocalMonthly',
+            _fetchValue: async () => {
+                const plans = await Plans.instance.getAll();
+                const vpnPlan = plans.find((plan) =>
+                    plan instanceof FeaturePlan && plan.features.vpn && plan.months === BillingPeriod.Monthly);
+
+                const price = vpnPlan ? vpnPlan.localPrice : Number.NaN;
+                return Formatter.formatCurrency(price);
+            }
+        },
+        {
+            key: 'pwmPriceLocalMonthly',
+            _fetchValue: async () => {
+                const plans = await Plans.instance.getAll();
+                const vpnPlan = plans.find((plan) =>
+                    plan instanceof FeaturePlan && plan.features.pwm && plan.months === BillingPeriod.Monthly);
+
+                const price = vpnPlan ? vpnPlan.localPrice : Number.NaN;
+                return Formatter.formatCurrency(price);
+            }
+        }
+    ];
+
+    Prefs.init();
+    Breakpointer.init();
+    ThemeManager.init();
+    SkeletonLoader.init();
+    PlaceholderPopulator.registerPlaceholders(placeholders);
+    PlaceholderPopulator.init();
+    FlagEmojiReplacer.init();
+    WebclientLinker.init();
+    JourneyTracker.init();
+})();
+ ‘¢Ç      hThTHPõèh{ô   X    ~FETCH,:https://mega.io/wp-content/themes/megapages/megalib/js/megalib.js?ver=1746139693 strongly-framed 1 security-info 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 request-method GET response-head HTTP/2 200 
+server: nginx
+date: Thu, 19 Jun 2025 13:09:46 GMT
+content-type: application/javascript
+content-length: 89140
+last-modified: Thu, 01 May 2025 22:48:13 GMT
+etag: "6813fa2d-15c34"
+expires: Mon, 30 Jun 2025 23:13:58 GMT
+cache-control: max-age=2592000, max-age=2592000
+x-cache-status: HIT
+accept-ranges: bytes
+X-Firefox-Spdy: h2
+ original-response-headers server: nginx
+date: Thu, 19 Jun 2025 13:09:46 GMT
+content-type: application/javascript
+content-length: 89140
+last-modified: Thu, 01 May 2025 22:48:13 GMT
+etag: "6813fa2d-15c34"
+expires: Mon, 30 Jun 2025 23:13:58 GMT
+cache-control: max-age=2592000
+cache-control: max-age=2592000
+x-cache-status: HIT
+accept-ranges: bytes
+X-Firefox-Spdy: h2
+ ctid 2 uncompressed-len 0 net-response-time-onstart 988 net-response-time-onstop 1009  \4

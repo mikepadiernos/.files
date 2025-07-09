@@ -1,0 +1,245 @@
+button
+{
+	border:0px solid;
+	background:transparent;
+	font-family:verdana;
+	font-weight:bold;
+	font-size:12px;
+}
+#login-keyboard {
+	width: 90%;/* position:relative;PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px;   PADDING-TOP: 12px;*/
+}
+.loginkeyboard
+{
+	 PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; border:0px solid #A1C5E7;
+}
+/*
+.TopLeftCurve
+{
+	background-image:url('/netbanking/gif/LTCurve.jpg'); background-repeat:no-repeat; height:7px;  width:7px; text-align:left; 
+}
+.TopRightCurve
+{
+	background-image:url('/netbanking/gif/RTCurve.jpg'); background-repeat:no-repeat; height:7px; width:7px; text-align:right; overflow:hidden
+}
+.BottomLeftCurve
+{
+	background-image:url('/netbanking/gif/LBCurve.jpg'); background-repeat:no-repeat; height:7px;  width:7px; text-align:left;  overflow:hidden
+}
+.BottomRightCurve
+{
+	background-image:url('/netbanking/gif/RBCurve.jpg'); background-repeat:no-repeat; height:7px; width:7px; text-align:right; overflow:hidden
+}
+.LeftLine
+{
+	border-left: 1px solid #A1C5E7; 
+}
+.LeftLine
+{
+	border-right: 1px solid #A1C5E7; 
+}
+.TopMiddleLine
+{
+	border-top: 1px solid #A1C5E7; 
+}
+.BottomMiddleLine
+{
+	border-bottom: 1px solid #A1C5E7; 
+}*/
+#login-keyboard TABLE TR TD {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 1px; VERTICAL-ALIGN: middle; WIDTH: 28px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard TABLE TR TD BUTTON {
+	background-image:url('/netbanking/gif/r_button.gif'); background-repeat:no-repeat; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 28px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard TABLE TR TD.halfwidth {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; VERTICAL-ALIGN: middle; WIDTH: 10px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard TABLE TR TD.clear {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; VERTICAL-ALIGN: middle; WIDTH: 28px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard-special {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px;
+}
+#login-keyboard-special TABLE {
+	border-spacing: 0px
+}
+#login-keyboard-special TABLE TR TD {
+	WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; BORDER:0px solid; margin:0px;
+}
+#login-keyboard-special TABLE TR TD BUTTON {
+	background-image:url('/netbanking/gif/r_button.gif'); background-repeat:no-repeat; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 28px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard-special TABLE TR TD.halfwidth {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard-special TABLE TR TD.clear {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-special TABLE TR TD.halfwidthLgn {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard-special TABLE TR TD.clearLgn {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-alpha {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+#login-keyboard-alpha TABLE {
+	border-spacing: 0px
+}
+#login-keyboard-alpha TABLE TR TD {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-alpha TABLE TR TD BUTTON {
+	background-image:url('/netbanking/gif/r_button.gif'); background-repeat:no-repeat; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 28px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard-alpha TABLE TR TD.halfwidth {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-alpha TABLE TR TD.halfwidthLgn {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-alpha TABLE TR TD.clear {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-alpha TABLE TR TD.clearLgn {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-alpha TABLE TR TD button.clearbutton {
+	background-image:url('/netbanking/gif/clear_button.gif'); background-repeat:no-repeat; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 59px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard-alpha TABLE TR TD button.backbutton {
+	background-image:url('/netbanking/gif/back_button.gif'); background-repeat:no-repeat; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 36px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard-alpha TABLE TR TD button.capslockbutton {
+	background-image:url('/netbanking/gif/capslock.gif'); background-repeat:no-repeat; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 110px; PADDING-TOP: 0px; HEIGHT: 28px;  TEXT-ALIGN: center
+}
+#login-keyboard-alpha TABLE TR TD button.mixedbutton {
+	background-image:url('/netbanking/gif/capslock.gif'); background-repeat:no-repeat; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 110px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard-alpha TABLE TR TD button.hoveringbutton {
+	background-image:url('/netbanking/gif/capslock.gif'); background-repeat:no-repeat; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 110px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard-numeric {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: right; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+#login-keyboard-numeric TABLE {
+	border-spacing: 0px
+}
+#login-keyboard-numeric TABLE TR TD {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-numeric TABLE TR TD BUTTON {
+	background-image:url('/netbanking/gif/r_button.gif'); background-repeat:no-repeat; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px;  WIDTH: 28px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center
+}
+#login-keyboard-numeric TABLE TR TD.halfwidth {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-numeric TABLE TR TD.halfwidthLgn {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-numeric TABLE TR TD.clear {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-numeric TABLE TR TD.clearLgn {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center;
+}
+#login-keyboard-controls {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+#login-keyboard-controls TABLE {
+	 border-spacing: 0px
+}
+#login-keyboard-controls TABLE TR TD {
+	PADDING: 0px; /* BORDER-RIGHT: 1px outset; BORDER-TOP: 1px outset; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; VERTICAL-ALIGN: middle; BORDER-LEFT: 1px outset; WIDTH: 28px; PADDING-TOP: 0px; BORDER-BOTTOM: 1px outset; HEIGHT: 28px; BACKGROUND-COLOR: #EAF2FA; TEXT-ALIGN: center*/
+}
+#login-keyboard-controls TABLE TR TD.button {
+	/*PADDING: 2px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; VERTICAL-ALIGN: middle; WIDTH: 70px; PADDING-TOP: 0px; HEIGHT: 28px BACKGROUND-COLOR: #F1F5F5; TEXT-ALIGN: center; BORDER: 2px outset*/
+}
+#login-keyboard-controls TABLE TR TD BUTTON {
+	background-image:url('/netbanking/gif/r_button.gif'); background-repeat:no-repeat; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; WIDTH: 70px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: center; VERTICAL-ALIGN: top; 
+}
+#login-keyboard-controls TABLE TR TD.halfwidth {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px; TEXT-ALIGN: center; BORDER-BOTTOM-STYLE: none
+}
+#login-keyboard-controls TABLE TR TD.clear {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; HEIGHT: 28px TEXT-ALIGN: center; 
+}
+#login-keyboard-controls TABLE TR TD.halfwidthLgn {
+	VERTICAL-ALIGN: middle; WIDTH: 10px; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; HEIGHT: 28px; TEXT-ALIGN: center; 
+}
+#login-keyboard-controls TABLE TR TD.clearLgn {
+	VERTICAL-ALIGN: middle; WIDTH: 28px; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; HEIGHT: 28px TEXT-ALIGN: center; 
+}
+.blue-block {
+	PADDING-BOTTOM: 16px; MARGIN: 0px 0px 3px; BACKGROUND-COLOR: #ebeff6
+}
+.blue-block H3 {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; MARGIN: 0px; COLOR: #039; PADDING-TOP: 2px;
+}
+.blue-block H4 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 12px 0px 0px 5px; PADDING-TOP: 0px
+}
+.blue-block UL {
+	MARGIN: 12px 0px 0px
+}
+.blue-block P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 12px 5px 0px; PADDING-TOP: 0px
+}
+.blue-block P.with-title {
+	MARGIN: 0px 5px
+}
+BR.clear-both {
+	CLEAR: both; DISPLAY: block; FONT-WEIGHT:bold; FONT: 1px monospace
+}
+DIV.clear-both {
+	CLEAR: both; DISPLAY: block; FONT-WEIGHT:bold; FONT: 1px monospace
+}
+#main-content {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 576px; PADDING-TOP: 0px; POSITION: relative
+}
+.DataLeftAlignedClear
+{
+    FONT-WEIGHT: normal; FONT-SIZE: 8pt; VERTICAL-ALIGN: middle; TEXT-ALIGN: left;
+}
+.DataLeftAligned
+{
+    FONT-WEIGHT: normal; FONT-SIZE: 8pt; VERTICAL-ALIGN: middle; TEXT-ALIGN: left
+}
+.formtable {  
+	font-size: 0.70em;
+	color: #333333;
+	border-color: #C2DAF0; 
+	border-width: 1px;  
+	border-style: solid; 
+	background-color: #EAF2FA; 
+	margin-top: 2px; 
+	margin-right: 0px; 
+	margin-bottom: 10px; 
+	margin-left: 2px;
+}ö°q—œ      hT2vhT2wHP¶'h]lö   q    O^userContextId=1&partitionKey=%28https%2Chdfcbank.com%29,:https://netbanking.hdfcbank.com/netbanking/css/vkb.css strongly-framed 1 security-info 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 request-method GET request-User-Agent Mozilla/5.0 (X11; Linux x86_64; rv:139.0) Gecko/20100101 Firefox/139.0 response-head HTTP/1.1 200 OK
+Date: Thu, 19 Jun 2025 15:53:27 GMT
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload;
+Last-Modified: Fri, 17 Sep 2010 17:57:05 GMT
+Accept-Ranges: bytes
+Content-Length: 9472
+Vary: User-Agent
+X-Frame-Options: SAMEORIGIN
+Content-Type: text/css
+X-Permitted-Cross-Domain-Policies: none
+ original-response-headers Date: Thu, 19 Jun 2025 15:53:27 GMT
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload;
+Last-Modified: Fri, 17 Sep 2010 17:57:05 GMT
+Accept-Ranges: bytes
+Content-Length: 9472
+Vary: User-Agent
+X-Frame-Options: SAMEORIGIN
+Keep-Alive: timeout=10, max=55
+Connection: Keep-Alive
+Content-Type: text/css
+X-Permitted-Cross-Domain-Policies: none
+Set-Cookie: TS40a5956e027=084d2b7e0fab2000abadc3a60f50a430282ec183f41e65655e965d2655f4179880d7b5b1732c714d0898b71e4a113000907b4a397cae65ac9a9f0f5be01da5e97a3614f329bde78d2b61b3be1e3afe7da52789459a6c4e14a1ad3f76921440ea; Path=/
+ ctid 5 uncompressed-len 0 net-response-time-onstart 1028 net-response-time-onstop 1325   % 

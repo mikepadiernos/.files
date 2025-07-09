@@ -106,8 +106,9 @@ ForegroundPositive=0,110,40
 ForegroundVisited=69,40,134
 
 [DirSelect Dialog]
-DirSelectDialog Size=1051,610
-History Items[$e]=file:$HOME/Library/__ Downloads/Torrents,file:$HOME/Library/__ Entertainment/Shows/Beck: Mongolian Chop Squad/01 - 26,file:$HOME/Library/__ Entertainment/Shows/Beck: Mongolian Chop Squad,file:$HOME/Library/__ Entertainment/Music,file:$HOME/Library/__ Entertainment/Music,file:$HOME/Library/__ Downloads,remote:/vps.spsi.padiernos,file:$HOME/.sshfs/%22spsi.padiernos%22,file:///var/lib/os-prober/mount/.sshfs,file:$HOME/Library/Notebooks,file:$HOME/Library/Notebooks,file:$HOME/Library/Notebooks,file:///media/shared/entertainment/Shows,file:///media/shared/entertainment/Movies,file:$HOME/Library/__ Media/__ Entertainment/Movies,file:///media/shared/entertainment/Music/Ringtones,file:///media/shared/entertainment/Music/Notifications,file:///media/shared/entertainment/Music/Collections,file:///media/shared/entertainment/Music/_Unsorted,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/Pictures/Screenshots,file:///media/shared/entertainment/Music,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/Public,file:$HOME/Library/__ Media/__ Entertainment/Shows,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/Videos,file:$HOME/.library,file:$HOME/.library/__ records,file:$HOME/.library/__ records,file:$HOME/.library,file:///media/pandorum,file:///media/nostromo,file:///media/yautja,file:///media/chojin,file:$HOME/.files/.openaudible,file:$HOME/.files/.openaudible,file:$HOME/Library/__ Media/Entertainment/Music,file:$HOME/Library/__ Media/Entertainment/Music
+DirSelectDialog Size=1197,570
+History Items[$e]=file:///media/shared,file:$HOME/Library/Notebooks,file:$HOME/Library/Notebooks/mikepadiernos,file:$HOME/Library/Notebooks,file:$HOME/Library/Documents/Scans,file:///media/nostromo/.cloud/[%7B(0)%7D],file:///media/nostromo/.cloud,file:///media/nostromo,file:///home,file:$HOME/Library/__ Media,file:$HOME/Library/__ Entertainment/Music/.cache/,file:$HOME/Library/__ Entertainment/Music/.temp/,file:$HOME/Library/__ Entertainment/Music/Playlists,file:$HOME/Library/__ Entertainment/Music/_Unsorted,file:$HOME/Library/__ Entertainment/Music/Singles,file:$HOME/Library/__ Entertainment/Music/Collections,file:$HOME/Library/__ Downloads/Torrents,file:$HOME/Library/__ Entertainment/Shows/Beck: Mongolian Chop Squad/01 - 26,file:$HOME/Library/__ Entertainment/Shows/Beck: Mongolian Chop Squad,file:$HOME/Library/__ Entertainment/Music,file:$HOME/Library/__ Entertainment/Music,file:$HOME/Library/__ Downloads,remote:/vps.spsi.padiernos,file:$HOME/.sshfs/%22spsi.padiernos%22,file:///var/lib/os-prober/mount/.sshfs,file:$HOME/Library/Notebooks,file:$HOME/Library/Notebooks,file:$HOME/Library/Notebooks,file:///media/shared/entertainment/Shows,file:///media/shared/entertainment/Movies,file:$HOME/Library/__ Media/__ Entertainment/Movies,file:///media/shared/entertainment/Music/Ringtones,file:///media/shared/entertainment/Music/Notifications,file:///media/shared/entertainment/Music/Collections,file:///media/shared/entertainment/Music/_Unsorted,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/Pictures/Screenshots,file:///media/shared/entertainment/Music,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/Public,file:$HOME/Library/__ Media/__ Entertainment/Shows,file:$HOME/Library/__ Media/__ Entertainment/Music,file:$HOME/Library/__ Media/Videos,file:$HOME/.library,file:$HOME/.library/__ records,file:$HOME/.library/__ records,file:$HOME/.library,file:///media/pandorum,file:///media/yautja
+Splitter State=\x00\x00\x00\xff\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x00\xa0\x00\x00\x03 \x00\xff\xff\xff\xff\x01\x00\x00\x00\x01\x00
 
 [General]
 ColorScheme=AMoleLikeEd
@@ -140,7 +141,7 @@ widgetStyle=Lightly
 Allow Expansion=false
 Automatically select filename extension=true
 Breadcrumb Navigation=false
-Decoration position=0
+Decoration position=2
 LocationCombo Completionmode=5
 PathCombo Completionmode=5
 Show Bookmarks=false
@@ -149,16 +150,16 @@ Show Inline Previews=true
 Show Preview=false
 Show Speedbar=true
 Show hidden files=true
-Sort by=Name
+Sort by=Date
 Sort directories first=true
 Sort hidden files last=false
-Sort reversed=false
+Sort reversed=true
 Speedbar Width=200
 View Style=Detail
 listViewIconSize=29
 
 [KShortcutsDialog Settings]
-Dialog Size=1134,480
+Dialog Size=3380,1408
 
 [PreviewSettings]
 EnableRemoteFolderThumbnail=false

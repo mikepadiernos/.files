@@ -1,0 +1,585 @@
+
+	
+		<!DOCTYPE html>
+		<html lang="en">
+
+		
+			
+				
+					
+						
+							
+								
+									
+										
+
+											<head>
+												<title>Ultimatix - Digitally Connected!</title>
+												<meta charset="UTF-8">
+												<meta name="viewport" content="width=device-width, initial-scale=1">
+												<meta http-equiv="X-UA-Compatible" content="IE=edge;" />
+												<meta http-equiv="X-UA-Compatible" content="IE=11;" />
+												<!--===============================================================================================-->
+												<link rel="icon" type="image/png" href="/login/img/Modified/favicon.ico" />
+												<link rel="stylesheet" href="/login/css/Modified/bootstrap.css">
+												<link rel="stylesheet" href="/login/css/Modified/mdb.min.css">
+												<link rel="stylesheet" type="text/css" href="/login/css/Modified/style11.css?v=1.2">
+												<script type="text/javascript" src="/login/js/Modified/popper.js"></script>
+												<script type="text/javascript" src="/login/js/Modified/jquery.js"></script>
+												<script type="text/javascript" src="/login/js/Modified/bootstrap.js"></script>
+
+
+
+
+
+												
+													<script type="text/javascript">
+														var loginErrorMessage = '';
+														var user = '';
+														var downtimeMessage = 'This feature is currently unavailable.';
+														var sendNotificationUrl = 'https://login.ultimatix.net/utxAuthService/easyauth/rest/sendNofication';
+														var loginOptionURL = 'https://login.ultimatix.net/utxAuthService/easyauth/login/getLoginOptions';
+														const enablePasswordModal = true;
+														const passwordModalInterval = 300;
+														var easyAuthUrl = 'https://login.ultimatix.net/utxAuthService/easyauth/rest/sendEasyAuthNotification';
+													</script>
+													
+											</head>
+											<noscript>
+												<div id="noscript" style="position: absolute; top: 0; left: 0; background-color: #FFF; z-index: 999; height: 100%; width: 100%; text-align: center; padding-top: 50px;">
+													You must
+													<b>enable Javascript</b> in order to use this site.
+												</div>
+											</noscript>
+
+											<body onload="getLastLoginDetails()">
+												<div class="main">
+													<div class="column" id="img-Container">
+														<div id="logo-container">
+														 	<!--img src="/login/img/Modified/main_logo.png" id="logo"-->
+															<img src="/login/img/Modified/TCS_White_2021_V2.png" id="logo">
+														</div>
+														<img src="/login/img/Modified/web_illustration.png" class="responsive">
+
+														<div id="copyright-container">
+															<div id="termsOfUse">
+																<a data-toggle='modal' data-target="#termsofUseModal" tabindex="-1">Terms of Use |</a>
+																<a data-toggle='modal' data-target="#browCompatibility" tabindex="-1">Browser and Display Compatibility</a>
+															</div>
+
+															<div id="copyrightMsg">
+																Copyright &copy;
+																2025
+																	Tata Consultancy Services
+																	<br> Entry to this site is restricted to employees and affiliates.
+															</div>
+														</div>
+
+														<!-- Modal -->
+														<div class="modal fade" id="termsofUseModal" tabindex="-1" role="dialog" aria-labelledby="termsofUseModalTitle" aria-describedby="termsModal"
+														 aria-modal="true">
+															<div class="modal-dialog modal-dialog-centered" role="document">
+																<div class="modal-content" id="terms-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="termsofUseModalLongTitle"></h5>
+
+																	</div>
+																	<div class="modal-body" id="termsModal"></div>
+																	<div class="modal-ok-btn-container">
+																		<button type="button" class="btn btn-primary" data-dismiss="modal" class="modal-ok-btn">OK</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+
+														<!-- Modal -->
+														<div class="modal fade" id="browCompatibility" tabindex="-1" role="dialog" aria-labelledby="browserCompatibilityTitle" aria-describedby="browserCompatibilityTitleBody"
+														 aria-modal="true">
+															<div class="modal-dialog modal-dialog-centered" role="document">
+																<div class="modal-content" id="browComp-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="browserCompatibilityTitle"></h5>
+
+																	</div>
+																	<div class="modal-body" id="browserCompatibilityTitleBody">
+
+																	</div>
+																	<div class="modal-ok-btn-container">
+																		<button type="button" class="btn btn-primary" data-dismiss="modal" class="modal-ok-btn">OK</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="column" id="login-Container">
+														<div id="inside-log-con">
+															<div id="ultimatix-logo">
+																<a href=https://www.ultimatix.net/
+																	tabindex="-1">
+																	<img id="ultimatix-image" src="img/Modified/logo_ultimatix.svg">
+																</a>
+															</div>
+															<!-- Second Page Static username -->
+															<div id="username-static">
+																<div id="username-text-second">Username</div>
+																<div id="static-input-container">
+																	<input type="text" id="staticInput" name="staticInput" tabindex="0" autocomplete="chrome-off" title="Press Enter to edit username" onclick="editusernameOnOtherScreens()"
+																	 readonly onkeyup="enterKey(event)">
+
+																	<div class="edit-button" tabindex="0" id="edit-button">
+																		<img id="hide_username_first" src="/login/img/Modified/hide_username.svg" onclick="hideShowFirst()" title="Hide username">
+																	</div>
+																	<div class="ok-button" tabindex="0" id="ok-button">
+																		<img id="hide_username_first" src="/login/img/Modified/show_username.svg" onclick="hideShowSecond()" title="Show username">
+																	</div>
+																</div>
+															</div>
+															<!-- Username Input -->
+															<div id="username-input-outer">
+																<div id="login-buttton-container-inner">
+																	<div class="md-form" id="username-input" onclick="changeColor()" onfocusout="defaultColor()">
+																		<input type="text" id="form1" class="form-control userID" name="form1" autocomplete="chrome-off" onkeyup="capLock(event)" onclick="hideErroMsg()" tabindex="0"
+																		 aria-label="Enter username and, on Tab plus Enter, you can hide username">
+																		<label for="form1" id="input-label">Username</label>
+																	</div>
+																	<div style="display: flex; flex-direction: row;">
+																		<div id="img1">
+																			<div class="edit-button" id="edit-button2" tabindex="0">
+																				<img id="hide_username_first2" src="/login/img/Modified/hide_username.svg" title="Hide username" onclick="hideShowFirst()">
+																			</div>
+
+																			<div class="ok-button" id="ok-button2" tabindex="0">
+																				<img id="hide_username_first2" src="/login/img/Modified/show_username.svg" title="Show username" onclick="hideShowSecond()">
+																			</div>
+																		</div>
+																		<div id="img2">
+																			<img id="personalized_username" class="more_info" src="/login/img/Modified/personalized_username.svg" title="You can now log on using Ultimatix Personalised username">
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div id="field_blank"></div>
+														<!-- Second page div -->
+														<div id="second-page-div">
+															<div id="select-login-method">Select Login Method</div>
+															<div id="authentication-button">
+																<div id="easyAuth-button-inner">
+																	<button aria-label="Press Enter for EasyAuth, or press tab for more information regarding EasyAuth"  autofocus class="btn auth-btns" id="easyAuth-btn" value="1" tabindex="0" onclick="easyAuth()" tabindex="0">EasyAuth</button>																	
+																	<a aria-label="Press Enter for EasyAuth guide, or press tab for alternative login options" id="EAGMob" hidden href='https://auth.ultimatix.net/login/pages/EATourGuide.html' target="_blank"><img src="/login/img/Modified/EAMob.svg"></a>
+																	<div id="easyAuthGuide" hidden><a aria-label="Press Enter for EasyAuth guide, or press tab for alternative login options" id="EAGLink" href='https://auth.ultimatix.net/login/pages/EATourGuide.html' target="_blank">Start EasyAuth Tour
+																	<img id="playTour" src="/login/img/Modified/playEA.svg"></a>
+																	</div>
+																</div>	
+																<div id="authentication-button-inner">
+																	<button aria-label="Press tab to check alternative Ultimatix login option" autofocus class="btn auth-btns" id="auth-code-btn" value="1" tabindex="0" onclick="authCode()" tabindex="0"
+																	 >AuthCode</button>
+																</div>
+																<div id="pass-auth-inner">
+																	<button type="button" autofocus class="btn auth-btns" id="password-btn" data-toggle="modal" data-target="#pwdModal" value="0"
+																	 tabindex="0">Password</button>
+																</div>
+
+																<div id="rsa-auth-inner">
+																	<button type="button" autofocus class="btn auth-btns" id="rsa-btn" value="0" tabindex="0" onclick="rsaValue()">TokenCode</button>
+																</div>
+															</div>
+															
+
+															<!--Password modal-->
+															<div class="modal fade" id="pwdModal" role="dialog">
+																<div class="modal-dialog modal-lg">
+																	<div class="modal-content">
+	
+																		<div class="modal-body">
+																			<div id="dataContainer">
+																				<div class="pwdMessage">Still using password? Please wait for it to be enabled...</div>
+																				<progress id="progressBar" value="0" max="2000">
+																				</progress>
+																				<br>
+																				<span id="status"></span>
+																				<div class="pwdMessage" id="pwdMessageId">
+																					For improved security, switch to other login methods.
+																					<br> For more information,
+																					<a href="https://knome.ultimatix.net/wikis/2609-ultimatix-login-using-authcode-faqs" id="helpPage">Click here</a>
+
+																				</div>
+
+																				<div id="allOptionLink" data-dismiss="modal">Go Back to Other Login Methods</div>
+																			</div>
+
+																			<div id="imgContainer2">
+																				<img src="/login/img/Modified/component.svg" id="pwdImg">
+
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+															</div>
+
+															<!--ends-->
+															<div id="auth-error2">
+																Use AuthCode generated using Ultimatix
+																<a data-toggle='modal' data-target='#exampleModalCenter2' style='font-size: 13px; text-decoration: none;' tabindex='-1'>Authenticator app
+																</a>
+															</div>
+															<!--AuthCode Modal -->
+															<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+																<div class="modal-dialog modal-dialog-centered" role="document">
+																	<div class="modal-content">
+																		<div class="modal-header">
+																			<h5 class="modal-title" id="exampleModalLongTitle">Ultimatix Authenticator
+																			</h5>
+
+																		</div>
+																		<div class="modal-body" id="authCodeModal">
+																			<p>An AuthCode can be generated using Ultimatix Authenticator app.</p>
+																			<p>
+																				Download the Ultimatix Authenticator app from
+																				<a href='https://uxapps.ultimatix.net/'>
+																					UxApps
+																				</a>
+																			</p>
+																			<p id="helpdesk">For any help please contact Ultimatix.helpdesk@tcs.com
+																			</p>
+																			<div class="modal-ok-btn-container">
+																				<button type="button" class="btn btn-primary" data-dismiss="modal" class="modal-ok-btn">OK</button>
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+															</div>
+
+
+															<div id="disabled-button">
+																<button disabled class="btn btn-primary" id="auth-btns-disabled">Login</button>
+																
+																
+																<div class="forget-link">
+																     <a href=https://account.ultimatix.net/login/PasswordMgmt/html/ForgetSelectionInt.html tabindex="-1">
+																     <img id="unable_login" src="/login/img/Modified/forgottenicon.svg" alt="Icon For Forgotten Password? or Reset password"></a>
+																     <a id="unable_text" href=https://account.ultimatix.net/login/PasswordMgmt/html/ForgetSelectionInt.html tabindex="0">Forgot Account Details?</a>
+																     <div class="separator-line"></div>
+																     <a href=https://auth.ultimatix.net/login/pages/HelpPage.html tabindex="-1">
+																     <img id="help_icon" src="/login/img/Modified/helpicon.svg" alt="Icon For Trouble Logging In?"></a>
+																	<a id="help_unable" href=https://auth.ultimatix.net/login/pages/HelpPage.html tabindex="0">Trouble Logging In?</a>
+																</div>
+																	
+															</div>
+														</div>
+														<!-- Auth Code -->
+														<form id="auth-code-outer" name="loginForm" method="post" action=/ultimatixLogin/login_pwdless.fcc
+															onsubmit="return authValidation()" autocomplete="off">
+															<div id="auth-code-inner1">
+																<div id="auth-code-inner">
+																	<div style="font-size: 13px" id="enter-auth">
+																		Enter
+																		<strong>AuthCode</strong>
+																	</div>
+																	<div>
+																		<div id="complete_authcode">
+																			<input id="authcode1" class="auth-code-class" tabindex="1" type="number" name="Password"  autocomplete="chrome-off" onkeyup="onKeyUpEvent(1, event)"
+																			 onfocus="onFocusEvent(1)" onfocusout="onFocusOutEvent(1)" oninput="maxLengthCheck(this)" onkeydown="onKeyDownEvent(1,event)"
+																			 maxlength="6" aria-label="Enter 6 digit authcode. Press tab to select other login method." />
+																		</div>
+																	</div>
+																	<div id="auth-error"></div>
+																	<!--AuthCode Modal -->
+																	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+																		<div class="modal-dialog modal-dialog-centered" role="document">
+																			<div class="modal-content">
+																				<div class="modal-header">
+																					<h5 class="modal-title" id="exampleModalLongTitle">Ultimatix Authenticator
+																					</h5>
+
+																				</div>
+																				<div class="modal-body" id="authCodeModal">
+																					<p>An AuthCode can be generated using Ultimatix Authenticator app.</p>
+																					<p>
+																						Download the Ultimatix Authenticator app from
+																						<a href='https://uxapps.ultimatix.net/'>
+																							UxApps
+																						</a>
+																					</p>
+																					<p id="helpdesk">For any help please contact Ultimatix.helpdesk@tcs.com
+																					</p>
+																					<div class="modal-ok-btn-container">
+																						<button type="button" class="btn btn-primary" data-dismiss="modal" class="modal-ok-btn">OK</button>
+																					</div>
+																				</div>
+
+																			</div>
+																		</div>
+																	</div>
+
+																	<div id="other-login-methods-auth" tabindex="-1">
+																		<a onclick="otherLoginMethods()" id="otherloginoption" tabindex="0" onkeyup="enterOtherLogin(event)" style="text-align: center;"><span class="arrow"></span><span>Other Login Methods</span></a>
+																	</div>
+																	<p id="otp-caution"></p>
+																	<INPUT TYPE=HIDDEN NAME="SMENC" VALUE="UTF-8" />
+																	<INPUT type=HIDDEN name="SMLOCALE" value="US-EN" />
+																	<INPUT type=hidden name="target" value=-SM-HTTPS%3A%2F%2Fauthapp.ultimatix.net%2Fultimatix%2Fredirect%2Fredirect.jsp%3FSAMLRequest%3DfZJPb8IwDMW-%2FSpV7-%2F66UEtEiNIaExC4wdtgtBBcitUkXux379gtFSGzSODp-%2Btt-%2F7KdPZuam9HiwqowsWBxHzQEtzUPpYsN3b0s-%2FZrJyiaOqWzzs66Q18doDkuTmNfGgUrLOaG4EKuRYNICfJt-%2FPXNU-%2BCiLfWkJGmZt4cESy5Q89GY9eA3YLtlYTdZl2wE1GLPAwV9KbuQRpNoCnoalKNIHUONFC4lcY2L-%2FqoNKxc31ZCQvjfWuYtnFGlBQ3ZbgeESyHa9s9mUVVfsMfrJIZtt6-%2BVDC-%2FxEkTDvNWiYE-%2BpEJUE8EfxJPPTcTXx9-%2BmhcmWaRc5JKrLcKRE75w5JaCpYEiUjP8r8ePIWj3iS8yQKknz8wbz3G3QHiV0R82HW3rF9jFbckjNv6cAIeiy-%2FvKiDXw1S7ugq-%2BmblI-%2BDT8M5Wea1-%2B-%2F4PyBw-%3D-%3D%26SMPORTALURL%3Dhttps-%3A-%2F-%2Fauthapp.ultimatix.net-%2Faffwebservices-%2Fpublic-%2Fsaml2sso%26SAMLTRANSACTIONID%3D7d57f126--4cc4ce1a--1d5b923a--3f959bcc--84de7fc7--1d />
+																	
+																			<input type=HIDDEN id="username" name="USER" maxlength="256" tabindex="1" />
+																			<input type="text" name="AuthType" value="1" hidden id="AuthType">
+																</div>
+															</div>
+															<div id="password-outer">
+																<div id="password-inner" class="md-form">
+																	<div style="font-size: 13px" id="enter-password">
+																		Enter
+																		<b>Password</b>
+																	</div>
+																	<div id="password-page-input">
+																		<div id="password-input-div">
+																			<input type="password" id="password-login" aria-label="Enter Password or, press tab to select other login methods" onkeyup="enabledPassBtn()"
+																			 class="form-control" name="Password" autocomplete="chrome-off" disabled onclick="passwordColor()" onkeypress="capLockPass(event)"
+																			 onfocusout="passwordFocusOut()" />
+																		</div>
+																	</div>
+																	<div id="pass-error"></div>
+																	<div id="other-login-methods-pass">
+																		<a onclick="otherLoginMethods()" style="text-align: center;" tabindex="0" onkeyup="enterOtherLogin(event)"><span class="arrow"></span><span>Other Login Methods</span>
+																		</a>
+																	</div>
+																</div>
+															</div>
+
+
+															<!--RSA-->
+
+															<div id="rsa-outer" hidden>
+																<div id="rsa-inner" class="md-form">
+
+																	<div style="font-size: 13px" id="enter-passwordRSA" hidden>
+																		Enter
+																		<b>Password</b>
+																	</div>
+																	<div id="password-page-inputRSA" hidden>
+																		<div id="password-input-divRSA">
+																			<input type="password" id="password-loginRSA" tabindex="0" aria-label="Enter Password or, press tab to select other login methods"
+																			 onkeyup="enabledRSABtn()" class="form-control" name="Password" autocomplete="chrome-off" disabled onclick="passwordColor()"
+																			 onkeypress="capLockPass(event)" onfocusout="passwordFocusOut()" />
+																		</div>
+																	</div>
+																	<div id="pass-errorRSA"></div>
+
+																	<div style="font-size: 13px" id="enter-rsa">
+																		Enter
+																		<b>TokenCode</b>
+																	</div>
+																	<div id="complete_rsa">
+																		<input id="rsa1" class="rsa-class" tabindex="0" type="number" autocomplete="chrome-off" onkeyup="onKeyUpEventRSA(1, event)" onfocus="onFocusEventRSA(1)"
+																		 onfocusout="onFocusOutEventRSA(1)" oninput="maxLengthCheck(this)" onkeydown="onKeyDownEventRSA(event)"
+																		 maxlength="8" aria-label="Enter 6 or 8 digit RSA Token. Press tab to select other login method." style="border-bottom-color: black;">
+																	</div>
+																	<input type="text" id="partitionedRSA" name="TokenCode" maxlength="8" autocomplete="chrome-off" hidden />
+
+
+																	<div id="rsa-error" style="color: rgb(49, 49, 49);">
+																		Use Token Code generated on
+																		<a data-toggle="modal" id="authApp" href="#rsa-info-modal" style="font-size: 13px; text-decoration: none;" tabindex="-1">Software/Hardware token
+																		</a>
+																	</div>
+
+
+																	<!--RSA info modal-->
+
+																	<div class="modal fade" id="rsa-info-modal" tabindex="-1" role="dialog" aria-labelledby="rsa-info-title" aria-hidden="true">
+																		<div class="modal-dialog modal-dialog-centered" role="document">
+																			<div class="modal-content">
+																				<div class="modal-header">
+																					<h5 class="modal-title" id="rsa-info-title">Token Code</h5>
+																				</div>
+																				<div class="modal-body" id="rsa-info-body">
+																					<p>
+																						A TokenCode can be generated using
+																						<strong>
+																							Hard/Soft Token. Hard TokenCode is the Code displayed on the Hard Token physical device, whereas Soft TokenCode can be generated
+																							by entering the PIN on the Soft Token application.
+																							<br/>For any help please contact Ultimatix.helpdesk@tcs.com
+																					</p>
+																					<div class="modal-ok-btn-container">
+																						<button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal" id="modal-ok-btn-rsa">OK</button>
+																					</div>
+																				</div>
+
+																			</div>
+																		</div>
+																	</div>
+
+
+
+																	<div id="other-login-methods-rsa" tabindex="-1">
+																		<a onclick="otherLoginMethods()" style="text-align: center;" tabindex="0" onkeyup="enterOtherLogin(event)"><span class="arrow"></span><span>Other Login Methods</span>
+																		</a>
+																	</div>
+																</div>
+															</div>
+
+															<!--Easy auth-->
+															<div id="easyauth-outer">
+																<div id="easyauth-inner" class="md-form">
+																	<div id="enter-easyauth">
+																		Login using<strong> EasyAuth</strong>
+																	</div>
+																	<div id="easyauth-page-subtitle" tabindex="0">
+																		Tap the number shown below on the Authenticator app.</br> Please ensure your device is connected to the internet.
+																	</div>
+																	<div id="digit_container" tabindex="0" aria-label="Press tab for number">
+																		<div id="number">
+																			<img src="/login/img/Modified/easyAuthMobile.svg" id="easyAuthMobile">
+																			<div class="digits" tabindex="0" aria-live="assertive">60</div>
+																		</div>
+																		<div class="container timer">
+
+																			<div class="circle">
+																				<svg width="90" viewBox="0 0 220 220">
+																					<g transform="translate(110,110)">
+																						<circle r="100" class="e-c-base" />
+																						<g transform="rotate(-90)">
+																							<circle r="100" class="e-c-progress" />
+																							<g id="e-pointer">
+																								<circle cx="100" cy="0" r="8" class="e-c-pointer" />
+																							</g>
+																						</g>
+																					</g>
+																				</svg>
+																			</div>
+																			<div class="controlls" >
+																				<div class="display-remain-time" tabindex="0"></div>
+																			</div>
+																		</div>
+																	</div>
+																	<div id="timeout" hidden>
+																		<div id="ea_error"><img id="ERR" src="/login/img/Modified/easyauthErrors.svg" alt="Please check your Internet Connection or Try using Other Login Options"></div>
+																		<div id="timeout_msg" tabindex="0"></div>
+																		<button type="button" id="retry_opt" class="btn btn-primary" onclick="easyAuth()">Retry</button>
+
+																	</div>
+																	<div id="easyauth-error"></div>
+																	<input type="password" id="easyAuth-login" name="Password" autocomplete="chrome-off" disabled hidden/>
+																	<div id="other-login-methods-easyauth">
+																		<a onclick="otherLoginMethods()" style="text-align: center;" tabindex="0" onkeyup="enterOtherLogin(event)"><span class="arrow"></span><span>Other Login Methods</span>
+																		</a>
+																	</div>
+																</div>
+															</div>
+															<!--easy auth ends-->
+															<div id="submit-button">
+																<button type="submit" value="Submit" class="btn btn-primary" id="form-submit">Login</button>
+																
+																<div class="forget-link">
+																     <a href=https://account.ultimatix.net/login/PasswordMgmt/html/ForgetSelectionInt.html tabindex="-1">
+																     <img id="unable_login" src="/login/img/Modified/forgottenicon.svg" alt="Icon For Forgotten Password? or Reset password"></a>
+																     <a id="unable_text" href=https://account.ultimatix.net/login/PasswordMgmt/html/ForgetSelectionInt.html tabindex="0">Forgot Account Details?</a>
+																     <div class="separator-line"></div>
+																     <a href=https://auth.ultimatix.net/login/pages/HelpPage.html tabindex="-1">
+																     <img id="help_icon" src="/login/img/Modified/helpicon.svg" alt="Icon For Trouble Logging In?"></a>
+																	<a id="help_unable" href=https://auth.ultimatix.net/login/pages/HelpPage.html tabindex="0">Trouble Logging In?</a>
+
+																</div>
+																	
+															</div>
+														</form>
+														<!-- Proceed button -->
+											
+														<div id="static-button-container">
+														     <div id="button-container">
+																<button type="button" class="btn btn-primary" id="proceed-button" onclick="staticUsername()" tabindex="0" aria-label="Press enter key to Proceed or press tab if you need any help.">
+																	Proceed
+																	<span class="spinner-grow spinner-grow-sm"></span>
+																</button>
+															</div>
+
+															
+																<div class="forget-link">
+																     <a href=https://account.ultimatix.net/login/PasswordMgmt/html/ForgetSelectionInt.html tabindex="-1">
+																     <img id="unable_login" src="/login/img/Modified/forgottenicon.svg" alt="Icon For Forgotten Password? or Reset password"></a>
+																     <a id="unable_text" href=https://account.ultimatix.net/login/PasswordMgmt/html/ForgetSelectionInt.html tabindex="0">Forgot Account Details?</a>
+																     <div class="separator-line"></div>
+																     <a href=https://auth.ultimatix.net/login/pages/HelpPage.html tabindex="-1">
+																     <img id="help_icon" src="/login/img/Modified/helpicon.svg" alt="Icon For Trouble Logging In?"></a>
+																	<a id="help_unable" href=https://auth.ultimatix.net/login/pages/HelpPage.html tabindex="0">Trouble Logging In?</a>
+
+																</div>
+																
+														</div>
+														<div id="ph_copyright">
+															<a data-toggle="modal" data-target="#termsofUseModalMobile">Terms and Conditions</a>
+															<br> Copyright &copy;
+															2025
+																Tata Consultancy Services
+														</div>
+														<!-- Modal -->
+														<div class="modal fade" id="termsofUseModalMobile" tabindex="-1" role="dialog" aria-labelledby="termsofUseModalTitle" aria-describedby="termsModal"
+														 aria-modal="true">
+															<div class="modal-dialog modal-dialog-centered" role="document">
+																<div class="modal-content" id="terms-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="termsofUseModalLongTitleMobile">
+																		</h5>
+
+																	</div>
+																	<div class="modal-body" id="termsModalMobile"></div>
+																	<div class="modal-ok-btn-container">
+																		<button type="button" class="btn btn-primary" data-dismiss="modal" class="modal-ok-btn">OK</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<script src="/login/js/Modified/socket/sockjs.min.js"></script>
+												<script src="/login/js/Modified/socket/stomp.min.js"></script>
+												<script src="/login/js/Modified/socket/polyfill.js"></script>
+												<script src="/login/js/Modified/socket/app_websocket.js"></script>
+												<script src="/login/js/Modified/socket/app_sse.js"></script>
+												<script type="text/javascript" src="/login/js/Modified/onLoad3.js"></script>
+												<script type="text/javascript" src="/login/js/Modified/mdb.min.js" defer></script>
+												<script type="text/javascript" src="/login/js/Modified/script11.js"></script>
+											</body>
+											<script type="text/javascript">
+												function openTermsWindow() {
+
+													mywin = window.open('/utxLogin/pages/terms.jsp', "TermsWindow", 'toolbar=0, location=0, width=600,height=540,status=no, resizable=no, scrollbars=yes, top=70, left=90');
+													mywin.focus();
+
+												}
+												/* will open the Browser and Display Compatibilty pop-up*/
+												function browserCompatibilityWindow() {
+
+													mywin = window.open('/utxLogin/pages/BrowserCompatibility.jsp', "CompatibilityWindow", 'toolbar=0, location=0, width=450,height=355,status=no, resizable=no, scrollbars=yes, top=70, left=90');
+													mywin.focus();
+
+												}
+											</script>
+											
+
+		</html>
+ÕïC"4      hT,–hT,—HP²hT,—  ê    ~FETCH,:https://auth.ultimatix.net/utxLogin/login?TYPE=33554432&REALMOID=06-9374027c-7828-4b8f-9228-94f04c85cf02&GUID=&SMAUTHREASON=0&METHOD=GET&SMAGENTNAME=-SM-k3NCKvCkroes4pEwq0AQwup2pCbB6XRbHfApTf6UwdEA2%2bwhWWoUw07LXypODrCb&TARGET=-SM-HTTPS%3a%2f%2fauthapp%2eultimatix%2enet%2fultimatix%2fredirect%2fredirect%2ejsp%3fSAMLRequest%3dfZJPb8IwDMW-%2FSpV7-%2F66UEtEiNIaExC4wdtgtBBcitUkXux379gtFSGzSODp-%2Btt-%2F7KdPZuam9HiwqowsWBxHzQEtzUPpYsN3b0s-%2FZrJyiaOqWzzs66Q18doDkuTmNfGgUrLOaG4EKuRYNICfJt-%2FPXNU-%2BCiLfWkJGmZt4cESy5Q89GY9eA3YLtlYTdZl2wE1GLPAwV9KbuQRpNoCnoalKNIHUONFC4lcY2L-%2FqoNKxc31ZCQvjfWuYtnFGlBQ3ZbgeESyHa9s9mUVVfsMfrJIZtt6-%2BVDC-%2FxEkTDvNWiYE-%2BpEJUE8EfxJPPTcTXx9-%2BmhcmWaRc5JKrLcKRE75w5JaCpYEiUjP8r8ePIWj3iS8yQKknz8wbz3G3QHiV0R82HW3rF9jFbckjNv6cAIeiy-%2FvKiDXw1S7ugq-%2BmblI-%2BDT8M5Wea1-%2B-%2F4PyBw-%3D-%3D%26SMPORTALURL%3dhttps-%3A-%2F-%2Fauthapp%2eultimatix%2enet-%2Faffwebservices-%2Fpublic-%2Fsaml2sso%26SAMLTRANSACTIONID%3d7d57f126--4cc4ce1a--1d5b923a--3f959bcc--84de7fc7--1d strongly-framed 1 security-info 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 request-method GET response-head HTTP/1.1 200 OK
+Date: Thu, 19 Jun 2025 15:28:23 GMT
+X-Frame-Options: DENY
+Cache-Control: max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Thu, 01 Jan 1970 00:00:00 GMT
+X-UA-Compatible: IE=11;
+Content-Type: text/html; charset=UTF-8
+Strict-Transport-Security: max-age=16070400; includeSubDomains
+ original-response-headers Date: Thu, 19 Jun 2025 15:28:23 GMT
+X-Frame-Options: DENY
+Cache-Control: max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Thu, 01 Jan 1970 00:00:00 GMT
+X-UA-Compatible: IE=11;
+Keep-Alive: timeout=4
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+Strict-Transport-Security: max-age=16070400; includeSubDomains
+Transfer-Encoding: chunked
+ ctid 1 uncompressed-len 0 net-response-time-onstart 1569 net-response-time-onstop 1868   v 

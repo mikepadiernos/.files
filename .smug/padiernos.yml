@@ -1,0 +1,23 @@
+session: padiernos
+root: /home/mikepadiernos/Library/Projects/padiernos
+windows:
+  - name: public
+    root: .
+
+  - name: web
+    root: web/
+
+  - name: default
+    root: web/sites/default/
+
+  - name: "minim - gulp"
+    root: web/themes/custom/minim/
+    command:
+      - gulp
+
+  - name: "minim - work"
+    root: web/themes/custom/minim/
+
+  - name: "minim.css"
+    root: web/themes/custom/minim/source/00-core/_minim.css/
+

@@ -39,7 +39,7 @@ set mime_forward = yes # attachments are forwarded with mail
 set wait_key = no # mutt won't ask "press key to continue"
 set fast_reply # skip to compose when replying
 set fcc_attach # save attachments with the body
-set forward_format = "Fwd: %s" # format of subject when forwarding
+set forward_format = "FWD: %s" # format of subject when forwarding
 set forward_quote # include message in forwards
 set reverse_name # reply as whomever it was to
 set include # include message in replies

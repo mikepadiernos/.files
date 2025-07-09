@@ -1,0 +1,13 @@
+session: "󰶍"
+root:   ~/Library/.mail/
+windows:
+  - name: "󰊫 mike.padiernos"
+    root: mike.padiernos@gmail.com
+    commands:
+      - nmt -f ~/Library/.mail/mike.padiernos@gmail.com/INBOX/
+
+  - name: "󰺻 mike"
+    root: mike@padiernos.me
+    commands:
+      - nmt -f ~/Library/.mail/mike@padiernos.me/INBOX/
+

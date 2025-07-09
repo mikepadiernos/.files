@@ -1,0 +1,14 @@
+# COMPLETIONS
+
+# COMPLETIONS: NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  													# This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  				# This loads nvm bash_completion
+
+# COMPLETIONS: DART
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+# [[ -f /home/mikepadiernos/.dart-cli-completion/zsh-config.zsh ]] && . /home/mikepadiernos/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+# END COMPLETIONS

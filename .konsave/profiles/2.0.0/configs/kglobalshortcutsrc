@@ -11,6 +11,19 @@ Switch to Last-Used Keyboard Layout=Meta+Alt+L,Meta+Alt+L,Switch to Last-Used Ke
 Switch to Next Keyboard Layout=Meta+Alt+K,Meta+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
 
+[brave-browser]
+_k_friendly_name=brave-browser
+choose_credential_fields=none,none,Choose Custom Login Fields
+fill_password=none,Alt+Shift+P,Fill Password Only
+fill_totp=none,Alt+Shift+O,Fill TOTP
+fill_username_password=none,Alt+Shift+U,Fill Username and Password
+redetect_fields=none,none,Redetect login fields
+reload_extension=none,none,Reload
+request_autotype=none,none,Request Global Auto-Type
+retrive_credentials_forced=none,none,Reopen database
+save_credentials=none,none,Save Credentials
+show_password_generator=none,Alt+Shift+G,Show Password Generator
+
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
 _k_friendly_name=Accessibility
@@ -35,6 +48,18 @@ mute=Volume Mute\tMeta+Alt+Num++,Volume Mute,Mute
 [krusader]
 _k_friendly_name=Krusader
 bring_main_window_to_top=Meta+K,Meta+K,Bring Main Window to Top
+
+[kshutdown]
+_k_friendly_name=KShutdown
+kshutdown/cancel=none,none,
+kshutdown/hibernate=none,none,Hibernate
+kshutdown/lock=none,none,Lock
+kshutdown/logout=none,none,Logout
+kshutdown/reboot=none,none,Restart
+kshutdown/show-main-window=none,none,Show/Hide Main Window
+kshutdown/show-menu=none,none,Show Action Menu
+kshutdown/shutdown=none,none,Shut Down
+kshutdown/suspend=none,none,Sleep
 
 [ksmserver]
 Halt Without Confirmation=none,,Shut Down Without Confirmation
@@ -456,6 +481,7 @@ activate widget 202=none,none,Activate Syncthing Widget
 activate widget 226=none,none,Activate Syncthing Widget
 activate widget 227=Meta+Ctrl+F12,none,Activate Sticky Note Widget
 activate widget 255=none,none,Activate split-clock Widget
+activate widget 280=none,none,Activate KDE control station Widget
 activate widget 3=Ctrl+2,none,Activate Panel Widget
 activate widget 60=Ctrl+1,none,Activate Panel Widget
 activate widget 88=none,none,Activate Icons-only Task Manager Widget
@@ -482,6 +508,9 @@ _launch=Meta+Num+.\tMeta+Num+Del
 [services][bighardware.desktop]
 _launch=none
 
+[services][brave-localhost:9090__-Default.desktop]
+_launch=
+
 [services][com.github.hluk.copyq.desktop]
 _launch=Ctrl+Num+Ins\tCtrl+Num+0\tMeta+Num+0\tMeta+Num+Ins
 
@@ -498,19 +527,55 @@ _launch=Ctrl+Num+Del\tMeta+Num+Del\tCtrl+Num+.\tMeta+Num+.
 Dropdown=Ctrl+Shift+Space
 SoftwareRender=Ctrl+Shift+R
 
+[software.Browsers]
+_k_friendly_name=Browsers
+activate=none,Alt+P,Pick color from web page (Smart Color Picker)
+autofill_card=none,none,Autofill the last used card for the current website
+autofill_identity=none,none,Autofill the last used identity for the current website
+autofill_login=none,Ctrl+Shift+L,Autofill the last used login for the current website
+choose_credential_fields=none,none,Choose Custom Login Fields
+createTab=none,none,Create new tab
+fill_password=none,Alt+Shift+I,Fill Password Only
+fill_totp=none,Alt+Shift+O,Fill TOTP
+fill_username_password=none,Alt+Shift+U,Fill Username and Password
+generate_password=Ctrl+Shift+9,Ctrl+Shift+9,Generate and copy a new random password to the clipboard
+goBack=none,none,Go back in history
+goForward=none,none,Go forward in history
+lock_vault=none,none,Lock the vault
+previousTab=none,none,Go one tab left
+quickNext=none,none,Go one tab right
+redetect_fields=none,none,Redetect login fields
+reloadTab=none,none,Reload tab
+reload_extension=none,none,Reload
+request_autotype=none,none,Request Global Auto-Type
+retrive_credentials_forced=none,none,Reopen database
+saveLargestImage=none,Ctrl+Shift+L,Save screenshot to Koofr
+save_credentials=none,none,Save Credentials
+screenshot=none,Ctrl+Shift+K,Save screenshot to Koofr
+show_password_generator=none,Alt+Shift+G,Show Password Generator
+toggle-vim-mode=none,Alt+V,Toggle plugin activation.
+userCustomized1=none,none,Custom shortcut 1
+userCustomized2=none,none,Custom shortcut 2
+
 [vivaldi-stable]
 _k_friendly_name=vivaldi-stable
 activate=Alt+P,Alt+P,Pick color from web page (Smart Color Picker)
 autofill_card=none,none,Autofill the last used card for the current website
 autofill_identity=none,none,Autofill the last used identity for the current website
-autofill_login=,Ctrl+Shift+L,Autofill the last used login for the current website
+autofill_login=none,Ctrl+Shift+L,Autofill the last used login for the current website
 choose_credential_fields=none,none,Choose Custom Login Fields
+createTab=none,none,Create new tab
 fill_password=Alt+Shift+I,Alt+Shift+I,Fill Password Only
 fill_totp=Alt+Shift+O,Alt+Shift+O,Fill TOTP
 fill_username_password=Alt+Shift+U,Alt+Shift+U,Fill Username and Password
-generate_password=,Ctrl+Shift+9,Generate and copy a new random password to the clipboard
+generate_password=none,Ctrl+Shift+9,Generate and copy a new random password to the clipboard
+goBack=none,none,Go back in history
+goForward=none,none,Go forward in history
 lock_vault=none,none,Lock the vault
+previousTab=none,none,Go one tab left
+quickNext=none,none,Go one tab right
 redetect_fields=none,none,Redetect login fields
+reloadTab=none,none,Reload tab
 reload_extension=none,none,Reload
 request_autotype=none,none,Request Global Auto-Type
 retrive_credentials_forced=none,none,Reopen database
@@ -518,7 +583,9 @@ saveLargestImage=Ctrl+Shift+L,Ctrl+Shift+L,Save screenshot to Koofr
 save_credentials=none,none,Save Credentials
 screenshot=Ctrl+Shift+K,Ctrl+Shift+K,Save screenshot to Koofr
 show_password_generator=Alt+Shift+G,Alt+Shift+G,Show Password Generator
-toggle-vim-mode=,Alt+V,Toggle plugin activation.
+toggle-vim-mode=none,Alt+V,Toggle plugin activation.
+userCustomized1=none,none,Custom shortcut 1
+userCustomized2=none,none,Custom shortcut 2
 
 [wacomtablet]
 Map to fullscreen=Meta+Ctrl+F,Meta+Ctrl+F,Map to fullscreen

@@ -154,15 +154,52 @@ Word Completion Remove Tail=true
 [KTextEditor::Search]
 Replace History=,&
 
+[Kate Print Settings][Margins]
+bottom=4.32
+left=4.23
+right=4.28
+top=4.26
+
 [MainWindow]
-2 screens: Height=1328
-2 screens: Width=3436
+2 screens: Height=1408
+2 screens: Width=860
 3440x1440 screen: Height=1338
 3440x1440 screen: Width=1720
 ToolBarsMovable=Disabled
 
 [MainWindow][Toolbar mainToolBar]
 ToolButtonStyle=IconOnly
+
+[Printing][HeaderFooter]
+FooterBackground=211,211,211
+FooterBackgroundEnabled=false
+FooterEnabled=true
+FooterForeground=0,0,0
+FooterFormatCenter=
+FooterFormatLeft=
+FooterFormatRight=%U
+HeaderBackground=211,211,211
+HeaderBackgroundEnabled=false
+HeaderEnabled=true
+HeaderFooterFont=Atari ST 8x16 System Font,12,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+HeaderForeground=0,0,0
+HeaderFormatCenter=%f
+HeaderFormatLeft=%y
+HeaderFormatRight=%p
+
+[Printing][Layout]
+BackgroundColorEnabled=false
+BoxColor=invalid
+BoxEnabled=false
+BoxMargin=6
+BoxWidth=1
+ColorScheme=Printing
+Font=Atari ST 8x16 System Font,12,-1,5,500,0,0,0,0,0,0,0,0,0,0,1,Medium
+
+[Printing][Text]
+DontPrintFoldedCode=true
+Legend=false
+LineNumbers=false
 
 [UiSettings]
 ColorScheme=A Mole Like Ed

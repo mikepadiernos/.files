@@ -1,27 +1,36 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 export LC_ALL=en_US.UTF-8
 
 export EDITOR=nvim
 
 export DIRENV_SKIP_TIMEOUT=TRUE
-export FILES="$HOME/.files"
+export FILES="$HOME/.library/.files"
 export CONFIGS="$FILES/configs"
 
 export ZSH="$FILES/.zsh"
+export ZSH_CONFIGS="$ZSH/configs"
+export ZSH_MODULES="$ZSH/modules"
 export ZSH_PLUGINS="$ZSH/plugins"
 export ZSH_THEMES="$ZSH/themes"
 
-export ASDF_DIR="$HOME/.asdf"
-export ASDF="$ASDF_DIR"
-
-export NEOVIM="$FILES/.neovim/bin"
-
 export CARGO="$HOME/.cargo/bin"
 
-set OPENAUDIBLE_HOME="$HOME/.files/.openaudible"
+export GOPATH="$HOME/.go"
 
-fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $NEOVIM $OPENAUDIBLE_HOME $CARGO $fpath)
+# set OPENAUDIBLE_HOME="$HOME/.files/.openaudible"
+
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+fpath+=(
+  ${ZSH_PLUGINS}/zsh-completions/src
+  $NEOVIM
+  # $OPENAUDIBLE_HOME
+  $CARGO
+  $GOPATH
+  $fpath
+)
 
 # export ZSH_DISABLE_COMPFIX="true"
 
@@ -29,24 +38,24 @@ fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $NEOVIM $OPENAUDI
 # autoload -Uz compinit; compinit
 
 # direnv allow
-source "$ZSH"/.zsh_themes
-source "$ZSH"/.zsh_plugins
-source "$ZSH"/.zsh_bindkeys
-source "$ZSH"/.zsh_aliases
-source "$ZSH"/.zsh_completions
 
-source "$ZSH"/.zsh_homebrew
-source "$ZSH"/.zsh_drush
+source "$ZSH_CONFIGS"/.zsh_themes
+source "$ZSH_CONFIGS"/.zsh_plugins
+source "$ZSH_CONFIGS"/.zsh_bindkeys
+source "$ZSH_CONFIGS"/.zsh_aliases
+source "$ZSH_CONFIGS"/.zsh_completions
+
+source "$ZSH_MODULES"/.zsh_homebrew
+source "$ZSH_MODULES"/.zsh_drush
 
 eval "$(atuin init zsh)"
-eval "$(direnv hook zsh)"
-# eval "$(zoxide init zsh)"
+eval "$(mise activate zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
 # autoload -Uz compinit && compinit -i > /dev/null
 autoload -Uz compinit; compinit
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Lando
 # export PATH="/home/mikepadiernos/.lando/bin${PATH+:$PATH}"; #landopath

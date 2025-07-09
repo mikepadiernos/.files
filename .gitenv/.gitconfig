@@ -1,0 +1,83 @@
+[user]
+	email = mike@padiernos.me
+	name = Michael Padiernos
+
+[advice]
+  addEmptyPathspec = false
+  pushNonFastForward = false
+  statusHints = false
+
+# [credential]
+# 	helper = keepassxc --git-groups
+# 	credentialStore = cache
+
+# [credential "https://dev.azure.com"]
+#	useHttpPath = true
+
+[credential]
+	credentialStore = plaintext
+	helper = store
+
+[credential "https://dev.azure.com"]
+  useHttpPath = true
+
+[core]
+  autocrlf = input  # keep newlines as in input
+  compression = 9  # trade cpu for network
+  fsync = none
+  whitespace = error  # threat incorrect whitespace as errors
+
+[init]
+  defaultBranch = main
+
+[log]
+  abbrevCommit = true  # short commits
+
+[status]
+  branch = true
+  short = true
+  showStash = true
+  showUntrackedFiles = all  # show individual untracked files
+
+[interactive]
+  diffFilter = diff-so-fancy --patch
+  singlekey = true
+
+[commit]
+  gpgSign = true
+
+[blame]
+  coloring = highlightRecent
+  date = relative
+
+[diff]
+  context = 3  # less context in diffs
+  renames = copies  # detect copies as renames in diffs
+  interHunkContext = 10  # merge near hunks in diffs
+
+[push]
+  autoSetupRemote = true  # easier to push new branches
+  default = current  # push only current branch by default
+  followTags = true  # push also tags
+  gpgSign = false  # my remotes doesn't support sign pushes
+
+[pull]
+  rebase = true
+
+[pager]
+  branch = false  # no need to use pager for git branch
+  diff = diff-so-fancy | $PAGER  # diff-so-fancy as diff pager
+
+[submodule]
+  fetchJobs = 16
+
+[rebase]
+  autoStash = true
+
+# Third-party: diff-so-fancy
+[diff-so-fancy]
+  markEmptyLines = false
+
+# URL shortcuts
+[url "git@github.com:"]
+  insteadOf = "gh:"

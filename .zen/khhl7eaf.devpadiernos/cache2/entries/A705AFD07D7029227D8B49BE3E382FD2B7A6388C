@@ -1,0 +1,381 @@
+var Ticket = (function () {
+    function Ticket(bal, summonsNumber) {
+        this.balance = bal;
+        this.summonsNumber = summonsNumber;
+    }
+    return Ticket;
+})();
+
+var TicketSelect = (function () {
+    function TicketSelect() {
+        this.selectedTicketList = [];
+    }
+    TicketSelect.prototype.showTicketList = function () {
+        $('#divScreen').mask('Loading...');
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/ticket/information',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            context: this,
+            success: function (data) {
+                if (data.bError) {
+                    window.location.replace("Search.aspx");
+                    return;
+                }
+
+                if (data.sTicketType === "P") {
+                    $('#divLicensePlate').html(data.sLicensePlate);
+                    $('#divLicenseState').html(data.sLicenseState);
+                    $("#lblLicensePlateAndState").html("License Plate:");
+                    $("#spnAppearanceLineCount").show();
+                    $(".PaidText").html("paid");
+                } else {
+                    if (data.sMotoristID !== "") {
+                        $('#divLicensePlate').html(data.sMotoristID);
+                        $('#divLicenseState').html(data.sMotoristState);
+                        $("#lblLicensePlateAndState").html("Motorist ID:");
+                    } else {
+                        $('#divLicensePlate').html(data.sSummons);
+                        $('#divLicenseState').html("");
+                        $("#lblLicensePlateAndState").html("Summons:");
+                    }
+                    $("#spnAppearanceLineCount").hide();
+                    $(".PaidText").html("open/paid");                    
+                }
+                $('#divPayable').html(data.sPayable);
+            },
+            error: function (jq, textStatus, errorThrown) {
+                window.location.replace("Search.aspx");
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/ticket/ticketlist',
+            //data: JSON.stringify(pi),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            context: this,
+            success: function (data) {
+                if (data === null) {
+                    window.location.replace("Search.aspx");
+                    return;
+                }
+                var template = kendo.template($("#ticketDetailTemplate").html());
+                var aNotPaid = [];
+                var aPaid = [];
+                var ticketCount, BottomTicketCount;
+
+                for (x = 0; x < data.length; x++) {
+                    if ((data[x].fBalance > 0) || (data[x].bAppearanceRequired === 'Yes'))
+                        aNotPaid.push(data[x]);
+                    else
+                        aPaid.push(data[x]);
+                }
+
+                var tplNotPaid = template(aNotPaid);
+                $("#divTicketDetail").html(tplNotPaid); //Append the result
+
+                var tplPaid = template(aPaid);
+                $("#divPaidTicketList").html(tplPaid); //Append the result
+
+                var x;
+                var iUnpaidCount;
+                var iRequireAppearance;
+                var iPaidCount;
+
+                iUnpaidCount = 0;
+                iRequireAppearance = 0;
+                iPaidCount = 0;
+                for (x = 0; x < data.length; x++) {
+                    if ((data[x].fBalance > 0) && (data[x].bAppearanceRequired === 'No')) {
+                        ++iUnpaidCount;
+                    }
+
+                    if (data[x].bAppearanceRequired === 'Yes') {
+                        ++iRequireAppearance;
+                    }
+
+                    if ((data[x].fBalance <= 0) && (data[x].bAppearanceRequired === 'No')) {
+                        ++iPaidCount;
+                    }
+                }
+
+                ticketCount = data.length.toString() + " ticket(s) found";
+                BottomTicketCount = "";
+
+                //if (iUnpaidCount > 0) {
+                ticketCount += ", " + iUnpaidCount + " can be paid";
+
+                //}
+                if (iPaidCount > 0) {
+                    ticketCount += ", " + iPaidCount + " closed";
+                    if (BottomTicketCount !== "") {
+                        BottomTicketCount += ", ";
+                    }
+                    BottomTicketCount += iPaidCount + " closed";
+                }
+                if (iRequireAppearance > 0) {
+                    ticketCount += ", " + iRequireAppearance + " require(s) appearance";
+                }
+
+                $(".TicketCounts").html(ticketCount);
+                $(".BottomTicketCounts").html(BottomTicketCount);
+                if (BottomTicketCount !== "") {
+                    $("#divPaid").show();
+                } else {
+                    $("#divPaid").hide();
+                }
+                if (iUnpaidCount === 0) {
+                    $("#btnSelectAll").data("kendoButton").enable(false);
+                    $("#lblTotalToPay").html("No Tickets to Pay");
+                }
+
+                $(".imgAdditionalSummonsFound").kendoTooltip({
+                    content: "The Search for this Summons also returned other tickets included in this list",
+                    position: "top"
+                });
+
+                $(".imgNoDisposition").kendoTooltip({
+                    content: "Payment of a traffic ticket results in a plea and a disposition of guilty of the violation.<br/>DMV may impose points, suspend or revoke your license or<br/> assess additional fees as a result of a guilty disposition.<br/>You may wish to seek the advice of an attorney before making payment.",
+                    position: "top"
+                });
+
+                $(".imgAppearanceRequired").kendoTooltip({
+                    content: "Appearance is required.  This cannot be paid online",
+                    position: "top"
+                });
+
+                $(".imgOpenDisposition").kendoTooltip({
+                    content: "Please contact the court for information on how to pay or have this ticket adjudicated.",
+                    position: "top"
+                });
+
+                $(".imgOpenDisposition").kendoTooltip({
+                    content: "Please contact the court for information on how to pay or have this ticket adjudicated.",
+                    position: "top"
+                });
+
+                $(".imgTRHelp").kendoTooltip({
+                    content: "You have pleaded 'Not Guilty'.<br/>You have requested a Trial.<br/>If you have not already met with a prosecutor to conference your case and<br/>discuss options you should do so.<br/>If the trial date has been assigned the date is displayed.<br/>If the trial date has not yet been determined you will see 'Date Pending'.",
+                    position: "top"
+                });
+
+                $(".imgCOHelp").kendoTooltip({
+                    content: "You have plead 'Not Guilty'.<br/>The first step in the adjudication process is for you to meet with a prosecutor to discuss your options.<br/>If a conference date has been assigned it will be shown above.<br/>If a conference date has not yet assigned you will see 'Date Pending'.",
+                    position: "top"
+                });
+
+                $(".imgMRHelp").kendoTooltip({
+                    content: "Mail Review is a holding status while there is correspondence in transit.<br/>Your summons is being reviewed to assure that you will not be unfairly penalized due to mail delays.",
+                    position: "top"
+                });
+
+                $(".imgBalanceDueHelp").kendoTooltip({
+                    position: "top"
+                })
+
+                $(".imgPaidOnline").kendoTooltip({
+                    position: "top"
+                });
+
+                $('#divScreen').unmask();
+            },
+            error: function (jq, textStatus, errorThrown) {
+                window.location.replace("Search.aspx");
+            }
+        });
+    };
+
+    TicketSelect.prototype.selectTicket = function (cb, balance, summonsNumber) {
+        var ticket;
+        if (cb.checked) {
+            //console.log('adding ticket ' + summonsNumber + ' for ' + balance);
+            ticket = new Ticket(balance, summonsNumber);
+            this.selectedTicketList.push(ticket);
+        } else {
+            this.removeTicketSelection(summonsNumber);
+        }
+        this.update();
+    };
+
+    TicketSelect.prototype.removeTicketSelection = function (summonsNumber) {
+        var x;
+
+        for (x = 0; x < this.selectedTicketList.length; x++) {
+            if (this.selectedTicketList[x].summonsNumber === summonsNumber) {
+                this.selectedTicketList.splice(x, 1);
+                break;
+            }
+        }
+    };
+
+    TicketSelect.prototype.selectAll = function () {
+        this.reset();
+        $('.ticketselectcheckbox').each(function () {
+            if (!$(this).is(':checked')) {
+                $(this).click();
+            }
+        });
+
+        this.update();
+    };
+
+    TicketSelect.prototype.selectNone = function () {
+        this.reset();
+        $('.ticketselectcheckbox').each(function () {
+            if ($(this).is(':checked')) {
+                $(this).click();
+            }
+        });
+
+        this.update();
+    };
+
+    TicketSelect.prototype.update = function () {
+        var i;
+        var fBalance;
+
+        fBalance = 0;
+
+        for (i = 0; i < this.selectedTicketList.length; i++) {
+            fBalance += this.selectedTicketList[i].balance;
+        }
+
+        if (this.selectedTicketList.length > 0) {
+            $('#lblTotalToPay').html('Total Amount to Pay: $' + $.number(fBalance, 2) + ', ' + this.selectedTicketList.length.toString() + ' obligation(s) selected');
+        } else {
+            $('#lblTotalToPay').html('Select Obligations to Pay');
+        }
+
+        if (this.selectedTicketList.length > 0) {
+            $("#btnNext").data("kendoButton").enable(true);
+        } else {
+            $("#btnNext").data("kendoButton").enable(false);
+        }
+
+        if (this.selectedTicketList.length === $('.ticketselectcheckbox').length) {
+            $("#btnSelectAll").hide();
+            $("#btnDeselectAll").show();
+        } else {
+            $("#btnSelectAll").show();
+            $("#btnDeselectAll").hide();
+        }
+
+        //btnNext.SetEnabled(this.selectedTicketList.length > 0);
+    };
+
+    TicketSelect.prototype.submitIfValid = function () {
+        $('#divTicketList').mask('Processing...');
+        $('#divTicketSelectButtons').mask('Processing...');
+        var payList;
+        payList = {
+            TicketList: []
+        };
+
+        var i;
+
+        if (this.selectedTicketList.length > 0) {
+            for (i = 0; i < this.selectedTicketList.length; i++) {
+                payList.TicketList.push({ SummonsNumber: this.selectedTicketList[i].summonsNumber });
+            }
+            this.SetTicketSelection(payList);
+        } else {
+            $('#divTicketSelectButtons').unmask();
+            $('#divTicketList').unmask();
+        }
+    };
+
+    TicketSelect.prototype.SetTicketSelection = function (ticketData) {
+        $.ajax({
+            type: 'POST',
+            url: '../api/ticket/SelectTickets',
+            data: JSON.stringify(ticketData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            context: this,
+            success: function (data) {
+                if (data === null) {
+                    window.location.replace("Search.aspx");
+                    return;
+                }
+                window.location.replace("Affirmation.aspx");
+            },
+            error: function (jq, textStatus, errorThrown) {
+                window.location.replace("Search.aspx");
+            }
+        });
+    };
+
+    TicketSelect.prototype.reset = function () {
+        //this.selectedTicketList.forEach(function (v) { v.checkBox.SetChecked(false); });
+        $('#divTicketSelectButtons').mask('Resetting...');
+        while (this.selectedTicketList.length > 0) {
+            this.selectedTicketList.pop();
+        }
+
+
+        $('.ticketselectcheckbox').each(function () {
+            $(this).attr('checked', false);
+        });
+
+        this.update();
+        $('#divTicketSelectButtons').unmask();
+    };
+
+    TicketSelect.prototype.back = function () {
+        $('#divTicketSelectButtons').mask('Standby...');
+        window.location.replace("Search.aspx");
+    };
+    return TicketSelect;
+})();
+
+
+var ticketSelect = new TicketSelect();
+
+$(function () {
+    ticketSelect.showTicketList();
+    $('#btnBack').on('click', function (event) {
+        ticketSelect.back();
+    });
+
+    //TODO: Disable next by default
+    $("#btnNext").kendoButton({
+        enable: false
+    });
+    $("#btnSelectAll").kendoButton();
+    $('#btnNext').on('click', function (event) {
+        ticketSelect.submitIfValid();
+    });
+    $('#btnSelectAll').on('click', function (event) {
+        ticketSelect.selectAll();
+    });
+    $('#btnDeselectAll').on('click', function (event) {
+        ticketSelect.selectNone();
+    });
+    $('#btnReset').on('click', function (event) {
+        ticketSelect.reset();
+    });
+});
+/// <reference path="../ts.definitions/kendo.web.d.ts"/>
+/// <reference path="../ts.definitions/jquery.d.ts" />
+/// <reference path="../ts.definitions/jquery.plugin.d.ts" />
+»⁄h˝Ó      hTòhTòHPù˚h]J   w    O^userContextId=1&partitionKey=%28https%2Csurecourt.com%29,:https://rvcny.surecourt.com/epay/EZPay/TicketSelect.js?1004 strongly-framed 1 security-info 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 request-method GET response-head HTTP/2 200 
+content-type: application/javascript
+last-modified: Fri, 03 Dec 2021 09:02:53 GMT
+accept-ranges: bytes
+etag: "80dc68e24e8d71:0"
+date: Thu, 19 Jun 2025 13:24:38 GMT
+content-length: 13834
+X-Firefox-Spdy: h2
+ original-response-headers content-type: application/javascript
+last-modified: Fri, 03 Dec 2021 09:02:53 GMT
+accept-ranges: bytes
+etag: "80dc68e24e8d71:0"
+server: 
+date: Thu, 19 Jun 2025 13:24:38 GMT
+content-length: 13834
+X-Firefox-Spdy: h2
+ ctid 2 uncompressed-len 0 net-response-time-onstart 86 net-response-time-onstop 165   6
