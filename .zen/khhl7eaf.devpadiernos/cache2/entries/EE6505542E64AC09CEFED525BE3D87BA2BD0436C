@@ -1,1263 +1,0 @@
-/**
- * jQuery number plug-in 2.0.6
- * Copyright 2012, Digital Fusion
- * Licensed under the MIT license.
- * http://opensource.teamdf.com/license/
- *
- * A jQuery plugin which implements a permutation of phpjs.org's number_format to provide
- * simple number formatting, insertion, and as-you-type masking of a number.
- * 
- * @author	Sam Sehnert
- * @docs	http://www.teamdf.com/web/jquery-number-format-redux/196/
- */
-(function ($) {
-
-    /**
-	 * Method for selecting a range of characters in an input/textarea.
-	 *
-	 * @param int rangeStart			: Where we want the selection to start.
-	 * @param int rangeEnd				: Where we want the selection to end.
-	 *
-	 * @return void;
-	 */
-    function setSelectionRange(rangeStart, rangeEnd) {
-        // Check which way we need to define the text range.
-        if (this.createTextRange) {
-            var range = this.createTextRange();
-            range.collapse(true);
-            range.moveStart('character', rangeStart);
-            range.moveEnd('character', rangeEnd - rangeStart);
-            range.select();
-        }
-
-            // Alternate setSelectionRange method for supporting browsers.
-        else if (this.setSelectionRange) {
-            this.focus();
-            this.setSelectionRange(rangeStart, rangeEnd);
-        }
-    }
-
-    /**
-	 * Get the selection position for the given part.
-	 * 
-	 * @param string part			: Options, 'Start' or 'End'. The selection position to get.
-	 *
-	 * @return int : The index position of the selection part.
-	 */
-    function getSelection(part) {
-        var pos = this.value.length;
-
-        // Work out the selection part.
-        part = (part.toLowerCase() == 'start' ? 'Start' : 'End');
-
-        if (document.selection) {
-            // The current selection
-            var range = document.selection.createRange(), stored_range, selectionStart, selectionEnd;
-            // We'll use this as a 'dummy'
-            stored_range = range.duplicate();
-            // Select all text
-            //stored_range.moveToElementText( this );
-            stored_range.expand('textedit');
-            // Now move 'dummy' end point to end point of original range
-            stored_range.setEndPoint('EndToEnd', range);
-            // Now we can calculate start and end points
-            selectionStart = stored_range.text.length - range.text.length;
-            selectionEnd = selectionStart + range.text.length;
-            return part == 'Start' ? selectionStart : selectionEnd;
-        }
-
-        else if (typeof (this['selection' + part]) != "undefined") {
-            pos = this['selection' + part];
-        }
-        return pos;
-    }
-
-    /**
-	 * Substitutions for keydown keycodes.
-	 * Allows conversion from e.which to ascii characters.
-	 */
-    var _keydown = {
-        codes: {
-            188: 44,
-            109: 45,
-            190: 46,
-            191: 47,
-            192: 96,
-            220: 92,
-            222: 39,
-            221: 93,
-            219: 91,
-            173: 45,
-            187: 61, //IE Key codes
-            186: 59, //IE Key codes
-            189: 45, //IE Key codes
-            110: 46  //IE Key codes
-        },
-        shifts: {
-            96: "~",
-            49: "!",
-            50: "@",
-            51: "#",
-            52: "$",
-            53: "%",
-            54: "^",
-            55: "&",
-            56: "*",
-            57: "(",
-            48: ")",
-            45: "_",
-            61: "+",
-            91: "{",
-            93: "}",
-            92: "|",
-            59: ":",
-            39: "\"",
-            44: "<",
-            46: ">",
-            47: "?"
-        }
-    };
-
-    /**
-	 * jQuery number formatter plugin. This will allow you to format numbers on an element.
-	 *
-	 * @params proxied for format_number method.
-	 *
-	 * @return : The jQuery collection the method was called with.
-	 */
-    $.fn.number = function (number, decimals, dec_point, thousands_sep) {
-
-        // Enter the default thousands separator, and the decimal placeholder.
-        thousands_sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep;
-        dec_point = (typeof dec_point === 'undefined') ? '.' : dec_point;
-        decimals = (typeof decimals === 'undefined') ? 0 : decimals;
-
-        // Work out the unicode character for the decimal placeholder.
-        var u_dec = ('\\u' + ('0000' + (dec_point.charCodeAt(0).toString(16))).slice(-4)),
-	    	regex_dec_num = new RegExp('[^' + u_dec + '0-9]', 'g'),
-	    	regex_dec = new RegExp(u_dec, 'g');
-
-        // If we've specified to take the number from the target element,
-        // we loop over the collection, and get the number.
-        if (number === true) {
-            // If this element is a number, then we add a keyup
-            if (this.is('input:text')) {
-                // Return the jquery collection.
-                return this.on({
-
-                    /**
-	    			 * Handles keyup events, re-formatting numbers.
-	    			 *
-	    			 * @param object e			: the keyup event object.s
-	    			 *
-	    			 * @return void;
-	    			 */
-                    'keydown.format': function (e) {
-
-                        // Define variables used in the code below.
-                        var $this = $(this),
-	    					data = $this.data('numFormat'),
-	    					code = (e.keyCode ? e.keyCode : e.which),
-							chara = '', //unescape(e.originalEvent.keyIdentifier.replace('U+','%u')),
-	    					start = getSelection.apply(this, ['start']),
-	    					end = getSelection.apply(this, ['end']),
-	    					val = '',
-	    					setPos = false;
-
-                        // Webkit (Chrome & Safari) on windows screws up the keyIdentifier detection
-                        // for numpad characters. I've disabled this for now, because while keyCode munging
-                        // below is hackish and ugly, it actually works cross browser & platform.
-
-                        //	    				if( typeof e.originalEvent.keyIdentifier !== 'undefined' )
-                        //	    				{
-                        //	    					chara = unescape(e.originalEvent.keyIdentifier.replace('U+','%u'));
-                        //	    				}
-                        //	    				else
-                        //	    				{
-                        if (_keydown.codes.hasOwnProperty(code)) {
-                            code = _keydown.codes[code];
-                        }
-                        if (!e.shiftKey && (code >= 65 && code <= 90)) {
-                            code += 32;
-                        } else if (!e.shiftKey && (code >= 69 && code <= 105)) {
-                            code -= 48;
-                        } else if (e.shiftKey && _keydown.shifts.hasOwnProperty(code)) {
-                            //get shifted keyCode value
-                            chara = _keydown.shifts[code];
-                        }
-
-                        if (chara == '') chara = String.fromCharCode(code);
-                        //	    				}
-
-                        // Stop executing if the user didn't type a number key, a decimal character, or backspace.
-                        if (code !== 8 && chara != dec_point && !chara.match(/[0-9]/)) {
-                            // We need the original keycode now...
-                            var key = (e.keyCode ? e.keyCode : e.which);
-                            if ( // Allow control keys to go through... (delete, etc)
-	    						key == 46 || key == 8 || key == 9 || key == 27 || key == 13 ||
-                                // Allow: Ctrl+A, Ctrl+R
-	    						((key == 65 || key == 82) && (e.ctrlKey || e.metaKey) === true) ||
-                                // Allow: home, end, left, right
-	    						((key >= 35 && key <= 39))
-							) {
-                                return;
-                            }
-                            // But prevent all other keys.
-                            e.preventDefault();
-                            return false;
-                        }
-
-                        //console.log('Continuing on: ', code, chara);
-
-                        // The whole lot has been selected, or if the field is empty, and the character
-                        if ((start == 0 && end == this.value.length || $this.val() == 0) && !e.metaKey && !e.ctrlKey && !e.altKey && chara.length === 1 && chara != 0) {
-                            // Blank out the field, but only if the data object has already been instanciated.
-                            start = end = 1;
-                            this.value = '';
-
-                            // Reset the cursor position.
-                            data.init = (decimals > 0 ? -1 : 0);
-                            data.c = (decimals > 0 ? -(decimals + 1) : 0);
-                            setSelectionRange.apply(this, [0, 0]);
-                        }
-
-                            // Otherwise, we need to reset the caret position
-                            // based on the users selection.
-                        else {
-                            data.c = end - this.value.length;
-                        }
-
-                        // If the start position is before the decimal point,
-                        // and the user has typed a decimal point, we need to move the caret
-                        // past the decimal place.
-                        if (decimals > 0 && chara == dec_point && start == this.value.length - decimals - 1) {
-                            data.c++;
-                            data.init = Math.max(0, data.init);
-                            e.preventDefault();
-
-                            // Set the selection position.
-                            setPos = this.value.length + data.c;
-                        }
-
-                            // If the user is just typing the decimal place,
-                            // we simply ignore it.
-                        else if (chara == dec_point) {
-                            data.init = Math.max(0, data.init);
-                            e.preventDefault();
-                        }
-
-                            // If hitting the delete key, and the cursor is behind a decimal place,
-                            // we simply move the cursor to the other side of the decimal place.
-                        else if (decimals > 0 && code == 8 && start == this.value.length - decimals) {
-                            e.preventDefault();
-                            data.c--;
-
-                            // Set the selection position.
-                            setPos = this.value.length + data.c;
-                        }
-
-                            // If hitting the delete key, and the cursor is to the right of the decimal
-                            // (but not directly to the right) we replace the character preceeding the
-                            // caret with a 0.
-                        else if (decimals > 0 && code == 8 && start > this.value.length - decimals) {
-                            if (this.value === '') return;
-
-                            // If the character preceeding is not already a 0,
-                            // replace it with one.
-                            if (this.value.slice(start - 1, start) != '0') {
-                                val = this.value.slice(0, start - 1) + '0' + this.value.slice(start);
-                                $this.val(val.replace(regex_dec_num, '').replace(regex_dec, dec_point));
-                            }
-
-                            e.preventDefault();
-                            data.c--;
-
-                            // Set the selection position.
-                            setPos = this.value.length + data.c;
-                        }
-
-                            // If the delete key was pressed, and the character immediately
-                            // before the caret is a thousands_separator character, simply
-                            // step over it.
-                        else if (code == 8 && this.value.slice(start - 1, start) == thousands_sep) {
-                            e.preventDefault();
-                            data.c--;
-
-                            // Set the selection position.
-                            setPos = this.value.length + data.c;
-                        }
-
-                            // If the caret is to the right of the decimal place, and the user is entering a
-                            // number, remove the following character before putting in the new one. 
-                        else if (
-	    					decimals > 0 &&
-	    					start == end &&
-	    					this.value.length > decimals + 1 &&
-	    					start > this.value.length - decimals - 1 && isFinite(+chara) &&
-		    				!e.metaKey && !e.ctrlKey && !e.altKey && chara.length === 1
-	    				) {
-                            // If the character preceeding is not already a 0,
-                            // replace it with one.
-                            if (end === this.value.length) {
-                                val = this.value.slice(0, start - 1);
-                            }
-                            else {
-                                val = this.value.slice(0, start) + this.value.slice(start + 1);
-                            }
-
-                            // Reset the position.
-                            this.value = val;
-                            setPos = start;
-                        }
-
-                        // If we need to re-position the characters.
-                        if (setPos !== false) {
-                            console.log('Setpos keydown: ', setPos);
-                            setSelectionRange.apply(this, [setPos, setPos]);
-                        }
-
-                        // Store the data on the element.
-                        $this.data('numFormat', data);
-
-                    },
-
-                    /**
-	    			 * Handles keyup events, re-formatting numbers.
-	    			 *
-	    			 * @param object e			: the keyup event object.s
-	    			 *
-	    			 * @return void;
-	    			 */
-                    'keyup.format': function (e) {
-
-                        // Store these variables for use below.
-                        var $this = $(this),
-	    					data = $this.data('numFormat'),
-	    					code = (e.keyCode ? e.keyCode : e.which),
-	    					start = getSelection.apply(this, ['start']),
-	    					setPos;
-
-                        // Stop executing if the user didn't type a number key, a decimal, or a comma.
-                        if (this.value === '' || (code < 48 || code > 57) && (code < 96 || code > 105) && code !== 8) return;
-
-                        // Re-format the textarea.
-                        $this.val($this.val());
-
-                        if (decimals > 0) {
-                            // If we haven't marked this item as 'initialised'
-                            // then do so now. It means we should place the caret just 
-                            // before the decimal. This will never be un-initialised before
-                            // the decimal character itself is entered.
-                            if (data.init < 1) {
-                                start = this.value.length - decimals - (data.init < 0 ? 1 : 0);
-                                data.c = start - this.value.length;
-                                data.init = 1;
-
-                                $this.data('numFormat', data);
-                            }
-
-                                // Increase the cursor position if the caret is to the right
-                                // of the decimal place, and the character pressed isn't the delete key.
-                            else if (start > this.value.length - decimals && code != 8) {
-                                data.c++;
-
-                                // Store the data, now that it's changed.
-                                $this.data('numFormat', data);
-                            }
-                        }
-
-                        console.log('Setting pos: ', start, decimals, this.value.length + data.c, this.value.length, data.c);
-
-                        // Set the selection position.
-                        setPos = this.value.length + data.c;
-                        setSelectionRange.apply(this, [setPos, setPos]);
-                    },
-
-                    /**
-	    			 * Reformat when pasting into the field.
-	    			 *
-	    			 * @param object e 		: jQuery event object.
-	    			 *
-	    			 * @return false : prevent default action.
-	    			 */
-                    'paste.format': function (e) {
-
-                        // Defint $this. It's used twice!.
-                        var $this = $(this),
-	    					original = e.originalEvent,
-	    					val = null;
-
-                        // Get the text content stream.
-                        if (window.clipboardData && window.clipboardData.getData) { // IE
-                            val = window.clipboardData.getData('Text');
-                        } else if (original.clipboardData && original.clipboardData.getData) {
-                            val = original.clipboardData.getData('text/plain');
-                        }
-
-                        // Do the reformat operation.
-                        $this.val(val);
-
-                        // Stop the actual content from being pasted.
-                        e.preventDefault();
-                        return false;
-                    }
-
-                })
-
-	    		// Loop each element (which isn't blank) and do the format.
-    			.each(function () {
-
-    			    var $this = $(this).data('numFormat', {
-    			        c: -(decimals + 1),
-    			        decimals: decimals,
-    			        thousands_sep: thousands_sep,
-    			        dec_point: dec_point,
-    			        regex_dec_num: regex_dec_num,
-    			        regex_dec: regex_dec,
-    			        init: false
-    			    });
-
-    			    // Return if the element is empty.
-    			    if (this.value === '') return;
-
-    			    // Otherwise... format!!
-    			    $this.val($this.val());
-    			});
-            }
-            else {
-                // return the collection.
-                return this.each(function () {
-                    var $this = $(this), num = +$this.text().replace(regex_dec_num, '').replace(regex_dec, '.');
-                    $this.number(!isFinite(num) ? 0 : +num, decimals, dec_point, thousands_sep);
-                });
-            }
-        }
-
-        // Add this number to the element as text.
-        return this.text($.number.apply(window, arguments));
-    };
-
-    //
-    // Create .val() hooks to get and set formatted numbers in inputs.
-    //
-
-    // We check if any hooks already exist, and cache
-    // them in case we need to re-use them later on.
-    var origHookGet = null, origHookSet = null;
-
-    // Check if a text valHook already exists.
-    if ($.valHooks.text) {
-        // Preserve the original valhook function
-        // we'll call this for values we're not 
-        // explicitly handling.
-        origHookGet = $.valHooks.text.get;
-        origHookSet = $.valHooks.text.set;
-    }
-    else {
-        // Define an object for the new valhook.
-        $.valHooks.text = {};
-    }
-
-    /**
-	 * Define the valHook to return normalised field data against an input
-	 * which has been tagged by the number formatter.
-	 *
-	 * @param object el			: The raw DOM element that we're getting the value from.
-	 *
-	 * @return mixed : Returns the value that was written to the element as a
-	 *				   javascript number, or undefined to let jQuery handle it normally.
-	 */
-    $.valHooks.text.get = function (el) {
-
-        // Get the element, and its data.
-        var $this = $(el), num,
-			data = $this.data('numFormat');
-
-        // Does this element have our data field?
-        if (!data) {
-            // Check if the valhook function already existed
-            if ($.isFunction(origHookGet)) {
-                // There was, so go ahead and call it
-                return origHookGet(el);
-            }
-            else {
-                // No previous function, return undefined to have jQuery
-                // take care of retrieving the value
-                return undefined;
-            }
-        }
-        else {
-            // Remove formatting, and return as number.
-            if (el.value === '') return '';
-
-            // Convert to a number.
-            num = +(el.value
-				.replace(data.regex_dec_num, '')
-				.replace(data.regex_dec, '.'));
-
-            // If we've got a finite number, return it.
-            // Otherwise, simply return 0.
-            // Return as a string... thats what we're
-            // used to with .val()
-            return '' + (isFinite(num) ? num : 0);
-        }
-    };
-
-    /**
-	 * A valhook which formats a number when run against an input
-	 * which has been tagged by the number formatter.
-	 *
-	 * @param object el		: The raw DOM element (input element).
-	 * @param float			: The number to set into the value field.
-	 *
-	 * @return mixed : Returns the value that was written to the element,
-	 *				   or undefined to let jQuery handle it normally. 
-	 */
-    $.valHooks.text.set = function (el, val) {
-        // Get the element, and its data.
-        var $this = $(el),
-			data = $this.data('numFormat');
-
-        // Does this element have our data field?
-        if (!data) {
-            // Check if the valhook function already existed
-            if ($.isFunction(origHookSet)) {
-                // There was, so go ahead and call it
-                return origHookSet(el, val);
-            }
-            else {
-                // No previous function, return undefined to have jQuery
-                // take care of retrieving the value
-                return undefined;
-            }
-        }
-        else {
-            return el.value = $.number(val, data.decimals, data.dec_point, data.thousands_sep)
-        }
-    };
-
-    /**
-	 * The (modified) excellent number formatting method from PHPJS.org.
-	 * http://phpjs.org/functions/number_format/
-	 *
-	 * @modified by Sam Sehnert (teamdf.com)
-	 *	- don't redefine dec_point, thousands_sep... just overwrite with defaults.
-	 *	- don't redefine decimals, just overwrite as numeric.
-	 *	- Generate regex for normalizing pre-formatted numbers.
-	 *
-	 * @param float number			: The number you wish to format, or TRUE to use the text contents
-	 *								  of the element as the number. Please note that this won't work for
-	 *								  elements which have child nodes with text content.
-	 * @param int decimals			: The number of decimal places that should be displayed. Defaults to 0.
-	 * @param string dec_point		: The character to use as a decimal point. Defaults to '.'.
-	 * @param string thousands_sep	: The character to use as a thousands separator. Defaults to ','.
-	 *
-	 * @return string : The formatted number as a string.
-	 */
-    $.number = function (number, decimals, dec_point, thousands_sep) {
-
-        // Set the default values here, instead so we can use them in the replace below.
-        thousands_sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep;
-        dec_point = (typeof dec_point === 'undefined') ? '.' : dec_point;
-        decimals = !isFinite(+decimals) ? 0 : Math.abs(decimals);
-
-        // Work out the unicode representation for the decimal place.	
-        var u_dec = ('\\u' + ('0000' + (dec_point.charCodeAt(0).toString(16))).slice(-4));
-
-        // Fix the number, so that it's an actual number.
-        number = (number + '')
-			.replace(new RegExp(u_dec, 'g'), '.')
-			.replace(new RegExp('[^0-9+\-Ee.]', 'g'), '');
-
-        var n = !isFinite(+number) ? 0 : +number,
-		    s = '',
-		    toFixedFix = function (n, decimals) {
-		        var k = Math.pow(10, decimals);
-		        return '' + Math.round(n * k) / k;
-		    };
-
-        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-        s = (decimals ? toFixedFix(n, decimals) : '' + Math.round(n)).split('.');
-        if (s[0].length > 3) {
-            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, thousands_sep);
-        }
-        if ((s[1] || '').length < decimals) {
-            s[1] = s[1] || '';
-            s[1] += new Array(decimals - s[1].length + 1).join('0');
-        }
-        return s.join(dec_point);
-    }
-
-})(jQuery);        lô  xlôìf   20250613091300-8lOô  ø©%G   https://rvcny.surecourt.com/epay/scripts/jquery_plugin/jquery.number.js      Z`  /**
- * jQuery number plug-in 2.0.6
- * Copyright 2012, Digital Fusion
- * Licensed under the MIT license.
- * http://opensource.teamdf.com/license/
- *
- * A jQuery plugin which implements a permutation of phpjs.org's number_format to provide
- * simple number formatting, insertion, and as-you-type masking of a number.
- * 
- * @author	Sam Sehnert
- * @docs	http://www.teamdf.com/web/jquery-number-format-redux/196/
- */
-(function ($) {
-
-    /**
-	 * Method for selecting a range of characters in an input/textarea.
-	 *
-	 * @param int rangeStart			: Where we want the selection to start.
-	 * @param int rangeEnd				: Where we want the selection to end.
-	 *
-	 * @return void;
-	 */
-    function setSelectionRange(rangeStart, rangeEnd) {
-        // Check which way we need to define the text range.
-        if (this.createTextRange) {
-            var range = this.createTextRange();
-            range.collapse(true);
-            range.moveStart('character', rangeStart);
-            range.moveEnd('character', rangeEnd - rangeStart);
-            range.select();
-        }
-
-            // Alternate setSelectionRange method for supporting browsers.
-        else if (this.setSelectionRange) {
-            this.focus();
-            this.setSelectionRange(rangeStart, rangeEnd);
-        }
-    }
-
-    /**
-	 * Get the selection position for the given part.
-	 * 
-	 * @param string part			: Options, 'Start' or 'End'. The selection position to get.
-	 *
-	 * @return int : The index position of the selection part.
-	 */
-    function getSelection(part) {
-        var pos = this.value.length;
-
-        // Work out the selection part.
-        part = (part.toLowerCase() == 'start' ? 'Start' : 'End');
-
-        if (document.selection) {
-            // The current selection
-            var range = document.selection.createRange(), stored_range, selectionStart, selectionEnd;
-            // We'll use this as a 'dummy'
-            stored_range = range.duplicate();
-            // Select all text
-            //stored_range.moveToElementText( this );
-            stored_range.expand('textedit');
-            // Now move 'dummy' end point to end point of original range
-            stored_range.setEndPoint('EndToEnd', range);
-            // Now we can calculate start and end points
-            selectionStart = stored_range.text.length - range.text.length;
-            selectionEnd = selectionStart + range.text.length;
-            return part == 'Start' ? selectionStart : selectionEnd;
-        }
-
-        else if (typeof (this['selection' + part]) != "undefined") {
-            pos = this['selection' + part];
-        }
-        return pos;
-    }
-
-    /**
-	 * Substitutions for keydown keycodes.
-	 * Allows conversion from e.which to ascii characters.
-	 */
-    var _keydown = {
-        codes: {
-            188: 44,
-            109: 45,
-            190: 46,
-            191: 47,
-            192: 96,
-            220: 92,
-            222: 39,
-            221: 93,
-            219: 91,
-            173: 45,
-            187: 61, //IE Key codes
-            186: 59, //IE Key codes
-            189: 45, //IE Key codes
-            110: 46  //IE Key codes
-        },
-        shifts: {
-            96: "~",
-            49: "!",
-            50: "@",
-            51: "#",
-            52: "$",
-            53: "%",
-            54: "^",
-            55: "&",
-            56: "*",
-            57: "(",
-            48: ")",
-            45: "_",
-            61: "+",
-            91: "{",
-            93: "}",
-            92: "|",
-            59: ":",
-            39: "\"",
-            44: "<",
-            46: ">",
-            47: "?"
-        }
-    };
-
-    /**
-	 * jQuery number formatter plugin. This will allow you to format numbers on an element.
-	 *
-	 * @params proxied for format_number method.
-	 *
-	 * @return : The jQuery collection the method was called with.
-	 */
-    $.fn.number = function (number, decimals, dec_point, thousands_sep) {
-
-        // Enter the default thousands separator, and the decimal placeholder.
-        thousands_sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep;
-        dec_point = (typeof dec_point === 'undefined') ? '.' : dec_point;
-        decimals = (typeof decimals === 'undefined') ? 0 : decimals;
-
-        // Work out the unicode character for the decimal placeholder.
-        var u_dec = ('\\u' + ('0000' + (dec_point.charCodeAt(0).toString(16))).slice(-4)),
-	    	regex_dec_num = new RegExp('[^' + u_dec + '0-9]', 'g'),
-	    	regex_dec = new RegExp(u_dec, 'g');
-
-        // If we've specified to take the number from the target element,
-        // we loop over the collection, and get the number.
-        if (number === true) {
-            // If this element is a number, then we add a keyup
-            if (this.is('input:text')) {
-                // Return the jquery collection.
-                return this.on({
-
-                    /**
-	    			 * Handles keyup events, re-formatting numbers.
-	    			 *
-	    			 * @param object e			: the keyup event object.s
-	    			 *
-	    			 * @return void;
-	    			 */
-                    'keydown.format': function (e) {
-
-                        // Define variables used in the code below.
-                        var $this = $(this),
-	    					data = $this.data('numFormat'),
-	    					code = (e.keyCode ? e.keyCode : e.which),
-							chara = '', //unescape(e.originalEvent.keyIdentifier.replace('U+','%u')),
-	    					start = getSelection.apply(this, ['start']),
-	    					end = getSelection.apply(this, ['end']),
-	    					val = '',
-	    					setPos = false;
-
-                        // Webkit (Chrome & Safari) on windows screws up the keyIdentifier detection
-                        // for numpad characters. I've disabled this for now, because while keyCode munging
-                        // below is hackish and ugly, it actually works cross browser & platform.
-
-                        //	    				if( typeof e.originalEvent.keyIdentifier !== 'undefined' )
-                        //	    				{
-                        //	    					chara = unescape(e.originalEvent.keyIdentifier.replace('U+','%u'));
-                        //	    				}
-                        //	    				else
-                        //	    				{
-                        if (_keydown.codes.hasOwnProperty(code)) {
-                            code = _keydown.codes[code];
-                        }
-                        if (!e.shiftKey && (code >= 65 && code <= 90)) {
-                            code += 32;
-                        } else if (!e.shiftKey && (code >= 69 && code <= 105)) {
-                            code -= 48;
-                        } else if (e.shiftKey && _keydown.shifts.hasOwnProperty(code)) {
-                            //get shifted keyCode value
-                            chara = _keydown.shifts[code];
-                        }
-
-                        if (chara == '') chara = String.fromCharCode(code);
-                        //	    				}
-
-                        // Stop executing if the user didn't type a number key, a decimal character, or backspace.
-                        if (code !== 8 && chara != dec_point && !chara.match(/[0-9]/)) {
-                            // We need the original keycode now...
-                            var key = (e.keyCode ? e.keyCode : e.which);
-                            if ( // Allow control keys to go through... (delete, etc)
-	    						key == 46 || key == 8 || key == 9 || key == 27 || key == 13 ||
-                                // Allow: Ctrl+A, Ctrl+R
-	    						((key == 65 || key == 82) && (e.ctrlKey || e.metaKey) === true) ||
-                                // Allow: home, end, left, right
-	    						((key >= 35 && key <= 39))
-							) {
-                                return;
-                            }
-                            // But prevent all other keys.
-                            e.preventDefault();
-                            return false;
-                        }
-
-                        //console.log('Continuing on: ', code, chara);
-
-                        // The whole lot has been selected, or if the field is empty, and the character
-                        if ((start == 0 && end == this.value.length || $this.val() == 0) && !e.metaKey && !e.ctrlKey && !e.altKey && chara.length === 1 && chara != 0) {
-                            // Blank out the field, but only if the data object has already been instanciated.
-                            start = end = 1;
-                            this.value = '';
-
-                            // Reset the cursor position.
-                            data.init = (decimals > 0 ? -1 : 0);
-                            data.c = (decimals > 0 ? -(decimals + 1) : 0);
-                            setSelectionRange.apply(this, [0, 0]);
-                        }
-
-                            // Otherwise, we need to reset the caret position
-                            // based on the users selection.
-                        else {
-                            data.c = end - this.value.length;
-                        }
-
-                        // If the start position is before the decimal point,
-                        // and the user has typed a decimal point, we need to move the caret
-                        // past the decimal place.
-                        if (decimals > 0 && chara == dec_point && start == this.value.length - decimals - 1) {
-                            data.c++;
-                            data.init = Math.max(0, data.init);
-                            e.preventDefault();
-
-                            // Set the selection position.
-                            setPos = this.value.length + data.c;
-                        }
-
-                            // If the user is just typing the decimal place,
-                            // we simply ignore it.
-                        else if (chara == dec_point) {
-                            data.init = Math.max(0, data.init);
-                            e.preventDefault();
-                        }
-
-                            // If hitting the delete key, and the cursor is behind a decimal place,
-                            // we simply move the cursor to the other side of the decimal place.
-                        else if (decimals > 0 && code == 8 && start == this.value.length - decimals) {
-                            e.preventDefault();
-                            data.c--;
-
-                            // Set the selection position.
-                            setPos = this.value.length + data.c;
-                        }
-
-                            // If hitting the delete key, and the cursor is to the right of the decimal
-                            // (but not directly to the right) we replace the character preceeding the
-                            // caret with a 0.
-                        else if (decimals > 0 && code == 8 && start > this.value.length - decimals) {
-                            if (this.value === '') return;
-
-                            // If the character preceeding is not already a 0,
-                            // replace it with one.
-                            if (this.value.slice(start - 1, start) != '0') {
-                                val = this.value.slice(0, start - 1) + '0' + this.value.slice(start);
-                                $this.val(val.replace(regex_dec_num, '').replace(regex_dec, dec_point));
-                            }
-
-                            e.preventDefault();
-                            data.c--;
-
-                            // Set the selection position.
-                            setPos = this.value.length + data.c;
-                        }
-
-                            // If the delete key was pressed, and the character immediately
-                            // before the caret is a thousands_separator character, simply
-                            // step over it.
-                        else if (code == 8 && this.value.slice(start - 1, start) == thousands_sep) {
-                            e.preventDefault();
-                            data.c--;
-
-                            // Set the selection position.
-                            setPos = this.value.length + data.c;
-                        }
-
-                            // If the caret is to the right of the decimal place, and the user is entering a
-                            // number, remove the following character before putting in the new one. 
-                        else if (
-	    					decimals > 0 &&
-	    					start == end &&
-	    					this.value.length > decimals + 1 &&
-	    					start > this.value.length - decimals - 1 && isFinite(+chara) &&
-		    				!e.metaKey && !e.ctrlKey && !e.altKey && chara.length === 1
-	    				) {
-                            // If the character preceeding is not already a 0,
-                            // replace it with one.
-                            if (end === this.value.length) {
-                                val = this.value.slice(0, start - 1);
-                            }
-                            else {
-                                val = this.value.slice(0, start) + this.value.slice(start + 1);
-                            }
-
-                            // Reset the position.
-                            this.value = val;
-                            setPos = start;
-                        }
-
-                        // If we need to re-position the characters.
-                        if (setPos !== false) {
-                            console.log('Setpos keydown: ', setPos);
-                            setSelectionRange.apply(this, [setPos, setPos]);
-                        }
-
-                        // Store the data on the element.
-                        $this.data('numFormat', data);
-
-                    },
-
-                    /**
-	    			 * Handles keyup events, re-formatting numbers.
-	    			 *
-	    			 * @param object e			: the keyup event object.s
-	    			 *
-	    			 * @return void;
-	    			 */
-                    'keyup.format': function (e) {
-
-                        // Store these variables for use below.
-                        var $this = $(this),
-	    					data = $this.data('numFormat'),
-	    					code = (e.keyCode ? e.keyCode : e.which),
-	    					start = getSelection.apply(this, ['start']),
-	    					setPos;
-
-                        // Stop executing if the user didn't type a number key, a decimal, or a comma.
-                        if (this.value === '' || (code < 48 || code > 57) && (code < 96 || code > 105) && code !== 8) return;
-
-                        // Re-format the textarea.
-                        $this.val($this.val());
-
-                        if (decimals > 0) {
-                            // If we haven't marked this item as 'initialised'
-                            // then do so now. It means we should place the caret just 
-                            // before the decimal. This will never be un-initialised before
-                            // the decimal character itself is entered.
-                            if (data.init < 1) {
-                                start = this.value.length - decimals - (data.init < 0 ? 1 : 0);
-                                data.c = start - this.value.length;
-                                data.init = 1;
-
-                                $this.data('numFormat', data);
-                            }
-
-                                // Increase the cursor position if the caret is to the right
-                                // of the decimal place, and the character pressed isn't the delete key.
-                            else if (start > this.value.length - decimals && code != 8) {
-                                data.c++;
-
-                                // Store the data, now that it's changed.
-                                $this.data('numFormat', data);
-                            }
-                        }
-
-                        console.log('Setting pos: ', start, decimals, this.value.length + data.c, this.value.length, data.c);
-
-                        // Set the selection position.
-                        setPos = this.value.length + data.c;
-                        setSelectionRange.apply(this, [setPos, setPos]);
-                    },
-
-                    /**
-	    			 * Reformat when pasting into the field.
-	    			 *
-	    			 * @param object e 		: jQuery event object.
-	    			 *
-	    			 * @return false : prevent default action.
-	    			 */
-                    'paste.format': function (e) {
-
-                        // Defint $this. It's used twice!.
-                        var $this = $(this),
-	    					original = e.originalEvent,
-	    					val = null;
-
-                        // Get the text content stream.
-                        if (window.clipboardData && window.clipboardData.getData) { // IE
-                            val = window.clipboardData.getData('Text');
-                        } else if (original.clipboardData && original.clipboardData.getData) {
-                            val = original.clipboardData.getData('text/plain');
-                        }
-
-                        // Do the reformat operation.
-                        $this.val(val);
-
-                        // Stop the actual content from being pasted.
-                        e.preventDefault();
-                        return false;
-                    }
-
-                })
-
-	    		// Loop each element (which isn't blank) and do the format.
-    			.each(function () {
-
-    			    var $this = $(this).data('numFormat', {
-    			        c: -(decimals + 1),
-    			        decimals: decimals,
-    			        thousands_sep: thousands_sep,
-    			        dec_point: dec_point,
-    			        regex_dec_num: regex_dec_num,
-    			        regex_dec: regex_dec,
-    			        init: false
-    			    });
-
-    			    // Return if the element is empty.
-    			    if (this.value === '') return;
-
-    			    // Otherwise... format!!
-    			    $this.val($this.val());
-    			});
-            }
-            else {
-                // return the collection.
-                return this.each(function () {
-                    var $this = $(this), num = +$this.text().replace(regex_dec_num, '').replace(regex_dec, '.');
-                    $this.number(!isFinite(num) ? 0 : +num, decimals, dec_point, thousands_sep);
-                });
-            }
-        }
-
-        // Add this number to the element as text.
-        return this.text($.number.apply(window, arguments));
-    };
-
-    //
-    // Create .val() hooks to get and set formatted numbers in inputs.
-    //
-
-    // We check if any hooks already exist, and cache
-    // them in case we need to re-use them later on.
-    var origHookGet = null, origHookSet = null;
-
-    // Check if a text valHook already exists.
-    if ($.valHooks.text) {
-        // Preserve the original valhook function
-        // we'll call this for values we're not 
-        // explicitly handling.
-        origHookGet = $.valHooks.text.get;
-        origHookSet = $.valHooks.text.set;
-    }
-    else {
-        // Define an object for the new valhook.
-        $.valHooks.text = {};
-    }
-
-    /**
-	 * Define the valHook to return normalised field data against an input
-	 * which has been tagged by the number formatter.
-	 *
-	 * @param object el			: The raw DOM element that we're getting the value from.
-	 *
-	 * @return mixed : Returns the value that was written to the element as a
-	 *				   javascript number, or undefined to let jQuery handle it normally.
-	 */
-    $.valHooks.text.get = function (el) {
-
-        // Get the element, and its data.
-        var $this = $(el), num,
-			data = $this.data('numFormat');
-
-        // Does this element have our data field?
-        if (!data) {
-            // Check if the valhook function already existed
-            if ($.isFunction(origHookGet)) {
-                // There was, so go ahead and call it
-                return origHookGet(el);
-            }
-            else {
-                // No previous function, return undefined to have jQuery
-                // take care of retrieving the value
-                return undefined;
-            }
-        }
-        else {
-            // Remove formatting, and return as number.
-            if (el.value === '') return '';
-
-            // Convert to a number.
-            num = +(el.value
-				.replace(data.regex_dec_num, '')
-				.replace(data.regex_dec, '.'));
-
-            // If we've got a finite number, return it.
-            // Otherwise, simply return 0.
-            // Return as a string... thats what we're
-            // used to with .val()
-            return '' + (isFinite(num) ? num : 0);
-        }
-    };
-
-    /**
-	 * A valhook which formats a number when run against an input
-	 * which has been tagged by the number formatter.
-	 *
-	 * @param object el		: The raw DOM element (input element).
-	 * @param float			: The number to set into the value field.
-	 *
-	 * @return mixed : Returns the value that was written to the element,
-	 *				   or undefined to let jQuery handle it normally. 
-	 */
-    $.valHooks.text.set = function (el, val) {
-        // Get the element, and its data.
-        var $this = $(el),
-			data = $this.data('numFormat');
-
-        // Does this element have our data field?
-        if (!data) {
-            // Check if the valhook function already existed
-            if ($.isFunction(origHookSet)) {
-                // There was, so go ahead and call it
-                return origHookSet(el, val);
-            }
-            else {
-                // No previous function, return undefined to have jQuery
-                // take care of retrieving the value
-                return undefined;
-            }
-        }
-        else {
-            return el.value = $.number(val, data.decimals, data.dec_point, data.thousands_sep)
-        }
-    };
-
-    /**
-	 * The (modified) excellent number formatting method from PHPJS.org.
-	 * http://phpjs.org/functions/number_format/
-	 *
-	 * @modified by Sam Sehnert (teamdf.com)
-	 *	- don't redefine dec_point, thousands_sep... just overwrite with defaults.
-	 *	- don't redefine decimals, just overwrite as numeric.
-	 *	- Generate regex for normalizing pre-formatted numbers.
-	 *
-	 * @param float number			: The number you wish to format, or TRUE to use the text contents
-	 *								  of the element as the number. Please note that this won't work for
-	 *								  elements which have child nodes with text content.
-	 * @param int decimals			: The number of decimal places that should be displayed. Defaults to 0.
-	 * @param string dec_point		: The character to use as a decimal point. Defaults to '.'.
-	 * @param string thousands_sep	: The character to use as a thousands separator. Defaults to ','.
-	 *
-	 * @return string : The formatted number as a string.
-	 */
-    $.number = function (number, decimals, dec_point, thousands_sep) {
-
-        // Set the default values here, instead so we can use them in the replace below.
-        thousands_sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep;
-        dec_point = (typeof dec_point === 'undefined') ? '.' : dec_point;
-        decimals = !isFinite(+decimals) ? 0 : Math.abs(decimals);
-
-        // Work out the unicode representation for the decimal place.	
-        var u_dec = ('\\u' + ('0000' + (dec_point.charCodeAt(0).toString(16))).slice(-4));
-
-        // Fix the number, so that it's an actual number.
-        number = (number + '')
-			.replace(new RegExp(u_dec, 'g'), '.')
-			.replace(new RegExp('[^0-9+\-Ee.]', 'g'), '');
-
-        var n = !isFinite(+number) ? 0 : +number,
-		    s = '',
-		    toFixedFix = function (n, decimals) {
-		        var k = Math.pow(10, decimals);
-		        return '' + Math.round(n * k) / k;
-		    };
-
-        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-        s = (decimals ? toFixedFix(n, decimals) : '' + Math.round(n)).split('.');
-        if (s[0].length > 3) {
-            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, thousands_sep);
-        }
-        if ((s[1] || '').length < decimals) {
-            s[1] = s[1] || '';
-            s[1] += new Array(decimals - s[1].length + 1).join('0');
-        }
-        return s.join(dec_point);
-    }
-
-})(jQuery);”ò¿Ÿb   ^       #´,      setSelectionRange      ‚!P
-      rangeStart     ¸¬õ§      rangeEnd   ‹Yk1      createTextRange    #ùÁ¢      collapse   »íÉz	      moveStart      –¥ï$	      character      ˝Ä”á      moveEnd    1<Î      select	     KÃÌ      focus
-       „qˆ      getSelection   ∆ÈI◊      part   U,2ñ      pos    RâDo      toLowerCase    ö£))      Start      x){F      End    ∏OÄ      document   l8oi	      selection      ⁄ËS#      createRange    §°_∏      stored_range   ÂA¸¨      selectionStart     L0F      selectionEnd   uÁ…	      duplicate      ^æ4#      expand     OÌÖ|      textedit   WuÙ      setEndPoint    Ú]      EndToEnd   à3¿µ      text   
-˝§ù      _keydown   ˆçÆ      codes      Í√èÁ      shifts     π}W      decimals    9äØ	      dec_point!      _≠S      thousands_sep"      Z‡∆u      u_dec#      ˛¿~π      \u$     S∞˜      0000%   (=S:
-      charCodeAt&     ÿÖ Ã      slice'      «≠R+      regex_dec_num(      1Úg7      [^)     xÅ^      0-9]*   ë?öU	      regex_dec+      ©ıÍ
-      input:text,     ·∏#L      keydown.format-      Kı±      $this.      6ó(Å      data/   JÆ≤ı	      numFormat0      ähc)      code1   ≠5      keyCode2    ≈∏0      which3      z∑≥       chara4      &⁄õ      val5    Bµe◊      setPos6     ô,Åÿ      shiftKey7   >¬≈      fromCharCode8   ÆÑ3Ã      [0-9]9      B¸ø;      key:    
-@•&      ctrlKey;    `$ü˝      metaKey<    B9∫¿      preventDefault=     ◊ïÊ      altKey>     íu`      init?   Kk.      max@    ˛Q1      consoleA    =X˚      logB    mfÒ˚      Setpos keydown: C   §,ﬂ∫      keyup.formatD   o_      Setting pos: E      heÀ¥      paste.formatF   Õ_      originalG   Ÿ‹Ô      originalEventH      ¯2áâ      windowI     ;Óçœ      clipboardDataJ      “œü      getDataK    ^≤«°      TextL   ó
-      text/plainM     Ív.|      numN    ¥†á-      origHookGetO    %W      origHookSetP    "Ô2¢      valHooksQ   ãè@i
-      isFunctionR     ˛ .      absS    Ë∫Œ      [^0-9+-Ee.]T    Æ(GÕ
-      toFixedFixU     qET      powV    &9!Ï      roundW      nàÿ*      \B(?=(?:\d{3})+(?!\d))X     >Â/      jQueryY     ≈,ñ=      $.fn.number]    MÙ!_      $.fn.number/<^      ºÎçÜ      $.valHooks.text.get_    ›ß      $.valHooks.text.set`    üŸãé      $.number      ‰ Ô%,â                                                                                                                                                                        	                 
-                                                         ≥Oåc                         $ `   P
-  P  PN  PO  P                …  ã                   …        ã   	                P   P!  P"  '  P*  P   ã      
-         e  -  .  0  3    î   4  5  9  ã               e  -  .  0    5  ã               e  -  F  4  ã                 -  ã                 -  M  ã               ï -  M  .              ï 4  -  .                     !  "  n  s  T              n    k  Ø¬0∞8      W     IÙ$KEÆ˙ö   
-                                   ,  C  E     #   c    !     '  *  >          á&’™ç!´!   D   ®‡5’D                             o    Ω   y ·ß@`FÄ NˇˇˇˇP	P»  `ﬂúX»    	              C       ø  –   ·o   –   ·o   –   ·;   ;   º ,Am-Aæ .Aø /A¿ `A‹ \Aﬁ 'A› ]A€ [A≠ -Aª =A∫ ;AΩ -An.A>   ;   `   A1   A2	   A3
-   A4   A5   A6   A7   A8   A9   A0   A-   A=   A[   A]   A\   A;   A'   A,   A.   A/   A>   –   ·√   L   o   N   ·–   ·–   ·√   L    L!   úC   ô0   √   L    L!   L"   –   ·√   L    L!   L#   –   ·õ   ô6   √   L    ;$   N!   ·ô9   √   L    L!   o%   N"   ·√   L    L!   o&   N#   ·√   o'   N   ·ßü@B`%	%&%&&&&&&&&&&&JS	%((((((((((((((((((((ì@s`ï@Ä ±`` 	`ô 	`ö 	`§ 	`ö@Ä …`ö@Ä ˜`ö@Ä  `ê0Ä BP4  Æ%€4  ƒ                       ‡œ  ·¿  L   ús   ô   ¿  „L   Êu  œ   ·¿   „L   Êy ·¿   „L   Ê   æ  y ·¿   „L   Ê   æ æ  )y ·¿   „L   Êy  ·õA   ô   ¿  L   ú.   ô   ¿  „L   Êy  ·¿  „L   Êæ  æ y ·ô   ßF`ì `P(`P$`ê ˇˇˇÈP$`ê ˇˇˇ‡P$`PN`ì `P$`ˇˇˇ‚PIPÄÄË  ÿø<∑Ë  k        
-       $       ‡œ  ·¿  L   L   œ   ·æ  „L   Êu     ú   ô      õ   ô      ô   Œ  ·Ω   L   úÃ   ô	   Ω   L   „L	   Êu  œ  ·¿  „L
-   Êu  œ  ·¿  „L   Ê   y ·¿  „L   Ê   ¿  y ·¿  L   L   ¿  L   L   )œ  ·¿  ¿  L   L   (œ  ·æ     ú   ô   ¿  õ   ô   ¿  ô   §õ<   ô   ¿     æ  (M   ú   ô"   ¿     æ  (Mœ   ·ô$   ¿   §ß&`ì@	`
-P∞@`î@`ë PH
-`PH`ê PD`ê %ˇˇˇËPD`,î ` î `™@K`	ñ `	O	`$Q∏  €éæ∏  Ó  '      	       -       ø –   ·ø –   ·ø –   ·ﬁœ  ·‡œ  ·√    ú   ô      õ   ô   √   ô   –   ·√    ú   ô      õ   ô   √   ô   –   ·√    ú   ô   õ   ô   √   ô   –   ·      √   „L   Êu „L   Êu („L   Ê¸u (œ   ·Ω   Ç	   ¿   (
-   (   Â  É –   ·Ω   Ç¿      Â  É –   ·æ  úÜ   ô   ¿  „L   Ê   u úP   ô   ¿  „L   Ê;   o   >   o   >   o   >   u „L   Êo   u §õ   ô$   ¿  „L   Êo   u §ô'   ¿  „L   Ê√  L   „L   ÊΩ   ¿  u u §ßß@	` ∞ 	` ∞ 	` ¨@`	
-
-PPP)`î ˇˇˇÓ)`ˇˇˇıI`ê@`ê PM`EJÄ  ÀJÄ  ˇJPJÄ ˇˇˇ˚PCÄ 6;Ä + `ˇˇˇ˚PCÄ 6FÄ 5	`ë ˇˇˇÚPˇˇˇÚP#QÄD  Ôl¯pD  ¶
-     
-          $     ‡œ	  ·√   ¿	  u œ   ·¿   „L   Ê   u œ  ·æ  L   ú   ô   æ  L   õ   ô   æ  L   ô   œ  ·   œ  ·√  „L   Ê¿	  j      k    u œ  ·√  „L   Ê¿	  j      k    u œ  ·   œ  ·œ  ·√  L	   „L
-   Ê¿  u ú   ô   √  L	   ¿  Mœ  ·ô   æ  L   û$   ô   ·¿  A"û   ô   ·¿  Z!ô   ú   ô   ¿   (0œ  ·õ´   ô   æ  L   û$   ô   ·¿  E"û   ô    ·¿  i!ô!   ú   ô"   ¿  0)0œ  ·õX   ô#   æ  L   û#   ô%   ·√  L   „L
-   Ê¿  u ô(   ú   ô)   √  L   ¿  Mœ  ·ô+   ¿     ú"   ô-   Ω   „L   Ê¿  u œ  ·ô0   ¿  û4   ô1   ·¿  √   û   ô3   ·¿  „L   Ên   u ô6   ú5  ô7   æ  L   ú   ô9   æ  L   õ   ô:   æ  L   ô;   œ  ·¿  .ü»   ô=   ·¿  ü∂   ô?   ·¿  	ü§   ôA   ·¿  üí   ôC   ·¿  üÄ   ôE   ·¿  Aü   ôG   ·¿  RôH   û.   ôI   ·æ  L   ü   ôK   ·æ  L   ôL   ôL   ü$   ôM   ·¿  #"û   ôO   ·¿  '!ôP   ú   ôQ    §ôQ   æ  „L   Êy  ·§ôS   ¿  û   ôU   ·¿  ¿	  L   L   ôX   ü   ôY   ·¿   „L   Êu  ô\   ûd   ô]   ·æ  L   ûP   ô`   ·æ  L   û<   ôc   ·æ  L   û(   ôf   ·¿  L   û   ôh   ·¿  ôi   ú≠   ôj   œ  œ  ·¿	     N   ·¿  √    ú   ôm   ˇõ   ôm   ôm   N   ·¿  √    ú   ôp   √   (õ   ôr   ôr   N   ·√  „L   Ê¿	  j   k    k   y ·õ'   ôv   ¿  ¿  ¿	  L   L   )N   ·ôz   √    û;   ô|   ·¿  √   û&   ô~   ·¿  ¿	  L   L   √   ))ôÉ   úo   ôÑ   ¿  „L   2*N   ·¿  Ω   „L   Ê¿  L   u N   ·æ  „L   Êy  ·¿	  L   L   ¿  L   (œ  ·õJ  ôì   ¿  √   ú@   ôï   ¿  Ω   „L   Ê¿  L   u N   ·æ  „L   Êy  ·õ˚  ôú   √    û6   ôû   ·¿  û$   ô†   ·¿  ¿	  L   L   √   )ô§   úL   ô•   æ  „L   Êy  ·¿  „L   2+N   ·¿	  L   L   ¿  L   (œ  ·õh  ôØ   √    û6   ô±   ·¿  û$   ô≥   ·¿  ¿	  L   L   √   ) ô∑   ú  ô∏   ¿	  L      ú   ôª    §ôª   ¿	  L   „L   Ê¿  )¿  u    úÇ   ô¡   ¿	  L   „L   Ê¿  )u    (¿	  L   „L   Ê¿  u (œ  ·¿   „L   Ê¿  „L   Ê√      u „L   Ê√   √   u y ·ô–   æ  „L   Êy  ·¿  „L   2+N   ·¿	  L   L   ¿  L   (œ  ·õ  ô⁄   ¿  û.   ô‹   ·¿	  L   „L   Ê¿  )¿  u √   ô·   úL   ô‚   æ  „L   Êy  ·¿  „L   2+N   ·¿	  L   L   ¿  L   (œ  ·õÄ  ôÏ   √    û«   ôÓ   ·¿  ¿  û≥   ô   ·¿	  L   L   √   ( ûí   ôı   ·¿  ¿	  L   L   √   )) ûl   ô˚   ·Ω    ¿  u ûS   ôˇ   ·æ  L   û?   ô  ·æ  L   û+   ô  ·æ  L   û   ô  ·¿  L   ô	  ú£   ô
-  ¿  ¿	  L   L   ú.   ô  ¿	  L   „L   Ê¿  )u œ  ·õA   ô  ¿	  L   „L   Ê¿  u ¿	  L   „L   Ê¿  (u (œ  ·ô  ¿	  ¿  N   ·¿  œ  ·ô  ¿   úN   ô  Ω    „L!   Ê"   ¿  y ·√  „L   Ê¿	  j   ¿  k    ¿  k   y ·ô"  ¿   „L   Ê   ¿  y ·ßF%`ˇˇˇˇP(`ê P(`∂ `*`ˇˇˇÙP(`ˇˇˇÙP(`*`F`ë ˇˇˇÒP-`ô@`º `ó $`º `ó $`§ -ˇˇˇÒPí@`ô@"`î `ˇˇˇÛPM&`ñ ë ˇˇˇ˙Pì@((`∂ `⁄0,‹0.® !`AÄ  ßF3`
-P$`AÄ  ßF:`ï ™ Pï î î ¿@<`*`O@`≠ `ï û `ë ˇˇˇÙP>G `ö@N`ñ ï ò `í `ë 	ˇˇˇ˘P)`
-PDT`ô@Y"`	ê `ë 	ˇˇˇ˘P)`
-PN`"`® &ñ `
-P$`í@e`ô@k"`® %ñ !`ô `AÄ  ßFp!`ê ˇˇˇÔPì !`ë ˇˇˇ˜P	ê ˇˇˇ˙P)!`
-
-ˇˇˇ¯P
-#ˇˇˇÌPˇˇˇ›PIu`
-P$`í@y`ô@"`¢ ˇˇˇÔPï `
-P$`í `ô@Ä  ä`í î ° í ö ˇˇˇ˜P.î î Ø !`ô !`ë ˇˇˇ˜Pí !`ë ˇˇˇ˜Pê ˇˇˇ˙P `.` `ë `ë  ˇˇˇËP$`		ˇˇˇÎP `ê ˇˇˇÓP PÄ¥  :ﬂ¥  ‚               K       ‡œ  ·√   ¿  u œ   ·¿   „L   Ê   u œ  ·æ  L   ú   ô   æ  L   õ   ô   æ  L   ô   œ  ·√  „L   Ê¿  j      k    u œ  ·¿  L      üd   ô   ·¿  0ü   ô   ·¿  9 ô   û;   ô   ·¿  `ü   ô   ·¿  i ô   û   ô   ·¿  ô   ú   ô    §ô   ¿   „L	   Ê¿   „L	   Êu  y ·√    ú  ô   ¿  L
-   úè   ô   ¿  L   L   √   )¿  L
-   ú   ô%   õ   ô%   ô%   )œ  ·¿  ¿  ¿  L   L   )N   ·¿  N
-   ·¿   „L   Ê   ¿  y ·õn   ô-   ¿  ¿  L   L   √   ) û   ô2   ·¿  ô3   ú4   ô4   ¿  „L   2*N   ·¿   „L   Ê   ¿  y ·ô:   Ω   „L   Ê   ¿  √   ¿  L   L   ¿  L   (¿  L   L   ¿  L   y ·¿  L   L   ¿  L   (œ  ·√  „L   Ê¿  j   ¿  k    ¿  k   y ·ßF%`ˇˇˇˇP(`ê P(`∂ `ˇˇˇÙPH
-`ˇZ`A+F`
-PˇˇˇˆPD`ë@!`ï !`¨ !`ï !`K!`ê ˇˇˇÓPN&`® !`í@"!`ê ˇˇˇÓPI&`ë 
-
-	ˇˇˇ´PD)`/`		ˇˇˇÎP$Pd  =óÇ˚d  ˝                       ‡œ  ·√   ¿  u œ   ·æ  L   œ  ·œ  ·Ω   L   û   ô   ·Ω   L   L   ô   ú-   ô	   Ω   L   „L   Ê   u œ  ·õX   ô   ¿  L   û   ô   ·¿  L   L   ô   ú'   ô   ¿  L   „L   Ê   u œ  ·ô   ¿   „L   Ê¿  y ·æ  „L   Êy  ·§ßF%`ˇˇˇˇP(`-`F`≥ `ñ Pí $`± `ï PM`
-ˇˇˇ¸PD`
-P$`!QÄÄÄ  ‚ˆ"~  Ø                        ‡œ  ·√   ¿  u „L   Ê   ;   √   (>   √   >   √   >   √   >   √   >   √   >	   >
-   u œ   ·¿  L      ú   ô    §ô   ¿   „L   Ê¿   „L   Êu  y ·ßF`ˇˇˇˇP% -*****F PH`ô `AF`
-PˇˇˇˆP$PÄ   )ì4Ï   ü         	               ‡œ  ·√   ¿  u œ   ·¿   „L   Êu  „L   Ê√      u „L   Ê√      u œ  ·¿   „L   ÊΩ    ¿  u ù   ô   õ   ô   ¿  ô   √   √   √   y ·ß&!`ˇˇˇˇP`P
-
-ˇˇˇ¯P
-#
-ˇˇˇ¯P)`
-ˇˇˇ˜Pò 
-
-ˇˇˇ…P$P¨  Ê&4¨                         √    æ  u œ   ·¿   „L   Ê   u œ  ·¿  ùK   ô   √   „L   Ê√   u ú   ô   √    æ  u §õ   ô    §ô   õù   ô   æ  L      ú   ô      §ô   æ  L   „L   Ê¿  L      u „L   Ê¿  L   	   u œ  ·   Ω
-    ¿  u ú   ô   ¿  õ   ô   ô   (§ô   ß@`ˇˇˇˇP(`ê PH`N	`ˇˇˇıPM`ˇˇˇÙPC";@`A"ê0@`ò `E"F` /ˇˇˇ¯P*ˇˇˇ¯PI `	ˇˇˇ˜P¢@"VÄÄÄ4  ˛0ﬂI4  º          	              √    æ  u œ   ·¿   „L   Ê   u œ  ·¿  ùN   ô   √   „L   Ê√   u ú   ô   √    æ  æ u §õ   ô    §ô   õ@   ô   æ  √   „L   Êæ ¿  L   ¿  L   ¿  L   u N   §ô   ß@`ˇˇˇˇP(`ê PH`N`ˇˇˇıPM
-`ˇˇˇPC;@`Aê0 `			ˇˇˇ’PHVÄÄ|  Jƒ√6|  ô                H       æ  ú   ô      õ   ô   æ ô   Œ ·æ  ú   ô      õ   ô   æ ô   Œ ·Ω    æ u ù   ô   õ   ô   Ω   „L   Êæ u ô   Œ ·      æ „L   Êu „L	   Êu („L
-   Ê¸u (œ   ·æ     („L   ÊΩ   Ç¿      Â  É    u „L   ÊΩ   Ç      Â  É    u Œ  ·Ω    æ  u ù   ô    õ   ô    æ  ô!   œ  ·   œ  ·o   œ  ·æ ú   ô#   ¿   ¿  æ u õ#   ô$      Ω   „L   Ê¿  u (ô(   „L   Ê   u œ  ·¿  ML    ú)   ô.   ¿  ¿  M„L   Ên   æ u P·ô2   ¿  Mü   ô4   ·   ô4   L   æ úe   ô7   ¿  ¿  Mü   ô9   ·   ô9   P·¿  1‰MΩ   Çæ ¿  ML   )(Â  É „L   Ê   u (0P·ôF   ¿  „L   Êæ u §ß@	` ™ 	` ™ 	`ˇˇˇ˜P§ #ˇˇˇ¸PL`	
-
-PPPI	`ê ˇˇˇıPˇˇˇ¯P*îPˇˇˇ¯PG`
-ˇˇˇ˜Pò .`*`J	`í ˇˇˇÚPí ˇˇˇ˙Pï 
-P(`ò `í ˇˇˇ›PJ`† .`¢ `í ˇˇˇÎP&PL	`ˇˇˇ˚P#QÄÄ   S\ŒÄ   =                 	       Ω   „L   Ê
-æ u œ   ·   Ω   „L   Êæ  ¿   ,u ¿   -(§ß `ˇˇˇ¯P(`ˇˇˇˆP&QÄÄÄ3ıÿ  `               	    `W  I                            {    `.  /  1  2  ê        î     ı   6    ç  7  ·     P:  ;  <  W  I  4  =  >  c  ã  ?  &  0  ‚  '  @  A  B    `.  /  1  2       W  ê   4  >  I  c  @  A  D    `G  H  I  J  K  L  4  <    `.  /    @c    !     '  *  >  W  ê   4  	  `  ‚  ê   .    '    `,  .  #  $  %  )  &  é  (  )  g  ú +     @  p,    pC    pE  å     p	  p       H  
-  `.  /  Q  W  ê   ‚  '  *  .  '    `.  /  Q         !  W    `ã  U  ê   V    `,  .  '  ã  R  #  $  %  )  &  ê   ‚  é  g  S    pV  Ê  I    Pá  >  0    `  p  p   @  @    @~  !  @  #  $  %  ^  &  *  (  )  _  +  {  }  |  :  "  <  >  ?    ◊   p  P    Œ   Ô    @
-  p  p  p   `  pX  ˇXÑ·                 π   (                 	            	      
-        k      Y           #   ,        =      C        M   	   E        V      ]        d      ]        à      ^        ì   	   _        °      `        ú      T        ùH©¿      Z`      Z`                Ä≥  P`  ™  P`                ”  #  π  #                !  Ö
-    Ö
-  /             Çí  ëI  â  ëI  Ä              p  ÿ6  g  ÿ6  õ   0           ‘7  ù@  À7  ù@  K  .           ®A  E  üA  E    .           åE  ìG  ÉE  ìG  ò              H  ˙H  H  ˙H  ≠  +              M  GR  ¡M  GR  ÷  $            ˚S  ÔV  ÚS  ÔV    $           ⁄Z  K`  —Z  K`  -              ^  |^  ^  |^  >            5°›ÜBL î¨U™é      hTﬂhTﬂHRΩ6h]J   É    O^userContextId=1&partitionKey=%28https%2Csurecourt.com%29,:https://rvcny.surecourt.com/epay/scripts/jquery_plugin/jquery.number.js strongly-framed 1 security-info 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 request-method GET response-head HTTP/2 200 
-content-type: application/javascript
-last-modified: Fri, 03 Dec 2021 09:03:01 GMT
-accept-ranges: bytes
-etag: "8090cb9224e8d71:0"
-date: Thu, 19 Jun 2025 13:24:21 GMT
-content-length: 24666
-X-Firefox-Spdy: h2
- original-response-headers content-type: application/javascript
-last-modified: Fri, 03 Dec 2021 09:03:01 GMT
-accept-ranges: bytes
-etag: "8090cb9224e8d71:0"
-server: 
-date: Thu, 19 Jun 2025 13:24:21 GMT
-content-length: 24666
-X-Firefox-Spdy: h2
- ctid 2 uncompressed-len 0 net-response-time-onstart 249 net-response-time-onstop 1766 alt-data 1;24666,javascript/moz-script-bytecode-20250613091300-8l alt-data-from-child 1   ˘›

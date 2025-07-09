@@ -1,8 +1,0 @@
-@-moz-document url-prefix("chrome:") {
-  #tabbrowser-tabs
-    .tabbrowser-tab:is([visuallyselected]):not(:hover)
-    .tab-reset-button {
-    display: none !important;
-  }
-  
-}
