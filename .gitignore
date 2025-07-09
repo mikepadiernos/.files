@@ -8,6 +8,8 @@
 .atuin/.data/
 .atuin/data/
 
+.davfs2/
+
 # .filecentipede/lib/
 
 # .msmtp/*.log
@@ -19,6 +21,8 @@
 .tmux/plugins/*/
 
 .qute/__pycache__/
+
+.zen/
 
 .zsh/.historical/
 .zsh/history/
