@@ -1,9 +1,9 @@
 # : Manager {{{
-[manager]
+[mgr]
 cwd = { fg = "#ABB2BF", bg = "#000000" }  # Blue
 
 # Hovered
-hovered = { bg = "#282C34" }  # Darkened background
+hovered = { bg = "#0f0f0f" }  # Darkened background
 preview_hovered = { underline = false }
 
 # Find
@@ -28,8 +28,7 @@ count_selected = { fg = "#98C379", bg = "#282C34" }  # Green on Darkened backgro
 
 # Border
 border_symbol = " "
-
-# border_style = { fg = "#282C34" }  # Darkened background
+border_style = { fg = "#000000" }  # Darkened background
 
 # : }}}
 

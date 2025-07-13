@@ -13,15 +13,15 @@
 	<key>gutterSettings</key>
 	<dict>
 		<key>background</key>
-		<string>#353b45</string>
+		<string>#000000</string>
 		<key>divider</key>
-		<string>#353b45</string>
+		<string>#000000</string>
 		<key>foreground</key>
-		<string>#545862</string>
+		<string>#ffffff</string>
 		<key>selectionBackground</key>
-		<string>#3e4451</string>
+		<string>#efe100</string>
 		<key>selectionForeground</key>
-		<string>#565c64</string>
+		<string>#000000</string>
 	</dict>
 	<key>settings</key>
 	<array>
@@ -29,7 +29,7 @@
 			<key>settings</key>
 			<dict>
 				<key>background</key>
-				<string>#282c34</string>
+				<string>#000000</string>
 				<key>caret</key>
 				<string>#abb2bf</string>
 				<key>foreground</key>

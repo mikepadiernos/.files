@@ -3,6 +3,8 @@
 
 export LC_ALL=en_US.UTF-8
 
+export SHELL="/usr/bin/zsh"
+
 export EDITOR=nvim
 
 export DIRENV_SKIP_TIMEOUT=TRUE
