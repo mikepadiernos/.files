@@ -1,0 +1,9 @@
+if [ command -v nvm > /dev/null 2>&1 ]; then
+  echo -e 'NVM is' "\e[31mnot installed\e[0m"
+else
+  echo -e 'NVM is' "\e[32minstalled\e[0m"
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+fi
+

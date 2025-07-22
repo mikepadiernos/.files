@@ -48,10 +48,11 @@ source "$ZSH_CONFIGS"/.zsh_aliases
 source "$ZSH_CONFIGS"/.zsh_completions
 
 source "$ZSH_MODULES"/.zsh_homebrew
-source "$ZSH_MODULES"/.zsh_drush
+# source "$ZSH_MODULES"/.zsh_drush
+source "$ZSH_MODULES"/.zsh_node
 
 eval "$(atuin init zsh)"
-eval "$(mise activate zsh)"
+eval "$(~/.local/bin/mise activate zsh --shims)"
 eval "$(zoxide init --cmd cd zsh)"
 
 # autoload -Uz compinit && compinit -i > /dev/null

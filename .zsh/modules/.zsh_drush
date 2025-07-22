@@ -1,5 +1,5 @@
-if [ hash drush &> /dev/null ]; then
-  echo 'DRUSH is installed'
+if [ hash 'ddev drush' &> /dev/null ]; then
+  echo -e "\e[42mDRUSH\e[0m" 'is installed'
   alias den   = 'drush -y en'
   alias dun   = 'drush -y pmu'
   alias dcr   = 'drush -y cr'
