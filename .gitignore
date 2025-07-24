@@ -15,6 +15,7 @@
 # .msmtp/*.log
 
 .neovim/
+.neovim/*/
 
 .openaudible/tmp/
 
