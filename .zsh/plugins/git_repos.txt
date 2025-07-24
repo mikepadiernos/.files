@@ -26,6 +26,7 @@ https://github.com/michaelpadiernos-forks/zsh-history.git
 https://github.com/michaelpadiernos-forks/zsh-history-substring-search.git
 https://github.com/michaelpadiernos-forks/zsh-ls.git
 https://github.com/michaelpadiernos-forks/zsh-magic-dashboard.git
+https://github.com/wintermi/zsh-mise.git
 https://github.com/michaelpadiernos-forks/zsh-ssh-agent.git
 https://github.com/michaelpadiernos-forks/zsh-ssh.git
 https://github.com/michaelpadiernos-forks/zsh-ssh-plugin.git
