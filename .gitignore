@@ -14,7 +14,7 @@
 
 # .msmtp/*.log
 
-.neovim/nvim.modular/
+.neovim/
 
 .openaudible/tmp/
 
