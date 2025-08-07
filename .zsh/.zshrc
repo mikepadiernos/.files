@@ -25,6 +25,8 @@ export GOPATH="$HOME/.go"
 
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
+. "$HOME/.atuin/bin/env"
+
 fpath+=(
   ${ZSH_PLUGINS}/zsh-completions/src
   $NEOVIM
@@ -51,7 +53,9 @@ source "$ZSH_MODULES"/.zsh_homebrew
 # source "$ZSH_MODULES"/.zsh_drush
 source "$ZSH_MODULES"/.zsh_node
 
-eval "$(atuin init zsh)"
+source <(fzf --zsh)
+
+eval "$(~/.atuin/bin/atuin init zsh)"
 eval "$(~/.local/bin/mise activate zsh --shims)"
 eval "$(zoxide init --cmd cd zsh)"
 
@@ -62,3 +66,6 @@ autoload -Uz compinit; compinit
 
 # Lando
 # export PATH="/home/mikepadiernos/.lando/bin${PATH+:$PATH}"; #landopath
+
+# . "$HOME/.atuin/bin/env"
+
