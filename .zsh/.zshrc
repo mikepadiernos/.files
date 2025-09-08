@@ -21,11 +21,15 @@ export CARGO="$HOME/.cargo/bin"
 
 export GOPATH="$HOME/.go"
 
+# export AWSPATH="/usr/sbin/aws_completer"
+
 # set OPENAUDIBLE_HOME="$HOME/.files/.openaudible"
 
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export ATUIN="/usr/bin/atuin"
 
-. "$HOME/.atuin/bin/env"
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$AWSPATH:$ATUIN
+
+# . "$HOME/.atuin/bin/env"
 
 fpath+=(
   ${ZSH_PLUGINS}/zsh-completions/src
@@ -55,8 +59,9 @@ source "$ZSH_MODULES"/.zsh_node
 
 source <(fzf --zsh)
 
-eval "$(~/.atuin/bin/atuin init zsh)"
-eval "$(~/.local/bin/mise activate zsh --shims)"
+eval "$($HOME/wsl2-ssh-agent)"
+eval "$(atuin init zsh)"
+eval "$(mise activate zsh --shims)"
 eval "$(zoxide init --cmd cd zsh)"
 
 # autoload -Uz compinit && compinit -i > /dev/null
@@ -69,3 +74,4 @@ autoload -Uz compinit; compinit
 
 # . "$HOME/.atuin/bin/env"
 
+# complete -C '/usr/sbin/aws_completer' aws
