@@ -59,7 +59,7 @@ source "$ZSH_MODULES"/.zsh_node
 
 source <(fzf --zsh)
 
-eval "$($HOME/wsl2-ssh-agent)"
+# eval "$($HOME/wsl2-ssh-agent)"
 eval "$(atuin init zsh)"
 eval "$(mise activate zsh --shims)"
 eval "$(zoxide init --cmd cd zsh)"
