@@ -8,6 +8,7 @@
 .atuin/.data/
 .atuin/data/
 
+.copy/*.dat
 .davfs2/
 
 # .filecentipede/lib/
