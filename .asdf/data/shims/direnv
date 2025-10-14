@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# asdf-plugin: direnv 2.35.0
-exec /home/mikepadiernos/.asdf/bin/asdf exec "direnv" "$@" # asdf_allow: ' asdf '

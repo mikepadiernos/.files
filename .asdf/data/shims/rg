@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# asdf-plugin: ripgrep 14.1.1
-exec /home/mikepadiernos/.asdf/bin/asdf exec "rg" "$@" # asdf_allow: ' asdf '

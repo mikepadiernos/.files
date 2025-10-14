@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# asdf-plugin: eza 0.20.4
-exec /home/mikepadiernos/.asdf/bin/asdf exec "eza" "$@" # asdf_allow: ' asdf '

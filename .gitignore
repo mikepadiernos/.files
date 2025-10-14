@@ -5,10 +5,13 @@
 
 .asdf/data/*/
 
-.atuin/.data/
-.atuin/data/
+.atuin/data/records.db
+.atuin/data/*.db-shm
+.atuin/data/*.db-wal
 
 .copyq/*.dat
+.copyq/copyq.lock
+
 
 .davfs2/
 
