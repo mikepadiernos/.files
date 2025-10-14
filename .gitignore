@@ -32,7 +32,8 @@
 
 .zsh/.historical/
 .zsh/history/
-.zsh/plugins/*/
+.zsh/plugins/zsh*/
+!.zsh/plugins/git_repos.txt
 .zsh/themes/minimal/
 .zsh/themes/typewritten/
 
