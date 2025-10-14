@@ -1,3 +1,0 @@
-DetailBar#details
-{
-}

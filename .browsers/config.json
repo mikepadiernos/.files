@@ -1,0 +1,28 @@
+{
+  "hidden_apps": [],
+  "hidden_profiles": [
+    "/usr/bin/microsoft-edge-dev#",
+    "/usr/bin/microsoft-edge-dev#Default",
+    "/usr/bin/google-chrome-unstable#"
+  ],
+  "profile_order": [
+    "/opt/zen-browser-bin/zen-bin#",
+    "/usr/bin/vivaldi-stable#Profile 1",
+    "/usr/bin/vivaldi-stable#Profile 2",
+    "/usr/bin/vivaldi-stable#Profile 3",
+    "/usr/bin/vivaldi-stable#Default",
+    "qutebrowser#",
+    "brave#Default",
+    "/usr/bin/chromium#Default"
+  ],
+  "default_profile": null,
+  "rules": [],
+  "ui": {
+    "show_hotkeys": false,
+    "quit_on_lost_focus": false,
+    "theme": "Auto"
+  },
+  "behavior": {
+    "unwrap_urls": false
+  }
+}
