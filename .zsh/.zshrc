@@ -40,7 +40,7 @@ fpath+=(
   $fpath
 )
 
-# export ZSH_DISABLE_COMPFIX="true"
+export ZSH_DISABLE_COMPFIX="true"
 
 # autoload -Uz compinit && compinit -i > /dev/null
 # autoload -Uz compinit; compinit
@@ -65,7 +65,7 @@ eval "$(mise activate zsh --shims)"
 eval "$(zoxide init --cmd cd zsh)"
 
 # autoload -Uz compinit && compinit -i > /dev/null
-autoload -Uz compinit; compinit
+autoload -Uz compinit; compinit -u
 
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
