@@ -1,0 +1,53 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+meta+/",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "ctrl+`",
+        "command": "-workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "ctrl+meta+space",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "-workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+meta+enter",
+        "command": "workbench.action.toggleAuxiliaryBar"
+    },
+    {
+        "key": "ctrl+alt+b",
+        "command": "-workbench.action.toggleAuxiliaryBar"
+    },
+    {
+        "key": "ctrl+meta+\\",
+        "command": "workbench.action.toggleMaximizedAuxiliaryBar"
+    },
+    {
+        "key": "ctrl+meta+]",
+        "command": "lazygit-vscode.toggle"
+    },
+    {
+        "key": "ctrl+shift+l",
+        "command": "-lazygit-vscode.toggle"
+    },
+    {
+        "key": "ctrl+meta+[",
+        "command": "docker-lazydocker.launch"
+    },
+    {
+        "key": "ctrl+meta+backspace",
+        "command": "yazi-vscode.toggle"
+    },
+    {
+        "key": "ctrl+shift+y",
+        "command": "-yazi-vscode.toggle"
+    }
+]

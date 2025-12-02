@@ -59,9 +59,9 @@ source "$ZSH_MODULES"/.zsh_node
 
 source <(fzf --zsh)
 
+eval "$($HOME/.local/bin/mise activate zsh --shims)"
 # eval "$($HOME/wsl2-ssh-agent)"
 eval "$(atuin init zsh)"
-eval "$(mise activate zsh --shims)"
 eval "$(zoxide init --cmd cd zsh)"
 
 # autoload -Uz compinit && compinit -i > /dev/null
