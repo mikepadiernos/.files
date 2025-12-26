@@ -5,7 +5,7 @@
 
 .asdf/data/*/
 
-.atuin/data/records.db
+.atuin/data/*.db
 .atuin/data/*.db-shm
 .atuin/data/*.db-wal
 
