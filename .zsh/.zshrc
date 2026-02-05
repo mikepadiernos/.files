@@ -56,7 +56,7 @@ source "$ZSH_CONFIGS"/.zsh_completions
 source "$ZSH_MODULES"/.zsh_homebrew
 # source "$ZSH_MODULES"/.zsh_drush
 source "$ZSH_MODULES"/.zsh_node
-
+source "$ZSH_MODULES"/.zsh_mise
 source <(fzf --zsh)
 
 eval "$($HOME/.local/bin/mise activate zsh --shims)"

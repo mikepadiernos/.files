@@ -26,6 +26,7 @@ settings:
     https://member.healthfirst.org: true
   content.javascript.clipboard:
     https://brew.sh: access-paste
+    https://duckduckgo.com: access-paste
     https://github.com: access-paste
     https://mail.google.com: access-paste
     https://myappexp.tcsapps.com: access-paste
