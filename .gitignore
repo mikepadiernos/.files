@@ -5,9 +5,12 @@
 
 .asdf/data/*/
 
-.atuin/data/*.db
-.atuin/data/*.db-shm
-.atuin/data/*.db-wal
+.atuin/data/**.db
+.atuin/data/**.db-shm
+.atuin/data/**.db-wal
+.atuin/data/history.db
+.atuin/data/kv.db
+.atuin/data/scripts.db
 
 .copyq/*.dat
 .copyq/copyq.lock
