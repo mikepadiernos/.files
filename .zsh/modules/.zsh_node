@@ -1,7 +1,7 @@
 if [ command -v nvm > /dev/null 2>&1 ]; then
-  echo -e 'NVM is' "\e[31mnot installed\e[0m"
+  echo -e '\e[31;41m NVM \e[0m' 'is' "\e[31mnot installed\e[0m"
 else
-  echo -e 'NVM is' "\e[32minstalled\e[0m"
+  echo -e '\e[30;42m NVM \e[0m' "\e[32minstalled\e[0m"
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

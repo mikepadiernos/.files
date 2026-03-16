@@ -23,7 +23,10 @@ export GOPATH="$HOME/.go"
 
 # export AWSPATH="/usr/sbin/aws_completer"
 
-# set OPENAUDIBLE_HOME="$HOME/.files/.openaudible"
+# Configure OpenAudible path only when the app is available.
+if command -v openaudible >/dev/null 2>&1 || command -v OpenAudible >/dev/null 2>&1; then
+  export OPENAUDIBLE_HOME="${OPENAUDIBLE_HOME:-$HOME/.files/.openaudible}"
+fi
 
 export ATUIN="/usr/bin/atuin"
 
@@ -34,11 +37,14 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$AWSPATH:$ATUIN
 fpath+=(
   ${ZSH_PLUGINS}/zsh-completions/src
   $NEOVIM
-  # $OPENAUDIBLE_HOME
   $CARGO
   $GOPATH
   $fpath
 )
+
+if [[ -n "$OPENAUDIBLE_HOME" && -d "$OPENAUDIBLE_HOME" ]]; then
+  fpath+=($OPENAUDIBLE_HOME)
+fi
 
 export ZSH_DISABLE_COMPFIX="true"
 
@@ -53,10 +59,12 @@ source "$ZSH_CONFIGS"/.zsh_bindkeys
 source "$ZSH_CONFIGS"/.zsh_aliases
 source "$ZSH_CONFIGS"/.zsh_completions
 
-source "$ZSH_MODULES"/.zsh_homebrew
-# source "$ZSH_MODULES"/.zsh_drush
-source "$ZSH_MODULES"/.zsh_node
 source "$ZSH_MODULES"/.zsh_mise
+
+# source "$ZSH_MODULES"/.zsh_drush
+source "$ZSH_MODULES"/.zsh_gh
+source "$ZSH_MODULES"/.zsh_homebrew
+source "$ZSH_MODULES"/.zsh_node
 source <(fzf --zsh)
 
 eval "$($HOME/.local/bin/mise activate zsh --shims)"
@@ -67,11 +75,3 @@ eval "$(zoxide init --cmd cd zsh)"
 # autoload -Uz compinit && compinit -i > /dev/null
 autoload -Uz compinit; compinit -u
 
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Lando
-# export PATH="/home/mikepadiernos/.lando/bin${PATH+:$PATH}"; #landopath
-
-# . "$HOME/.atuin/bin/env"
-
-# complete -C '/usr/sbin/aws_completer' aws

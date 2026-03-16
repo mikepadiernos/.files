@@ -1,0 +1,52 @@
+---CHECK PROJECT mike---
+Error: unknown shorthand flag: 'p' in -p
+Usage:
+  ddev describe [projectname] [flags]
+
+Aliases:
+  describe, status, st, desc
+
+Examples:
+ddev describe
+ddev describe <projectname>
+ddev status
+ddev st
+
+Flags:
+  -h, --help   help for describe
+
+Global Flags:
+  -j, --json-output   If true, user-oriented output will be in JSON format.
+      --skip-hooks    If true, any hook normally run by the command will be skipped.
+
+---CHECK DRUSH---
+Error: unknown shorthand flag: 'p' in -p
+Usage:
+  ddev exec [flags] [command] [command-flags]
+
+Aliases:
+  exec, .
+
+Examples:
+ddev exec ls /var/www/html
+ddev exec --service db
+ddev exec -s db
+ddev exec -s solr (assuming an add-on service named 'solr')
+ddev exec --raw -- ls -lR
+ddev exec -s db -u root ls -la /root
+
+Flags:
+  -d, --dir string       Define the execution directory within the container
+  -h, --help             help for exec
+  -q, --quiet            Suppress detailed error output
+      --raw              Use raw exec (do not interpret with Bash inside container) (default true)
+  -s, --service string   Define the service to connect to. [e.g. web, db] (default "web")
+  -u, --user string      Defines the user to use within the container
+
+Global Flags:
+  -j, --json-output   If true, user-oriented output will be in JSON format.
+      --skip-hooks    If true, any hook normally run by the command will be skipped.
+
+---DRUSH VERSION---
+Error: unknown command "drush" for "ddev"
+Run 'ddev --help' for usage.

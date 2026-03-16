@@ -1,0 +1,37 @@
+PWD=/home/mikepadiernos/.files
+DDEV_BIN=present
+ ITEM              VALUE                                   
+ DDEV version      v1.25.1                                 
+ architecture      amd64                                   
+ cgo_enabled       0                                       
+ db                ddev/ddev-dbserver-mariadb-11.8:v1.25.1 
+ ddev-environment  linux                                   
+ ddev-ssh-agent    ddev/ddev-ssh-agent:v1.25.1             
+ docker            29.3.0                                  
+ docker-api        1.54                                    
+ docker-buildx     0.32.1                                  
+ docker-compose    v5.0.2                                  
+ docker-platform   linux-docker                            
+ global-ddev-dir   /home/mikepadiernos/.ddev               
+ go-version        go1.26.0                                
+ mutagen           0.18.1                                  
+ os                linux                                   
+ router            ddev/ddev-traefik-router:v1.25.1        
+ web               ddev/ddev-webserver:v1.25.1             
+ xhgui-image       ddev/ddev-xhgui:v1.25.1                 
+
+---DDEV LIST---
+┌───────────┬─────────┬───────────────────────────────────────────────┬─────── ≈
+│ NAME      │ STATUS  │ LOCATION                                      │ URL    ≈
+├───────────┼─────────┼───────────────────────────────────────────────┼─────── ≈
+│ mike      │ [33mpaused[0m  │ ~/Library/Projects/personal/mike.padiernos.me │        ≈
+├───────────┼─────────┼───────────────────────────────────────────────┼─────── ≈
+│ swe-homes │ [31mstopped[0m │ ~/Library/Projects/fuelfx/swe-homes           │        ≈
+├───────────┼─────────┼───────────────────────────────────────────────┼─────── ≈
+│ Router    │ [31mexited[0m  │ The router is not healthy, your               │ http:/ ≈
+│           │         │ projects may not be accessible, if            │        ≈
+│           │         │ it doesn't become healthy, run                │        ≈
+│           │         │ 'ddev poweroff && ddev start' on a            │        ≈
+│           │         │ project to recreate it.                       │        ≈
+└───────────┴─────────┴───────────────────────────────────────────────┴─────── ≈
+

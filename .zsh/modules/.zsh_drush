@@ -1,11 +1,53 @@
-if [ hash 'ddev drush' &> /dev/null ]; then
-  echo -e "\e[42mDRUSH\e[0m" 'is installed'
-  alias den   = 'drush -y en'
-  alias dun   = 'drush -y pmu'
-  alias dcr   = 'drush -y cr'
-  alias dcri  = 'drush -y cr && drush -y updb && drush -y cim && drush -y cr'
-  alias dcrx  = 'drush -y cr && drush -y updb && drush -y cex && drush -y cr'
+unalias den dun dcr dcri dcrx 2>/dev/null
+
+function _drush_in_ddev {
+  command -v ddev >/dev/null 2>&1 && [ -f .ddev/config.yaml ]
+}
+
+function _drush_has_local {
+  command -v drush >/dev/null 2>&1 || [[ -n "${aliases[drush]}" ]]
+}
+
+function _drush_available {
+  _drush_in_ddev || _drush_has_local
+}
+
+function _drush_run {
+  if _drush_in_ddev; then
+    ddev drush "$@"
+  elif command -v drush >/dev/null 2>&1; then
+    command drush "$@"
+  elif [[ -n "${aliases[drush]}" ]]; then
+    eval "${aliases[drush]} \"$@\""
+  else
+    echo -e '\e[31;41m DRUSH \e[0m' 'is' "\e[31mnot installed\e[0m"
+    return 1
+  fi
+}
+
+if _drush_available; then
+  echo -e "\e[30;42m DRUSH \e[0m" "\e[32minstalled\e[0m"
+
+  function den {
+    _drush_run -y en "$@"
+  }
+
+  function dun {
+    _drush_run -y pmu "$@"
+  }
+
+  function dcr {
+    _drush_run -y cr "$@"
+  }
+
+  function dcri {
+    _drush_run -y cr "$@" && _drush_run -y updb && _drush_run -y cim && _drush_run -y cr
+  }
+
+  function dcrx {
+    _drush_run -y cr "$@" && _drush_run -y updb && _drush_run -y cex && _drush_run -y cr
+  }
 else
-  echo 'DRUSH is not installed'
+  echo -e "\e[31;41mDRUSH\e[0m" 'is' "\e[31mnot installed\e[0m"
 fi
 

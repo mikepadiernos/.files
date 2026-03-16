@@ -1,16 +1,14 @@
 .DS_store
+
 .nexcloudsync.log
 
 !historical/
 
 .asdf/data/*/
 
-.atuin/data/**.db
-.atuin/data/**.db-shm
-.atuin/data/**.db-wal
-.atuin/data/history.db
-.atuin/data/kv.db
-.atuin/data/scripts.db
+.atuin/**/*.db
+.atuin/**/*.db-shm
+.atuin/**/*.db-wal
 
 .copyq/*.dat
 .copyq/copyq.lock
@@ -25,18 +23,18 @@
 .neovim/
 .neovim/*/
 
-.openaudible/tmp/
-
-.tmux/plugins/*/
+# .openaudible/tmp/
 
 .qute/__pycache__/
+
+.tmux/plugins/*/
 
 .zen/
 
 .zsh/.historical/
 .zsh/history/
 .zsh/plugins/zsh*/
-!.zsh/plugins/git_repos.txt
 .zsh/themes/minimal/
 .zsh/themes/typewritten/
+!.zsh/plugins/git_repos.txt
 

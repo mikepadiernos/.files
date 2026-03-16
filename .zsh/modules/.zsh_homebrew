@@ -1,14 +1,14 @@
 # HOMEBREW
 if [ ! -z "$( ls -A '/home/linuxbrew/.linuxbrew/bin/brew'  )" ]; then
-  echo "HOMEBREW [Linux] is" "\e[32minstalled\e[0m"
+  echo -e "\e[30;42m HOMEBREW [Linux] \e[0m" "\e[32minstalled\e[0m"
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
 elif [ ! -z "$( ls -A '/usr/local/bin/brew' )" ]; then
-  echo "HOMEBREW [MacOS] is" "\e[32minstalled\e[0m"
+  echo -e "\e[30;42m HOMEBREW [MacOS] \e[0m" "\e[32minstalled\e[0m"
   eval "$(/usr/local/bin/brew shellenv)"
   # export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
 else
-  echo "HOMEBREW is" "\e[31mnot installed\e[0m"
+  echo -e "\e[31;41m HOMEBREW \e[0m" 'is' "\e[31mnot installed\e[0m"
 fi
 
 # # linuxbrew: php@8.1
