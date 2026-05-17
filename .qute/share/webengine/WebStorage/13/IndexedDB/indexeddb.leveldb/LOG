@@ -1,0 +1,7 @@
+2026/03/14-20:43:57.741 42c5e Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/WebStorage/13/IndexedDB/indexeddb.leveldb/MANIFEST-000001
+2026/03/14-20:43:57.741 42c5e Recovering log #3
+2026/03/14-20:43:57.742 42c5e Reusing old log /home/mikepadiernos/.local/share/qutebrowser/webengine/WebStorage/13/IndexedDB/indexeddb.leveldb/000003.log 
+2026/03/14-20:44:02.691 42c5f Level-0 table #5: started
+2026/03/14-20:44:02.693 42c5f Level-0 table #5: 144201 bytes OK
+2026/03/14-20:44:02.694 42c5f Delete type=0 #3
+2026/03/14-20:44:02.694 42c5f Manual compaction at level-0 from (begin) .. (end); will stop at (end)

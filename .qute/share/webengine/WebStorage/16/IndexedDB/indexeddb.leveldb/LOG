@@ -1,0 +1,17 @@
+2026/03/17-06:53:35.942 32d7 Creating DB /home/mikepadiernos/.local/share/qutebrowser/webengine/WebStorage/16/IndexedDB/indexeddb.leveldb since it was missing.
+2026/03/17-06:53:35.943 32d7 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/WebStorage/16/IndexedDB/indexeddb.leveldb/MANIFEST-000001
+2026/03/17-06:54:07.481 32d8 Level-0 table #5: started
+2026/03/17-06:54:07.492 32d8 Level-0 table #5: 1523977 bytes OK
+2026/03/17-06:54:07.493 32d8 Delete type=0 #3
+2026/03/17-06:54:18.542 32d8 Level-0 table #7: started
+2026/03/17-06:54:18.545 32d8 Level-0 table #7: 343079 bytes OK
+2026/03/17-06:54:18.547 32d8 Delete type=0 #4
+2026/03/17-06:54:18.547 32d8 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2026/03/17-06:54:18.547 32d8 Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x02\x01\x1f\x04\x03\x01\x06\x00Q\x00U\x00E\x00U\x00E\x00D\x03\x00\x00\x00\x00\x00\x00L@\x03\x00@\xe0\xe8\xb6\xcfyB\x00\x03\x00\x00\x00\x00\x00\x00G@' @ 4747 : 1
+2026/03/17-06:54:18.547 32d8 Compacting 1@1 + 1@2 files
+2026/03/17-06:54:18.554 32d8 Generated table #8@1: 270 keys, 95681 bytes
+2026/03/17-06:54:18.554 32d8 Compacted 1@1 + 1@2 files => 95681 bytes
+2026/03/17-06:54:18.555 32d8 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/03/17-06:54:18.555 32d8 Delete type=2 #5
+2026/03/17-06:54:18.555 32d8 Delete type=2 #7
+2026/03/17-06:54:18.555 32d8 Manual compaction at level-1 from '\x00\x02\x01\x1f\x04\x03\x01\x06\x00Q\x00U\x00E\x00U\x00E\x00D\x03\x00\x00\x00\x00\x00\x00L@\x03\x00@\xe0\xe8\xb6\xcfyB\x00\x03\x00\x00\x00\x00\x00\x00G@' @ 4747 : 1 .. (end); will stop at (end)

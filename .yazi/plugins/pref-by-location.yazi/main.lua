@@ -28,9 +28,34 @@ local STATE_KEY = {
 	no_notify = "no_notify",
 	save_path = "save_path",
 	last_hovered_folder = "last_hovered_folder",
+	hoverved_histories = "hoverved_histories",
 	prefs = "prefs",
+	default_pref = "default_pref",
+	project_plugin_load_event = "project_plugin_load_event",
+	disable_fallback_preference = "disable_fallback_preference",
 	tasks_write_prefs_running = "tasks_write_prefs_running",
 	tasks_write_prefs = "tasks_write_prefs",
+	current_show_hidden_state = "current_show_hidden_state",
+	-- Use this to fix flickering when toggle hidden
+	tmp_disable_ind_hidden = "tmp_disable_ind_hidden",
+}
+
+local ACTION = {
+	save = "save",
+	toggle = "toggle",
+	disable = "disable",
+	reset = "reset",
+}
+
+local HIDDEN_STATE = {
+	show = "show",
+	hide = "hide",
+	toggle = "toggle",
+}
+
+local IND_EVENTS = {
+	sort = "sort",
+	hidden = "hidden",
 }
 
 -- Encode binary string to hex (e.g., "\xED" => "\\xED")
@@ -80,6 +105,28 @@ local function hex_decode_table(t)
 	end
 	return out
 end
+
+local add_hover_histories = ya.sync(function(state, namespace, key, value, limit_cached_items)
+	if not state[namespace] then
+		state[namespace] = {}
+	end
+	local storage = state[namespace]
+	if limit_cached_items and #storage > limit_cached_items then
+		table.remove(storage, 1)
+	end
+	storage[key] = value
+end)
+
+local get_hover_histories = ya.sync(function(state, namespace, key)
+	local storage = state[namespace]
+	if not storage then
+		return nil
+	end
+
+	if storage then
+		return storage[key]
+	end
+end)
 
 local enqueue_task = ya.sync(function(state, task_name, task_data)
 	if not state[task_name] or type(state[task_name]) ~= "table" then
@@ -157,11 +204,15 @@ local read_prefs_from_saved_file = function(pref_path)
 end
 
 local current_dir = ya.sync(function()
-	return tostring(cx.active.current.cwd)
+	local is_virtual = Url(cx.active.current.cwd).scheme and Url(cx.active.current.cwd).scheme.is_virtual
+
+	return tostring((is_virtual and cx.active.current.cwd or cx.active.current.cwd.path) or cx.active.current.cwd)
 end)
 
+-- NOTE: can't use rt.mgr here because the value is not always the latest, unless set entry function as sync
 local current_pref = ya.sync(function()
-	return {
+	local show_hidden = get_state(STATE_KEY.current_show_hidden_state)
+	local pref = {
 		sort = {
 			cx.active.pref.sort_by,
 			reverse = cx.active.pref.sort_reverse,
@@ -172,6 +223,11 @@ local current_pref = ya.sync(function()
 		linemode = cx.active.pref.linemode,
 		show_hidden = cx.active.pref.show_hidden,
 	}
+	if show_hidden ~= nil then
+		pref.show_hidden = show_hidden
+	end
+
+	return pref
 end)
 
 local function deepClone(original)
@@ -195,6 +251,8 @@ local function save_prefs()
 	end
 
 	if get_state(STATE_KEY.tasks_write_prefs_running) or #get_state(STATE_KEY.tasks_write_prefs) == 0 then
+		-- Use this to fix flickering when toggle hidden
+		set_state(STATE_KEY.tmp_disable_ind_hidden, false)
 		return
 	end
 	set_state(STATE_KEY.tasks_write_prefs_running, true)
@@ -262,42 +320,87 @@ local function save_prefs()
 	save_prefs()
 end
 
--- This function trigger everytime user change cwd
-local change_pref = ya.sync(function()
+--- Update the ui preferences or return new preference for (ind-sort,ind-hidden)
+local update_ui_pref = ya.sync(function(_, pref, return_type)
+	-- sort
+	local sort_pref = pref.sort
+	if sort_pref then
+		ya.dict_merge(sort_pref, {
+			tab = (type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
+				or cx.active.id.value,
+		})
+		if return_type == IND_EVENTS.sort then
+			return sort_pref
+		end
+		if not return_type then
+			ya.emit("sort", sort_pref)
+		end
+	end
+
+	--show_hidden
+	local show_hidden_pref = pref.show_hidden
+	if show_hidden_pref ~= nil then
+		show_hidden_pref = show_hidden_pref and HIDDEN_STATE.show or HIDDEN_STATE.hide
+		if return_type == IND_EVENTS.hidden then
+			return show_hidden_pref
+		end
+
+		if not return_type then
+			ya.emit("hidden", {
+				show_hidden_pref,
+				tab = (type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
+					or cx.active.id.value,
+			})
+		end
+	end
+
+	-- linemode
+	local linemode_pref = pref.linemode
+	if linemode_pref then
+		ya.emit("linemode", {
+			linemode_pref,
+			tab = (type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
+				or cx.active.id.value,
+		})
+	end
+end)
+
+local get_ind_sort_pref = ya.sync(function()
 	local prefs = get_state(STATE_KEY.prefs)
-	local cwd = tostring(cx.active.current.cwd)
+	local is_virtual = Url(cx.active.current.cwd).scheme and Url(cx.active.current.cwd).scheme.is_virtual
+	local cwd = tostring((is_virtual and cx.active.current.cwd or cx.active.current.cwd.path) or cx.active.current.cwd)
+	-- return sort pref based on location
+	for _, pref in ipairs(prefs) do
+		if string.match(cwd, pref.location .. "$") then
+			return update_ui_pref(pref, IND_EVENTS.sort)
+		end
+	end
+end)
+
+local get_ind_hidden_pref = ya.sync(function()
+	local prefs = get_state(STATE_KEY.prefs)
+	local is_virtual = Url(cx.active.current.cwd).scheme and Url(cx.active.current.cwd).scheme.is_virtual
+	local cwd = tostring((is_virtual and cx.active.current.cwd or cx.active.current.cwd.path) or cx.active.current.cwd)
+	-- return hidden pref based on location
+	for _, pref in ipairs(prefs) do
+		if string.match(cwd, pref.location .. "$") then
+			return update_ui_pref(pref, IND_EVENTS.hidden)
+		end
+	end
+end)
+
+-- This function trigger everytime user change cwd
+local change_pref = ya.sync(function(_)
+	local prefs = get_state(STATE_KEY.prefs)
+	local is_virtual = Url(cx.active.current.cwd).scheme and Url(cx.active.current.cwd).scheme.is_virtual
+	local cwd = tostring((is_virtual and cx.active.current.cwd or cx.active.current.cwd.path) or cx.active.current.cwd)
 	-- change pref based on location
 	for _, pref in ipairs(prefs) do
 		if string.match(cwd, pref.location .. "$") then
-			-- sort
-			local sort_pref = pref.sort
-			if sort_pref then
-				ya.dict_merge(sort_pref, {
-					tab = (type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
-						or cx.active.id.value,
-				})
-				ya.emit("sort", sort_pref)
-			end
+			update_ui_pref(pref)
 
-			-- linemode
-			local linemode_pref = pref.linemode
-			if linemode_pref then
-				ya.emit("linemode", {
-					linemode_pref,
-					tab = (type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
-						or cx.active.id.value,
-				})
-			end
-
-			--show_hidden
 			local show_hidden_pref = pref.show_hidden
 			if show_hidden_pref ~= nil then
-				ya.emit("hidden", {
-					show_hidden_pref and "show" or "hide",
-					tab = (type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
-						or cx.active.id.value,
-				})
-
 				-- Restore hovered hidden folder
 				local last_hovered_folder = get_state(
 					STATE_KEY.last_hovered_folder
@@ -308,27 +411,44 @@ local change_pref = ya.sync(function()
 				)
 
 				if last_hovered_folder then
+					local tab_id = tostring(
+						(type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
+							or cx.active.id.value
+					)
+
+					local hover_histories = get_hover_histories(
+						STATE_KEY.hoverved_histories .. tab_id,
+						tostring(last_hovered_folder.last_parent)
+					)
+					local current_hovered = cx.active.preview.folder
+						and cx.active.preview.folder.hovered
+						and tostring(
+							(
+								is_virtual and cx.active.preview.folder.hovered.url
+								or cx.active.preview.folder.hovered.url.path
+							) or cx.active.preview.folder.hovered.url
+						)
 					if
-						-- NOTE: Case user move left to right
-						(last_hovered_folder.preview_cwd == cwd)
-						and last_hovered_folder.preview_hovered_folder
-							~= (cx.active.current.hovered and tostring(cx.active.current.hovered.url))
+						-- NOTE: Case user move to right
+						(last_hovered_folder.last_preview_folder == cwd)
+						and current_hovered ~= last_hovered_folder.left_to_right_hover
 					then
 						ya.emit("reveal", {
-							last_hovered_folder.preview_hovered_folder,
+							last_hovered_folder.left_to_right_hover,
 							no_dummy = true,
 							raw = true,
 							tab = (type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
 								or cx.active.id.value,
 						})
 					elseif
-						--NOTE: Case user move from right to left
-						(last_hovered_folder.parent_cwd == cwd or not last_hovered_folder.parent_cwd)
-						and last_hovered_folder.hovered_folder
+						-- NOTE: Case user move to left
+						(last_hovered_folder.last_parent == cwd or not last_hovered_folder.last_parent)
+						and hover_histories
+						and hover_histories
 							~= (cx.active.current.hovered and tostring(cx.active.current.hovered.url))
 					then
 						ya.emit("reveal", {
-							last_hovered_folder.hovered_folder,
+							hover_histories,
 							no_dummy = true,
 							raw = true,
 							tab = (type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
@@ -338,7 +458,14 @@ local change_pref = ya.sync(function()
 				end
 				-- Save parent cwd + parent hovered folder + preview hovered folder
 
+				local tab_id = tostring(
+					(type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
+						or cx.active.id.value
+				)
 				local parent_folder = cx.active.parent
+					and tostring(
+						(is_virtual and cx.active.parent.cwd or cx.active.parent.cwd.path) or cx.active.parent.cwd
+					)
 				set_state(
 					STATE_KEY.last_hovered_folder
 						.. tostring(
@@ -346,12 +473,19 @@ local change_pref = ya.sync(function()
 								or cx.active.id.value
 						),
 					{
-						parent_cwd = parent_folder and tostring(parent_folder.cwd),
-						hovered_folder = cwd,
-						preview_cwd = cx.active.preview.folder and tostring(cx.active.preview.folder.cwd),
-						preview_hovered_folder = cx.active.preview.folder
-							and cx.active.preview.folder.hovered
-							and tostring(cx.active.preview.folder.hovered.url),
+						last_parent = parent_folder,
+						last_preview_folder = cx.active.preview.folder and tostring(
+							(is_virtual and cx.active.preview.folder.cwd or cx.active.preview.folder.cwd.path)
+								or cx.active.preview.folder.cwd
+						),
+						left_to_right_hover = get_hover_histories(
+							STATE_KEY.hoverved_histories .. tab_id,
+							cx.active.preview.folder
+								and tostring(
+									(is_virtual and cx.active.preview.folder.cwd or cx.active.preview.folder.cwd.path)
+										or cx.active.preview.folder.cwd
+								)
+						),
 					}
 				)
 			end
@@ -370,7 +504,13 @@ local reset_pref_cwd = function()
 		end
 	end
 	set_state(STATE_KEY.prefs, prefs)
-	change_pref()
+	if get_state(STATE_KEY.disable_fallback_preference) then
+		-- Restore default preference, because list pref not contain fallback pref (.*)
+		update_ui_pref(get_state(STATE_KEY.default_pref))
+	else
+		-- Restore default preference, because list pref contain fallback pref (.*), which is added in setup function
+		change_pref()
+	end
 	enqueue_task(STATE_KEY.tasks_write_prefs, { exclude_cwd = true })
 	save_prefs()
 end
@@ -399,9 +539,13 @@ function M:is_literal_string(str)
 end
 
 -- sort value is https://yazi-rs.github.io/docs/configuration/keymap#mgr.sort
---- @param opts {prefs: table<{ location: string, sort: {[1]?: SORT_BY, reverse?: boolean, dir_first?: boolean, translit?: boolean, sensitive?: boolean }, linemode?: LINEMODE, show_hidden?: boolean, is_predefined?: boolean }>, save_path?: string, disabled?: boolean, no_notify?: boolean }
+--- @param opts {prefs: table<{ location: string, sort: {[1]?: SORT_BY, reverse?: boolean, dir_first?: boolean, translit?: boolean, sensitive?: boolean }, linemode?: LINEMODE, show_hidden?: boolean, is_predefined?: boolean }>, save_path?: string, disabled?: boolean, no_notify?: boolean, project_plugin_load_event?: string }
 function M:setup(opts)
 	local prefs = type(opts.prefs) == "table" and opts.prefs or {}
+	set_state(
+		STATE_KEY.project_plugin_load_event,
+		type(opts.project_plugin_load_event) == "string" and opts.project_plugin_load_event or "@projects-load"
+	)
 	local save_path = (ya.target_family() == "windows" and os.getenv("APPDATA") .. "\\yazi\\config\\pref-by-location")
 		or (os.getenv("HOME") .. "/.config/yazi/pref-by-location")
 	if type(opts) == "table" then
@@ -411,7 +555,7 @@ function M:setup(opts)
 	end
 
 	set_state(STATE_KEY.save_path, save_path)
-	-- flag to prevent these predefined prefs is saved to file
+	-- flag to prevent predefined prefs is saved to file
 	for _, pref in ipairs(prefs) do
 		pref.is_predefined = true
 	end
@@ -420,34 +564,84 @@ function M:setup(opts)
 	for idx = #saved_prefs, 1, -1 do
 		table.insert(prefs, 1, saved_prefs[idx])
 	end
+
+	local default_pref = {
+		location = ".*",
+		sort = {
+			rt.mgr.sort_by,
+			reverse = rt.mgr.sort_reverse,
+			dir_first = rt.mgr.sort_dir_first,
+			translit = rt.mgr.sort_translit,
+			sensitive = rt.mgr.sort_sensitive,
+		},
+		linemode = rt.mgr.linemode,
+		show_hidden = rt.mgr.show_hidden,
+		is_predefined = true,
+	}
+
+	if opts and opts.disable_fallback_preference == true then
+		set_state(STATE_KEY.default_pref, default_pref)
+		set_state(STATE_KEY.disable_fallback_preference, true)
+	else
+		-- Add fallback location from yazi.toml
+		table.insert(prefs, deepClone(default_pref))
+	end
+	set_state(STATE_KEY.prefs, prefs)
+	set_state(STATE_KEY.loaded, true)
+
 	-- dds subscribe on changed directory
-	ps.sub("cd", function(_)
-		if not get_state(STATE_KEY.loaded) then
-			-- Add fallback location from yazi.toml
-			local current_location_pref = current_pref()
-			table.insert(prefs, {
-				location = ".*",
-				sort = current_location_pref.sort,
-				linemode = current_location_pref.linemode,
-				show_hidden = current_location_pref.show_hidden,
-				is_predefined = true,
-			})
-			set_state(STATE_KEY.prefs, prefs)
-			set_state(STATE_KEY.loaded, true)
+	ps.sub("ind-sort", function(opt)
+		if not get_state(STATE_KEY.disabled) then
+			local new_sort_pref = get_ind_sort_pref()
+			if new_sort_pref then
+				opt.by, opt.reverse, opt.dir_first, opt.translit, opt.sensitive =
+					new_sort_pref[1],
+					new_sort_pref.reverse,
+					new_sort_pref.dir_first,
+					new_sort_pref.translit,
+					new_sort_pref.sensitive
+			end
 		end
+
+		return opt
+	end)
+
+	set_state(STATE_KEY.tmp_disable_ind_hidden, false)
+	ps.sub("key-hidden", function(opt)
+		if not get_state(STATE_KEY.disabled) then
+			set_state(STATE_KEY.tmp_disable_ind_hidden, true)
+			local new_show_hidden_state
+			if opt.state == HIDDEN_STATE.toggle then
+				new_show_hidden_state = not cx.active.pref.show_hidden
+			elseif opt.state == HIDDEN_STATE.hide then
+				new_show_hidden_state = false
+			elseif opt.state == HIDDEN_STATE.show then
+				new_show_hidden_state = true
+			end
+			set_state(STATE_KEY.current_show_hidden_state, new_show_hidden_state)
+		end
+		return opt
+	end)
+
+	ps.sub("ind-hidden", function(opt)
+		if not get_state(STATE_KEY.disabled) and not get_state(STATE_KEY.tmp_disable_ind_hidden) then
+			local new_hidden_pref = get_ind_hidden_pref()
+			if new_hidden_pref then
+				opt.state = new_hidden_pref
+			end
+		end
+
+		return opt
+	end)
+
+	ps.sub("cd", function(_)
 		if get_state(STATE_KEY.disabled) then
 			return
 		end
 		-- NOTE: Trigger if folder is already loaded
-
-		if cx.active.current.stage then
+		if cx.active.current.stage() then
 			change_pref()
 		end
-	end)
-
-	-- NOTE: project.yazi compatibility
-	ps.sub_remote("project-loaded", function(_)
-		change_pref()
 	end)
 
 	ps.sub("load", function(body)
@@ -455,9 +649,33 @@ function M:setup(opts)
 			return
 		end
 		-- NOTE: Trigger if folder is already loaded
-		if body.stage and current_dir() == tostring(body.url) then
+		if body.stage() and current_dir() == tostring(body.url) then
 			change_pref()
 		end
+	end)
+
+	ps.sub("hover", function(_)
+		if cx.active.current.hovered then
+			local is_virtual = Url(cx.active.current.hovered.url).scheme
+				and Url(cx.active.current.hovered.url).scheme.is_virtual
+			local hovered_url = (is_virtual and cx.active.current.hovered.url or cx.active.current.hovered.url.path)
+				or cx.active.current.hovered.url
+			local tab_id = tostring(
+				(type(cx.active.id) == "number" or type(cx.active.id) == "string") and cx.active.id
+					or cx.active.id.value
+			)
+			add_hover_histories(
+				STATE_KEY.hoverved_histories .. tab_id,
+				tostring(hovered_url.parent),
+				tostring(hovered_url),
+				10
+			)
+		end
+	end)
+
+	-- NOTE: project.yazi compatibility
+	ps.sub_remote(get_state(STATE_KEY.project_plugin_load_event), function(_)
+		change_pref()
 	end)
 
 	ps.sub_remote(PUBSUB_KIND.prefs_changed, function(new_prefs)
@@ -476,7 +694,7 @@ end
 
 function M:entry(job)
 	local action = job.args[1]
-	if action == "toggle" then
+	if action == ACTION.toggle then
 		local disabled = not get_state(STATE_KEY.disabled)
 		set_state(STATE_KEY.disabled, disabled)
 		-- trigger update to other instances
@@ -487,15 +705,15 @@ function M:entry(job)
 			reload_prefs_from_file()
 			change_pref()
 		end
-	elseif action == "disable" then
+	elseif action == ACTION.disable then
 		set_state(STATE_KEY.disabled, true)
 		-- trigger update to other instances
 		broadcast(PUBSUB_KIND.disabled, true)
 		success(NOTIFY_MSG.TOGGLE, "Disabled")
-	elseif action == "save" then
+	elseif action == ACTION.save then
 		enqueue_task(STATE_KEY.tasks_write_prefs, {})
 		save_prefs()
-	elseif action == "reset" then
+	elseif action == ACTION.reset then
 		reset_pref_cwd()
 	end
 end

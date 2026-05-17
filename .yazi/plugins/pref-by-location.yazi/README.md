@@ -4,6 +4,7 @@
 
 - [pref-by-location](#pref-by-location)
   - [Requirements](#requirements)
+  - [Preferences priority](#preferences-priority)
   - [Installation](#installation)
     - [Add setup function in `yazi/init.lua`.](#add-setup-function-in-yaziinitlua)
     - [Add `keymap.toml`](#add-keymaptoml)
@@ -31,8 +32,8 @@ This is a Yazi plugin that save these preferences by location:
 
 This plugin will pick the first matching preference. The order of preferences is:
 
-- Manually saved preferences (using `plugin pref-by-location -- save`)
-- Predefined preferences (in `setup` function)
+- Manually saved preferences (using `plugin pref-by-location -- save`).
+- Predefined preferences (in `setup` function).
 - Default preferences (in `yazi.toml`)
 
 ## Installation
@@ -41,13 +42,11 @@ Install the plugin:
 
 ```sh
 ya pkg add boydaihungst/pref-by-location
-# or
-ya pack -a boydaihungst/pref-by-location
 ```
 
 ### Add setup function in `yazi/init.lua`.
 
-Prefs is optional but the setup function is required.
+All the options inside setup function are optional, but the setup function itself is required.
 
 ```lua
 local pref_by_location = require("pref-by-location")
@@ -58,12 +57,23 @@ pref_by_location:setup({
   -- Hide "enable" and "disable" notifications.
   -- no_notify = false -- true|false (Optional)
 
+  -- Disable the fallback/default preference (values in `yazi.toml`).
+  -- This mean if none of the saved or predifined perferences is matched,
+  -- then it won't reset preference to default values in yazi.toml.
+  -- For example, go from folder A to folder B (folder B matchs saved preference to show hidden files) -> show hidden.
+  -- Then move back to folder A -> keep showing hidden files, because the folder A doesn't match any saved or predefined preference.
+  -- disable_fallback_preference = false -- true|false|nil (Optional)
+
   -- You can backup/restore this file. But don't use same file in the different OS.
   -- save_path =  -- full path to save file (Optional)
   --       - Linux/MacOS: os.getenv("HOME") .. "/.config/yazi/pref-by-location"
   --       - Windows: os.getenv("APPDATA") .. "\\yazi\\config\\pref-by-location"
 
-  -- You don't have to set "prefs". Just use keymaps below work just fine
+  -- https://github.com/MasouShizuka/projects.yazi compatibility
+  -- If you use projects.yazi plugin and changed it's default yazi_load_event config, you have to set this value to equal projects.yazi > setup function > save > yazi_load_event. Default is "@projects-load"
+  -- project_plugin_load_event = "@projects-load" -- string (Optional)
+
+  -- This is predefined preferences.
   prefs = { -- (Optional)
     -- location: String | Lua pattern (Required)
     --   - Support literals full path, lua pattern (string.match pattern): https://www.lua.org/pil/20.2.html

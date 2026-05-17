@@ -1,0 +1,6 @@
+2026/04/28-19:48:09.894 64f6 Creating DB /home/mikepadiernos/.local/share/qutebrowser/webengine/IndexedDB/https_www.tiktok.com_0.indexeddb.leveldb since it was missing.
+2026/04/28-19:48:09.897 64f6 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/IndexedDB/https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/04/28-19:48:15.801 64f1 Level-0 table #5: started
+2026/04/28-19:48:15.802 64f1 Level-0 table #5: 14481 bytes OK
+2026/04/28-19:48:15.804 64f1 Delete type=0 #3
+2026/04/28-19:48:15.804 64f1 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

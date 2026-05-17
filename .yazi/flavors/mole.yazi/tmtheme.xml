@@ -419,9 +419,9 @@
 			<key>settings</key>
 			<dict>
 				<key>background</key>
-				<string>#3e4451</string>
+				<string>#000000</string>
 				<key>foreground</key>
-				<string>#abb2bf</string>
+				<string>#000000</string>
 			</dict>
 		</dict>
 		<dict>

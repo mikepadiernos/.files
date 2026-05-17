@@ -26,17 +26,17 @@ This is a Yazi plugin that replaces the default file previewer and spotter with 
 
 - Spotter
 
-  ![Before spot](statics/2024-11-21-04-19-01.png)
+  ![Before spot](statics/2025-12-29-before_spotter.png)
 
 ### After:
 
 - Previewer
 
-![After previewer](statics/2024-11-21-05-27-48.png)
+  ![After previewer](statics/2024-11-21-05-27-48.png)
 
 - Spotter
 
-![After spotter](statics/2024-11-21-05-29-50.png)
+  ![After spotter](statics/2025-12-29-after_spotter.png)
 
 ## Requirements
 
@@ -49,33 +49,20 @@ Install the plugin:
 
 ```sh
 ya pkg add boydaihungst/file-extra-metadata
-# or
-ya pack -a boydaihungst/file-extra-metadata
 ```
 
-Add spotter keybind, makes sure not conflict with other `<Tab>` keybind in
-`manager` section:
-
-```toml
-[mgr]
-keymap = [
-  # ...
-  # Spotting
-  { on = "<Tab>", run = "spot", desc = "Spot hovered file" },
-]
-```
-
-Create `~/.config/yazi/yazi.toml` and add:
+Create `~/.config/yazi/yazi.toml` and add:  
+For yazi < v25.12.29 (29/12/2025) replace `url` with `name`
 
 ```toml
 [plugin]
   append_previewers = [
-    { name = "*", run = "file-extra-metadata" },
+    { url = "*", run = "file-extra-metadata" },
   ]
-  # yazi v0.4 after 21/11/2024
+
   # Setup keybind for spotter: https://github.com/sxyazi/yazi/pull/1802
   append_spotters = [
-    { name = "*", run = "file-extra-metadata" },
+    { url = "*", run = "file-extra-metadata" },
   ]
 ```
 
@@ -86,14 +73,15 @@ or
   previewers = [
     # ... the rest
     # disable default file plugin { name = "*", run = "file" },
-    { name = "*", run = "file-extra-metadata" },
+    { url = "*", run = "file-extra-metadata" },
   ]
+
   # Setup keybind for spotter: https://github.com/sxyazi/yazi/pull/1802
   spotters = [
     # ... the rest
     # Fallback
     # { name = "*", run = "file" },
-    { name = "*", run = "file-extra-metadata" },
+    { url = "*", run = "file-extra-metadata" },
   ]
 ```
 
@@ -115,7 +103,7 @@ tbl_col = { fg = "#4fa6ed" }
 
 ## For developer
 
-If you want to compile this with other spotter/previewer:
+If you want to combine this with other spotter/previewer:
 
 ```lua
 require("file-extra-metadata"):render_table(job, { show_plugins_section = true })

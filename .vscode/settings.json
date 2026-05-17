@@ -74,5 +74,17 @@
         "pycache",
         "qute",
         "yazi"
-    ]
+    ],
+    "[toml]": {
+        "editor.defaultFormatter": "tombi-toml.tombi",
+        "editor.formatOnSave": true
+    },
+    "editor.fontSize": 12,
+    "chat.editor.fontSize": 12,
+    "chat.fontSize": 12,
+    "debug.console.fontSize": 12,
+    "scm.inputFontSize": 12,
+    "terminal.integrated.fontSize": 12,
+    "markdown.preview.fontSize": 12,
+    "editor.fontFamily": "'DecimaMonoPro 400', monospace"
 }

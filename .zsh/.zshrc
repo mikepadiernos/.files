@@ -1,3 +1,4 @@
+# shellcheck shell=bash disable=SC1090,SC1091
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -19,59 +20,57 @@ export ZSH_THEMES="$ZSH/themes"
 
 export CARGO="$HOME/.cargo/bin"
 
+export GOROOT="$HOME/.go"
 export GOPATH="$HOME/.go"
 
 # export AWSPATH="/usr/sbin/aws_completer"
 
 # Configure OpenAudible path only when the app is available.
 if command -v openaudible >/dev/null 2>&1 || command -v OpenAudible >/dev/null 2>&1; then
-  export OPENAUDIBLE_HOME="${OPENAUDIBLE_HOME:-$HOME/.files/.openaudible}"
+  export OPENAUDIBLE_HOME="${OPENAUDIBLE_HOME:-$HOME/.apps/openaudible}"
 fi
 
-export ATUIN="/usr/bin/atuin"
+# export LD_PRELOAD=/opt/gtk-nocsd/libgtk-nocsd.so
 
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$AWSPATH:$ATUIN
-
-# . "$HOME/.atuin/bin/env"
+[[ -d "$GOROOT/bin" ]] && export PATH="$PATH:$GOROOT/bin"
+[[ -d "$GOPATH/bin" ]] && export PATH="$PATH:$GOPATH/bin"
 
 fpath+=(
-  ${ZSH_PLUGINS}/zsh-completions/src
-  $NEOVIM
-  $CARGO
-  $GOPATH
-  $fpath
+  "${ZSH_PLUGINS}/zsh-completions/src"
+  "$NEOVIM"
+  "$CARGO"
+  "$GOPATH"
 )
 
 if [[ -n "$OPENAUDIBLE_HOME" && -d "$OPENAUDIBLE_HOME" ]]; then
-  fpath+=($OPENAUDIBLE_HOME)
+  fpath+=("$OPENAUDIBLE_HOME")
 fi
 
 export ZSH_DISABLE_COMPFIX="true"
 
-# autoload -Uz compinit && compinit -i > /dev/null
-# autoload -Uz compinit; compinit
+source "${ZSH_CONFIGS}/.zsh_themes"
+source "${ZSH_CONFIGS}/.zsh_plugins"
+source "${ZSH_CONFIGS}/.zsh_bindkeys"
+source "${ZSH_CONFIGS}/.zsh_aliases"
+source "${ZSH_CONFIGS}/.zsh_completions"
 
-# direnv allow
+source "${ZSH_MODULES}/.zsh_mise"
 
-source "$ZSH_CONFIGS"/.zsh_themes
-source "$ZSH_CONFIGS"/.zsh_plugins
-source "$ZSH_CONFIGS"/.zsh_bindkeys
-source "$ZSH_CONFIGS"/.zsh_aliases
-source "$ZSH_CONFIGS"/.zsh_completions
+source "${ZSH_MODULES}/.zsh_drush"
+source "${ZSH_MODULES}/.zsh_gh"
+source "${ZSH_MODULES}/.zsh_homebrew"
+# source "${ZSH_MODULES}/.zsh_node"
 
-source "$ZSH_MODULES"/.zsh_mise
-
-# source "$ZSH_MODULES"/.zsh_drush
-source "$ZSH_MODULES"/.zsh_gh
-source "$ZSH_MODULES"/.zsh_homebrew
-source "$ZSH_MODULES"/.zsh_node
 source <(fzf --zsh)
 
-eval "$($HOME/.local/bin/mise activate zsh --shims)"
-# eval "$($HOME/wsl2-ssh-agent)"
+eval "$("$HOME"/.local/bin/mise activate zsh --shims)"
+
 eval "$(atuin init zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
-# autoload -Uz compinit && compinit -i > /dev/null
-autoload -Uz compinit; compinit -u
-
+autoload -Uz compinit
+if [[ -n $(find "${ZDOTDIR:-$HOME}/.zcompdump" -mmin +1440 2>/dev/null) ]]; then
+  compinit -i
+else
+  compinit -iC
+fi

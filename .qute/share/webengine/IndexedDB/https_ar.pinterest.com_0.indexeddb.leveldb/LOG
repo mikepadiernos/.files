@@ -1,0 +1,6 @@
+2026/05/10-18:05:41.615 21fce5 Creating DB /home/mikepadiernos/.local/share/qutebrowser/webengine/IndexedDB/https_ar.pinterest.com_0.indexeddb.leveldb since it was missing.
+2026/05/10-18:05:41.617 21fce5 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/IndexedDB/https_ar.pinterest.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/05/10-18:12:26.616 21fce5 Level-0 table #5: started
+2026/05/10-18:12:26.624 21fce5 Level-0 table #5: 339707 bytes OK
+2026/05/10-18:12:26.626 21fce5 Delete type=0 #3
+2026/05/10-18:12:26.626 21fce5 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

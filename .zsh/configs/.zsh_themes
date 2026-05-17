@@ -1,2 +1,4 @@
 # source "$ZSH_THEMES"/minimal.zsh-theme
+
+# shellcheck source=/dev/null
 source "$ZSH_THEMES"/typewritten.zsh-theme

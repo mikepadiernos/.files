@@ -2,24 +2,20 @@
 [mgr]
 cwd = { fg = "#ABB2BF", bg = "#000000" }  # Blue
 
-# Hovered
-hovered = { bg = "#0f0f0f" }  # Darkened background
-preview_hovered = { underline = false }
-
 # Find
 find_keyword = { fg = "#E06C75", italic = false, underline = false }  # Red
 find_position = { fg = "#E5C07B", italic = false }  # Orange
 
 # Marker
-marker_copied = { fg = "#ABB2BF", bg = "#98C379" }  # Light gray on Green
-marker_cut = { fg = "#ABB2BF", bg = "#E06C75" }  # Light gray on Red
-marker_marked = { fg = "#ABB2BF", bg = "#56B6C2" }  # Light gray on cyan
-marker_selected = { fg = "#ABB2BF", bg = "#E5C07B" }  # Light gray on Orange
+marker_copied = { fg = "#98C379", bg = "#98C379" }  # Light gray on Green
+marker_cut = { fg = "#E06C75", bg = "#E06C75" }  # Light gray on Red
+marker_marked = { fg = "#56B6C2", bg = "#56B6C2" }  # Light gray on cyan
+marker_selected = { fg = "#efe100", bg = "#efe100" }  # Light gray on Yellow
 
 # Tab
-tab_active = { bg = "#282C34", fg = "#ABB2BF" }  # Darkened background, Blue text
-tab_inactive = {}
-tab_width = 1
+# tab_active = { bg = "#282C34", fg = "#ABB2BF" }  # Darkened background, Blue text
+# tab_inactive = {}
+# tab_width = 1
 
 # Count
 count_copied = { fg = "#98C379", bg = "#282C34" }  # Green on Darkened background
@@ -28,15 +24,22 @@ count_selected = { fg = "#98C379", bg = "#282C34" }  # Green on Darkened backgro
 
 # Border
 border_symbol = " "
-border_style = { fg = "#000000" }  # Darkened background
+border_style  = { bg = "#000000" }
 
 # : }}}
 
+# Indicator
+[indicator]
+parent = { fg = "#efe100", bg = "#151617" }  # Blue
+current = { fg = "#000000", bg = "#EFE100" }  # Green on Darkened background
+preview = { fg = "#000000", bg = "#61AFEF" }  # Green on Blue
+padding = { open = "█", close = "█" }  # Blue
+
 # : Status {{{
 [status]
-separator_open = " "
-separator_close = " "
-# sparator_style = { fg = "#000000", bg = "#373737" }  # Blue on Darkened background
+# separator_open = "▐ "
+# separator_close = " ▌"
+# separator_style = { fg = "#000000", bg = "#000000" }  # Black
 
 # Mode
 mode_normal = { fg = "#000000", bg = "#EFE100", bold = true }  # Dark gray on Blue
@@ -94,8 +97,8 @@ mask = { bg = "#282C34" }  # Darkened background
 cand = { fg = "#98C379" }  # Green
 rest = { fg = "#ABB2BF" }  # Light gray
 desc = { fg = "#E5C07B" }  # Orange
-separator = "  "
-separator_style = { fg = "#ABB2BF" }  # Light gray
+separator = ""
+separator_style = { bg = "#000000" }  # Light gray
 
 # : }}}
 
@@ -144,8 +147,8 @@ rules = [
     { mime = "application/vnd.*", fg = "#98C379" },  # Green
 
     # Fallback
-    { name = "*", fg = "#ABB2BF" },  # Blue
-    { name = "*/", fg = "#ABB2BF" }  # Blue
+    { url = "*", fg = "#ABB2BF" },  # Blue
+    { url = "*/", fg = "#ABB2BF" }  # Blue
 ]
 
 # : }}}

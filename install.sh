@@ -20,7 +20,7 @@ ln -s "$ZSHRC_SOURCE" "$ZSHRC_TARGET"
 [ -e "$FILES_TARGET.backup" ] && rm -rf "$FILES_TARGET.backup"
 [ -e "$ZSHRC_TARGET.backup" ] && rm -f "$ZSHRC_TARGET.backup"
 
-cd "$HOME"
+cd "$HOME" || exit 1
 zsh -c 'source ~/.zshrc'
 
 # Setup mise and global tools

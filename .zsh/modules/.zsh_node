@@ -1,4 +1,5 @@
-if [ command -v nvm > /dev/null 2>&1 ]; then
+# shellcheck shell=bash disable=SC1090,SC1091
+if command -v nvm >/dev/null 2>&1; then
   echo -e '\e[31;41m NVM \e[0m' 'is' "\e[31mnot installed\e[0m"
 else
   echo -e '\e[30;42m NVM \e[0m' "\e[32minstalled\e[0m"

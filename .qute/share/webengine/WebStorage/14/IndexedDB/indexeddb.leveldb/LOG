@@ -1,0 +1,6 @@
+2026/03/14-19:53:18.860 42c5f Creating DB /home/mikepadiernos/.local/share/qutebrowser/webengine/WebStorage/14/IndexedDB/indexeddb.leveldb since it was missing.
+2026/03/14-19:53:18.861 42c5f Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/WebStorage/14/IndexedDB/indexeddb.leveldb/MANIFEST-000001
+2026/03/14-19:53:34.419 42c5f Level-0 table #5: started
+2026/03/14-19:53:34.421 42c5f Level-0 table #5: 62617 bytes OK
+2026/03/14-19:53:34.422 42c5f Delete type=0 #3
+2026/03/14-19:53:34.422 42c5f Manual compaction at level-0 from (begin) .. (end); will stop at (end)

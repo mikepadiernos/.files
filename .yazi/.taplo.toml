@@ -1,0 +1,25 @@
+[formatting]
+align_entries = false
+array_trailing_comma = true
+array_auto_expand = true
+array_auto_collapse = false
+compact_arrays = false
+indent_string = "\t"
+trailing_newline = true
+allowed_blank_lines = 2
+reorder_keys = false
+
+[[rule]]
+include = ["yazi.toml"]
+schema = { url = "https://yazi-rs.github.io/schemas/yazi.json" }
+
+[[rule]]
+include = ["keymap.toml"]
+schema = { url = "https://yazi-rs.github.io/schemas/keymap.json" }
+
+[[rule]]
+include = ["theme.toml"]
+schema = { url = "https://yazi-rs.github.io/schemas/theme.json" }
+
+[[rule]]
+include = ["flavors/**/*.toml"]

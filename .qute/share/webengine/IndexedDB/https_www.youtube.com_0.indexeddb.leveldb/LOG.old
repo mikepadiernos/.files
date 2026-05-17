@@ -1,0 +1,4 @@
+2026/04/30-20:21:27.058 64f1 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/04/30-20:21:27.060 64f1 Recovering log #33
+2026/04/30-20:21:27.061 64f1 Reusing old log /home/mikepadiernos/.local/share/qutebrowser/webengine/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/000033.log 
+2026/04/30-20:21:27.061 64f1 Delete type=2 #32

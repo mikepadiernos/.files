@@ -1,0 +1,6 @@
+2026/03/21-12:53:49.564 3279e6 Creating DB /home/mikepadiernos/.local/share/qutebrowser/webengine/IndexedDB/https_www.figma.com_0.indexeddb.leveldb since it was missing.
+2026/03/21-12:53:49.567 3279e6 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/IndexedDB/https_www.figma.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/03/21-12:53:55.408 3279e7 Level-0 table #5: started
+2026/03/21-12:53:55.409 3279e7 Level-0 table #5: 1466 bytes OK
+2026/03/21-12:53:55.410 3279e7 Delete type=0 #3
+2026/03/21-12:53:55.410 3279e7 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

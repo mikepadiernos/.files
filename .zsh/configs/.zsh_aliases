@@ -18,5 +18,13 @@ alias nmt='neomutt'
 alias vim='nvim'
 alias vm='nvim'
 
-# yazi
+# yazi — use Chafa (half-block) renderer inside VS Code since the IIP adapter
+# reports zero pixel dimensions; unset the two env vars that trigger VS Code detection
+function yazi() {
+    if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+        env -u VSCODE_INJECTION -u TERM_PROGRAM command yazi "$@"
+    else
+        command yazi "$@"
+    fi
+}
 alias yz='yazi'

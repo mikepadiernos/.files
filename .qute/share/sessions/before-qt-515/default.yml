@@ -1,0 +1,27 @@
+windows:
+- active: true
+  geometry: !!binary |
+    AdnQywADAAAAAAAAAAAAAAAAAx8AAAJXAAAAAAAAAAAAAAMfAAACVwAAAAAAAAAAB4AAAAAAAAAA
+    AAAAAx8AAAJX
+  tabs:
+  - history:
+    - active: true
+      last_visited: '2025-12-23T22:46:16'
+      pinned: false
+      scroll-pos:
+        x: 0
+        y: 0
+      title: qutebrowser | qutebrowser
+      url: https://qutebrowser.org/
+      zoom: 1.0
+  - active: true
+    history:
+    - active: true
+      last_visited: '2025-12-23T22:46:16'
+      pinned: false
+      scroll-pos:
+        x: 0
+        y: 0
+      title: qutebrowser quickstart | qutebrowser
+      url: https://www.qutebrowser.org/quickstart.html
+      zoom: 1.0
