@@ -36,6 +36,8 @@ if command -v openaudible >/dev/null 2>&1 || command -v OpenAudible >/dev/null 2
 fi
 
 # PATH Setup
+[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+[[ -d "$HOME/.local/share/pnpm" ]] && export PATH="$HOME/.local/share/pnpm:$PATH"
 [[ -d "$CARGO" ]] && export PATH="$PATH:$CARGO"
 [[ -d "$GOROOT/bin" ]] && export PATH="$PATH:$GOROOT/bin"
 [[ -d "$GOPATH/bin" ]] && export PATH="$PATH:$GOPATH/bin"
