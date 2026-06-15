@@ -1,20 +1,11 @@
 windows:
 - geometry: !!binary |
-    AdnQywADAAAAAAeAAAAAAAAADvcAAAQ3AAAHgAAAAAAAAA73AAAENwAAAAAAAAAAB4AAAAeAAAAA
-    AAAADvcAAAQ3
+    AdnQywADAAAAAAeAAAABAwAADvcAAAU6AAAHgAAAAQMAAA73AAAFOgAAAAAAAAAAB4AAAAeAAAAB
+    AwAADvcAAAU6
   tabs:
-  - active: true
-    history:
-    - last_visited: '2026-05-10T18:14:43'
-      pinned: false
-      title: Plasma 6 Menus - KDE Store
-      url: https://store.kde.org/browse?cat=709&ord=latest
-    - last_visited: '2026-05-10T18:20:02'
-      pinned: false
-      title: Plasma 6 Multimedia - KDE Store
-      url: https://store.kde.org/browse?cat=711&ord=latest
+  - history:
     - active: true
-      last_visited: '2026-05-10T18:20:24'
+      last_visited: '2026-05-24T15:12:44'
       pinned: false
       scroll-pos:
         x: 0
@@ -22,105 +13,67 @@ windows:
       title: Plasma 6 Multimedia - KDE Store
       url: https://store.kde.org/browse?cat=711&page=2&ord=latest
       zoom: 1.0
-    - last_visited: '2026-05-10T18:20:15'
+  - active: true
+    history:
+    - last_visited: '2026-05-24T15:12:46'
       pinned: false
-      title: ApexMusic - KDE Store
-      url: https://store.kde.org/p/2290442
-  - history:
-    - last_visited: '2026-05-10T17:55:59'
+      title: 'GitHub - popcorntime/popcorntime: Popcorn Time™ puts everything in one
+        place. Your favorite platforms, your shows, your movies-ready when you are.
+        · GitHub'
+      url: https://github.com/popcorntime/popcorntime
+    - last_visited: '2026-05-24T15:21:38'
       pinned: false
-      title: 'Propranolol: Uses, Dosage, Side Effects, Warnings - Drugs.com'
-      url: https://www.drugs.com/propranolol.html
-    - last_visited: '2026-05-10T17:59:24'
+      title: Repository search results · GitHub
+      url: https://github.com/search?q=popcorn&type=repositories
+    - last_visited: '2026-05-24T15:21:42'
       pinned: false
-      title: Google
-      url: https://www.google.com/
-    - last_visited: '2026-05-10T17:59:30'
+      title: Repository search results · GitHub
+      url: https://github.com/search?q=popcorn&type=repositories&s=updated&o=asc
+    - last_visited: '2026-05-24T15:21:58'
       pinned: false
-      title: cow cup from detroit - Google Search
-      url: https://www.google.com/search?q=cow+cup+from+detroit&newwindow=1&sca_esv=6387cc943ddbbd42&sxsrf=ANbL-n7QdqXn9D9IKRWaimKXglF5A-dkRA%3A1778450364153&source=hp&ei=vP8AauuHB9Wu5NoP84v82A4&iflsig=AFdpzrgAAAAAagENzG3XV2Zv8GDaL5S9AJvekt4MMERK&ved=0ahUKEwjr1dDx26-UAxVVF1kFHfMFH-sQ4dUDCDM&uact=5&oq=cow+cup+from+detroit&gs_lp=Egdnd3Mtd2l6IhRjb3cgY3VwIGZyb20gZGV0cm9pdDIEECMYJzIFEAAY7wUyBRAAGO8FMgUQABjvBTIFEAAY7wVI6AdQAFgAcAB4AJABAJgBmwGgAZsBqgEDMC4xuAEDyAEA-AEC-AEBmAIBoAKrAZgDAJIHAzAuMaAH-wKyBwMwLjG4B6sBwgcDMy0xyAcLgAgB&sclient=gws-wiz
-    - last_visited: '2026-05-10T17:59:32'
+      title: Repository search results · GitHub
+      url: https://github.com/search?q=popcorn&type=repositories&s=updated&o=desc
+    - last_visited: '2026-05-24T15:22:00'
       pinned: false
-      title: cow cup from detroit - Google Search
-      url: https://www.google.com/search?newwindow=1&sca_esv=6387cc943ddbbd42&sxsrf=ANbL-n6HOknfubGn2rKGDlm29o50eHyfdg:1778450367695&udm=2&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKpaEWjvZ2Py1XXV8d8KvlI3o6iwGk6Iv1tRbZIBNIVs-6lto6-3aNUADBtReCZUIrpCSvtJ2n2Dl5r5xPF7AjcceSsrZfAr12urbe-Qpeeh8KBvxGpY7KMMD3mTMWGffZZFBQD8XK1aC61gxbhx5tiVBKzPJTD2TiPdcpx0iVdC2dF9mC2O59ATTP_seY-Ocy0bkIWIQ&q=cow+cup+from+detroit&sa=X&ved=2ahUKEwjM8Krz26-UAxXqMlkFHZwmBAoQtKgLegQIExAB&biw=1912&bih=1041&dpr=1
-    - last_visited: '2026-05-10T17:59:44'
+      title: Sign in to GitHub · GitHub
+      url: https://github.com/login?return_to=https%3A%2F%2Fgithub.com%2Fsearch%3Fq%3Dpopcorn%26type%3Drepositories%26s%3Dupdated%26o%3Ddesc
+    - last_visited: '2026-05-24T15:22:09'
       pinned: false
-      title: cow cup from detroit - Google Search
-      url: https://www.google.com/search?newwindow=1&sca_esv=6387cc943ddbbd42&sxsrf=ANbL-n7IOH4lCv2yY-U_vxOSJtA8mveMjw%3A1778450371846&q=cow+cup+from+detroit&source=lnms&fbs=ADc_l-anYpvSch6nZB23wgI5nE2rmiB5eWMOuULHKiSpvEnkgZ3GhONjHxmxXFEcQawHGpWJZ7IlkpAHNZ-tUYwVgjTD3UPxSrtN6bSGMNZoX44FHDNeJWtHhzTtaiij7c0BLkNVd5dNqks88qO6W8Iu4db-rMZ0MmJRmaU2ItJ-LKbMn8jbxKCI8xp20MVoRG4XB_LPJW7FNREmmG_kvn7unn_hB5cKG7GvPjxVRCPQH6N3bgJReXk&sa=X&ved=2ahUKEwi9laj126-UAxWnKFkFHW0dKMYQ0pQJegQIEBAB&biw=1912&bih=1041&dpr=1
-    - last_visited: '2026-05-10T17:59:52'
+      title: Sign in - Google Accounts
+      url: https://accounts.google.com/v3/signin/accountchooser?client_id=1078992815106-brpsupgvhheqg35tupphbh0qk9c32nq8.apps.googleusercontent.com&code_challenge=fkxp3WjOiFxioE3C_kptgPQpfaFeFy1g1B0aiPsKjB0&code_challenge_method=S256&nonce=7aca3c823892fb9aa9c5d6e23f642d43&prompt=select_account&redirect_uri=https%3A%2F%2Fgithub.com%2Fsessions%2Fsocial%2Fgoogle%2Fcallback&response_type=code&scope=openid+email+profile&state=10ae1015b854368c24216a980c8a84ef&dsh=S-1390221339%3A1779650528493324&o2v=2&service=lso&flowName=GeneralOAuthFlow&opparams=%253F&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Foauth%2Fconsent%3Fauthuser%3Dunknown%26part%3DAJi8hANvkMDa6PuzG0x6cUkAC1mP0i0_Lwr_OZllzLBv9R6wh_EtH21eT1BKbtbvhOsk6CuohTGhCA1E8QEa9o6yh7U92vGdq7xtdMypprKShpFlCzM_8U2VMckC9sS83e55g76F9kOrecSz2v-SVyOBVXcCn1ZubdR013YceJ0M4G89sR34_CPj9aRiJGISgAyF86WOqXWpjaEC6nkHdJAV8THBQ2o20nF1zgacGXLcFsSsbTETS0zFkdyeCUXKeebHi7tq8AxSy8N2SveuxRhbf3htst6exkZGNa4I0GkIWWd3vTkLroX_eMiqY4MTiMRKjOrG26FO51bmiNa4knOAZ4kdkrkgYX1qkdBgZHNFm7UJf6YE9Y17hO3NjwnzAGK_Bu0IyiHwGK_fDxcI0nd3ZutyX7eyRyzVALIdz9RpgC-vg2ZvbcczWzL5D3cX-7gBp6lEv4qP5uW6JpChDnwb0CHU2KuKkw%26flowName%3DGeneralOAuthFlow%26as%3DS-1390221339%253A1779650528493324%26client_id%3D1078992815106-brpsupgvhheqg35tupphbh0qk9c32nq8.apps.googleusercontent.com%26requestPath%3D%252Fsignin%252Foauth%252Fconsent%23&app_domain=https%3A%2F%2Fgithub.com
+    - last_visited: '2026-05-24T15:22:11'
       pinned: false
-      title: cow head cup from detroit - Google Search
-      url: https://www.google.com/search?q=cow+head+cup+from+detroit&newwindow=1&sca_esv=6387cc943ddbbd42&biw=1912&bih=1005&sxsrf=ANbL-n4PyIZY7YJP2BdnJQO3hsEkC0E53g%3A1778450382103&ei=zv8AaubyBc_j5NoPrY-LmAk&ved=0ahUKEwjmkZr626-UAxXPMVkFHa3HApMQ4dUDCBM&uact=5&oq=cow+head+cup+from+detroit&gs_lp=Egxnd3Mtd2l6LXNlcnAiGWNvdyBoZWFkIGN1cCBmcm9tIGRldHJvaXQyCBAAGIkFGKIEMgUQABjvBTIFEAAY7wUyCBAAGIkFGKIESIQUUPkFWM0OcAF4AZABAJgBpwGgAa0EqgEDMi4zuAEDyAEA-AEBmAIFoALoA8ICChAAGEcY1gQYsAPCAgQQIxgnwgIIECEYoAEYwwTCAgoQIRgKGKABGMMEmAMAiAYBkAYIkgcDMi4zoAfUCrIHAzEuM7gH4APCBwUwLjIuM8gHFoAIAQ&sclient=gws-wiz-serp
-    - last_visited: '2026-05-10T18:00:03'
+      title: Two-factor authentication · GitHub
+      url: https://github.com/sessions/two-factor/mobile
+    - last_visited: '2026-05-24T15:22:28'
       pinned: false
-      title: cow head coffee mug from detroit - Google Search
-      url: https://www.google.com/search?q=cow+head+coffee+mug+from+detroit&newwindow=1&sca_esv=6387cc943ddbbd42&biw=1912&bih=1005&sxsrf=ANbL-n61sLtI4oSNbBm6TujWEFVNyrMphg%3A1778450390366&ei=1v8AasaIFqrT5NoPoJjG6A0&ved=0ahUKEwjGy5L-26-UAxWqKVkFHSCMEd0Q4dUDCBM&uact=5&oq=cow+head+coffee+mug+from+detroit&gs_lp=Egxnd3Mtd2l6LXNlcnAiIGNvdyBoZWFkIGNvZmZlZSBtdWcgZnJvbSBkZXRyb2l0MggQIRigARjDBEj5G1DIClisGnACeAGQAQCYAZkBoAHrB6oBAzYuNLgBA8gBAPgBAZgCCqACxwbCAgoQABhHGNYEGLADwgIKECEYChigARjDBJgDAIgGAZAGBpIHAzcuM6AHpB6yBwM1LjO4B7YGwgcFMC40LjbIByWACAE&sclient=gws-wiz-serp
-    - last_visited: '2026-05-10T18:00:16'
+      title: Repository search results
+      url: https://github.com/search?q=popcorn&type=repositories&s=updated&o=desc
+    - last_visited: '2026-05-24T15:23:47'
       pinned: false
-      title: cow head coffee mug detroit - Google Search
-      url: https://www.google.com/search?q=cow+head+coffee+mug+detroit&newwindow=1&sca_esv=6387cc943ddbbd42&biw=1912&bih=1005&sxsrf=ANbL-n7B3HzkAEFQuvBX4mC-Uc6MO8fQBA%3A1778450400258&ei=4P8AauG2D4Oy5NoP5cLKqA4&ved=0ahUKEwjhpu6C3K-UAxUDGVkFHWWhEuUQ4dUDCBM&uact=5&oq=cow+head+coffee+mug+detroit&gs_lp=Egxnd3Mtd2l6LXNlcnAiG2NvdyBoZWFkIGNvZmZlZSBtdWcgZGV0cm9pdDIIEAAYiQUYogQyCBAAGIkFGKIEMgUQABjvBTIFEAAY7wUyCBAAGIAEGKIESOQhUKoQWKcfcAN4AJABAJgBeaABjwKqAQMyLjG4AQPIAQD4AQGYAgagArsCwgILEAAYiQUYogQYsAPCAggQABjvBRiwA8ICCBAhGKABGMMEmAMAiAYBkAYEkgcDNS4xoAeVC7IHAzIuMbgHqALCBwMyLTbIBxyACAE&sclient=gws-wiz-serp
-    - last_visited: '2026-05-10T18:02:05'
+      title: Repository search results
+      url: https://github.com/search?q=popcorn+time&type=repositories&s=updated&o=desc
+    - last_visited: '2026-05-24T15:24:23'
       pinned: false
-      title: cow head shaped coffee mug detroit - Google Search
-      url: https://www.google.com/search?q=cow+head+shaped+coffee+mug+detroit&newwindow=1&sca_esv=6387cc943ddbbd42&biw=1912&bih=1005&sxsrf=ANbL-n6vee2Ivn9SLd9D8od7HMwPnOUhFQ%3A1778450412802&ei=7P8AaobVMKGq5NoPqOatuAM&ved=0ahUKEwiG--uI3K-UAxUhFVkFHShzCzcQ4dUDCBM&uact=5&oq=cow+head+shaped+coffee+mug+detroit&gs_lp=Egxnd3Mtd2l6LXNlcnAiImNvdyBoZWFkIHNoYXBlZCBjb2ZmZWUgbXVnIGRldHJvaXQyCBAAGIkFGKIEMggQABiJBRiiBDIFEAAY7wUyBRAAGO8FMgUQABjvBUj3GFDOBljvFXABeACQAQCYAYsBoAG7BaoBAzUuMrgBA8gBAPgBAZgCCKAC-QXCAgsQABiJBRiiBBiwA8ICCBAAGO8FGLADwgILEAAYgAQYogQYsAPCAgcQIxiwAhgnwgIIEAAYgAQYogTCAgoQIRgKGKABGMMEmAMAiAYBkAYFkgcDNS4zoAenFbIHAzQuM7gH7QXCBwUwLjMuNcgHI4AIAQ&sclient=gws-wiz-serp
-    - last_visited: '2026-05-10T18:03:19'
-      pinned: false
-      title: cow head shaped coffee mug detroit - Google Search
-      url: https://www.google.com/search?newwindow=1&sca_esv=6387cc943ddbbd42&sxsrf=ANbL-n5c6Hc77L9Jo7gXBVqp33fj_lj5PQ:1778450519200&q=cow+head+shaped+coffee+mug+detroit&udm=2&source=univ&fir=gKmXbnqgsDncXM%252CAxj42KOeEIRJ2M%252C_%253Bo7sW0ouFgQW-6M%252CqfaQDF7CsMTW_M%252C_%253Bcyk-O2hpWch9sM%252Cv4-wb8mC1kgRKM%252C_%253BKH_MGFXkomkS6M%252CiT51e0MjOFGGNM%252C_%253BV0aNf5-5mzXftM%252CQA_cNSj5HeqoKM%252C_%253BwP5dNFF8x3wKyM%252CIpIi9iV5lKWwuM%252C_%253BXApsrplN0x979M%252CziVpvpbATaV9_M%252C_%253BNrolLONpQJqxZM%252CY9_xpXZ6X2a6ZM%252C_%253BNKBz8HW3MBcD8M%252C5WRwpVlZL0Li2M%252C_%253BoxBs5aHGz4WgtM%252CDLZT1GEIHVIiOM%252C_%253BEGb5c8sTHJM_lM%252CX-xSLAZONqo8JM%252C_%253BrKywHDfqF0k9EM%252Cvd-pRpJ2rUQqqM%252C_&usg=AI4_-kRsJwaug_vLvohGjlbEcDbK9wlLVQ&sa=X&ved=2ahUKEwjLicq73K-UAxXKK1kFHXg_PLMQ7Al6BAhyEAU&biw=1912&bih=1041&dpr=1
-    - last_visited: '2026-05-10T18:04:42'
-      pinned: false
-      title: cow mug with face - Google Search
-      url: https://www.google.com/search?newwindow=1&sa=X&sca_esv=6387cc943ddbbd42&udm=2&sxsrf=ANbL-n7eMVJXZMSZ7heDGO-TQ-hwVUM8Ow:1778450533057&q=cow+mug+with+face&stick=H4sIAAAAAAAAAFvEKpicX66QW5quUJ5ZkqGQlpicCgBv-nMNFAAAAA&source=univ&ved=2ahUKEwjc3ZfC3K-UAxX4M1kFHSqGEpwQrNwCegQIXBAA&biw=1912&bih=1041&dpr=1
-    - last_visited: '2026-05-10T18:05:31'
-      pinned: false
-      title: cow mug with face - Google Search
-      url: https://www.google.com/search?newwindow=1&sa=X&sca_esv=6387cc943ddbbd42&udm=2&sxsrf=ANbL-n7eMVJXZMSZ7heDGO-TQ-hwVUM8Ow:1778450533057&q=cow+mug+with+face&stick=H4sIAAAAAAAAAFvEKpicX66QW5quUJ5ZkqGQlpicCgBv-nMNFAAAAA&source=univ&ved=2ahUKEwjc3ZfC3K-UAxX4M1kFHSqGEpwQrNwCegQIXBAA&biw=1912&bih=1041&dpr=1#sv=CAMSVhoyKhBlLXZGTmdVX3ltTzZFYUJNMg52Rk5nVV95bU82RWFCTToOZy1GbEVaczNKMDliaU0gBCocCgZtb3NhaWMSEGUtdkZOZ1VfeW1PNkVhQk0YADABGAcghdXFjwVKCBABGAEgASgB
-    - last_visited: '2026-05-10T18:09:37'
-      pinned: false
-      title: dane county cow mug with face - Google Search
-      url: https://www.google.com/search?q=dane+county+cow+mug+with+face&newwindow=1&sca_esv=6387cc943ddbbd42&udm=2&biw=1912&bih=1005&sxsrf=ANbL-n6RAlZKS0o0PhpVE1vvH2DjdcPEQA%3A1778450682028&ei=-gABaqqqAZay5NoPis3FwAk&ved=0ahUKEwiqj5yJ3a-UAxUWGVkFHYpmEZgQ4dUDCBQ&uact=5&oq=dane+county+cow+mug+with+face&gs_lp=Egtnd3Mtd2l6LWltZyIdZGFuZSBjb3VudHkgY293IG11ZyB3aXRoIGZhY2VI0R5Q4wtYmRhwAXgAkAEAmAF6oAGjB6oBBDEwLjK4AQPIAQD4AQGYAgGgAhfCAgQQABgemAMAiAYBkgcBMaAHkAGyBwC4BwDCBwMzLTHIBwyACAE&sclient=gws-wiz-img
-    - last_visited: '2026-05-10T18:09:40'
-      pinned: false
-      title: dane county cow mug with face - Google Search
-      url: https://www.google.com/search?newwindow=1&sca_esv=6387cc943ddbbd42&sxsrf=ANbL-n7zkuvN8KavhohzHW3m0pya5zxM4A:1778450976202&q=dane+county+cow+mug+with+face&source=lnms&fbs=ADc_l-byipRaccqV0jmfPhi1DgzPtklXGmVkws8Z_lBff884vwWzYGOXmwhR8m6ZBpcqcPLGZsMcHzb046MbOWR3c9PU2bBabO2S6Ph9oC8jS9uFZHVKupewXVPQnIe1IGMiq2W_Oc-VU1mJBaLTLuoqlanSjJ1be2YDXWKo8dTRhhMaErLtv13GFLEB3eo95hUTvuoI-ta1zXbY7itjxBRbnK2c0YvJ18ewldEoiU7RgxivmoA-FBM&sa=X&ved=2ahUKEwjemb-V3q-UAxXHMlkFHdXfMxEQ0pQJegQIDxAB&biw=1912&bih=1041&dpr=1
-    - last_visited: '2026-05-10T18:09:48'
-      pinned: false
-      title: dane county cow mug - Google Search
-      url: https://www.google.com/search?q=dane+county+cow+mug+&newwindow=1&sca_esv=6387cc943ddbbd42&biw=1912&bih=1005&sxsrf=ANbL-n5AncoHa6I_JOIYjhW7vAMfEMMe8Q%3A1778450979752&ei=IwIBarzQLYmg5NoP1M2-kAU&ved=0ahUKEwj87ZeX3q-UAxUJEFkFHdSmD1IQ4dUDCBM&uact=5&oq=dane+county+cow+mug+&gs_lp=Egxnd3Mtd2l6LXNlcnAiFGRhbmUgY291bnR5IGNvdyBtdWcgMgQQIxgnMgUQABjvBTIFEAAY7wUyBRAAGO8FMggQABiABBiiBDIFEAAY7wVI6RFQngtYngtwAngAkAEAmAFaoAFaqgEBMbgBA8gBAPgBAZgCA6ACcMICCBAAGO8FGLADmAMAiAYBkAYFkgcDMi4xoAfmA7IHAzAuMbgHZMIHAzItM8gHEYAIAQ&sclient=gws-wiz-serp
-    - last_visited: '2026-05-10T18:09:50'
-      pinned: false
-      title: dane county cow mug - Google Search
-      url: https://www.google.com/search?newwindow=1&sca_esv=6387cc943ddbbd42&sxsrf=ANbL-n7MPP4bdtL050MlIKs5DKQCffWU6w:1778450985577&udm=2&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKpaEWjvZ2Py1XXV8d8KvlI3o6iwGk6Iv1tRbZIBNIVs-6UIUc6UR6SuJFZzmDZDaBC-m-l14a_FtSAzW6lSIO-VulTn0qiECr51J_sv1CBYe6YfLeLQi1lfTVBSudKt1x8KSYiNRkN9wHT59oA9T_Bh8TH9E6jHfyFylInI9x3qKb1VOzIXdmY9LbUPL40q6Vz8TyTYg&q=dane+county+cow+mug&sa=X&ved=2ahUKEwiosfuZ3q-UAxVuD1kFHVPaMccQtKgLegQIEhAB&biw=1912&bih=1041&dpr=1
-    - last_visited: '2026-05-10T18:09:59'
-      pinned: false
-      title: dane county cow mug - Google Search
-      url: https://www.google.com/search?newwindow=1&sca_esv=6387cc943ddbbd42&sxsrf=ANbL-n50et3E9hKr_r1r9smDg9039v7Yww%3A1778450989998&q=dane+county+cow+mug&source=lnms&fbs=ADc_l-YQanUcJSoe62luYRIM6gsUt2zjmW_MvZe6pHkYHWOdy8woxLkmF_YUe3IvdgohA__TdOTYxfOBMcx4eQe9ntarPAZBXD5rP9acXWUjBNK3VMW3QOEjlzJ3eoQHhqVX-6Jb6-XIQq_qJzQZYfoxYgbegajFekPTpKF5tmTu_-aflTUfPAW53HVeg8PlMuRZZYF8BzKQhoSNdwg_RSmMRu96_M1LZI4E1g6SRUGv6wY1aOF7t84&sa=X&ved=2ahUKEwinmImc3q-UAxXQGFkFHccRLzYQ0pQJegQIEBAB&biw=1912&bih=1041&dpr=1
-    - last_visited: '2026-05-10T18:10:26'
-      pinned: false
-      title: dane county regional airport cow mug - Google Search
-      url: https://www.google.com/search?q=dane+county+regional+airport+cow+mug&newwindow=1&sca_esv=6387cc943ddbbd42&biw=1912&bih=1005&sxsrf=ANbL-n4CQO1BoUpcfFS1cLbk_2rPJavryw%3A1778450997072&ei=NQIBao2KBK_b5NoP4dy36Q0&oq=dane+county+regional+cow+mug&gs_lp=Egxnd3Mtd2l6LXNlcnAiHGRhbmUgY291bnR5IHJlZ2lvbmFsIGNvdyBtdWcqAggAMggQIRigARjDBEjWIlDmB1j6D3ABeACQAQCYAXCgAaoGqgEDNy4yuAEDyAEA-AEBmAIHoAKzBMICDRAjGMkCGPAFGLADGCfCAggQABjvBRiwA8ICBxAjGLACGCfCAg0QIxjJAhjwBRiwAhgnwgIFEAAY7wXCAgoQIRgKGKABGMMEwgIEECEYCpgDAIgGAZAGBZIHATegB9QfsgcBNrgHqATCBwcwLjIuNC4xyAcegAgB&sclient=gws-wiz-serp
-    - last_visited: '2026-05-10T18:10:30'
-      pinned: false
-      title: dane county regional airport cow mug - Google Search
-      url: https://www.google.com/search?newwindow=1&sca_esv=6387cc943ddbbd42&sxsrf=ANbL-n7AnrHyencavqhlmphfpIpNeWDAfw:1778451026026&udm=2&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKpaEWjvZ2Py1XXV8d8KvlI3o6iwGk6Iv1tRbZIBNIVs-4GJXYeB3CBxAjmqru39Vzqg2oQoq-3y7w0y9gQyMPLZy0HZ8-r6knIhdo0q7k1USdQHqSdoFiSiEUxjoNS9k-l0XVgoD6ypZzT2HNhKKUIb1Y-zvCpYEpN6GUuYQVU0jyy-gYj5nw3ld_9VH_HzLAQJEmvqg&q=dane+county+regional+airport+cow+mug&sa=X&ved=2ahUKEwien6Ct3q-UAxU8D1kFHVafE3kQtKgLegQIEBAB&biw=1912&bih=1041&dpr=1
-    - last_visited: '2026-05-10T18:10:31'
-      pinned: false
-      title: dane county regional airport cow mug - Google Search
-      url: https://www.google.com/search?newwindow=1&sca_esv=6387cc943ddbbd42&sxsrf=ANbL-n7AnrHyencavqhlmphfpIpNeWDAfw:1778451026026&udm=2&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKpaEWjvZ2Py1XXV8d8KvlI3o6iwGk6Iv1tRbZIBNIVs-4GJXYeB3CBxAjmqru39Vzqg2oQoq-3y7w0y9gQyMPLZy0HZ8-r6knIhdo0q7k1USdQHqSdoFiSiEUxjoNS9k-l0XVgoD6ypZzT2HNhKKUIb1Y-zvCpYEpN6GUuYQVU0jyy-gYj5nw3ld_9VH_HzLAQJEmvqg&q=dane+county+regional+airport+cow+mug&sa=X&ved=2ahUKEwien6Ct3q-UAxU8D1kFHVafE3kQtKgLegQIEBAB&biw=1912&bih=1041&dpr=1#sv=CAMSVhoyKhBlLWMtSWkyTmJaZy1VRkJNMg5jLUlpMk5iWmctVUZCTToOZW4tLVNzUG0xbnJRcU0gBCocCgZtb3NhaWMSEGUtYy1JaTJOYlpnLVVGQk0YADABGAcg7azg9wNKCBABGAEgASgB
-    - last_visited: '2026-05-10T18:11:07'
-      pinned: false
-      title: dane county regional airport - Google Search
-      url: https://www.google.com/search?q=dane+county+regional+airport&newwindow=1&sca_esv=6387cc943ddbbd42&udm=2&biw=1912&bih=1005&sxsrf=ANbL-n57IRtYaq4gUwqXbOuFJHjBNFtW9Q%3A1778451029348&ei=VQIBaon2FNDe5NoPkbHnsAQ&ved=0ahUKEwjJ9Oqu3q-UAxVQL1kFHZHYGUYQ4dUDCBQ&uact=5&oq=dane+county+regional+airport&gs_lp=Egtnd3Mtd2l6LWltZyIcZGFuZSBjb3VudHkgcmVnaW9uYWwgYWlycG9ydDIHECMYyQIYJzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEiCElC5Clj_DXACeACQAQCYAVKgAaABqgEBMrgBA8gBAPgBAZgCAqACyQGYAwCIBgGSBwMxLjGgB_0NsgcDMS4xuAfJAcIHAzMtMsgHIYAIAQ&sclient=gws-wiz-img
-    - last_visited: '2026-05-10T18:11:10'
-      pinned: false
-      title: dane county regional airport - Google Search
-      url: https://www.google.com/search?newwindow=1&sca_esv=6387cc943ddbbd42&sxsrf=ANbL-n6pDjTDF-iYK4nTehh0OACbo0B0mQ:1778451066824&q=dane+county+regional+airport&source=lnms&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKpfLY5rtNM5M-cdiqwJEN-avVopuudCJpVy325uLh9CI-8vhFhPifKnfbb8Zmy5dQCa0UguwlyQf9ZDX5-eLMjkhKLAiPwaW12TPIzO07NPYOBOtqthN7e_YNkRdaBEEbt5FrpHoJhosXvGFSbqiKuGryHawJc5bl_yC1vxxKVIhdErZye-DToxa7_0V1A6rckRZUPoJ_175yvc3Zntvnl9kCtR1s&sa=X&ved=2ahUKEwiEn9rA3q-UAxUPLFkFHWWmEQsQ0pQJegQIEBAB&biw=1912&bih=1041&dpr=1
+      title: Repository search results
+      url: https://github.com/search?q=popcorn+time&type=repositories&s=updated&o=desc&p=2
     - active: true
-      last_visited: '2026-05-10T18:11:37'
+      last_visited: '2026-05-24T15:37:31'
       pinned: false
       scroll-pos:
         x: 0
         y: 0
-      title: dane county regional airport store - Google Search
-      url: https://www.google.com/search?q=dane+county+regional+airport+store&newwindow=1&sca_esv=6387cc943ddbbd42&biw=1912&bih=1005&sxsrf=ANbL-n6T6rOQKFtOR7bdaoHT-f5VnGyohQ%3A1778451069734&ei=fQIBaqy4LJiy5NoPsIGliAI&ved=0ahUKEwjs6ovC3q-UAxUYGVkFHbBACSEQ4dUDCBM&uact=5&oq=dane+county+regional+airport+store&gs_lp=Egxnd3Mtd2l6LXNlcnAiImRhbmUgY291bnR5IHJlZ2lvbmFsIGFpcnBvcnQgc3RvcmUyBRAhGKABMgUQIRigATIFECEYoAEyBRAhGKABMgUQIRigAUjmDlDtA1i0DXABeAGQAQCYAX6gAfwEqgEDMy4zuAEDyAEA-AEBmAIHoALQBcICDRAjGPAFGMkCGLADGCfCAgoQABhHGNYEGLADwgINEAAYgAQYigUYQxiwA8ICDhAAGOQCGNYEGLAD2AEBwgIZEC4YgAQYigUYQxjHARjRAxjIAxiwA9gBAcICGRAuGIAEGIoFGEMYxwEYrwEYyAMYsAPYAQHCAgoQIxjJAhjwBRgnwgILEC4YrwEYxwEYgATCAgoQABiABBiKBRhDwgIFEAAYgATCAgsQABiABBiKBRiRAsICBhAAGBYYHsICCxAAGIAEGIoFGIYDwgIFEAAY7wXCAggQABiABBiiBMICBRAhGJ8FmAMAiAYBkAYTugYGCAEQARgJkgcDMi41oAeRKLIHAzEuNbgHuwXCBwUyLTUuMsgHOoAIAQ&sclient=gws-wiz-serp
+      title: Repository search results
+      url: https://github.com/search?q=popcorn+time&type=repositories&s=updated&o=desc&p=3
+      zoom: 1.0
+  - history:
+    - active: true
+      last_visited: '2026-05-24T15:23:10'
+      pinned: false
+      scroll-pos:
+        x: 0
+        y: 1560
+      title: 'popcorntime/popcorntime: Popcorn Time™ puts everything in one place.
+        Your favorite platforms, your shows, your movies-ready when you are.'
+      url: https://github.com/popcorntime/popcorntime
       zoom: 1.0

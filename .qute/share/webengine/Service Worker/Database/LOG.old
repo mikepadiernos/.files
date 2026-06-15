@@ -1,3 +1,2 @@
-2026/05/08-23:59:04.933 d5a7b Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/Service Worker/Database/MANIFEST-000001
-2026/05/08-23:59:04.934 d5a7b Recovering log #3
-2026/05/08-23:59:04.936 d5a7b Reusing old log /home/mikepadiernos/.local/share/qutebrowser/webengine/Service Worker/Database/000003.log 
+2026/05/24-15:22:28.361 101882 Creating DB /home/mikepadiernos/.local/share/qutebrowser/webengine/Service Worker/Database since it was missing.
+2026/05/24-15:22:28.363 101882 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/Service Worker/Database/MANIFEST-000001

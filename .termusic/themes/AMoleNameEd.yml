@@ -1,0 +1,27 @@
+colors:
+  name: A Mole Name Ed
+  author: M. Padiernos
+  primary:
+    background: "#000000"
+    foreground: "#d0d0d0"
+  cursor:
+    text: "#ffffff"
+    cursor: "#efe100"
+  normal:
+    black: "#000000"
+    red: "#ac4142"
+    green: "#90a959"
+    yellow: "#efe100"
+    blue: "#6a9fb5"
+    magenta: "#aa759f"
+    cyan: "#75b5aa"
+    white: "#d0d0d0"
+  bright:
+    black: "#505050"
+    red: "#ac4142"
+    green: "#90a959"
+    yellow: "#f4bf75"
+    blue: "#6a9fb5"
+    magenta: "#aa759f"
+    cyan: "#75b5aa"
+    white: "#f5f5f5"

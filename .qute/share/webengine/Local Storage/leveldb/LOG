@@ -1,27 +1,3 @@
-2026/05/10-17:55:58.490 21fcea Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/MANIFEST-000001
-2026/05/10-17:55:58.505 21fcea Recovering log #92
-2026/05/10-17:55:58.506 21fcea Reusing old log /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/000092.log 
-2026/05/10-18:00:47.188 21fce5 Level-0 table #97: started
-2026/05/10-18:00:47.201 21fce5 Level-0 table #97: 48225 bytes OK
-2026/05/10-18:00:47.203 21fce5 Delete type=0 #92
-2026/05/10-18:02:45.058 21fce5 Level-0 table #99: started
-2026/05/10-18:02:45.066 21fce5 Level-0 table #99: 92057 bytes OK
-2026/05/10-18:02:45.068 21fce5 Delete type=0 #96
-2026/05/10-18:03:47.186 21fce5 Level-0 table #101: started
-2026/05/10-18:03:47.197 21fce5 Level-0 table #101: 231519 bytes OK
-2026/05/10-18:03:47.199 21fce5 Delete type=0 #98
-2026/05/10-18:11:46.263 21fce1 Level-0 table #103: started
-2026/05/10-18:11:46.266 21fce1 Level-0 table #103: 38399 bytes OK
-2026/05/10-18:11:46.268 21fce1 Delete type=0 #100
-2026/05/10-18:11:46.268 21fce1 Compacting 4@0 + 1@1 files
-2026/05/10-18:11:46.305 21fce1 Generated table #104@0: 633 keys, 1188175 bytes
-2026/05/10-18:11:46.305 21fce1 Compacted 4@0 + 1@1 files => 1188175 bytes
-2026/05/10-18:11:46.306 21fce1 compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/05/10-18:11:46.306 21fce1 Delete type=2 #94
-2026/05/10-18:11:46.306 21fce1 Delete type=2 #97
-2026/05/10-18:11:46.306 21fce1 Delete type=2 #99
-2026/05/10-18:11:46.306 21fce1 Delete type=2 #101
-2026/05/10-18:11:46.306 21fce1 Delete type=2 #103
-2026/05/13-10:02:41.931 21fce5 Level-0 table #106: started
-2026/05/13-10:02:41.948 21fce5 Level-0 table #106: 10892 bytes OK
-2026/05/13-10:02:41.950 21fce5 Delete type=0 #102
+2026/06/14-23:48:42.376 239d92 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/MANIFEST-000001
+2026/06/14-23:48:42.382 239d92 Recovering log #110
+2026/06/14-23:48:42.383 239d92 Reusing old log /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/000110.log 

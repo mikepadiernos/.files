@@ -39,3 +39,4 @@
 !.zsh/plugins/git_repos.txt
 
 .atuin/data/history.db
+.copilot-specs-cache/

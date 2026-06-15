@@ -1,5 +1,44 @@
 # COMPLETIONS
 
+# ============================================================================
+# Completion Configuration
+# ============================================================================
+
+export ZSH_DISABLE_COMPFIX="true"
+
+fpath+=(
+  "${ZSH_PLUGINS}/zsh-completions/src"
+)
+
+if [[ -n "$OPENAUDIBLE_HOME" && -d "$OPENAUDIBLE_HOME" ]]; then
+  fpath+=("$OPENAUDIBLE_HOME")
+fi
+
+# ============================================================================
+# Completion Initialization
+# ============================================================================
+
+autoload -Uz compinit compaudit
+
+# Auto-fix insecure completion directories owned by the current user,
+# then initialize completions without interactive prompts
+_compaudit_insecure="$(compaudit 2>/dev/null)"
+if [[ -n "$_compaudit_insecure" ]]; then
+  while IFS= read -r _dir; do
+    [[ -O "$_dir" ]] && chmod go-w "$_dir" 2>/dev/null
+  done <<< "$_compaudit_insecure"
+fi
+
+if [[ -n $(find "${ZDOTDIR:-$HOME}/.zcompdump" -mmin +1440 2>/dev/null) ]]; then
+  compinit -i
+else
+  compinit -iC
+fi
+
+# ============================================================================
+# Tool-Specific Completions
+# ============================================================================
+
 # COMPLETIONS: NVM
 export NVM_DIR="$HOME/.nvm"
 
@@ -14,5 +53,20 @@ export NVM_DIR="$HOME/.nvm"
 ## Completion scripts setup. Remove the following line to uninstall
 # [[ -f /home/mikepadiernos/.dart-cli-completion/zsh-config.zsh ]] && . /home/mikepadiernos/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
+
+# COMPLETIONS: Docker
+command -v docker >/dev/null 2>&1 && eval "$(docker completion zsh)"
+
+# COMPLETIONS: kubectl
+command -v kubectl >/dev/null 2>&1 && eval "$(kubectl completion zsh)"
+
+# COMPLETIONS: Helm
+command -v helm >/dev/null 2>&1 && eval "$(helm completion zsh)"
+
+# COMPLETIONS: GitHub CLI
+command -v gh >/dev/null 2>&1 && eval "$(gh completion -s zsh)"
+
+# COMPLETIONS: AWS CLI
+command -v aws_completer >/dev/null 2>&1 && complete -C aws_completer aws
 
 # END COMPLETIONS

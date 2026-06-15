@@ -23,7 +23,7 @@ if
 fi
 
 echo "Setting up global mise tools..."
-"$mise_bin" install android-sdk argocd atuin aws-cli bat bat-extras delta docker-compose direnv eza fd fzf gh gitconfig github-cli gitui helm jq kubectl lazydocker lazygit lazyjournal lazyssh neovim node python rclone ripgrep shellcheck terraform tmux usage yazi zoxide
-"$mise_bin" use --global android-sdk argocd atuin aws-cli bat bat-extras delta docker-compose direnv eza fd fzf gh gitconfig github-cli gitui helm jq kubectl lazydocker lazygit lazyjournal lazyssh neovim node python rclone ripgrep shellcheck terraform tmux usage yazi zoxide
+"$mise_bin" install android-sdk argocd atuin aws-cli bat bat-extras delta docker-compose direnv eza fd fzf gh gitconfig github-cli gitui go helm jq kubectl lazydocker lazygit lazyjournal lazyssh neovim node python rclone ripgrep shellcheck terraform tmux usage yazi zoxide
+"$mise_bin" use --global android-sdk argocd atuin aws-cli bat bat-extras delta docker-compose direnv eza fd fzf gh gitconfig github-cli gitui go helm jq kubectl lazydocker lazygit lazyjournal lazyssh neovim node python rclone ripgrep shellcheck terraform tmux usage yazi zoxide
 
 echo "mise setup complete!"

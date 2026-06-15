@@ -1,27 +1,3 @@
-2026/05/10-17:55:59.728 21fce1 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/Session Storage/MANIFEST-000001
-2026/05/10-17:55:59.729 21fce1 Recovering log #23
-2026/05/10-17:55:59.729 21fce1 Reusing old log /home/mikepadiernos/.local/share/qutebrowser/webengine/Session Storage/000023.log 
-2026/05/10-18:02:47.188 21fce5 Level-0 table #27: started
-2026/05/10-18:02:47.193 21fce5 Level-0 table #27: 72468 bytes OK
-2026/05/10-18:02:47.200 21fce5 Delete type=0 #23
-2026/05/10-18:05:35.669 21fce5 Level-0 table #29: started
-2026/05/10-18:05:35.682 21fce5 Level-0 table #29: 216147 bytes OK
-2026/05/10-18:05:35.684 21fce5 Delete type=0 #26
-2026/05/10-18:05:48.116 21fce5 Level-0 table #31: started
-2026/05/10-18:05:48.124 21fce5 Level-0 table #31: 58583 bytes OK
-2026/05/10-18:05:48.125 21fce5 Delete type=0 #28
-2026/05/10-18:05:48.127 21fce5 Compacting 4@0 + 1@1 files
-2026/05/10-18:05:48.142 21fce5 Generated table #32@0: 1339 keys, 375608 bytes
-2026/05/10-18:05:48.142 21fce5 Compacted 4@0 + 1@1 files => 375608 bytes
-2026/05/10-18:05:48.143 21fce5 compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/05/10-18:05:48.143 21fce5 Delete type=2 #21
-2026/05/10-18:05:48.143 21fce5 Delete type=2 #24
-2026/05/10-18:05:48.144 21fce5 Delete type=2 #27
-2026/05/10-18:05:48.144 21fce5 Delete type=2 #29
-2026/05/10-18:05:48.144 21fce5 Delete type=2 #31
-2026/05/10-18:07:42.237 21fce5 Level-0 table #34: started
-2026/05/10-18:07:42.253 21fce5 Level-0 table #34: 207260 bytes OK
-2026/05/10-18:07:42.255 21fce5 Delete type=0 #30
-2026/05/10-18:11:18.948 21fce5 Level-0 table #36: started
-2026/05/10-18:11:18.988 21fce5 Level-0 table #36: 67695 bytes OK
-2026/05/10-18:11:18.990 21fce5 Delete type=0 #33
+2026/06/14-23:48:42.970 239d92 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/Session Storage/MANIFEST-000001
+2026/06/14-23:48:42.970 239d92 Recovering log #35
+2026/06/14-23:48:42.971 239d92 Reusing old log /home/mikepadiernos/.local/share/qutebrowser/webengine/Session Storage/000035.log 

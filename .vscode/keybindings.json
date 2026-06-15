@@ -43,11 +43,15 @@
         "command": "docker-lazydocker.launch"
     },
     {
-        "key": "ctrl+meta+backspace",
+        "key": "ctrl+meta+\\",
         "command": "yazi-vscode.toggle"
     },
     {
         "key": "ctrl+shift+y",
         "command": "-yazi-vscode.toggle"
+    },
+    {
+        "key": "ctrl+meta+'",
+        "command": "workbench.action.maximizeAuxiliaryBar"
     }
 ]
