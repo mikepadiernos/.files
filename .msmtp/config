@@ -3,7 +3,7 @@ host mail.padiernos.me
 port 465
 from mike@padiernos.me
 user mike@padiernos.me
-passwordeval "pass mail/mike@padiernos.me"
+passwordeval "PASSWORD_STORE_DIR=\"$HOME/.pass\" pass mail/mike@padiernos.me"
 auth on
 tls on
 tls_trust_file	/etc/ssl/certs/ca-certificates.crt
@@ -15,11 +15,23 @@ host smtp.gmail.com
 port 587
 from mike.padiernos@gmail.com
 user mike.padiernos@gmail.com
-passwordeval "pass mail/mike.padiernos@gmail.com"
+passwordeval "PASSWORD_STORE_DIR=\"$HOME/.pass\" pass mail/mike.padiernos@gmail.com"
 auth on
 tls on
 tls_trust_file	/etc/ssl/certs/ca-certificates.crt
 logfile /home/mikepadiernos/.config/msmtp/msmtp.log
 # tls_starttls
+
+account mike.padiernos@outlook.com
+host smtp.office365.com
+port 587
+from mike.padiernos@outlook.com
+user mike.padiernos@outlook.com
+passwordeval "PASSWORD_STORE_DIR=\"$HOME/.pass\" pass mail/mike.padiernos@outlook.com"
+auth on
+tls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile /home/mikepadiernos/.config/msmtp/msmtp.log
+tls_starttls on
 
 

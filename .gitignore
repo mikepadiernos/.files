@@ -1,36 +1,44 @@
-.DS_store
-
-.nexcloudsync.log
-
+# Keep tracked historical data
 !historical/
 
-.asdf/data/*/
+# System / generic
+.DS_store
 
+# Logs / sync artifacts
+.nexcloudsync.log
+
+# Copilot cache
+.copilot-specs-cache/
+
+# App runtime data
+
+# Atuin
 .atuin/**/*.db
 .atuin/**/*.db-shm
 .atuin/**/*.db-wal
 
+# CopyQ
 .copyq/*.dat
 .copyq/copyq.lock
 
-
+# davfs2
 .davfs2/
 
-# .filecentipede/lib/
-
-# .msmtp/*.log
-
+# Neovim
 .neovim/
 .neovim/*/
 
-# .openaudible/tmp/
-
+# qutebrowser cache/local secrets
 .qute/__pycache__/
+.qute/share/keepassxc.key*
 
+# tmux plugins
 .tmux/plugins/*/
 
+# Zen Browser
 .zen/
 
+# zsh runtime/cache
 .zsh/.historical/
 .zsh/history/
 .zsh/plugins/zsh*/
@@ -38,5 +46,7 @@
 .zsh/themes/typewritten/
 !.zsh/plugins/git_repos.txt
 
-.atuin/data/history.db
-.copilot-specs-cache/
+# Optional ignores
+# .filecentipede/lib/
+# .msmtp/*.log
+# .openaudible/tmp/

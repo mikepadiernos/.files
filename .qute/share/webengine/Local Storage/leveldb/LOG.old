@@ -1,8 +1,3 @@
-2026/05/24-15:12:43.973 101886 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/MANIFEST-000001
-2026/05/24-15:12:43.980 101886 Recovering log #105
-2026/05/24-15:12:43.981 101886 Level-0 table #108: started
-2026/05/24-15:12:43.982 101886 Level-0 table #108: 20232 bytes OK
-2026/05/24-15:12:43.983 101886 Delete type=0 #105
-2026/05/24-15:13:28.121 1018e7 Level-0 table #111: started
-2026/05/24-15:13:28.123 1018e7 Level-0 table #111: 11974 bytes OK
-2026/05/24-15:13:28.124 1018e7 Delete type=0 #109
+2026/06/19-16:08:59.595 3c0dc4 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/MANIFEST-000001
+2026/06/19-16:08:59.602 3c0dc4 Recovering log #110
+2026/06/19-16:08:59.603 3c0dc4 Reusing old log /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/000110.log 

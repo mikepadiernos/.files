@@ -1,0 +1,9 @@
+2026/06/19-10:04:23.614 2710d8 Reusing MANIFEST /home/mikepadiernos/.config/feishin/IndexedDB/file__0.indexeddb.leveldb/MANIFEST-000001
+2026/06/19-10:04:23.614 2710d8 Recovering log #6
+2026/06/19-10:04:23.615 2710d8 Reusing old log /home/mikepadiernos/.config/feishin/IndexedDB/file__0.indexeddb.leveldb/000006.log 
+2026/06/19-10:04:26.014 2710ac Compacting 1@1 + 1@2 files
+2026/06/19-10:04:26.022 2710ac Generated table #9@1: 29 keys, 9654 bytes
+2026/06/19-10:04:26.022 2710ac Compacted 1@1 + 1@2 files => 9654 bytes
+2026/06/19-10:04:26.023 2710ac compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/06/19-10:04:26.023 2710ac Delete type=2 #5
+2026/06/19-10:04:26.023 2710ac Delete type=2 #7

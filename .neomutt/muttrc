@@ -18,9 +18,24 @@ source /home/mikepadiernos/.config/mutt/accounts/mike@padiernos.me.muttrc
 folder-hook $folder 'source /home/mikepadiernos/.config/mutt/accounts/mike@padiernos.me.muttrc'
 source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@gmail.com.muttrc
 folder-hook $folder 'source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@gmail.com.muttrc'
-# source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@outlook.com.muttrc
-# folder-hook $folder 'source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@outlook.com.muttrc'
-#
+source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@outlook.com.muttrc
+folder-hook $folder 'source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@outlook.com.muttrc'
+
 macro index,pager i1 '<sync-mailbox><enter-command>source /home/mikepadiernos/.config/mutt/accounts/mike@padiernos.me.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to mike@padiernos.me"
 macro index,pager i2 '<sync-mailbox><enter-command>source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@gmail.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to mike.padiernos@gmail.com"
-# macro index,pager i3 '<sync-mailbox><enter-command>source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@outlook.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to mike.padiernos@outlook.com"
+macro index,pager i3 '<sync-mailbox><enter-command>source /home/mikepadiernos/.config/mutt/accounts/mike.padiernos@outlook.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to mike.padiernos@outlook.com"
+
+source /usr/share/mailwizard/mailwizard.muttrc # mailwizard-generated
+source /home/mikepadiernos/.config/mutt/mw_gen_mutt_accounts.muttrc # mailwizard-generated
+
+source /home/mikepadiernos/.config/mutt/unified-inbox.muttrc
+
+# Final UI override: force pure black divider between sidebar and index.
+set sidebar_divider_char = " "
+color sidebar_divider black black
+
+# >>> setup-mail abook >>>
+set query_command = "abook --mutt-query '%s'"
+macro index,pager A "<pipe-message>abook --add-email-quiet<enter>" "Add sender to abook"
+bind editor <Tab> complete-query
+# <<< setup-mail abook <<<

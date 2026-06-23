@@ -23,6 +23,7 @@
 
 import sys
 import json
+import os
 import argparse
 import urllib.parse
 import urllib.request
@@ -47,6 +48,18 @@ import readline
 # although won't work until an appropriate identity appears in the first line.
 ENCRYPTION_PIPE = ['gpg', '--encrypt', '--recipient', 'YOUR_GPG_IDENTITY']
 DECRYPTION_PIPE = ['gpg', '--decrypt']
+
+# Fallback to plain-text token storage when no GPG recipient is configured.
+# You can override by setting MUTT_OAUTH2_ENCRYPT_CMD / MUTT_OAUTH2_DECRYPT_CMD.
+if 'YOUR_GPG_IDENTITY' in ENCRYPTION_PIPE:
+    ENCRYPTION_PIPE = ['cat']
+    DECRYPTION_PIPE = ['cat']
+
+enc_cmd = os.environ.get('MUTT_OAUTH2_ENCRYPT_CMD', '').strip()
+dec_cmd = os.environ.get('MUTT_OAUTH2_DECRYPT_CMD', '').strip()
+if enc_cmd and dec_cmd:
+    ENCRYPTION_PIPE = enc_cmd.split()
+    DECRYPTION_PIPE = dec_cmd.split()
 
 registrations = {
     'google': {
@@ -75,8 +88,8 @@ registrations = {
         'scope': ('offline_access https://outlook.office.com/IMAP.AccessAsUser.All '
                   'https://outlook.office.com/POP.AccessAsUser.All '
                   'https://outlook.office.com/SMTP.Send'),
-        'client_id': '',
-        'client_secret': '',
+        'client_id': os.environ.get('MUTT_OAUTH2_MICROSOFT_CLIENT_ID', ''),
+        'client_secret': os.environ.get('MUTT_OAUTH2_MICROSOFT_CLIENT_SECRET', ''),
     },
 }
 
@@ -112,6 +125,7 @@ if path.exists():
 
 def writetokenfile():
     '''Writes global token dictionary into token file.'''
+    path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
         path.touch(mode=0o600)
     if 0o777 & path.stat().st_mode != 0o600:
@@ -140,6 +154,9 @@ if token['registration'] not in registrations:
     sys.exit(f'ERROR: Unknown registration "{token["registration"]}". Delete token file '
              f'and start over.')
 registration = registrations[token['registration']]
+
+if token['registration'] == 'microsoft' and not registration['client_id']:
+    sys.exit('Set MUTT_OAUTH2_MICROSOFT_CLIENT_ID before authorizing Microsoft OAuth2.')
 
 authflow = token['authflow']
 if args.authflow:

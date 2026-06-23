@@ -1,0 +1,6 @@
+2026/06/19-21:11:25.618 1075cc Reusing MANIFEST /home/mikepadiernos/.config/feishin/IndexedDB/file__0.indexeddb.leveldb/MANIFEST-000001
+2026/06/19-21:11:25.618 1075cc Recovering log #6
+2026/06/19-21:11:25.622 1075cc Reusing old log /home/mikepadiernos/.config/feishin/IndexedDB/file__0.indexeddb.leveldb/000006.log 
+2026/06/20-12:23:45.873 1075cc Level-0 table #12: started
+2026/06/20-12:23:45.895 1075cc Level-0 table #12: 1747517 bytes OK
+2026/06/20-12:23:45.896 1075cc Delete type=0 #6

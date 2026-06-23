@@ -1,3 +1,15 @@
-2026/06/14-23:48:42.376 239d92 Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/MANIFEST-000001
-2026/06/14-23:48:42.382 239d92 Recovering log #110
-2026/06/14-23:48:42.383 239d92 Reusing old log /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/000110.log 
+2026/06/19-16:35:18.799 3e228d Reusing MANIFEST /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/MANIFEST-000001
+2026/06/19-16:35:18.807 3e228d Recovering log #110
+2026/06/19-16:35:18.808 3e228d Reusing old log /home/mikepadiernos/.local/share/qutebrowser/webengine/Local Storage/leveldb/000110.log 
+2026/06/19-16:37:23.640 3e228d Level-0 table #114: started
+2026/06/19-16:37:23.643 3e228d Level-0 table #114: 27176 bytes OK
+2026/06/19-16:37:23.645 3e228d Delete type=0 #110
+2026/06/19-16:37:23.645 3e228d Compacting 4@0 + 1@1 files
+2026/06/19-16:37:23.663 3e228d Generated table #115@0: 687 keys, 1191530 bytes
+2026/06/19-16:37:23.663 3e228d Compacted 4@0 + 1@1 files => 1191530 bytes
+2026/06/19-16:37:23.664 3e228d compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/06/19-16:37:23.664 3e228d Delete type=2 #104
+2026/06/19-16:37:23.664 3e228d Delete type=2 #106
+2026/06/19-16:37:23.664 3e228d Delete type=2 #108
+2026/06/19-16:37:23.664 3e228d Delete type=2 #111
+2026/06/19-16:37:23.664 3e228d Delete type=2 #114

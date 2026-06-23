@@ -3,16 +3,17 @@
 set editor = "$EDITOR +/^$ +nohlsearch"
 
 # Sidebar mappings
+set sidebar_visible = yes
 set sidebar_width = 35
 set sidebar_short_path = yes
 set sidebar_next_new_wrap = yes
-set sidebar_format = ' %D%?F? [%F]?%* %?N?%N /? %?S?%S? '
+set sidebar_format = '%D%?F? [%F]? %?N?%N /? %?S?%S?'
 # set sidebar_format = "%D %?S?[%N/%S]?"
 set sidebar_divider_char = " "
 set sidebar_delim_chars="./"            # Delete everything up to the last specified character(s)
-set sidebar_folder_indent               # Indent folders whose names we've shortened
-set sidebar_indent_string = " "         # Indent with one space
-set sidebar_on_right = yes
+unset sidebar_folder_indent
+set sidebar_indent_string = ""
+set sidebar_on_right = no
 
 set status_chars = "—+#~"
 set status_on_top = yes

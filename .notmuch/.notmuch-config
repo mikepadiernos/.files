@@ -1,10 +1,10 @@
 [database]
-path=/home/mikepadiernos/Library/.mail
+path=/home/mikepadiernos/Library/.library/.maildir
 
 [user]
 name=mike
 primary_email=mike@padiernos.me
-other_email=dev@padiernos.io;mike.padiernos@outlook.com;mike.padiernos@gmail.com
+other_email=dev@padiernos.io;mike.padiernos@outlook.com;mike.padiernos@gmail.com;
 
 [new]
 tags=unread;inbox;notify

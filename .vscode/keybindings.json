@@ -53,5 +53,15 @@
     {
         "key": "ctrl+meta+'",
         "command": "workbench.action.maximizeAuxiliaryBar"
+    },
+    {
+        "key": "ctrl+shift+u",
+        "command": "workbench.action.browser.focusUrlInput",
+        "when": "activeEditor == 'workbench.editor.browser'"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "-workbench.action.browser.focusUrlInput",
+        "when": "activeEditor == 'workbench.editor.browser'"
     }
 ]

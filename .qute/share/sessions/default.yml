@@ -1,79 +1,194 @@
 windows:
 - geometry: !!binary |
-    AdnQywADAAAAAAeAAAABAwAADvcAAAU6AAAHgAAAAQMAAA73AAAFOgAAAAAAAAAAB4AAAAeAAAAB
-    AwAADvcAAAU6
+    AdnQywADAAAAAAeAAAABAwAADv8AAAVCAAAHgQAAARwAAA7+AAAE+wAAAAACAAAAB4AAAAeAAAAB
+    AwAADv8AAAVC
   tabs:
   - history:
     - active: true
-      last_visited: '2026-05-24T15:12:44'
+      last_visited: '2026-06-19T16:35:18'
       pinned: false
       scroll-pos:
         x: 0
         y: 0
-      title: Plasma 6 Multimedia - KDE Store
-      url: https://store.kde.org/browse?cat=711&page=2&ord=latest
-      zoom: 1.0
-  - active: true
-    history:
-    - last_visited: '2026-05-24T15:12:46'
-      pinned: false
-      title: 'GitHub - popcorntime/popcorntime: Popcorn Time™ puts everything in one
-        place. Your favorite platforms, your shows, your movies-ready when you are.
-        · GitHub'
-      url: https://github.com/popcorntime/popcorntime
-    - last_visited: '2026-05-24T15:21:38'
-      pinned: false
-      title: Repository search results · GitHub
-      url: https://github.com/search?q=popcorn&type=repositories
-    - last_visited: '2026-05-24T15:21:42'
-      pinned: false
-      title: Repository search results · GitHub
-      url: https://github.com/search?q=popcorn&type=repositories&s=updated&o=asc
-    - last_visited: '2026-05-24T15:21:58'
-      pinned: false
-      title: Repository search results · GitHub
-      url: https://github.com/search?q=popcorn&type=repositories&s=updated&o=desc
-    - last_visited: '2026-05-24T15:22:00'
-      pinned: false
-      title: Sign in to GitHub · GitHub
-      url: https://github.com/login?return_to=https%3A%2F%2Fgithub.com%2Fsearch%3Fq%3Dpopcorn%26type%3Drepositories%26s%3Dupdated%26o%3Ddesc
-    - last_visited: '2026-05-24T15:22:09'
-      pinned: false
-      title: Sign in - Google Accounts
-      url: https://accounts.google.com/v3/signin/accountchooser?client_id=1078992815106-brpsupgvhheqg35tupphbh0qk9c32nq8.apps.googleusercontent.com&code_challenge=fkxp3WjOiFxioE3C_kptgPQpfaFeFy1g1B0aiPsKjB0&code_challenge_method=S256&nonce=7aca3c823892fb9aa9c5d6e23f642d43&prompt=select_account&redirect_uri=https%3A%2F%2Fgithub.com%2Fsessions%2Fsocial%2Fgoogle%2Fcallback&response_type=code&scope=openid+email+profile&state=10ae1015b854368c24216a980c8a84ef&dsh=S-1390221339%3A1779650528493324&o2v=2&service=lso&flowName=GeneralOAuthFlow&opparams=%253F&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Foauth%2Fconsent%3Fauthuser%3Dunknown%26part%3DAJi8hANvkMDa6PuzG0x6cUkAC1mP0i0_Lwr_OZllzLBv9R6wh_EtH21eT1BKbtbvhOsk6CuohTGhCA1E8QEa9o6yh7U92vGdq7xtdMypprKShpFlCzM_8U2VMckC9sS83e55g76F9kOrecSz2v-SVyOBVXcCn1ZubdR013YceJ0M4G89sR34_CPj9aRiJGISgAyF86WOqXWpjaEC6nkHdJAV8THBQ2o20nF1zgacGXLcFsSsbTETS0zFkdyeCUXKeebHi7tq8AxSy8N2SveuxRhbf3htst6exkZGNa4I0GkIWWd3vTkLroX_eMiqY4MTiMRKjOrG26FO51bmiNa4knOAZ4kdkrkgYX1qkdBgZHNFm7UJf6YE9Y17hO3NjwnzAGK_Bu0IyiHwGK_fDxcI0nd3ZutyX7eyRyzVALIdz9RpgC-vg2ZvbcczWzL5D3cX-7gBp6lEv4qP5uW6JpChDnwb0CHU2KuKkw%26flowName%3DGeneralOAuthFlow%26as%3DS-1390221339%253A1779650528493324%26client_id%3D1078992815106-brpsupgvhheqg35tupphbh0qk9c32nq8.apps.googleusercontent.com%26requestPath%3D%252Fsignin%252Foauth%252Fconsent%23&app_domain=https%3A%2F%2Fgithub.com
-    - last_visited: '2026-05-24T15:22:11'
-      pinned: false
-      title: Two-factor authentication · GitHub
-      url: https://github.com/sessions/two-factor/mobile
-    - last_visited: '2026-05-24T15:22:28'
-      pinned: false
-      title: Repository search results
-      url: https://github.com/search?q=popcorn&type=repositories&s=updated&o=desc
-    - last_visited: '2026-05-24T15:23:47'
-      pinned: false
-      title: Repository search results
-      url: https://github.com/search?q=popcorn+time&type=repositories&s=updated&o=desc
-    - last_visited: '2026-05-24T15:24:23'
-      pinned: false
-      title: Repository search results
-      url: https://github.com/search?q=popcorn+time&type=repositories&s=updated&o=desc&p=2
-    - active: true
-      last_visited: '2026-05-24T15:37:31'
-      pinned: false
-      scroll-pos:
-        x: 0
-        y: 0
-      title: Repository search results
-      url: https://github.com/search?q=popcorn+time&type=repositories&s=updated&o=desc&p=3
+      title: log
+      url: qute://log/?level=info
       zoom: 1.0
   - history:
     - active: true
-      last_visited: '2026-05-24T15:23:10'
+      last_visited: '2026-06-19T16:35:19'
       pinned: false
       scroll-pos:
         x: 0
-        y: 1560
+        y: 0
+      title: DuckDuckGo - Protection. Privacy. Peace of mind.
+      url: https://duckduckgo.com/
+      zoom: 1.0
+  - history:
+    - last_visited: '2026-06-19T16:37:18'
+      pinned: false
       title: 'popcorntime/popcorntime: Popcorn Time™ puts everything in one place.
         Your favorite platforms, your shows, your movies-ready when you are.'
       url: https://github.com/popcorntime/popcorntime
+    - last_visited: '2026-06-19T16:37:23'
+      pinned: false
+      title: Issues · popcorntime/popcorntime
+      url: https://github.com/popcorntime/popcorntime/issues
+    - last_visited: '2026-06-19T21:45:09'
+      pinned: false
+      title: 'mikepadiernos/.files: My .files (dotfiles) config'
+      url: https://github.com/mikepadiernos/.files
+    - last_visited: '2026-06-19T21:45:12'
+      pinned: false
+      title: mikepadiernos (Mike Padiernos)
+      url: https://github.com/mikepadiernos
+    - last_visited: '2026-06-19T21:45:15'
+      pinned: false
+      title: mikepadiernos (Mike Padiernos)
+      url: https://github.com/mikepadiernos?tab=repositories
+    - last_visited: '2026-06-19T21:45:18'
+      pinned: false
+      title: New repository
+      url: https://github.com/new
+    - last_visited: '2026-06-19T21:46:57'
+      pinned: false
+      title: mikepadiernos/scripts
+      url: https://github.com/mikepadiernos/scripts
+    - active: true
+      last_visited: '2026-06-19T21:52:24'
+      pinned: false
+      scroll-pos:
+        x: 0
+        y: 0
+      title: mikepadiernos/scripts
+      url: https://github.com/mikepadiernos/scripts#
+      zoom: 1.0
+  - history:
+    - last_visited: '2026-06-19T22:21:10'
+      pinned: false
+      title: qutebrowser | qutebrowser
+      url: https://qutebrowser.org/
+    - last_visited: '2026-06-19T22:21:57'
+      pinned: false
+      title: himitsu at DuckDuckGo
+      url: https://duckduckgo.com/?q=himitsu&ia=web
+    - last_visited: '2026-06-19T22:22:21'
+      pinned: false
+      title: himitsu mutt at DuckDuckGo
+      url: https://duckduckgo.com/?q=himitsu+mutt&ia=web
+    - last_visited: '2026-06-19T22:22:22'
+      pinned: false
+      title: 'Lucksi/Himitsu: Himitsu is a Online/Offline Red Team Tool focused on
+        Password Cracking and Web Vulnerabilities'
+      url: https://github.com/Lucksi/Himitsu
+    - last_visited: '2026-06-20T12:51:44'
+      pinned: false
+      title: Your profile
+      url: https://github.com/settings/profile
+    - last_visited: '2026-06-20T12:51:57'
+      pinned: false
+      title: Billing
+      url: https://github.com/settings/billing/licensing
+    - last_visited: '2026-06-20T12:52:04'
+      pinned: false
+      title: Budgets
+      url: https://github.com/settings/billing/budgets
+    - last_visited: '2026-06-20T12:52:10'
+      original-url: https://github.com/settings/billing/budgets
+      pinned: false
+      title: Billing
+      url: https://github.com/settings/billing/licensing
+    - active: true
+      last_visited: '2026-06-20T12:52:23'
+      pinned: false
+      scroll-pos:
+        x: 0
+        y: 0
+      title: Budgets
+      url: https://github.com/settings/billing/budgets
+      zoom: 1.0
+  - history:
+    - last_visited: '2026-06-19T22:56:32'
+      pinned: false
+      title: qutebrowser | qutebrowser
+      url: https://qutebrowser.org/
+    - last_visited: '2026-06-19T22:56:47'
+      pinned: false
+      title: create a gpg key in linux at DuckDuckGo
+      url: https://duckduckgo.com/?q=create+a+gpg+key+in+linux&ia=web
+    - last_visited: '2026-06-19T23:15:18'
+      pinned: false
+      title: homebrew at DuckDuckGo
+      url: https://duckduckgo.com/?q=homebrew&ia=web
+    - last_visited: '2026-06-19T23:15:18'
+      pinned: false
+      title: 'Homebrew Documentation: Installation'
+      url: https://docs.brew.sh/Installation
+    - last_visited: '2026-06-19T23:15:28'
+      pinned: false
+      title: 'Homebrew: The Package Manager for Everywhere'
+      url: https://brew.sh/
+    - last_visited: '2026-06-20T00:10:59'
+      pinned: false
+      title: neomutt at DuckDuckGo
+      url: https://duckduckgo.com/?q=neomutt&ia=web
+    - last_visited: '2026-06-20T00:10:59'
+      pinned: false
+      title: Home - NeoMutt
+      url: https://neomutt.org/
+    - last_visited: '2026-06-20T00:11:17'
+      pinned: false
+      title: Contrib - NeoMutt
+      url: https://neomutt.org/contrib
+    - last_visited: '2026-06-20T00:11:23'
+      pinned: false
+      title: Useful Programs - NeoMutt
+      url: https://neomutt.org/contrib/useful-programs
+    - last_visited: '2026-06-20T00:12:08'
+      pinned: false
+      title: Development - NeoMutt
+      url: https://neomutt.org/dev
+    - last_visited: '2026-06-20T00:12:25'
+      pinned: false
+      title: Manual Pages - NeoMutt
+      url: https://neomutt.org/man
+    - last_visited: '2026-06-20T00:12:35'
+      pinned: false
+      title: Neomuttrc - NeoMutt
+      url: https://neomutt.org/man/neomuttrc
+    - last_visited: '2026-06-20T00:12:40'
+      original-url: https://neomutt.org/guide
+      pinned: false
+      title: The NeoMutt E-Mail Client - NeoMutt
+      url: https://neomutt.org/guide/
+    - last_visited: '2026-06-20T00:12:44'
+      pinned: false
+      title: Optional Features - NeoMutt
+      url: https://neomutt.org/guide/optionalfeatures
+    - active: true
+      last_visited: '2026-06-20T00:13:27'
+      pinned: false
+      scroll-pos:
+        x: 0
+        y: 14640
+      title: Configuration - NeoMutt
+      url: https://neomutt.org/guide/configuration
+      zoom: 1.0
+  - active: true
+    history:
+    - last_visited: '2026-06-20T13:18:34'
+      pinned: false
+      title: qutebrowser | qutebrowser
+      url: https://qutebrowser.org/
+    - last_visited: '2026-06-20T13:21:54'
+      pinned: false
+      title: ollama in right sidebar vscode at DuckDuckGo
+      url: https://duckduckgo.com/?q=ollama+in+right+sidebar+vscode&ia=web
+    - active: true
+      last_visited: '2026-06-20T13:21:54'
+      pinned: false
+      scroll-pos:
+        x: 0
+        y: 2940
+      title: 'Ollama + VS Code: Your Guide to Local LLM Development | Keyhole Software'
+      url: https://keyholesoftware.com/ollama-vs-code-your-guide-to-local-llm-development/
       zoom: 1.0

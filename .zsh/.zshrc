@@ -10,7 +10,7 @@ export EDITOR=nvim
 export DIRENV_SKIP_TIMEOUT=TRUE
 
 # Directory Paths
-export FILES="$HOME/.library/.files"
+export FILES="$HOME/.files"
 export CONFIGS="$FILES/configs"
 
 # Zsh-Specific Paths

@@ -1,3 +1,5 @@
+import os
+
 from mappings import bind
 
 config.load_autoconfig()
@@ -18,8 +20,13 @@ c.fonts.default_family          = font
 c.fonts.default_size            = "12pt"
 c.tabs.position                 = "bottom"
 c.tabs.title.alignment          = "center"
+c.input.mouse.rocker_gestures  = True
+c.input.mouse.back_forward_buttons = True
 c.url.default_page              = home
 c.url.start_pages               = home
 c.window.title_format           = "{perc}{current_title}"
 
-bind(config)
+keepassxc_script                = os.path.expanduser("~/.config/qutebrowser/scripts/qute-keepassxc/qute-keepassxc")
+keepassxc_gpg_key               = os.environ.get("QUTE_KEEPASSXC_GPG_KEY", "")
+
+bind(config, keepassxc_script=keepassxc_script, keepassxc_gpg_key=keepassxc_gpg_key)
