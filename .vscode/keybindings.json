@@ -63,5 +63,9 @@
         "key": "ctrl+l",
         "command": "-workbench.action.browser.focusUrlInput",
         "when": "activeEditor == 'workbench.editor.browser'"
+    },
+    {
+        "key": "ctrl+meta+]",
+        "command": "extension.lzgit"
     }
 ]
