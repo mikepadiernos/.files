@@ -438,5 +438,6 @@
   "vscode-ollama.maxTokens": 4096,
   "vscode-ollama.keepAlive": "5 minutes",
   "vscode-ollama.performanceMode": "Fast",
-  "vscode-ollama.systemPrompt": "Given the following conversation, relevant context, and a follow up question, reply with an answer to the current question the user is asking. Return only your response to the question given the above information following the users instructions as needed."
+  "vscode-ollama.systemPrompt": "Given the following conversation, relevant context, and a follow up question, reply with an answer to the current question the user is asking. Return only your response to the question given the above information following the users instructions as needed.",
+  "workbench.sideBar.location": "left"
 }
