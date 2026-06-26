@@ -1,0 +1,222 @@
+# TOOLS
+
+_zsh_tools_mise_packages=(
+	android-sdk
+	argocd
+	atuin
+	aws-cli
+	azure-cli
+	bat
+	bat-extras
+	delta
+	docker-compose
+	direnv
+	eza
+	fd
+	fzf
+	gh
+	gitconfig
+	github-cli
+	helm
+	jq
+	kubectl
+	lazydocker
+	lazygit
+	lazyjournal
+	lazyssh
+	neovim
+	node
+	python
+	rclone
+	ripgrep
+	shellcheck
+	terraform
+	tmux
+	usage
+	yazi
+	zoxide
+)
+
+tools() {
+	local action_update=0
+	local run_mise=1
+	local run_brew=1
+	local run_paru=1
+	local run_flatpak=1
+	local run_plasma=1
+	local run_firmware=1
+	local run_vscode=1
+	local dry_run=0
+	local arg
+
+	for arg in "$@"; do
+		case "$arg" in
+			--update)
+				action_update=1
+				;;
+			--mise-only)
+				run_brew=0
+				run_paru=0
+				run_flatpak=0
+				run_plasma=0
+				run_firmware=0
+				;;
+			--brew-only)
+				run_mise=0
+				run_paru=0
+				run_flatpak=0
+				run_plasma=0
+				run_firmware=0
+				;;
+			--no-brew)
+				run_brew=0
+				;;
+			--no-mise)
+				run_mise=0
+				;;
+			--no-paru)
+				run_paru=0
+				;;
+			--no-flatpak)
+				run_flatpak=0
+				;;
+			--no-plasma)
+				run_plasma=0
+				;;
+			--no-firmware)
+				run_firmware=0
+				;;
+			--system-only)
+				run_mise=0
+				run_brew=0
+				;;
+			--no-vscode)
+				run_vscode=0
+				;;
+			--dry-run)
+				dry_run=1
+				;;
+			--help|-h)
+				cat <<'EOF'
+tools --update [--mise-only|--brew-only|--system-only] [--no-brew|--no-mise|--no-paru|--no-flatpak|--no-plasma|--no-firmware|--no-vscode] [--dry-run]
+
+Examples:
+	tools --update
+	tools --update --mise-only
+	tools --update --system-only
+	tools --update --no-firmware
+	tools --update --no-vscode
+	tools --update --dry-run
+EOF
+				return 0
+				;;
+			*)
+				echo "tools: unknown flag '$arg'"
+				echo "try: tools --help"
+				return 1
+				;;
+		esac
+	done
+
+	if (( ! action_update )); then
+		echo "tools: missing required flag --update"
+		echo "try: tools --help"
+		return 1
+	fi
+
+	if (( run_mise )); then
+		if (( dry_run )); then
+			echo "[dry-run] mise self-update -y && mise upgrade --bump && mise use --global ${_zsh_tools_mise_packages[*]}"
+		else
+			mise self-update -y && mise upgrade --bump && mise use --global "${_zsh_tools_mise_packages[@]}"
+		fi
+	fi
+
+	if (( run_brew )); then
+		if (( dry_run )); then
+			echo "[dry-run] brew upgrade --force-bottle"
+		else
+			brew upgrade --force-bottle
+		fi
+	fi
+
+	if (( run_paru )); then
+		if command -v paru >/dev/null 2>&1; then
+			if (( dry_run )); then
+				echo "[dry-run] paru -Syu"
+			else
+				paru -Syu
+			fi
+		elif command -v yay >/dev/null 2>&1; then
+			if (( dry_run )); then
+				echo "[dry-run] yay -Syu"
+			else
+				yay -Syu
+			fi
+		elif command -v pacman >/dev/null 2>&1; then
+			if (( dry_run )); then
+				echo "[dry-run] sudo pacman -Syu"
+			else
+				sudo pacman -Syu
+			fi
+		else
+			echo "tools: skipping arch update (paru, yay, and pacman not found)"
+		fi
+	fi
+
+	if (( run_flatpak )); then
+		if command -v flatpak >/dev/null 2>&1; then
+			if (( dry_run )); then
+				echo "[dry-run] flatpak update -y"
+			else
+				flatpak update -y
+			fi
+		else
+			echo "tools: skipping flatpak update (flatpak not found)"
+		fi
+	fi
+
+	if (( run_plasma )); then
+		if command -v discover-update >/dev/null 2>&1; then
+			if (( dry_run )); then
+				echo "[dry-run] discover-update"
+			else
+				discover-update
+			fi
+		elif command -v plasma-discover >/dev/null 2>&1; then
+			if (( dry_run )); then
+				echo "[dry-run] plasma-discover --mode Update"
+			else
+				plasma-discover --mode Update
+			fi
+		else
+			echo "tools: skipping plasma widgets update (discover-update/plasma-discover not found)"
+		fi
+	fi
+
+	if (( run_firmware )); then
+		if command -v fwupdmgr >/dev/null 2>&1; then
+			if (( dry_run )); then
+				echo "[dry-run] fwupdmgr refresh --force && fwupdmgr get-updates && fwupdmgr update"
+			else
+				fwupdmgr refresh --force && fwupdmgr get-updates && fwupdmgr update
+			fi
+		else
+			echo "tools: skipping firmware update (fwupdmgr not found)"
+		fi
+	fi
+
+	if (( run_vscode )); then
+		if command -v code >/dev/null 2>&1; then
+			if (( dry_run )); then
+				echo "[dry-run] code --update-extensions"
+			else
+				code --update-extensions
+			fi
+		else
+			echo "tools: skipping vscode update (code not found)"
+		fi
+	fi
+}
+
+# END TOOLS

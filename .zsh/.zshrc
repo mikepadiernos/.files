@@ -22,39 +22,36 @@ export ZSH_THEMES="$ZSH/themes"
 
 # Tool-Specific Paths
 export CARGO="$HOME/.cargo/bin"
-export GOROOT="$HOME/.go"
-export GOPATH="$HOME/.go"
 export PASSWORD_STORE_DIR="$HOME/.pass"
+export GPG_PASSPHRASE_PASS_ENTRY="gpg/passphrase"
 
 # Optional Paths (commented out)
 # export AWSPATH="/usr/sbin/aws_completer"
 # export LD_PRELOAD=/opt/gtk-nocsd/libgtk-nocsd.so
 
-# Configure OpenAudible path only when the app is available
-if command -v openaudible >/dev/null 2>&1 || command -v OpenAudible >/dev/null 2>&1; then
-  export OPENAUDIBLE_HOME="${OPENAUDIBLE_HOME:-$HOME/.apps/openaudible}"
-fi
-
 # PATH Setup
 [[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.local/share/pnpm" ]] && export PATH="$HOME/.local/share/pnpm:$PATH"
 [[ -d "$CARGO" ]] && export PATH="$PATH:$CARGO"
-[[ -d "$GOROOT/bin" ]] && export PATH="$PATH:$GOROOT/bin"
-[[ -d "$GOPATH/bin" ]] && export PATH="$PATH:$GOPATH/bin"
 
 # Theme, plugins, and key bindings
 source "${ZSH_CONFIGS}/.zsh_themes"
 source "${ZSH_CONFIGS}/.zsh_plugins"
 source "${ZSH_CONFIGS}/.zsh_bindkeys"
 source "${ZSH_CONFIGS}/.zsh_aliases"
+source "${ZSH_MODULES}/.zsh_openaudible"
+source "${ZSH_MODULES}/.zsh_go"
 source "${ZSH_CONFIGS}/.zsh_completions"
 
 # Module configurations
-source "${ZSH_MODULES}/.zsh_drush"
 source "${ZSH_MODULES}/.zsh_mise"
 source "${ZSH_MODULES}/.zsh_homebrew"
-# source "${ZSH_MODULES}/.zsh_gh"
-# source "${ZSH_MODULES}/.zsh_node"
+source "${ZSH_MODULES}/.zsh_gpg"
+source "${ZSH_MODULES}/.zsh_drush"
+source "${ZSH_MODULES}/.zsh_composer"
+source "${ZSH_MODULES}/.zsh_gh"
+source "${ZSH_MODULES}/.zsh_node"
+source "${ZSH_MODULES}/.zsh_tools"
 
 # Tool Initialization
 source <(fzf --zsh)

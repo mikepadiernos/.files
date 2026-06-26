@@ -1,26 +1,92 @@
 # HOMEBREW
-if [ ! -z "$( ls -A '/home/linuxbrew/.linuxbrew/bin/brew'  )" ]; then
-  echo -e "\e[30;42m HOMEBREW [Linux] \e[0m" "\e[32minstalled\e[0m"
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
-elif [ ! -z "$( ls -A '/usr/local/bin/brew' )" ]; then
-  echo -e "\e[30;42m HOMEBREW [MacOS] \e[0m" "\e[32minstalled\e[0m"
-  eval "$(/usr/local/bin/brew shellenv)"
-  # export XDG_DATA_DIRS="/home/linuxbrew/.linuxbrew/share:$XDG_DATA_DIRS"
-else
-  echo -e "\e[31;41m HOMEBREW \e[0m" 'is' "\e[31mnot installed\e[0m"
+# Set HOMEBREW_VERBOSE=1 to print startup status.
+if [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+  _brew_bin="/home/linuxbrew/.linuxbrew/bin/brew"
+  _brew_platform="Linux"
+elif [[ -x "/usr/local/bin/brew" ]]; then
+  _brew_bin="/usr/local/bin/brew"
+  _brew_platform="MacOS"
+elif command -v brew >/dev/null 2>&1; then
+  _brew_bin="$(command -v brew)"
+  _brew_platform="Detected"
 fi
 
-# # linuxbrew: php@8.1
-# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/php@8.1/lib"S
-# export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/php@8.1/include"
-# export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.1/bin:$PATH"
-# export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.1/sbin:$PATH"
+if [[ -n "$_brew_bin" ]]; then
+  [[ -n "$HOMEBREW_VERBOSE" ]] && echo -e "\e[30;42m HOMEBREW [$_brew_platform] \e[0m" "\e[32minstalled\e[0m"
+  eval "$("$_brew_bin" shellenv)"
 
-# # linuxbrew: php@8.2
-# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/php@8.2/lib"
-# export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/php@8.2/include"
-# export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.2/bin:$PATH"
-# export PATH="/home/linuxbrew/.linuxbrew/opt/php@8.2/sbin:$PATH"
+  if [[ "$_brew_platform" == "Linux" ]]; then
+    export XDG_DATA_DIRS="${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+  fi
+
+  # Apply tap-trust bypass only for force-bottle upgrades.
+  brew() {
+    if [[ "$1" == "upgrade" ]]; then
+      local _arg
+      for _arg in "$@"; do
+        if [[ "$_arg" == "--force-bottle" ]]; then
+          HOMEBREW_NO_REQUIRE_TAP_TRUST=1 command brew "$@"
+          return $?
+        fi
+      done
+    fi
+
+    command brew "$@"
+  }
+else
+  [[ -n "$HOMEBREW_VERBOSE" ]] && echo -e "\e[31;41m HOMEBREW \e[0m" 'is' "\e[31mnot installed\e[0m"
+fi
+
+# HOMEBREW PHP
+# Optional pin, example: export HOMEBREW_PHP_FORMULA="php@8.4"
+_php_formula="${HOMEBREW_PHP_FORMULA:-}"
+
+# Prefer the currently active php command when available.
+if [ -z "$_php_formula" ] && command -v php >/dev/null 2>&1; then
+  _php_cmd="$(command -v php)"
+  case "$_php_cmd" in
+    */opt/php@*/bin/php)
+      _php_formula="${_php_cmd#*/opt/}"
+      _php_formula="${_php_formula%%/*}"
+      ;;
+    */opt/php/bin/php)
+      _php_formula="php"
+      ;;
+  esac
+fi
+
+# Fallback: use unversioned php if installed, otherwise latest installed php@X.Y formula.
+if [ -z "$_php_formula" ] && command -v brew >/dev/null 2>&1; then
+  if [[ -n "$HOMEBREW_PREFIX" && -d "$HOMEBREW_PREFIX/opt/php" ]]; then
+    _php_formula="php"
+  else
+    _php_formula="$(brew list --formula 2>/dev/null | grep -E '^php@[0-9]+\.[0-9]+$' | sort -V | tail -n 1)"
+  fi
+fi
+
+if [ -n "$_php_formula" ] && command -v brew >/dev/null 2>&1; then
+  if [[ -n "$HOMEBREW_PREFIX" && -d "$HOMEBREW_PREFIX/opt/$_php_formula" ]]; then
+    _php_prefix="$HOMEBREW_PREFIX/opt/$_php_formula"
+  else
+    _php_prefix="$(brew --prefix "$_php_formula" 2>/dev/null)"
+  fi
+  if [ -n "$_php_prefix" ] && [ -d "$_php_prefix" ]; then
+    export LDFLAGS="-L$_php_prefix/lib${LDFLAGS:+ $LDFLAGS}"
+    export CPPFLAGS="-I$_php_prefix/include${CPPFLAGS:+ $CPPFLAGS}"
+
+    case ":$PATH:" in
+      *":$_php_prefix/bin:"*) ;;
+      *) export PATH="$_php_prefix/bin:$PATH" ;;
+    esac
+
+    case ":$PATH:" in
+      *":$_php_prefix/sbin:"*) ;;
+      *) export PATH="$_php_prefix/sbin:$PATH" ;;
+    esac
+  fi
+fi
+
+unset _brew_bin _brew_platform
+unset _php_formula _php_prefix _php_cmd
 
 # END HOMEBREW

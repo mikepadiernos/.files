@@ -1,6 +1,11 @@
 # shellcheck shell=bash disable=SC1090,SC1091,SC2154,SC2168,SC1036,SC2034,SC2207,SC2086,SC2046
 # If gh is missing but mise is available, install gh and set it globally.
 __gh_activate_completion=1
+__gh_in_repo=0
+
+if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    __gh_in_repo=1
+fi
 
 if ! command -v gh >/dev/null 2>&1; then
     if command -v mise >/dev/null 2>&1; then
@@ -11,9 +16,13 @@ if ! command -v gh >/dev/null 2>&1; then
 fi
 
 if command -v gh >/dev/null 2>&1; then
-    echo -e "\e[30;42m Github CLI \e[0m" "\e[32minstalled\e[0m"
+    if [ "${__gh_in_repo}" -eq 1 ]; then
+        echo -e "\e[30;42m Github CLI \e[0m" "\e[32minstalled\e[0m"
+    fi
 else
-    echo -e "\e[31;41m Github CLI \e[0m" 'is' "\e[31mnot installed\e[0m"
+    if [ "${__gh_in_repo}" -eq 1 ]; then
+        echo -e "\e[31;41m Github CLI \e[0m" 'is' "\e[31mnot installed\e[0m"
+    fi
     __gh_activate_completion=0
 fi
 
@@ -231,5 +240,6 @@ if [ "${funcstack[1]}" = "_gh" ]; then
 fi
 
 unset __gh_activate_completion
+unset __gh_in_repo
 fi
 

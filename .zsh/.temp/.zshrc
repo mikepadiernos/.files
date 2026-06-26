@@ -19,9 +19,7 @@ export CARGO="$HOME/.cargo/bin"
 
 set TMUXIFIER="$HOME/.tmux/plugins/tmuxifier/bin"
 
-set OPENAUDIBLE_HOME="$HOME/.files/.openaudible"
-
-fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $OPENAUDIBLE_HOME $CARGO $TMUXIFIER $fpath)
+fpath+=(${ASDF}/completions ${ZSH_PLUGINS}/zsh-completions/src $CARGO $TMUXIFIER $fpath)
 
 # export ZSH_DISABLE_COMPFIX="true"
 

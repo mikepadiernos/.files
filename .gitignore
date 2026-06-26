@@ -1,21 +1,28 @@
 # Keep tracked historical data
 !historical/
 
-# System / generic
+# System artifacts
 .DS_store
 
 # Logs / sync artifacts
 .nexcloudsync.log
+.msmtp/*.log
 
-# Copilot cache
+# Tool caches
 .copilot-specs-cache/
 
-# App runtime data
+# Shell / terminal runtime data
+.zsh/.historical/
+.zsh/history/
+.zsh/plugins/zsh*/
+.zsh/themes/minimal/
+.zsh/themes/typewritten/
+!.zsh/plugins/git_repos.txt
+
+# Application runtime data
 
 # Atuin
-.atuin/**/*.db
-.atuin/**/*.db-shm
-.atuin/**/*.db-wal
+.atuin/data/*.db*
 
 # CopyQ
 .copyq/*.dat
@@ -26,27 +33,14 @@
 
 # Neovim
 .neovim/
-.neovim/*/
 
-# qutebrowser cache/local secrets
+# qutebrowser
 .qute/__pycache__/
 .qute/share/keepassxc.key*
+.qute/scripts/qute-keepassxc
 
 # tmux plugins
 .tmux/plugins/*/
 
 # Zen Browser
 .zen/
-
-# zsh runtime/cache
-.zsh/.historical/
-.zsh/history/
-.zsh/plugins/zsh*/
-.zsh/themes/minimal/
-.zsh/themes/typewritten/
-!.zsh/plugins/git_repos.txt
-
-# Optional ignores
-# .filecentipede/lib/
-# .msmtp/*.log
-# .openaudible/tmp/

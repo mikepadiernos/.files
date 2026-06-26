@@ -10,10 +10,6 @@ fpath+=(
   "${ZSH_PLUGINS}/zsh-completions/src"
 )
 
-if [[ -n "$OPENAUDIBLE_HOME" && -d "$OPENAUDIBLE_HOME" ]]; then
-  fpath+=("$OPENAUDIBLE_HOME")
-fi
-
 # ============================================================================
 # Completion Initialization
 # ============================================================================
@@ -39,6 +35,39 @@ fi
 # Tool-Specific Completions
 # ============================================================================
 
+_load_zsh_completion() {
+  # Safely eval completion script output from a command when available.
+  local cmd="$1"
+  local output
+  shift
+
+  command -v "$cmd" >/dev/null 2>&1 || return 0
+  output="$($cmd "$@" 2>/dev/null)" || return 0
+  [[ -n "$output" ]] && eval "$output" >/dev/null 2>&1
+}
+
+_has_completion_file() {
+  local fn="$1"
+  local dir
+
+  for dir in $fpath; do
+    [[ -r "$dir/$fn" ]] && return 0
+  done
+
+  return 1
+}
+
+_use_system_or_generated_completion() {
+  local cmd="$1"
+  local fn="$2"
+  shift 2
+
+  command -v "$cmd" >/dev/null 2>&1 || return 0
+  _has_completion_file "$fn" && return 0
+
+  (( $# > 0 )) && _load_zsh_completion "$cmd" "$@"
+}
+
 # COMPLETIONS: NVM
 export NVM_DIR="$HOME/.nvm"
 
@@ -49,18 +78,72 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  								# This loads nvm bash_completion
 
 # COMPLETIONS: Docker
-command -v docker >/dev/null 2>&1 && eval "$(docker completion zsh)"
+_load_zsh_completion docker completion zsh
+
+# COMPLETIONS: Docker Compose (standalone)
+_load_zsh_completion docker-compose completion zsh
 
 # COMPLETIONS: kubectl
-command -v kubectl >/dev/null 2>&1 && eval "$(kubectl completion zsh)"
+_load_zsh_completion kubectl completion zsh
 
 # COMPLETIONS: Helm
-command -v helm >/dev/null 2>&1 && eval "$(helm completion zsh)"
+_load_zsh_completion helm completion zsh
 
 # COMPLETIONS: GitHub CLI
-command -v gh >/dev/null 2>&1 && eval "$(gh completion -s zsh)"
+_load_zsh_completion gh completion -s zsh
+
+# COMPLETIONS: ArgoCD
+_load_zsh_completion argocd completion zsh
+
+# COMPLETIONS: Atuin
+_load_zsh_completion atuin gen-completions --shell zsh
+
+# COMPLETIONS: Azure CLI
+if command -v az >/dev/null 2>&1; then
+  if ! _has_completion_file _az && ! _has_completion_file _azure; then
+    _load_zsh_completion az completion -s zsh
+  fi
+fi
+
+# COMPLETIONS: Direnv
+_load_zsh_completion direnv hook zsh
+
+# COMPLETIONS: Lazygit
+_load_zsh_completion lazygit completion zsh
+
+# COMPLETIONS: Rclone
+_use_system_or_generated_completion rclone _rclone completion zsh -
+
+# COMPLETIONS: Terraform
+if command -v terraform >/dev/null 2>&1; then
+  if ! _has_completion_file _terraform; then
+    compdef _gnu_generic terraform
+  fi
+fi
+
+# COMPLETIONS: Usage CLI
+# Uses system completion files when available.
 
 # COMPLETIONS: AWS CLI
 command -v aws_completer >/dev/null 2>&1 && complete -C aws_completer aws
+
+# COMPLETIONS: Flatpak and Arch helpers
+# Most package-manager-installed completions are auto-loaded from fpath
+# (e.g. /usr/share/zsh/site-functions) via compinit.
+if command -v flatpak >/dev/null 2>&1 && ! _has_completion_file _flatpak; then
+  compdef _gnu_generic flatpak
+fi
+
+if command -v paru >/dev/null 2>&1 && ! _has_completion_file _paru; then
+  compdef _gnu_generic paru
+fi
+
+if command -v yay >/dev/null 2>&1 && ! _has_completion_file _yay; then
+  compdef _gnu_generic yay
+fi
+
+if command -v pacman >/dev/null 2>&1 && ! _has_completion_file _pacman; then
+  compdef _gnu_generic pacman
+fi
 
 # END COMPLETIONS

@@ -1,0 +1,9 @@
+# COMPOSER
+
+if command -v composer >/dev/null 2>&1; then
+	echo -e "\e[30;42m COMPOSER \e[0m" "\e[32minstalled\e[0m"
+else
+	echo -e "\e[31;41m COMPOSER \e[0m" "\e[31mnot installed\e[0m"
+fi
+
+# END COMPOSER

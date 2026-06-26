@@ -1,0 +1,464 @@
+[
+  {
+    "command": [
+      "/usr/bin/slack",
+      "--gtk-version=3",
+      "-s",
+      "%U"
+    ],
+    "executable_path": "/usr/bin/slack",
+    "display_name": "Slack",
+    "bundle": "slack",
+    "user_dir": "/home/mikepadiernos/.config/Slack",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/slack.png",
+    "profiles": {
+      "profiles_type": "RealProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "T06GX3JTS",
+          "profile_cli_container_name": "drupal",
+          "profile_name": "Drupal",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": [
+            "drupal.slack.com"
+          ]
+        }
+      ]
+    },
+    "restricted_domains": [
+      "*.slack.com",
+      "*.enterprise.slack.com"
+    ]
+  },
+  {
+    "command": [
+      "spotify",
+      "--uri=%u"
+    ],
+    "executable_path": "spotify",
+    "display_name": "Spotify",
+    "bundle": "spotify",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/spotify.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": [
+      "open.spotify.com"
+    ]
+  },
+  {
+    "command": [
+      "forkgram",
+      "--",
+      "%u"
+    ],
+    "executable_path": "forkgram",
+    "display_name": "Forkgram",
+    "bundle": "forkgram-bin",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/forkgram-bin.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": [
+      "t.me"
+    ]
+  },
+  {
+    "command": [
+      "/usr/bin/forkgram",
+      "--",
+      "%U"
+    ],
+    "executable_path": "/usr/bin/forkgram",
+    "display_name": "Forkgram",
+    "bundle": "io.github.forkgram.tdesktop._89c71ad553bbad19b2c5f72bc815cc0f",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/io.github.forkgram.tdesktop._89c71ad553bbad19b2c5f72bc815cc0f.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": [
+      "t.me"
+    ]
+  },
+  {
+    "command": [
+      "/usr/bin/zoom",
+      "%U"
+    ],
+    "executable_path": "/usr/bin/zoom",
+    "display_name": "Zoom Workplace",
+    "bundle": "Zoom",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/Zoom.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": [
+      "zoom.us",
+      "eu01web.zoom.us",
+      "us02web.zoom.us",
+      "us03web.zoom.us",
+      "us04web.zoom.us",
+      "us05web.zoom.us",
+      "us06web.zoom.us",
+      "us07web.zoom.us"
+    ]
+  },
+  {
+    "command": [
+      "/usr/bin/flatpak",
+      "run",
+      "--branch=stable",
+      "--arch=x86_64",
+      "--command=/app/bin/chrome",
+      "--file-forwarding",
+      "com.google.Chrome",
+      "@@u",
+      "%U",
+      "@@"
+    ],
+    "executable_path": "com.google.Chrome",
+    "display_name": "Google Chrome",
+    "bundle": "com.google.Chrome",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/com.google.Chrome.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  },
+  {
+    "command": [
+      "/usr/bin/glide-bin",
+      "%u"
+    ],
+    "executable_path": "/usr/bin/glide-bin",
+    "display_name": "Glide Browser",
+    "bundle": "glide-browser-bin",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/glide-browser-bin.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  },
+  {
+    "command": [
+      "helium-browser",
+      "%U"
+    ],
+    "executable_path": "helium-browser",
+    "display_name": "Helium Browser",
+    "bundle": "helium",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/helium.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  },
+  {
+    "command": [
+      "kfmclient",
+      "--mimetype",
+      "text/html",
+      "openURL",
+      "%u"
+    ],
+    "executable_path": "openURL",
+    "display_name": "Konqueror",
+    "bundle": "kfmclient_html",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/kfmclient_html.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  },
+  {
+    "command": [
+      "min-browser",
+      "%U"
+    ],
+    "executable_path": "min-browser",
+    "display_name": "Min",
+    "bundle": "min-browser",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/min-browser.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  },
+  {
+    "command": [
+      "nyxt",
+      "%u"
+    ],
+    "executable_path": "nyxt",
+    "display_name": "Nyxt",
+    "bundle": "nyxt",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/nyxt.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  },
+  {
+    "command": [
+      "falkon",
+      "%u"
+    ],
+    "executable_path": "falkon",
+    "display_name": "Falkon",
+    "bundle": "org.kde.falkon",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/org.kde.falkon.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  },
+  {
+    "command": [
+      "qutebrowser",
+      "--untrusted-args",
+      "%u"
+    ],
+    "executable_path": "qutebrowser",
+    "display_name": "qutebrowser",
+    "bundle": "org.qutebrowser.qutebrowser",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/org.qutebrowser.qutebrowser.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  },
+  {
+    "command": [
+      "/usr/bin/vivaldi-snapshot",
+      "%U"
+    ],
+    "executable_path": "/usr/bin/vivaldi-snapshot",
+    "display_name": "Vivaldi Snapshot",
+    "bundle": "vivaldi-snapshot",
+    "user_dir": "/home/mikepadiernos/.config/vivaldi-snapshot",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/vivaldi-snapshot.png",
+    "profiles": {
+      "profiles_type": "RealProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "Default",
+          "profile_cli_container_name": null,
+          "profile_name": "padiernos",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        },
+        {
+          "profile_cli_arg_value": "Profile 1",
+          "profile_cli_container_name": null,
+          "profile_name": "karter",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  },
+  {
+    "command": [
+      "/usr/bin/vivaldi-stable",
+      "%U"
+    ],
+    "executable_path": "/usr/bin/vivaldi-stable",
+    "display_name": "Vivaldi",
+    "bundle": "vivaldi-stable",
+    "user_dir": "/home/mikepadiernos/.config/vivaldi",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/vivaldi-stable.png",
+    "profiles": {
+      "profiles_type": "RealProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "Profile 1",
+          "profile_cli_container_name": null,
+          "profile_name": "devpadiernos",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        },
+        {
+          "profile_cli_arg_value": "Profile 4",
+          "profile_cli_container_name": null,
+          "profile_name": "karter",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        },
+        {
+          "profile_cli_arg_value": "Default",
+          "profile_cli_container_name": null,
+          "profile_name": "m.padiernos",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        },
+        {
+          "profile_cli_arg_value": "Profile 3",
+          "profile_cli_container_name": null,
+          "profile_name": "michaelpadiernos",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        },
+        {
+          "profile_cli_arg_value": "Profile 5",
+          "profile_cli_container_name": null,
+          "profile_name": "mikepadiernos",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        },
+        {
+          "profile_cli_arg_value": "Profile 2",
+          "profile_cli_container_name": null,
+          "profile_name": "padiernos",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  },
+  {
+    "command": [
+      "/opt/zen-browser-bin/zen-bin",
+      "%u"
+    ],
+    "executable_path": "/opt/zen-browser-bin/zen-bin",
+    "display_name": "Zen Browser",
+    "bundle": "zen",
+    "user_dir": "",
+    "icon_path": "/home/mikepadiernos/.cache/software.Browsers/icons/zen.png",
+    "profiles": {
+      "profiles_type": "PlaceholderProfiles",
+      "profiles": [
+        {
+          "profile_cli_arg_value": "",
+          "profile_cli_container_name": null,
+          "profile_name": "",
+          "profile_icon": null,
+          "profile_restricted_url_patterns": []
+        }
+      ]
+    },
+    "restricted_domains": []
+  }
+]
