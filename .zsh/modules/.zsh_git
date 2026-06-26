@@ -1,0 +1,50 @@
+# GIT
+
+_zsh_git_pick_mergetool() {
+  if command -v nvim >/dev/null 2>&1; then
+    echo "nvimdiff"
+    return 0
+  fi
+
+  if command -v vim >/dev/null 2>&1; then
+    echo "vimdiff"
+    return 0
+  fi
+
+  if command -v meld >/dev/null 2>&1; then
+    echo "meld"
+    return 0
+  fi
+
+  if command -v kdiff3 >/dev/null 2>&1; then
+    echo "kdiff3"
+    return 0
+  fi
+
+  return 1
+}
+
+_zsh_git_setup_mergetool() {
+  local configured_tool
+  local selected_tool
+
+  configured_tool="$(git config --global --get merge.tool 2>/dev/null)"
+  [[ -n "$configured_tool" ]] && return 0
+
+  selected_tool="$(_zsh_git_pick_mergetool)" || return 0
+
+  git config --global merge.tool "$selected_tool"
+  git config --global mergetool.prompt false
+  git config --global mergetool.keepBackup false
+
+  if [[ -n "$GIT_SETUP_VERBOSE" ]]; then
+    echo -e "\e[30;42m GIT \e[0m" "\e[32mmerge.tool set to $selected_tool\e[0m"
+  fi
+}
+
+_zsh_git_setup_mergetool
+
+unset -f _zsh_git_pick_mergetool
+unset -f _zsh_git_setup_mergetool
+
+# END GIT

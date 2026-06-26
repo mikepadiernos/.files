@@ -49,8 +49,10 @@ source "${ZSH_MODULES}/.zsh_homebrew"
 source "${ZSH_MODULES}/.zsh_gpg"
 source "${ZSH_MODULES}/.zsh_drush"
 source "${ZSH_MODULES}/.zsh_composer"
+source "${ZSH_MODULES}/.zsh_git"
 source "${ZSH_MODULES}/.zsh_gh"
 source "${ZSH_MODULES}/.zsh_node"
+source "${ZSH_MODULES}/.zsh_setup"
 source "${ZSH_MODULES}/.zsh_tools"
 
 # Tool Initialization

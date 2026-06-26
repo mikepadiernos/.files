@@ -18,16 +18,16 @@ alias vm='nvim'
 # yazi — use Chafa (half-block) renderer inside VS Code since the IIP adapter
 # reports zero pixel dimensions; unset the two env vars that trigger VS Code detection
 function yazi() {
-    local yazi_bin="${commands[yazi]}"
-    if [[ -z "$yazi_bin" ]]; then
-        print -u2 "yazi binary not found in PATH"
-        return 127
-    fi
+		local yazi_bin="${commands[yazi]}"
+		if [[ -z "$yazi_bin" ]]; then
+				print -u2 "yazi binary not found in PATH"
+				return 127
+		fi
 
-    if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-        env -u VSCODE_INJECTION -u TERM_PROGRAM "$yazi_bin" "$@"
-    else
-        "$yazi_bin" "$@"
-    fi
+		if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+				env -u VSCODE_INJECTION -u TERM_PROGRAM "$yazi_bin" "$@"
+		else
+				"$yazi_bin" "$@"
+		fi
 }
 alias yz='yazi'
