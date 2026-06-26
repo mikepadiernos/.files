@@ -1,4 +1,9 @@
-# source "$ZSH_THEMES"/minimal.zsh-theme
+source_if_exists() {
+	local file="$1"
+	[[ -f "$file" ]] && source "$file"
+}
+
+# source_if_exists "$ZSH_THEMES"/minimal.zsh-theme
 
 # shellcheck source=/dev/null
-source "$ZSH_THEMES"/typewritten.zsh-theme
+source_if_exists "$ZSH_THEMES"/typewritten.zsh-theme

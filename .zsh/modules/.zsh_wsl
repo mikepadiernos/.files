@@ -1,0 +1,26 @@
+#!/bin/zsh
+# WSL (Windows Subsystem for Linux) integration
+
+# Check if running in WSL
+_zsh_is_wsl() {
+    [[ -f /proc/version ]] && grep -qi microsoft /proc/version
+}
+
+# Only apply WSL integrations if actually running in WSL
+if _zsh_is_wsl; then
+    # wsl-clipboard-integration
+    alias copy='pbcopy'
+    alias paste='pbpaste'
+
+    # Paste Windows clipboard into zsh command line with Ctrl+V
+    if [[ -o interactive ]] && command -v pbpaste >/dev/null 2>&1; then
+        wsl_clipboard_paste_widget() (
+            local clip
+            clip="$(pbpaste 2>/dev/null || true)"
+            LBUFFER+="$clip"
+            zle redisplay
+        )
+        zle -N wsl_clipboard_paste_widget
+        bindkey '^V' wsl_clipboard_paste_widget
+    fi
+fi
