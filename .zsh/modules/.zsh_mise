@@ -54,7 +54,7 @@ if command -v mise >/dev/null 2>&1; then
 
   # vim: noet ci pi sts=0 sw=4 ts=4
 else
-  echo -e "\e[31;41m MISE \e[0m" 'is' "\e[31mnot installed\e[0m"
+  :
 fi
 
 unset __mise_setup_script

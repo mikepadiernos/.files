@@ -20,9 +20,6 @@ if command -v gh >/dev/null 2>&1; then
         echo -e "\e[30;42m Github CLI \e[0m" "\e[32minstalled\e[0m"
     fi
 else
-    if [ "${__gh_in_repo}" -eq 1 ]; then
-        echo -e "\e[31;41m Github CLI \e[0m" 'is' "\e[31mnot installed\e[0m"
-    fi
     __gh_activate_completion=0
 fi
 
