@@ -1,0 +1,322 @@
+#!/usr/bin/env zsh
+
+autoload -Uz add-zsh-hook colors
+colors
+
+typeset -g ZSH_PROMPT_LAYOUT="${ZSH_PROMPT_LAYOUT:-${TYPEWRITTEN_PROMPT_LAYOUT:-singleline}}"
+typeset -g ZSH_PROMPT_RELATIVE_PATH="${ZSH_PROMPT_RELATIVE_PATH:-${TYPEWRITTEN_RELATIVE_PATH:-adaptive}}"
+typeset -g ZSH_PROMPT_CURSOR="${ZSH_PROMPT_CURSOR:-${TYPEWRITTEN_CURSOR:-terminal}}"
+typeset -g ZSH_PROMPT_SYMBOL="${ZSH_PROMPT_SYMBOL:-${TYPEWRITTEN_SYMBOL:-❯}}"
+typeset -g ZSH_PROMPT_ARROW_SYMBOL="${ZSH_PROMPT_ARROW_SYMBOL:-${TYPEWRITTEN_ARROW_SYMBOL:-}}"
+[[ -z "$ZSH_PROMPT_ARROW_SYMBOL" ]] && ZSH_PROMPT_ARROW_SYMBOL='->'
+typeset -g ZSH_PROMPT_DISABLE_RETURN_CODE="${ZSH_PROMPT_DISABLE_RETURN_CODE:-${TYPEWRITTEN_DISABLE_RETURN_CODE:-false}}"
+typeset -g ZSH_PROMPT_LEFT_PREFIX="${ZSH_PROMPT_LEFT_PREFIX:-${TYPEWRITTEN_LEFT_PROMPT_PREFIX:-}}"
+typeset -g ZSH_PROMPT_LEFT_PREFIX_FUNCTION="${ZSH_PROMPT_LEFT_PREFIX_FUNCTION:-${TYPEWRITTEN_LEFT_PROMPT_PREFIX_FUNCTION:-}}"
+typeset -g ZSH_PROMPT_RIGHT_PREFIX="${ZSH_PROMPT_RIGHT_PREFIX:-${TYPEWRITTEN_RIGHT_PROMPT_PREFIX:-}}"
+typeset -g ZSH_PROMPT_RIGHT_PREFIX_FUNCTION="${ZSH_PROMPT_RIGHT_PREFIX_FUNCTION:-${TYPEWRITTEN_RIGHT_PROMPT_PREFIX_FUNCTION:-}}"
+
+typeset -g ZSH_PROMPT_BREAK_LINE=$'\n'
+typeset -g __ZSH_PROMPT_LAST_STATE=""
+typeset -g __ZSH_PROMPT_HAS_THEME_COLORS=0
+
+__zsh_prompt_use_theme_colors() {
+	if typeset -p tw_colors >/dev/null 2>&1; then
+		__ZSH_PROMPT_HAS_THEME_COLORS=1
+	else
+		__ZSH_PROMPT_HAS_THEME_COLORS=0
+	fi
+}
+
+__zsh_prompt_color_name() {
+	local role="$1"
+	local default_color="$2"
+	local resolved_color="$default_color"
+
+	if (( __ZSH_PROMPT_HAS_THEME_COLORS )) && [[ -n "${tw_colors[$role]}" ]]; then
+		resolved_color="${tw_colors[$role]}"
+	fi
+
+	print -r -- "$resolved_color"
+}
+
+__zsh_prompt_color_escape() {
+	local role="$1"
+	local default_color="$2"
+	local color_name
+
+	color_name="$(__zsh_prompt_color_name "$role" "$default_color")"
+	print -r -- "%F{$color_name}"
+}
+
+__zsh_prompt_prefix() {
+	local prefix=""
+	local prefix_value="$1"
+	local prefix_function="$2"
+	local prefix_color="$3"
+
+	if [[ -n "$prefix_value" || -n "$prefix_function" ]]; then
+		prefix="$prefix_color"
+	fi
+
+	if [[ -n "$prefix_value" ]]; then
+		prefix+="$prefix_value "
+	fi
+
+	if [[ -n "$prefix_function" ]] && whence -w "$prefix_function" >/dev/null 2>&1; then
+		local value
+		value="$($prefix_function 2>/dev/null)"
+		[[ -n "$value" ]] && prefix+="$value "
+	fi
+
+	print -r -- "$prefix"
+}
+
+__zsh_prompt_left_prefix() {
+	__zsh_prompt_prefix "$ZSH_PROMPT_LEFT_PREFIX" "$ZSH_PROMPT_LEFT_PREFIX_FUNCTION" "$(__zsh_prompt_color_escape left_prompt_prefix magenta)"
+}
+
+__zsh_prompt_right_prefix() {
+	__zsh_prompt_prefix "$ZSH_PROMPT_RIGHT_PREFIX" "$ZSH_PROMPT_RIGHT_PREFIX_FUNCTION" "$(__zsh_prompt_color_escape right_prompt_prefix magenta)"
+}
+
+__zsh_prompt_virtual_env() {
+	if [[ -z "$VIRTUAL_ENV_DISABLE_PROMPT" ]]; then
+		local virtual_env=""
+
+		if [[ -n "$VIRTUAL_ENV" ]]; then
+			virtual_env="($(basename "$VIRTUAL_ENV")) "
+		elif [[ -n "$CONDA_PROMPT_MODIFIER" ]]; then
+			virtual_env="$(basename "$CONDA_PROMPT_MODIFIER")"
+		fi
+
+		if [[ -n "$virtual_env" ]]; then
+			print -r -- "$(__zsh_prompt_color_escape virtual_env magenta)$virtual_env"
+		fi
+	fi
+}
+
+__zsh_prompt_git_toplevel() {
+	command git rev-parse --show-toplevel 2>/dev/null
+}
+
+__zsh_prompt_git_branch() {
+	local branch
+	branch="$(command git symbolic-ref --short -q HEAD 2>/dev/null)"
+	if [[ -n "$branch" ]]; then
+		print -r -- "$branch"
+	else
+		command git rev-parse --short HEAD 2>/dev/null
+	fi
+}
+
+__zsh_prompt_git_home() {
+	local current_directory="$1"
+	local git_toplevel="$2"
+
+	if [[ -n "$git_toplevel" && "$git_toplevel" != "$current_directory" ]]; then
+		local repo_name
+		local current_nesting
+		local repo_nesting
+		local diff
+
+		repo_name="$(basename "$git_toplevel")"
+		current_nesting="${current_directory//[^\/]}"
+		repo_nesting="${git_toplevel//[^\/]}"
+		diff="$(expr ${#current_nesting} - ${#repo_nesting})"
+
+		if [[ "$diff" -eq 1 ]]; then
+			print -r -- "$repo_name/"
+		else
+			print -r -- "$repo_name/.../"
+		fi
+	fi
+}
+
+__zsh_prompt_git_status() {
+	local status_response
+	local status_display=""
+
+	status_response="$(command git status --porcelain -b 2>/dev/null)"
+
+	if grep -q '^## HEAD (no branch)' <<< "$status_response"; then
+		print -r -- "$(__zsh_prompt_color_escape git_rebasing blue)rebasing"
+		return
+	fi
+
+	if grep -q '^A. ' <<< "$status_response" || grep -q '^M. ' <<< "$status_response" || grep -q '^D. ' <<< "$status_response"; then
+		status_display+=" $(__zsh_prompt_color_escape git_status_staged green)+"
+	fi
+
+	if grep -q '^?? ' <<< "$status_response"; then
+		status_display+=" $(__zsh_prompt_color_escape git_status_new cyan)?"
+	fi
+
+	if grep -q '^.M ' <<< "$status_response"; then
+		status_display+=" $(__zsh_prompt_color_escape git_status_modified yellow)!"
+	fi
+
+	if grep -q '^R. ' <<< "$status_response"; then
+		status_display+=" $(__zsh_prompt_color_escape git_status_renamed cyan)»"
+	fi
+
+	if grep -q '^.D ' <<< "$status_response"; then
+		status_display+=" $(__zsh_prompt_color_escape git_status_deleted red)—"
+	fi
+
+	if grep -q '^UU ' <<< "$status_response"; then
+		status_display+=" $(__zsh_prompt_color_escape git_status_unmerged cyan)#"
+	fi
+
+	local is_ahead=0
+	local is_behind=0
+	grep -q '^## .*ahead' <<< "$status_response" && is_ahead=1
+	grep -q '^## .*behind' <<< "$status_response" && is_behind=1
+
+	if [[ "$is_ahead" -eq 1 && "$is_behind" -eq 1 ]]; then
+		status_display+=" $(__zsh_prompt_color_escape git_status_diverged cyan)~"
+	elif [[ "$is_ahead" -eq 1 ]]; then
+		status_display+=" $(__zsh_prompt_color_escape git_status_ahead cyan)|•"
+	elif [[ "$is_behind" -eq 1 ]]; then
+		status_display+=" $(__zsh_prompt_color_escape git_status_behind cyan)•|"
+	fi
+
+	local stash_count
+	stash_count="$(command git stash list 2>/dev/null | wc -l)"
+	if [[ "$stash_count" -gt 0 ]]; then
+		status_display+=" $(__zsh_prompt_color_escape git_status_stash yellow)$"
+	fi
+
+	print -r -- "$status_display"
+}
+
+__zsh_prompt_context() {
+	local current_directory="$PWD"
+	local git_toplevel=""
+	local git_branch=""
+	local git_status=""
+	local git_home=""
+	local git_hide_status=""
+
+	git_hide_status="$(command git config --get oh-my-zsh.hide-status 2>/dev/null)"
+	if [[ "$git_hide_status" != "1" ]]; then
+		git_toplevel="$(__zsh_prompt_git_toplevel)"
+		if [[ -n "$git_toplevel" ]]; then
+			git_branch="$(__zsh_prompt_git_branch)"
+			git_status="$(__zsh_prompt_git_status)"
+			git_home="$(__zsh_prompt_git_home "$current_directory" "$git_toplevel")"
+		fi
+	fi
+
+	PROMPT_GIT_TIP="$git_toplevel"
+	PROMPT_GIT_BRANCH="$git_branch"
+	PROMPT_GIT_STATUS="$git_status"
+	PROMPT_GIT_HOME="$git_home"
+}
+
+__zsh_prompt_displayed_wd() {
+	local home_relative_wd="%~"
+	local git_relative_wd="${PROMPT_GIT_HOME}%c"
+	local displayed_wd="$git_relative_wd"
+
+	if [[ "$ZSH_PROMPT_RELATIVE_PATH" = "home" ]]; then
+		displayed_wd="$home_relative_wd"
+	elif [[ "$ZSH_PROMPT_RELATIVE_PATH" = "adaptive" && -z "$PROMPT_GIT_BRANCH" ]]; then
+		displayed_wd="$home_relative_wd"
+	elif [[ "$ZSH_PROMPT_LAYOUT" = pure* && -z "$ZSH_PROMPT_RELATIVE_PATH" ]]; then
+		displayed_wd="$home_relative_wd"
+	fi
+
+	print -r -- "$(__zsh_prompt_color_escape current_directory blue)$displayed_wd"
+}
+
+__zsh_prompt_fix_cursor() {
+	local cursor="\e[3 q"
+	if [[ "$ZSH_PROMPT_CURSOR" = "block" ]]; then
+		cursor="\e[1 q"
+	elif [[ "$ZSH_PROMPT_CURSOR" = "beam" ]]; then
+		cursor="\e[5 q"
+	fi
+	echo -ne "$cursor"
+}
+
+__zsh_prompt_refresh() {
+	local state
+	local displayed_wd
+	local left_prefix
+	local right_prefix
+	local prompt_color
+	local return_code
+	local error_code_color
+	local user_host
+	local prompt_body
+	local git_info
+	local git_arrow_info=""
+	local layout
+
+	__zsh_prompt_use_theme_colors
+	__zsh_prompt_context
+
+	state="$PWD|$PROMPT_GIT_TIP|$ZSH_PROMPT_LAYOUT|$ZSH_PROMPT_RELATIVE_PATH|$VIRTUAL_ENV|$CONDA_PROMPT_MODIFIER"
+	[[ "$state" == "$__ZSH_PROMPT_LAST_STATE" ]] && return 0
+	typeset -g __ZSH_PROMPT_LAST_STATE="$state"
+
+	displayed_wd="$(__zsh_prompt_displayed_wd)"
+	left_prefix="$(__zsh_prompt_left_prefix)"
+	right_prefix="$(__zsh_prompt_right_prefix)"
+	git_info="${PROMPT_GIT_BRANCH}${PROMPT_GIT_STATUS}"
+	layout="$ZSH_PROMPT_LAYOUT"
+
+	prompt_color="$(__zsh_prompt_color_escape symbol green)"
+	if [[ $(id -u) -eq 0 ]]; then
+		prompt_color="$(__zsh_prompt_color_escape symbol_root red)"
+	fi
+	error_code_color="$(__zsh_prompt_color_escape error_code red)"
+	return_code="%(?,,${error_code_color}%? )"
+	if [[ "$ZSH_PROMPT_DISABLE_RETURN_CODE" = true ]]; then
+		return_code=""
+	fi
+
+	user_host="$(__zsh_prompt_color_escape host yellow)%n$(__zsh_prompt_color_escape host_user_connector magenta)@$(__zsh_prompt_color_escape user yellow)%m"
+	prompt_body="${prompt_color}${return_code}${ZSH_PROMPT_SYMBOL} $(__zsh_prompt_color_escape prompt blue)"
+
+	if [[ -n "$git_info" ]]; then
+		git_arrow_info=" $(__zsh_prompt_color_escape arrow yellow)${ZSH_PROMPT_ARROW_SYMBOL} $(__zsh_prompt_color_escape git_branch blue)${git_info}"
+	fi
+
+	PROMPT="${left_prefix}${prompt_body}"
+	RPROMPT="${right_prefix}${displayed_wd}${git_arrow_info}"
+
+	if [[ "$layout" = "half_pure" ]]; then
+		PROMPT="${ZSH_PROMPT_BREAK_LINE}${__zsh_prompt_color_escape git_branch blue}${git_info}${ZSH_PROMPT_BREAK_LINE}${PROMPT}"
+		RPROMPT="${right_prefix}${displayed_wd}"
+	elif [[ "$layout" = "pure" ]]; then
+		PROMPT="${ZSH_PROMPT_BREAK_LINE}${displayed_wd}${git_arrow_info}${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}"
+		RPROMPT=""
+	elif [[ "$layout" = "pure_verbose" ]]; then
+		PROMPT="${ZSH_PROMPT_BREAK_LINE}${user_host} ${displayed_wd}${git_arrow_info}${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}"
+		RPROMPT=""
+	elif [[ "$layout" = "singleline_verbose" ]]; then
+		PROMPT="${user_host} ${left_prefix}${prompt_body}"
+		RPROMPT="${right_prefix}${displayed_wd}${git_arrow_info}"
+	elif [[ "$layout" = "multiline" ]]; then
+		PROMPT="${ZSH_PROMPT_BREAK_LINE}${user_host}${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}"
+		RPROMPT="${right_prefix}${displayed_wd}${git_arrow_info}"
+	fi
+
+	zle -R 2>/dev/null || true
+	zle reset-prompt 2>/dev/null || true
+}
+
+__zsh_prompt_setup() {
+	if [[ -o interactive ]]; then
+		add-zsh-hook precmd __zsh_prompt_refresh
+		add-zsh-hook chpwd __zsh_prompt_refresh
+		if [[ "$ZSH_PROMPT_CURSOR" != "terminal" ]]; then
+			add-zsh-hook precmd __zsh_prompt_fix_cursor
+		fi
+		__zsh_prompt_refresh
+		zle_highlight=( default:fg=$(__zsh_prompt_color_name prompt blue) )
+	fi
+}
+
+__zsh_prompt_setup

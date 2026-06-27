@@ -462,5 +462,6 @@
   "workbench.sideBar.location": "left",
   "python-envs.alwaysUseUv": false,
   "mailClient.composeMode": "markdown",
-  "update.mode": "none"
+  "update.mode": "none",
+  "where-am-i.textTransfrom": "lowercase"
 }
