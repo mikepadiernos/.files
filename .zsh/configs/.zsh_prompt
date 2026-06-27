@@ -86,13 +86,55 @@ __zsh_prompt_virtual_env() {
 		if [[ -n "$VIRTUAL_ENV" ]]; then
 			virtual_env="($(basename "$VIRTUAL_ENV")) "
 		elif [[ -n "$CONDA_PROMPT_MODIFIER" ]]; then
-			virtual_env="$(basename "$CONDA_PROMPT_MODIFIER")"
+			virtual_env="($(basename "$CONDA_PROMPT_MODIFIER")) "
 		fi
 
 		if [[ -n "$virtual_env" ]]; then
 			print -r -- "$(__zsh_prompt_color_escape virtual_env magenta)$virtual_env"
 		fi
 	fi
+}
+
+__zsh_prompt_compressed_pwd() {
+	local current_path="$PWD"
+	local prefix="/"
+	local -a parts
+	local part
+	local compressed_path=""
+	local last_index
+
+	if [[ "$current_path" == "$HOME" || "$current_path" == "$HOME"/* ]]; then
+		current_path="${current_path#$HOME}"
+		prefix="~"
+	fi
+
+	parts=(${(s:/:)current_path})
+	last_index=${#parts}
+
+	if [[ "$current_path" == "/" ]]; then
+		print -r -- "/"
+		return 0
+	fi
+
+	if (( last_index <= 1 )); then
+		print -r -- "$prefix"
+		return 0
+	fi
+
+	compressed_path="$prefix"
+
+	for (( i = 1; i < last_index; i++ )); do
+		part="${parts[i]}"
+		[[ -z "$part" ]] && continue
+
+		if [[ "$part" == .* ]]; then
+			compressed_path+="/.${part[2,2]}"
+		else
+			compressed_path+="/${part[1,1]}"
+		fi
+	done
+
+	print -r -- "$compressed_path"
 }
 
 __zsh_prompt_git_toplevel() {
@@ -242,6 +284,8 @@ __zsh_prompt_fix_cursor() {
 __zsh_prompt_refresh() {
 	local state
 	local displayed_wd
+	local compressed_pwd
+	local virtual_env_prefix
 	local left_prefix
 	local right_prefix
 	local prompt_color
@@ -261,6 +305,8 @@ __zsh_prompt_refresh() {
 	typeset -g __ZSH_PROMPT_LAST_STATE="$state"
 
 	displayed_wd="$(__zsh_prompt_displayed_wd)"
+	compressed_pwd="$(__zsh_prompt_compressed_pwd)"
+	virtual_env_prefix="$(__zsh_prompt_virtual_env)"
 	left_prefix="$(__zsh_prompt_left_prefix)"
 	right_prefix="$(__zsh_prompt_right_prefix)"
 	git_info="${PROMPT_GIT_BRANCH}${PROMPT_GIT_STATUS}"
@@ -277,7 +323,7 @@ __zsh_prompt_refresh() {
 	fi
 
 	user_host="$(__zsh_prompt_color_escape host yellow)%n$(__zsh_prompt_color_escape host_user_connector magenta)@$(__zsh_prompt_color_escape user yellow)%m"
-	prompt_body="${prompt_color}${return_code}${ZSH_PROMPT_SYMBOL} $(__zsh_prompt_color_escape prompt blue)"
+	prompt_body="${virtual_env_prefix}$(__zsh_prompt_color_escape current_directory blue)${compressed_pwd} ${prompt_color}${return_code}${ZSH_PROMPT_SYMBOL} $(__zsh_prompt_color_escape prompt blue)"
 
 	if [[ -n "$git_info" ]]; then
 		git_arrow_info=" $(__zsh_prompt_color_escape arrow yellow)${ZSH_PROMPT_ARROW_SYMBOL} $(__zsh_prompt_color_escape git_branch blue)${git_info}"
@@ -290,11 +336,11 @@ __zsh_prompt_refresh() {
 		PROMPT="${ZSH_PROMPT_BREAK_LINE}${__zsh_prompt_color_escape git_branch blue}${git_info}${ZSH_PROMPT_BREAK_LINE}${PROMPT}"
 		RPROMPT="${right_prefix}${displayed_wd}"
 	elif [[ "$layout" = "pure" ]]; then
-		PROMPT="${ZSH_PROMPT_BREAK_LINE}${displayed_wd}${git_arrow_info}${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}"
-		RPROMPT=""
+		PROMPT="${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}${git_arrow_info}"
+		RPROMPT="${right_prefix}${displayed_wd}"
 	elif [[ "$layout" = "pure_verbose" ]]; then
-		PROMPT="${ZSH_PROMPT_BREAK_LINE}${user_host} ${displayed_wd}${git_arrow_info}${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}"
-		RPROMPT=""
+		PROMPT="${ZSH_PROMPT_BREAK_LINE}${user_host}${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}${git_arrow_info}"
+		RPROMPT="${right_prefix}${displayed_wd}"
 	elif [[ "$layout" = "singleline_verbose" ]]; then
 		PROMPT="${user_host} ${left_prefix}${prompt_body}"
 		RPROMPT="${right_prefix}${displayed_wd}${git_arrow_info}"
@@ -309,6 +355,20 @@ __zsh_prompt_refresh() {
 
 __zsh_prompt_setup() {
 	if [[ -o interactive ]]; then
+		if whence -w add-zsh-hook >/dev/null 2>&1; then
+			add-zsh-hook -d precmd prompt_grml_precmd 2>/dev/null || true
+		fi
+
+		# Disable Typewritten's prompt redraw hooks if that theme was sourced for colors.
+		if whence -w add-zsh-hook >/dev/null 2>&1; then
+			add-zsh-hook -d precmd tw_fix_cursor 2>/dev/null || true
+			add-zsh-hook -d precmd tw_async_init_tasks 2>/dev/null || true
+		fi
+
+		if whence -w async_stop_worker >/dev/null 2>&1; then
+			async_stop_worker tw_worker >/dev/null 2>&1 || true
+		fi
+
 		add-zsh-hook precmd __zsh_prompt_refresh
 		add-zsh-hook chpwd __zsh_prompt_refresh
 		if [[ "$ZSH_PROMPT_CURSOR" != "terminal" ]]; then
