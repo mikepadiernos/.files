@@ -1,6 +1,7 @@
 [user]
 	email = mike@padiernos.me
 	name = mikepadiernos
+	signingkey = 1001E02010EC8DEBBF54B8FA1F945C1E08003E9F
 
 [advice]
   addEmptyPathspec = false
@@ -22,22 +23,22 @@
   useHttpPath = true
 
 [core]
-  autocrlf = input  # keep newlines as in input
-  compression = 9  # trade cpu for network
+  autocrlf = input                        # keep newlines as in input
+  compression = 9                         # trade cpu for network
   fsync = none
-  whitespace = error  # threat incorrect whitespace as errors
+  whitespace = error                      # threat incorrect whitespace as errors
 
 [init]
   defaultBranch = main
 
 [log]
-  abbrevCommit = true  # short commits
+  abbrevCommit = true                     # short commits
 
 [status]
   branch = true
   short = true
   showStash = true
-  showUntrackedFiles = all  # show individual untracked files
+  showUntrackedFiles = all                # show individual untracked files
 
 [interactive]
   diffFilter = diff-so-fancy --patch
@@ -51,22 +52,22 @@
   date = relative
 
 [diff]
-  context = 3  # less context in diffs
-  renames = copies  # detect copies as renames in diffs
-  interHunkContext = 10  # merge near hunks in diffs
+  context = 3                             # less context in diffs
+  renames = copies                        # detect copies as renames in diffs
+  interHunkContext = 10                   # merge near hunks in diffs
 
 [push]
-  autoSetupRemote = true  # easier to push new branches
-  default = current  # push only current branch by default
-  followTags = true  # push also tags
-  gpgSign = false  # my remotes doesn't support sign pushes
+  autoSetupRemote = true                  # easier to push new branches
+  default = current                       # push only current branch by default
+  followTags = true                       # push also tags
+  gpgSign = false                         # my remotes doesn't support sign pushes
 
 [pull]
   rebase = true
 
 [pager]
-  branch = false  # no need to use pager for git branch
-  diff = diff-so-fancy | $PAGER  # diff-so-fancy as diff pager
+  branch = false                          # no need to use pager for git branch
+  diff = diff-so-fancy | $PAGER           # diff-so-fancy as diff pager
 
 [submodule]
   fetchJobs = 16
@@ -81,6 +82,12 @@
 # URL shortcuts
 [url "git@github.com:"]
   insteadOf = "gh:"
+
+[url "git@github-personal:"]
+  insteadOf = "gh-p:"
+
+[url "git@github-work:"]
+  insteadOf = "gh-w:"
 
 [includeIf "gitdir:~/Library/Projects/work/"]
   path = ~/.gitconfig-work

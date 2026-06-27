@@ -63,4 +63,41 @@ _zsh_git_setup_mergetool() {
 _zsh_git_setup_mergetool
 unset -f _zsh_git_pick_mergetool _zsh_git_setup_mergetool
 
+# --- ssh url fallback ---------------------------------------------------------
+# If an SSH identity file for a gh-p/gh-w alias is missing, rewrite those URLs
+# to HTTPS so pushes/pulls still work without a key.
+
+_zsh_git_url_rewrite() {
+	local alias="$1"   # e.g. gh-p
+	local ssh_host="$2" # e.g. github-personal
+	local key="$3"      # e.g. ~/.ssh/id_ed25519_github_personal
+	local https_base="https://github.com/"
+
+	local current
+	current="$(git config --global --get "url.git@${ssh_host}:.insteadOf" 2>/dev/null)"
+
+	if [[ -f "${key/#\~/$HOME}" ]]; then
+		# Key exists — ensure SSH rewrite is active
+		if [[ "$current" != "${alias}:" ]]; then
+			git config --global "url.git@${ssh_host}:.insteadOf" "${alias}:"
+		fi
+	else
+		# No key — fall back to HTTPS
+		local https_current
+		https_current="$(git config --global --get "url.${https_base}.insteadOf" 2>/dev/null)"
+		if [[ "$current" == "${alias}:" ]]; then
+			git config --global --unset "url.git@${ssh_host}:.insteadOf" 2>/dev/null || true
+		fi
+		git config --global "url.${https_base}.insteadOf" "${alias}:"
+	fi
+}
+
+_zsh_git_setup_url_fallbacks() {
+	_zsh_git_url_rewrite "gh-p" "github-personal" "~/.ssh/id_ed25519_github_personal"
+	_zsh_git_url_rewrite "gh-w" "github-work"     "~/.ssh/id_ed25519_github_work"
+}
+
+_zsh_git_setup_url_fallbacks
+unset -f _zsh_git_url_rewrite _zsh_git_setup_url_fallbacks
+
 # END GIT
