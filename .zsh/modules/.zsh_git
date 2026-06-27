@@ -1,50 +1,66 @@
 # GIT
 
+# --- gitenv symlinks ----------------------------------------------------------
+
+_zsh_git_symlink() {
+	local src="$1"
+	local dest="$2"
+
+	if [[ -L "$dest" ]]; then
+		return 0
+	elif [[ -e "$dest" ]]; then
+		mv "$dest" "${dest}.bak"
+		echo "zsh_git: backup ${dest} -> ${dest}.bak"
+	fi
+
+	ln -s "$src" "$dest"
+	echo "zsh_git: linked ${dest} -> ${src}"
+}
+
+_zsh_git_setup_gitenv() {
+	local gitenv="${DOTFILES:+$DOTFILES/.gitenv}"
+	gitenv="${gitenv:-${HOME}/.files/.gitenv}"
+
+	[[ -d "$gitenv" ]] || return 0
+
+	_zsh_git_symlink "${gitenv}/.gitconfig"          "${HOME}/.gitconfig"
+	_zsh_git_symlink "${gitenv}/.gitconfig-work"     "${HOME}/.gitconfig-work"
+	_zsh_git_symlink "${gitenv}/.gitconfig-personal" "${HOME}/.gitconfig-personal"
+}
+
+_zsh_git_setup_gitenv
+unset -f _zsh_git_symlink _zsh_git_setup_gitenv
+
+# --- mergetool ----------------------------------------------------------------
+
 _zsh_git_pick_mergetool() {
-  if command -v nvim >/dev/null 2>&1; then
-    echo "nvimdiff"
-    return 0
-  fi
-
-  if command -v vim >/dev/null 2>&1; then
-    echo "vimdiff"
-    return 0
-  fi
-
-  if command -v meld >/dev/null 2>&1; then
-    echo "meld"
-    return 0
-  fi
-
-  if command -v kdiff3 >/dev/null 2>&1; then
-    echo "kdiff3"
-    return 0
-  fi
-
-  return 1
+	local tool
+	for tool in nvimdiff vimdiff meld kdiff3; do
+		local bin="${tool%diff}"
+		[[ "$tool" == "nvimdiff" ]] && bin="nvim"
+		[[ "$tool" == "vimdiff"  ]] && bin="vim"
+		command -v "$bin" >/dev/null 2>&1 && echo "$tool" && return 0
+	done
+	return 1
 }
 
 _zsh_git_setup_mergetool() {
-  local configured_tool
-  local selected_tool
+	local configured_tool selected_tool
 
-  configured_tool="$(git config --global --get merge.tool 2>/dev/null)"
-  [[ -n "$configured_tool" ]] && return 0
+	configured_tool="$(git config --global --get merge.tool 2>/dev/null)"
+	[[ -n "$configured_tool" ]] && return 0
 
-  selected_tool="$(_zsh_git_pick_mergetool)" || return 0
+	selected_tool="$(_zsh_git_pick_mergetool)" || return 0
 
-  git config --global merge.tool "$selected_tool"
-  git config --global mergetool.prompt false
-  git config --global mergetool.keepBackup false
+	git config --global merge.tool         "$selected_tool"
+	git config --global mergetool.prompt   false
+	git config --global mergetool.keepBackup false
 
-  if [[ -n "$GIT_SETUP_VERBOSE" ]]; then
-    echo -e "\e[30;42m GIT \e[0m" "\e[32mmerge.tool set to $selected_tool\e[0m"
-  fi
+	[[ -n "$GIT_SETUP_VERBOSE" ]] && \
+		echo -e "\e[30;42m GIT \e[0m" "\e[32mmerge.tool set to $selected_tool\e[0m"
 }
 
 _zsh_git_setup_mergetool
-
-unset -f _zsh_git_pick_mergetool
-unset -f _zsh_git_setup_mergetool
+unset -f _zsh_git_pick_mergetool _zsh_git_setup_mergetool
 
 # END GIT

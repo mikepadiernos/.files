@@ -1,6 +1,6 @@
 [user]
 	email = mike@padiernos.me
-	name = Michael Padiernos
+	name = mikepadiernos
 
 [advice]
   addEmptyPathspec = false
@@ -81,3 +81,14 @@
 # URL shortcuts
 [url "git@github.com:"]
   insteadOf = "gh:"
+
+[includeIf "gitdir:~/Library/Projects/work/"]
+  path = ~/.gitconfig-work
+
+[includeIf "gitdir:~/Library/Projects/personal/"]
+  path = ~/.gitconfig-personal
+[merge]
+	tool = nvimdiff
+[mergetool]
+	prompt = false
+	keepBackup = false
