@@ -324,7 +324,7 @@ __zsh_prompt_refresh() {
 	fi
 
 	user_host="$(__zsh_prompt_color_escape host yellow)%n$(__zsh_prompt_color_escape host_user_connector magenta)@$(__zsh_prompt_color_escape user yellow)%m"
-	prompt_body="${virtual_env_prefix}$(__zsh_prompt_color_escape current_directory blue)${compressed_pwd} ${prompt_color}${return_code}${ZSH_PROMPT_SYMBOL} $(__zsh_prompt_color_escape prompt blue)"
+	prompt_body="${virtual_env_prefix}$(__zsh_prompt_color_escape current_directory blue) ${compressed_pwd} ${prompt_color}${return_code}${ZSH_PROMPT_SYMBOL} $(__zsh_prompt_color_escape prompt blue)"
 
 	if [[ -n "$git_info" ]]; then
 		git_arrow_info=" $(__zsh_prompt_color_escape arrow yellow)${ZSH_PROMPT_ARROW_SYMBOL} $(__zsh_prompt_color_escape git_branch blue)${git_info}"
