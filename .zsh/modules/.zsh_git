@@ -26,6 +26,20 @@ _zsh_git_setup_gitenv() {
 	_zsh_git_symlink "${gitenv}/.gitconfig" "${HOME}/.gitconfig"
 }
 
+_zsh_git_disable_broken_vscode_askpass() {
+	# VS Code exports temporary askpass env vars. If the IPC socket is gone,
+	# git fails before credential helpers run.
+	if [[ -n "${VSCODE_GIT_IPC_HANDLE:-}" ]] && [[ ! -S "${VSCODE_GIT_IPC_HANDLE}" ]]; then
+		unset GIT_ASKPASS
+		unset SSH_ASKPASS
+		unset VSCODE_GIT_ASKPASS_NODE
+		unset VSCODE_GIT_ASKPASS_MAIN
+		unset VSCODE_GIT_IPC_HANDLE
+		export GIT_TERMINAL_PROMPT=1
+		[[ -n "$GIT_SETUP_VERBOSE" ]] && echo "zsh_git: disabled stale VS Code askpass env"
+	fi
+}
+
 _zsh_git_setup_pass_entries() {
 	# Initialize pass entries if needed
 	if command -v pass >/dev/null 2>&1; then
@@ -34,11 +48,13 @@ _zsh_git_setup_pass_entries() {
 
 		# Only require a GitHub PAT pass entry when gh-p resolves to HTTPS.
 		if grep -qx 'gh-p:' <<< "$ghp_rewrite"; then
-			if ! pass show github.com/mikepadiernos >/dev/null 2>&1 \
-				&& ! pass show github/mikepadiernos >/dev/null 2>&1; then
-				echo "zsh_git: GitHub PAT not found in pass — create one entry:"
-				echo "  pass insert github.com/mikepadiernos"
-				echo "  (or: pass insert github/mikepadiernos)"
+			if [[ -n "$GIT_SETUP_VERBOSE" ]]; then
+				echo "zsh_git: GitHub HTTPS auth uses pass entries by owner."
+				echo "  entry format: github.com/<owner>"
+				echo "  secret format:"
+				echo "    <PAT>"
+				echo "    username=<github-username>"
+				echo "  example: pass insert -m github.com/my-org"
 			fi
 		fi
 
@@ -53,9 +69,10 @@ _zsh_git_setup_pass_entries() {
 	fi
 }
 
+_zsh_git_disable_broken_vscode_askpass
 _zsh_git_setup_gitenv
 _zsh_git_setup_pass_entries
-unset -f _zsh_git_symlink _zsh_git_setup_gitenv _zsh_git_setup_pass_entries
+unset -f _zsh_git_symlink _zsh_git_setup_gitenv _zsh_git_disable_broken_vscode_askpass _zsh_git_setup_pass_entries
 
 # --- mergetool ----------------------------------------------------------------
 
@@ -88,6 +105,79 @@ _zsh_git_setup_mergetool() {
 
 _zsh_git_setup_mergetool
 unset -f _zsh_git_pick_mergetool _zsh_git_setup_mergetool
+
+# --- git/pass helpers --------------------------------------------------------
+
+git-pass-save() {
+	command -v git >/dev/null 2>&1 || { echo "git-pass-save: git not found"; return 1; }
+	command -v pass >/dev/null 2>&1 || { echo "git-pass-save: pass not found"; return 1; }
+
+	local remote url host host_short repo_path owner username pat
+	local entry_user entry_owner entry_user_short entry_owner_short
+	remote="${1:-origin}"
+
+	url="$(git remote get-url "$remote" 2>/dev/null)" || {
+		echo "git-pass-save: remote '$remote' not found"
+		return 1
+	}
+
+	if [[ "$url" == https://* ]]; then
+		host="${url#https://}"
+		host="${host%%/*}"
+		repo_path="${url#https://$host/}"
+	elif [[ "$url" == http://* ]]; then
+		host="${url#http://}"
+		host="${host%%/*}"
+		repo_path="${url#http://$host/}"
+	else
+		echo "git-pass-save: remote is not HTTP(S): $url"
+		return 1
+	fi
+
+	host_short="${host%%.*}"
+
+	owner="${repo_path%%/*}"
+	owner="${owner%.git}"
+	if [[ -z "$owner" ]]; then
+		echo "git-pass-save: unable to derive owner from remote: $url"
+		return 1
+	fi
+
+	read -r "username?GitHub username: "
+	if [[ -z "$username" ]]; then
+		echo "git-pass-save: username is required"
+		return 1
+	fi
+
+	echo -n "GitHub PAT (hidden): "
+	read -rs pat
+	echo
+	if [[ -z "$pat" ]]; then
+		echo "git-pass-save: PAT is required"
+		return 1
+	fi
+
+	entry_owner="${host}/${owner}"
+	entry_user="${host}/${username}"
+	entry_owner_short="${host_short}/${owner}"
+	entry_user_short="${host_short}/${username}"
+
+	printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_owner" >/dev/null || return 1
+	printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_user" >/dev/null || return 1
+	if [[ "$host_short" != "$host" ]]; then
+		printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_owner_short" >/dev/null || return 1
+		printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_user_short" >/dev/null || return 1
+	fi
+
+	echo "git-pass-save: saved credentials to pass entries:"
+	echo "  $entry_owner"
+	echo "  $entry_user"
+	if [[ "$host_short" != "$host" ]]; then
+		echo "  $entry_owner_short"
+		echo "  $entry_user_short"
+	fi
+	echo "git-pass-save: now run: git credential-cache exit && git push"
+}
 
 # --- dynamic identity ---------------------------------------------------------
 

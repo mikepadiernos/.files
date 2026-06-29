@@ -17,7 +17,7 @@
 
 [credential]
   helper = /home/padiernos/.files/.gitenv/git-credential-pass
-  helper = cache
+  useHttpPath = true
 
 [credential "https://github.com"]
   useHttpPath = true
