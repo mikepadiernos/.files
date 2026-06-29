@@ -152,6 +152,26 @@ __zsh_prompt_git_branch() {
 	fi
 }
 
+__zsh_prompt_git_remote_repo() {
+	local remote_url
+	local repo_name
+	local git_toplevel
+
+	remote_url="$(command git config --get remote.origin.url 2>/dev/null)"
+	if [[ -n "$remote_url" ]]; then
+		repo_name="${remote_url%.git}"
+		repo_name="${repo_name%/}"
+		repo_name="${repo_name##*/}"
+		if [[ -n "$repo_name" ]]; then
+			print -r -- "$repo_name"
+			return 0
+		fi
+	fi
+
+	git_toplevel="$(command git rev-parse --show-toplevel 2>/dev/null)"
+	print -r -- "${git_toplevel:t}"
+}
+
 __zsh_prompt_git_home() {
 	local current_directory="$1"
 	local git_toplevel="$2"
@@ -248,7 +268,7 @@ __zsh_prompt_context() {
 			git_branch="$(__zsh_prompt_git_branch)"
 			git_status="$(__zsh_prompt_git_status)"
 			git_home="$(__zsh_prompt_git_home "$current_directory" "$git_toplevel")"
-			git_repo_name="$(basename "$git_toplevel")"
+			git_repo_name="$(__zsh_prompt_git_remote_repo)"
 		fi
 	fi
 
@@ -272,7 +292,7 @@ __zsh_prompt_displayed_wd() {
 		displayed_wd="$home_relative_wd"
 	fi
 
-	print -r -- "$(__zsh_prompt_color_escape current_directory blue)$displayed_wd"
+	print -r -- "%F{#efe100}$displayed_wd"
 }
 
 __zsh_prompt_fix_cursor() {
@@ -298,7 +318,9 @@ __zsh_prompt_refresh() {
 	local user_host
 	local prompt_body
 	local git_info
-	local git_arrow_info=""
+	local git_branch_info
+	local git_right_info=""
+	local git_dirty_suffix=""
 	local layout
 
 	__zsh_prompt_use_theme_colors
@@ -314,6 +336,8 @@ __zsh_prompt_refresh() {
 	left_prefix="$(__zsh_prompt_left_prefix)"
 	right_prefix="$(__zsh_prompt_right_prefix)"
 	git_info="${PROMPT_GIT_BRANCH}${PROMPT_GIT_STATUS}"
+	git_branch_info="${PROMPT_GIT_BRANCH}"
+	[[ -n "$PROMPT_GIT_STATUS" ]] && git_dirty_suffix=" !"
 	layout="$ZSH_PROMPT_LAYOUT"
 
 	prompt_color="$(__zsh_prompt_color_escape symbol green)"
@@ -327,30 +351,30 @@ __zsh_prompt_refresh() {
 	fi
 
 	user_host="$(__zsh_prompt_color_escape host yellow)%n$(__zsh_prompt_color_escape host_user_connector magenta)@$(__zsh_prompt_color_escape user yellow)%m"
-	prompt_body="${virtual_env_prefix}$(__zsh_prompt_color_escape current_directory blue) ${compressed_pwd} ${prompt_color}${return_code}${ZSH_PROMPT_SYMBOL} $(__zsh_prompt_color_escape prompt blue)"
+	prompt_body="${virtual_env_prefix}$(__zsh_prompt_color_escape git_branch blue)${compressed_pwd} ${prompt_color}${return_code}${ZSH_PROMPT_SYMBOL} $(__zsh_prompt_color_escape prompt blue)"
 
-	if [[ -n "$git_info" ]]; then
-		git_arrow_info=" $(__zsh_prompt_color_escape arrow yellow)| $(__zsh_prompt_color_escape git_branch blue)${PROMPT_GIT_REPO_NAME} $(__zsh_prompt_color_escape arrow yellow)${ZSH_PROMPT_ARROW_SYMBOL} $(__zsh_prompt_color_escape git_branch blue)${git_info}"
+	if [[ -n "$PROMPT_GIT_BRANCH" ]]; then
+		git_right_info=" $(__zsh_prompt_color_escape arrow yellow)| %F{green}${PROMPT_GIT_REPO_NAME} $(__zsh_prompt_color_escape arrow yellow)-> $(__zsh_prompt_color_escape git_branch blue)${git_branch_info}${git_dirty_suffix}"
 	fi
 
 	PROMPT="${left_prefix}${prompt_body}"
-	RPROMPT="${right_prefix}${displayed_wd}${git_arrow_info}"
+	RPROMPT="${right_prefix}${displayed_wd}${git_right_info}"
 
 	if [[ "$layout" = "half_pure" ]]; then
 		PROMPT="${ZSH_PROMPT_BREAK_LINE}${__zsh_prompt_color_escape git_branch blue}${git_info}${ZSH_PROMPT_BREAK_LINE}${PROMPT}"
 		RPROMPT="${right_prefix}${displayed_wd}"
 	elif [[ "$layout" = "pure" ]]; then
-		PROMPT="${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}${git_arrow_info}"
+		PROMPT="${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}${git_right_info}"
 		RPROMPT="${right_prefix}${displayed_wd}"
 	elif [[ "$layout" = "pure_verbose" ]]; then
-		PROMPT="${ZSH_PROMPT_BREAK_LINE}${user_host}${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}${git_arrow_info}"
+		PROMPT="${ZSH_PROMPT_BREAK_LINE}${user_host}${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}${git_right_info}"
 		RPROMPT="${right_prefix}${displayed_wd}"
 	elif [[ "$layout" = "singleline_verbose" ]]; then
 		PROMPT="${user_host} ${left_prefix}${prompt_body}"
-		RPROMPT="${right_prefix}${displayed_wd}${git_arrow_info}"
+		RPROMPT="${right_prefix}${displayed_wd}${git_right_info}"
 	elif [[ "$layout" = "multiline" ]]; then
 		PROMPT="${ZSH_PROMPT_BREAK_LINE}${user_host}${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}"
-		RPROMPT="${right_prefix}${displayed_wd}${git_arrow_info}"
+		RPROMPT="${right_prefix}${displayed_wd}${git_right_info}"
 	fi
 
 	zle -R 2>/dev/null || true

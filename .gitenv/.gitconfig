@@ -1,7 +1,7 @@
 [user]
 	email = mike@padiernos.me
 	name = mikepadiernos
-	signingkey = 1001E02010EC8DEBBF54B8FA1F945C1E08003E9F
+	signingkey = 1FFCD1D39DDDB564D933A5F0E6EAF3CE288AF291
 
 [advice]
   addEmptyPathspec = false
