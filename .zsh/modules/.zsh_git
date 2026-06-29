@@ -23,13 +23,39 @@ _zsh_git_setup_gitenv() {
 
 	[[ -d "$gitenv" ]] || return 0
 
-	_zsh_git_symlink "${gitenv}/.gitconfig"          "${HOME}/.gitconfig"
-	_zsh_git_symlink "${gitenv}/.gitconfig-work"     "${HOME}/.gitconfig-work"
-	_zsh_git_symlink "${gitenv}/.gitconfig-personal" "${HOME}/.gitconfig-personal"
+	_zsh_git_symlink "${gitenv}/.gitconfig" "${HOME}/.gitconfig"
+}
+
+_zsh_git_setup_pass_entries() {
+	# Initialize pass entries if needed
+	if command -v pass >/dev/null 2>&1; then
+		local ghp_rewrite
+		ghp_rewrite="$(git config --global --get-all 'url.https://github.com/.insteadof' 2>/dev/null)"
+
+		# Only require a GitHub PAT pass entry when gh-p resolves to HTTPS.
+		if grep -qx 'gh-p:' <<< "$ghp_rewrite"; then
+			if ! pass show github.com/mikepadiernos >/dev/null 2>&1 \
+				&& ! pass show github/mikepadiernos >/dev/null 2>&1; then
+				echo "zsh_git: GitHub PAT not found in pass — create one entry:"
+				echo "  pass insert github.com/mikepadiernos"
+				echo "  (or: pass insert github/mikepadiernos)"
+			fi
+		fi
+
+		# Ensure gpg key passphrase entry exists (optional)
+		if ! pass show gpg/key-passphrase >/dev/null 2>&1; then
+			if [[ -n "$GIT_SETUP_VERBOSE" ]]; then
+				echo "zsh_git: gpg/key-passphrase not in pass — create it:"
+				echo "  pass insert gpg/key-passphrase"
+				echo "  (then paste your GPG key passphrase)"
+			fi
+		fi
+	fi
 }
 
 _zsh_git_setup_gitenv
-unset -f _zsh_git_symlink _zsh_git_setup_gitenv
+_zsh_git_setup_pass_entries
+unset -f _zsh_git_symlink _zsh_git_setup_gitenv _zsh_git_setup_pass_entries
 
 # --- mergetool ----------------------------------------------------------------
 
@@ -63,41 +89,36 @@ _zsh_git_setup_mergetool() {
 _zsh_git_setup_mergetool
 unset -f _zsh_git_pick_mergetool _zsh_git_setup_mergetool
 
-# --- ssh url fallback ---------------------------------------------------------
-# If an SSH identity file for a gh-p/gh-w alias is missing, rewrite those URLs
-# to HTTPS so pushes/pulls still work without a key.
+# --- dynamic identity ---------------------------------------------------------
 
-_zsh_git_url_rewrite() {
-	local alias="$1"   # e.g. gh-p
-	local ssh_host="$2" # e.g. github-personal
-	local key="$3"      # e.g. ~/.ssh/id_ed25519_github_personal
-	local https_base="https://github.com/"
+_zsh_git_sync_identity() {
+	command -v git >/dev/null 2>&1 || return 0
+	git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return 0
 
-	local current
-	current="$(git config --global --get "url.git@${ssh_host}:.insteadOf" 2>/dev/null)"
+	local repo_root remote_url target_name target_email
+	repo_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+	remote_url="$(git config --get remote.origin.url 2>/dev/null)"
 
-	if [[ -f "${key/#\~/$HOME}" ]]; then
-		# Key exists — ensure SSH rewrite is active
-		if [[ "$current" != "${alias}:" ]]; then
-			git config --global "url.git@${ssh_host}:.insteadOf" "${alias}:"
-		fi
+	if [[ "$repo_root" == "$HOME/Library/Projects/work"/* ]] || [[ "$remote_url" == *"ge-aero/"* ]]; then
+		target_name="570006541_aero"
+		target_email="michael.padiernos@geaerospace.com"
 	else
-		# No key — fall back to HTTPS
-		local https_current
-		https_current="$(git config --global --get "url.${https_base}.insteadOf" 2>/dev/null)"
-		if [[ "$current" == "${alias}:" ]]; then
-			git config --global --unset "url.git@${ssh_host}:.insteadOf" 2>/dev/null || true
-		fi
-		git config --global "url.${https_base}.insteadOf" "${alias}:"
+		target_name="mikepadiernos"
+		target_email="mike@padiernos.me"
 	fi
+
+	local current_name current_email
+	current_name="$(git config --local --get user.name 2>/dev/null || true)"
+	current_email="$(git config --local --get user.email 2>/dev/null || true)"
+
+	[[ "$current_name" == "$target_name" ]] || git config --local user.name "$target_name"
+	[[ "$current_email" == "$target_email" ]] || git config --local user.email "$target_email"
 }
 
-_zsh_git_setup_url_fallbacks() {
-	_zsh_git_url_rewrite "gh-p" "github-personal" "~/.ssh/id_ed25519_github_personal"
-	_zsh_git_url_rewrite "gh-w" "github-work"     "~/.ssh/id_ed25519_github_work"
-}
-
-_zsh_git_setup_url_fallbacks
-unset -f _zsh_git_url_rewrite _zsh_git_setup_url_fallbacks
+if [[ -o interactive ]] && whence -w add-zsh-hook >/dev/null 2>&1; then
+	add-zsh-hook chpwd _zsh_git_sync_identity
+	add-zsh-hook precmd _zsh_git_sync_identity
+	_zsh_git_sync_identity
+fi
 
 # END GIT

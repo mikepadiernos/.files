@@ -16,11 +16,17 @@
 #	useHttpPath = true
 
 [credential]
-	credentialStore = plaintext
-	helper = store
+  helper = /home/padiernos/.files/.gitenv/git-credential-pass
+  helper = cache
+
+[credential "https://github.com"]
+  useHttpPath = true
 
 [credential "https://dev.azure.com"]
   useHttpPath = true
+
+[url "https://github.com/"]
+  insteadOf = git@github.com:
 
 [core]
   autocrlf = input                        # keep newlines as in input
@@ -79,23 +85,9 @@
 [diff-so-fancy]
   markEmptyLines = false
 
-# URL shortcuts
-[url "git@github.com:"]
-  insteadOf = "gh:"
-
-[url "git@github-personal:"]
-  insteadOf = "gh-p:"
-
-[url "git@github-work:"]
-  insteadOf = "gh-w:"
-
-[includeIf "gitdir:~/Library/Projects/work/"]
-  path = ~/.gitconfig-work
-
-[includeIf "gitdir:~/Library/Projects/personal/"]
-  path = ~/.gitconfig-personal
 [merge]
 	tool = nvimdiff
+
 [mergetool]
 	prompt = false
 	keepBackup = false
