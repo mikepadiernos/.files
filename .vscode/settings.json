@@ -144,6 +144,7 @@
     "antfu.retypewriter",
     "antfu.smart-clicks",
     "antfu.where-am-i",
+    "atoolz.htmx-vscode-toolkit",
     "atoolz.yazi-vscode-toolkit",
     "bajdzis.vscode-twig-pack",
     "bbeversdorf.drupal-check",
@@ -247,6 +248,7 @@
     "shubhamprajapati1202.office-editor",
     "solomonkinard.git-blame",
     "soulfriends.jetbrains-product-icon-theme-ui",
+    "spacebox.spacebox-ui",
     "srfrnk.user-extensions",
     "stanislav.vscode-drupal",
     "streetsidesoftware.code-spell-checker",
@@ -328,7 +330,7 @@
     "sideBarSectionHeader.border": "#000000FF",
     "panelSectionHeader.background": "#000000FF",
     "accordion.border": "#000000",
-    "scrollbar.shadow": "#00000088",
+    "scrollbar.shadow": "#00000000",
     "scrollbarSlider.border": "#00000000",
     "scrollbarSlider.background": "#000000FF",
     "scrollbarSlider.hoverBackground": "#000000",
@@ -370,7 +372,7 @@
     "list.activeSelectionBackground": "#20202055",
     "menu.separatorBackground": "#000000FF",
     "menu.separatorForeground": "#000000FF",
-    "minimap.background": "#00000088",
+    "minimap.background": "#00000000",
     "panelSectionHeader.foreground": "#EFE10088",
     "sideBarSectionHeader.background": "#000000FF",
     "sideBarSectionHeader.foreground": "#EFE10088",
@@ -491,5 +493,6 @@
   "python-envs.alwaysUseUv": false,
   "mailClient.composeMode": "markdown",
   "update.mode": "none",
-  "where-am-i.textTransfrom": "lowercase"
+  "where-am-i.textTransfrom": "lowercase",
+  "spacebox-ui.blurEffect": true
 }
