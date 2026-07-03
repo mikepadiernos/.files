@@ -42,11 +42,22 @@ tools() {
 	local run_mise=1
 	local run_brew=1
 	local run_paru=1
+	local run_grub=1
 	local run_flatpak=1
 	local run_plasma=1
 	local run_firmware=1
 	local run_vscode=1
 	local dry_run=0
+	local grub_version_before=""
+	local grub_version_after=""
+	local grub_was_updated=0
+	local grub_cfg=""
+	local pass_entry="pass.local.sudo.mikepadiernos"
+	local pass_entry_path=""
+	local pass_line=""
+	local sudo_keepalive_pid=""
+	local sudo_askpass_script=""
+	local sudo_askpass_secret_file=""
 	local arg
 
 	for arg in "$@"; do
@@ -57,6 +68,7 @@ tools() {
 			--mise-only)
 				run_brew=0
 				run_paru=0
+				run_grub=0
 				run_flatpak=0
 				run_plasma=0
 				run_firmware=0
@@ -64,6 +76,7 @@ tools() {
 			--brew-only)
 				run_mise=0
 				run_paru=0
+				run_grub=0
 				run_flatpak=0
 				run_plasma=0
 				run_firmware=0
@@ -76,6 +89,9 @@ tools() {
 				;;
 			--no-paru)
 				run_paru=0
+				;;
+			--no-grub)
+				run_grub=0
 				;;
 			--no-flatpak)
 				run_flatpak=0
@@ -98,12 +114,13 @@ tools() {
 				;;
 			--help|-h)
 				cat <<'EOF'
-tools --update [--mise-only|--brew-only|--system-only] [--no-brew|--no-mise|--no-paru|--no-flatpak|--no-plasma|--no-firmware|--no-vscode] [--dry-run]
+tools --update [--mise-only|--brew-only|--system-only] [--no-brew|--no-mise|--no-paru|--no-grub|--no-flatpak|--no-plasma|--no-firmware|--no-vscode] [--dry-run]
 
 Examples:
 	tools --update
 	tools --update --mise-only
 	tools --update --system-only
+	tools --update --no-grub
 	tools --update --no-firmware
 	tools --update --no-vscode
 	tools --update --dry-run
@@ -134,18 +151,92 @@ EOF
 
 	if (( run_brew )); then
 		if (( dry_run )); then
-			echo "[dry-run] brew upgrade --force-bottle"
+			echo "[dry-run] HOMEBREW_NO_ASK=1 brew upgrade --force-bottle --yes"
 		else
-			brew upgrade --force-bottle
+			HOMEBREW_NO_ASK=1 brew upgrade --force-bottle --yes
+		fi
+	fi
+
+	if (( run_paru && run_grub && ! dry_run )); then
+		if command -v pacman >/dev/null 2>&1; then
+			grub_version_before="$(pacman -Q grub 2>/dev/null | awk '{print $2}')"
+		fi
+	fi
+
+	if (( run_paru )); then
+		if (( dry_run )); then
+			echo "[dry-run] pass show $pass_entry (or local/sudo/mikepadiernos) | head -n1 | sudo -S -p '' -v"
+			echo "[dry-run] create temporary SUDO_ASKPASS helper for paru"
+			echo "[dry-run] start sudo keepalive during arch/grub updates"
+		elif command -v sudo >/dev/null 2>&1; then
+			echo "tools: caching sudo credentials"
+
+			pass_entry_path="${pass_entry//.//}"
+			if [[ "$pass_entry_path" == pass/* ]]; then
+				pass_entry_path="${pass_entry_path#pass/}"
+			fi
+
+			if ! command -v pass >/dev/null 2>&1; then
+				echo "tools: pass is required for sudo auth but was not found"
+				return 1
+			fi
+
+			if pass show "$pass_entry" >/dev/null 2>&1; then
+				pass_line="$(pass show "$pass_entry" 2>/dev/null | head -n1)"
+				pass_entry_path="$pass_entry"
+			elif pass show "$pass_entry_path" >/dev/null 2>&1; then
+				pass_line="$(pass show "$pass_entry_path" 2>/dev/null | head -n1)"
+			elif pass show "local/sudo/mikepadiernos" >/dev/null 2>&1; then
+				pass_line="$(pass show "local/sudo/mikepadiernos" 2>/dev/null | head -n1)"
+				pass_entry_path="local/sudo/mikepadiernos"
+			else
+				echo "tools: could not read pass entry '$pass_entry' or '$pass_entry_path'"
+				echo "tools: ensure your pass store is unlocked first"
+				return 1
+			fi
+
+			if [[ -z "$pass_line" ]]; then
+				echo "tools: pass entry $pass_entry_path is empty"
+				return 1
+			fi
+
+			printf '%s\n' "$pass_line" | sudo -S -p '' -v >/dev/null 2>&1 || {
+				echo "tools: sudo validation failed using pass entry $pass_entry_path"
+				return 1
+			}
+
+			sudo_askpass_secret_file="$(mktemp)"
+			printf '%s\n' "$pass_line" >"$sudo_askpass_secret_file"
+			chmod 600 "$sudo_askpass_secret_file"
+
+			sudo_askpass_script="$(mktemp)"
+			cat >"$sudo_askpass_script" <<EOF
+#!/usr/bin/env sh
+cat '$sudo_askpass_secret_file'
+EOF
+			chmod 700 "$sudo_askpass_script"
+
+			# Keep sudo timestamp fresh to avoid re-prompts during long updates.
+			(
+				while true; do
+					sudo -n true >/dev/null 2>&1 || exit 0
+					sleep 50
+				done
+			) >/dev/null 2>&1 &!
+			sudo_keepalive_pid="$!"
 		fi
 	fi
 
 	if (( run_paru )); then
 		if command -v paru >/dev/null 2>&1; then
 			if (( dry_run )); then
-				echo "[dry-run] paru -Syu"
+				echo "[dry-run] paru --sudoloop -Syu (with SUDO_ASKPASS when pass entry exists)"
 			else
-				paru -Syu
+				if [[ -n "$sudo_askpass_script" ]]; then
+					SUDO_ASKPASS="$sudo_askpass_script" paru --sudoloop --sudo sudo --sudoflags "-A" -Syu
+				else
+					paru --sudoloop -Syu
+				fi
 			fi
 		elif command -v yay >/dev/null 2>&1; then
 			if (( dry_run )); then
@@ -164,6 +255,72 @@ EOF
 		fi
 	fi
 
+	if (( run_grub )); then
+		if (( dry_run )); then
+			echo "[dry-run] if grub package version changed, regenerate grub config"
+			echo "[dry-run] sudo grub-mkconfig -o /boot/grub/grub.cfg (or /boot/grub2/grub.cfg)"
+		elif (( ! run_paru )); then
+			echo "tools: skipping grub config refresh (system package update disabled)"
+		elif ! command -v pacman >/dev/null 2>&1; then
+			echo "tools: skipping grub config refresh (pacman not found)"
+		else
+			grub_version_after="$(pacman -Q grub 2>/dev/null | awk '{print $2}')"
+			if [[ -n "$grub_version_before" && -n "$grub_version_after" && "$grub_version_before" != "$grub_version_after" ]]; then
+				grub_was_updated=1
+			fi
+
+			if (( grub_was_updated )); then
+				if command -v grub-mkconfig >/dev/null 2>&1; then
+					if [[ -f /boot/grub/grub.cfg || -d /boot/grub ]]; then
+						grub_cfg="/boot/grub/grub.cfg"
+					elif [[ -f /boot/grub2/grub.cfg || -d /boot/grub2 ]]; then
+						grub_cfg="/boot/grub2/grub.cfg"
+					fi
+
+					if [[ -n "$grub_cfg" ]]; then
+						echo "tools: grub updated ($grub_version_before -> $grub_version_after), regenerating $grub_cfg"
+						if [[ -n "$sudo_askpass_script" ]]; then
+							SUDO_ASKPASS="$sudo_askpass_script" sudo -A -v || {
+								echo "tools: sudo validation failed before grub config refresh"
+								return 1
+							}
+							SUDO_ASKPASS="$sudo_askpass_script" sudo -A grub-mkconfig -o "$grub_cfg"
+						else
+							sudo -v || {
+								echo "tools: sudo validation failed before grub config refresh"
+								return 1
+							}
+							sudo grub-mkconfig -o "$grub_cfg"
+						fi
+					else
+						echo "tools: grub updated ($grub_version_before -> $grub_version_after), but no grub.cfg path found"
+						echo "tools: expected /boot/grub/grub.cfg or /boot/grub2/grub.cfg"
+					fi
+				else
+					echo "tools: grub updated ($grub_version_before -> $grub_version_after), but grub-mkconfig not found"
+				fi
+			else
+				if [[ -n "$grub_version_after" ]]; then
+					echo "tools: skipping grub config refresh (grub unchanged: $grub_version_after)"
+				else
+					echo "tools: skipping grub config refresh (grub package not installed)"
+				fi
+			fi
+		fi
+	fi
+
+	if [[ -n "$sudo_keepalive_pid" ]]; then
+		kill "$sudo_keepalive_pid" >/dev/null 2>&1 || true
+	fi
+
+	if [[ -n "$sudo_askpass_script" && -f "$sudo_askpass_script" ]]; then
+		rm -f "$sudo_askpass_script"
+	fi
+
+	if [[ -n "$sudo_askpass_secret_file" && -f "$sudo_askpass_secret_file" ]]; then
+		rm -f "$sudo_askpass_secret_file"
+	fi
+
 	if (( run_flatpak )); then
 		if command -v flatpak >/dev/null 2>&1; then
 			if (( dry_run )); then
@@ -177,29 +334,28 @@ EOF
 	fi
 
 	if (( run_plasma )); then
-		if command -v discover-update >/dev/null 2>&1; then
+		if command -v kpackagetool6 >/dev/null 2>&1; then
 			if (( dry_run )); then
-				echo "[dry-run] discover-update"
+				echo "[dry-run] kpackagetool6 --type Plasma/Applet --list"
+				echo "[dry-run] plasma widgets installed via paru/pacman/flatpak are already covered by earlier update steps"
 			else
-				discover-update
-			fi
-		elif command -v plasma-discover >/dev/null 2>&1; then
-			if (( dry_run )); then
-				echo "[dry-run] plasma-discover --mode Update"
-			else
-				plasma-discover --mode Update
+				kpackagetool6 --type Plasma/Applet --list >/dev/null 2>&1 || true
+				echo "tools: plasma widgets installed via paru/pacman/flatpak were updated in terminal-only mode"
+				echo "tools: skipped Discover GUI/KNS dialog to keep this command fully terminal-based"
 			fi
 		else
-			echo "tools: skipping plasma widgets update (discover-update/plasma-discover not found)"
+			echo "tools: skipping plasma widgets check (kpackagetool6 not found)"
 		fi
 	fi
 
 	if (( run_firmware )); then
 		if command -v fwupdmgr >/dev/null 2>&1; then
 			if (( dry_run )); then
-				echo "[dry-run] fwupdmgr refresh --force && fwupdmgr get-updates && fwupdmgr update"
+				echo "[dry-run] fwupdmgr refresh --force --assume-yes || fwupdmgr refresh --force --no-metadata-check --assume-yes"
+				echo "[dry-run] fwupdmgr get-updates --assume-yes && fwupdmgr update --assume-yes"
 			else
-				fwupdmgr refresh --force && fwupdmgr get-updates && fwupdmgr update
+				fwupdmgr refresh --force --assume-yes || fwupdmgr refresh --force --no-metadata-check --assume-yes
+				fwupdmgr get-updates --assume-yes && fwupdmgr update --assume-yes
 			fi
 		else
 			echo "tools: skipping firmware update (fwupdmgr not found)"
@@ -209,9 +365,9 @@ EOF
 	if (( run_vscode )); then
 		if command -v code >/dev/null 2>&1; then
 			if (( dry_run )); then
-				echo "[dry-run] code --update-extensions"
+				echo "[dry-run] NODE_NO_WARNINGS=1 code --update-extensions"
 			else
-				code --update-extensions
+				NODE_NO_WARNINGS=1 code --update-extensions
 			fi
 		else
 			echo "tools: skipping vscode update (code not found)"
