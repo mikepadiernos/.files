@@ -16,6 +16,7 @@
 #	useHttpPath = true
 
 [credential]
+  helper =
   helper = /home/padiernos/.files/.gitenv/git-credential-pass
   useHttpPath = true
 
@@ -51,7 +52,7 @@
   singlekey = true
 
 [commit]
-  gpgSign = true
+	gpgsign = false
 
 [blame]
   coloring = highlightRecent
@@ -72,6 +73,7 @@
   rebase = true
 
 [pager]
+  config = false                          # avoid less dependency for git config output
   branch = false                          # no need to use pager for git branch
   diff = diff-so-fancy | $PAGER           # diff-so-fancy as diff pager
 

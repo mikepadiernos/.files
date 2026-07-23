@@ -198,6 +198,8 @@ git:
     autoWrapCommitMessage: true
     # If autoWrapCommitMessage is true, the width to wrap to
     autoWrapWidth: 72
+    # Extra args passed to `git commit`, e.g. --no-gpg-sign
+    args: "--no-gpg-sign"
   # Config relating to merging
   merging:
     # If true, run merges in a subprocess so that if a commit message is required, Lazygit will not hang
@@ -407,6 +409,7 @@ keybinding:
     increaseRenameSimilarityThreshold: )
     decreaseRenameSimilarityThreshold: (
     openDiffTool: <c-t>
+    newWorktree: w
   status:
     checkForUpdate: u
     recentRepos: <enter>
@@ -447,8 +450,6 @@ keybinding:
     setUpstream: u
     fetchRemote: f
     sortOrder: s
-  worktrees:
-    viewWorktreeOptions: w
   commits:
     squashDown: s
     renameCommit: r

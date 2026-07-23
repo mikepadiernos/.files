@@ -113,7 +113,7 @@ git-pass-save() {
 	command -v pass >/dev/null 2>&1 || { echo "git-pass-save: pass not found"; return 1; }
 
 	local remote url host host_short repo_path owner username pat
-	local entry_user entry_owner entry_user_short entry_owner_short
+	local entry_user entry_owner entry_repo entry_repo_raw entry_user_short entry_owner_short entry_repo_short entry_repo_raw_short
 	remote="${1:-origin}"
 
 	url="$(git remote get-url "$remote" 2>/dev/null)" || {
@@ -144,6 +144,7 @@ git-pass-save() {
 	fi
 
 	read -r "username?GitHub username: "
+	username="$(printf '%s' "$username" | tr -d '\r' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
 	if [[ -z "$username" ]]; then
 		echo "git-pass-save: username is required"
 		return 1
@@ -152,6 +153,7 @@ git-pass-save() {
 	echo -n "GitHub PAT (hidden): "
 	read -rs pat
 	echo
+	pat="$(printf '%s' "$pat" | tr -d '\r' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
 	if [[ -z "$pat" ]]; then
 		echo "git-pass-save: PAT is required"
 		return 1
@@ -159,22 +161,34 @@ git-pass-save() {
 
 	entry_owner="${host}/${owner}"
 	entry_user="${host}/${username}"
+	entry_repo="${host}/${repo_path%.git}"
+	entry_repo_raw="${host}/${repo_path}"
 	entry_owner_short="${host_short}/${owner}"
 	entry_user_short="${host_short}/${username}"
+	entry_repo_short="${host_short}/${repo_path%.git}"
+	entry_repo_raw_short="${host_short}/${repo_path}"
 
 	printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_owner" >/dev/null || return 1
 	printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_user" >/dev/null || return 1
+	printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_repo" >/dev/null || return 1
+	printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_repo_raw" >/dev/null || return 1
 	if [[ "$host_short" != "$host" ]]; then
 		printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_owner_short" >/dev/null || return 1
 		printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_user_short" >/dev/null || return 1
+		printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_repo_short" >/dev/null || return 1
+		printf '%s\nusername=%s\n' "$pat" "$username" | pass insert -m -f "$entry_repo_raw_short" >/dev/null || return 1
 	fi
 
 	echo "git-pass-save: saved credentials to pass entries:"
 	echo "  $entry_owner"
 	echo "  $entry_user"
+	echo "  $entry_repo"
+	echo "  $entry_repo_raw"
 	if [[ "$host_short" != "$host" ]]; then
 		echo "  $entry_owner_short"
 		echo "  $entry_user_short"
+		echo "  $entry_repo_short"
+		echo "  $entry_repo_raw_short"
 	fi
 	echo "git-pass-save: now run: git credential-cache exit && git push"
 }
