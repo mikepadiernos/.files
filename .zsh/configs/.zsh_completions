@@ -11,27 +11,6 @@ fpath+=(
 )
 
 # ============================================================================
-# Completion Initialization
-# ============================================================================
-
-autoload -Uz compinit compaudit
-
-# Auto-fix insecure completion directories owned by the current user,
-# then initialize completions without interactive prompts
-_compaudit_insecure="$(compaudit 2>/dev/null)"
-if [[ -n "$_compaudit_insecure" ]]; then
-  while IFS= read -r _dir; do
-    [[ -O "$_dir" ]] && chmod go-w "$_dir" 2>/dev/null
-  done <<< "$_compaudit_insecure"
-fi
-
-if [[ -n $(find "${ZDOTDIR:-$HOME}/.zcompdump" -mmin +1440 2>/dev/null) ]]; then
-  compinit -i
-else
-  compinit -iC
-fi
-
-# ============================================================================
 # Tool-Specific Completions
 # ============================================================================
 
@@ -42,8 +21,27 @@ _load_zsh_completion() {
   shift
 
   command -v "$cmd" >/dev/null 2>&1 || return 0
-  output="$($cmd "$@" 2>/dev/null)" || return 0
+  output="$(command "$cmd" "$@" 2>/dev/null)" || return 0
   [[ -n "$output" ]] && eval "$output" >/dev/null 2>&1
+}
+
+_lazy_load_zsh_completion() {
+  local cmd="$1"
+  local completion_fn="$2"
+  local loader_fn="__zsh_lazy_completion_${cmd//[^a-zA-Z0-9_]/_}"
+  local -a generation_command=( "$cmd" )
+  shift 2
+  generation_command+=( "$@" )
+
+  command -v "$cmd" >/dev/null 2>&1 || return 0
+  local quoted_generation_command="${(j: :)${(q)generation_command}}"
+  eval "${loader_fn}() {
+    if (( ! \${+functions[$completion_fn]} )); then
+      _load_zsh_completion ${quoted_generation_command}
+    fi
+    (( \${+functions[$completion_fn]} )) && '$completion_fn' \"\$@\"
+  }"
+  compdef "$loader_fn" "$cmd"
 }
 
 _has_completion_file() {
@@ -78,32 +76,23 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  								# This loads nvm bash_completion
 
 # COMPLETIONS: Docker
-_load_zsh_completion docker completion zsh
+_lazy_load_zsh_completion docker _docker completion zsh
 
 # COMPLETIONS: Docker Compose (standalone)
-_load_zsh_completion docker-compose completion zsh
+_lazy_load_zsh_completion docker-compose _docker-compose completion zsh
 
 # COMPLETIONS: kubectl
-_load_zsh_completion kubectl completion zsh
+_lazy_load_zsh_completion kubectl _kubectl completion zsh
 
 # COMPLETIONS: Helm
-_load_zsh_completion helm completion zsh
+_lazy_load_zsh_completion helm _helm completion zsh
 
 # COMPLETIONS: GitHub CLI
-_load_zsh_completion gh completion -s zsh
-
 # COMPLETIONS: ArgoCD
-_load_zsh_completion argocd completion zsh
-
-# COMPLETIONS: Atuin
-_load_zsh_completion atuin gen-completions --shell zsh
+_lazy_load_zsh_completion argocd _argocd completion zsh
 
 # COMPLETIONS: Azure CLI
-if command -v az >/dev/null 2>&1; then
-  if ! _has_completion_file _az && ! _has_completion_file _azure; then
-    _load_zsh_completion az completion -s zsh
-  fi
-fi
+_lazy_load_zsh_completion az _az completion -s zsh
 
 # COMPLETIONS: Direnv
 _load_zsh_completion direnv hook zsh

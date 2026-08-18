@@ -22,40 +22,24 @@ source_plugin() {
 # zeza
 # zsh-alias-finder
 
-# source_plugin "zsh-abbr"                                                                        # zsh-abbr
-# source_plugin "zsh-asdf-direnv"                                                                 # zsh-asdf-direnv
-# source_plugin "zsh-autocomplete"                                                                 # zsh-autocomplete
+source_plugin "zsh-abbr"                                                                          # zsh-abbr
 source_plugin "zsh-autocompletion"                                                                # zsh-autocompletion
 source_plugin "zsh-autosuggestions"                                                               # zsh-autosuggestions
-# source_plugin "zsh-check-deps"                                                                   # zsh-check-deps
 source_plugin "zsh-colors"                                                                        # zsh-colors
 source_plugin "zsh-completions"                                                                   # zsh-completions
 source_plugin "zsh-doas-zsh-plugin"                                                               # zsh-doas-zsh-plugin
 source_plugin "zsh-docker-helpers"                                                                # zsh-docker-helpers
 source_plugin "zsh-drupal"                                                                        # zsh-drupal
 source_plugin "zsh-eza"                                                                           # zsh-eza
-# source_plugin "zsh-eza-ls-plugin"                                                                # zsh-eza-ls-plugin
-# source_plugin "zsh-F-Sy-H"                                                                       # zsh-F-Sy-H
-# source_plugin "zsh-fast-syntax-highlighting"                                                     # zsh-fast-syntax-highlighting
+source_plugin "zsh-F-Sy-H"                                                                        # zsh-F-Sy-H
 source_plugin "zsh-figures"                                                                       # zsh-figures
-# source_plugin "zsh-file-manager"                                                                 # zsh-file-manager
-# source_plugin "zsh-fzf-brew"                                                                     # zsh-fzf-brew
-# source_plugin "zsh-fzf-dir-navigator"                                                            # zsh-fzf-dir-navigator
 source_plugin "zsh-fzf-git-branches"                                                              # zsh-fzf-git-branches
-# source_plugin "zsh-fzf-history-search"                                                           # zsh-fzf-history-search
 source_plugin "zsh-fzf-plugin"                                                                    # zsh-fzf-plugin
-# source_plugin "zsh-fzf-tab"                                                                      # zsh-fzf-tab
-# source_plugin "zsh-fzf-tab-completion"                                                           # zsh-fzf-tab-completion
-source_plugin "zsh-history-substring-search"                                                      # zsh-history-substring-search
-# source_plugin "zsh-ls"                                                                           # zsh-ls
+source_plugin "zsh-fzf-tab"                                                                       # zsh-fzf-tab
 source_plugin "zsh-magic-dashboard"                                                               # zsh-magic-dashboard
 source_plugin "zsh-mise"                                                                          # zsh-mise
-# source_plugin "zsh-ssh"                                                                          # zsh-ssh
-# source_plugin "zsh-ssh-agent"                                                                    # zsh-ssh-agent
-# source_plugin "zsh-ssh-completion"                                                               # zsh-ssh-completion
-# source_plugin "zsh-ssh-plugin"                                                                   # zsh-ssh-plugin
-source_plugin "zsh-syntax-highlighting"                                                           # zsh-syntax-highlighting
-source_plugin "zsh-you-should-use"                                                                 # zsh-you-should-use
+source_plugin "zsh-ssh"                                                                           # zsh-ssh
+source_plugin "zsh-you-should-use"                                                                # zsh-you-should-use
 
 ## ---
 ## END ZSH_PLUGINS

@@ -2,7 +2,7 @@
 
 zsh_module_files=(
 	"${ZSH_MODULES}/.zsh_wsl"
-	"${ZSH_MODULES}/.zsh_mise"
+	# "${ZSH_MODULES}/.zsh_mise"
 	"${ZSH_MODULES}/.zsh_homebrew"
 	"${ZSH_MODULES}/.zsh_gpg"
 	"${ZSH_MODULES}/.zsh_drush"

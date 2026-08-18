@@ -1,0 +1,12 @@
+[Unit]
+Description=Atuin shell history daemon
+Documentation=https://atuin.sh
+After=network.target
+
+[Service]
+ExecStart=%h/.local/share/mise/shims/atuin daemon start
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=default.target

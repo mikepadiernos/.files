@@ -1,6 +1,8 @@
 # shellcheck shell=bash disable=SC1090,SC1091
 # Zsh configuration
 
+# zmodload zsh/zprof
+
 # Core environment
 export LC_ALL=en_US.UTF-8
 export SHELL="/usr/bin/zsh"
@@ -29,3 +31,4 @@ export GPG_PASSPHRASE_PASS_ENTRY="gpg/passphrase"
 # Shell bootstrap
 source "${ZSH_CONFIGS}/.zsh_bootstrap"
 
+# zprof

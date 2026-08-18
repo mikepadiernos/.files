@@ -10,6 +10,31 @@ eval_if_command_exists() {
 	command -v "$command_name" >/dev/null 2>&1 && eval "$*"
 }
 
+source_cached_init() {
+	local command_name="$1"
+	local cache_file="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/init-${command_name}"
+	local command_path="$(whence -p "$command_name")"
+	local temporary_file="${cache_file}.tmp.$$"
+	shift
+
+	[[ -n "$command_path" ]] || return 0
+	if [[ ! -s "$cache_file" || "$command_path" -nt "$cache_file" ]]; then
+		mkdir -p "${cache_file:h}" 2>/dev/null || return 0
+		"$command_path" "$@" >| "$temporary_file" 2>/dev/null || {
+			rm -f "$temporary_file"
+			return 0
+		}
+		[[ -s "$temporary_file" ]] || {
+			rm -f "$temporary_file"
+			return 0
+		}
+		mv -f "$temporary_file" "$cache_file"
+		zcompile "$cache_file" 2>/dev/null
+	fi
+
+	source "$cache_file"
+}
+
 zsh_bootstrap_files=(
 	"${ZSH_CONFIGS}/.zsh_load_configs"
 	"${ZSH_CONFIGS}/.zsh_load_modules"
@@ -19,7 +44,6 @@ for zsh_bootstrap_file in "${zsh_bootstrap_files[@]}"; do
 	source_if_exists "$zsh_bootstrap_file"
 done
 
-eval_if_command_exists fzf 'source <(fzf --zsh)'
-eval_if_command_exists mise 'eval "$(mise activate zsh --shims)"'
-eval_if_command_exists atuin 'eval "$(atuin init zsh)"'
-eval_if_command_exists zoxide 'eval "$(zoxide init --cmd cd zsh)"'
+source_cached_init fzf --zsh
+source_cached_init atuin init zsh
+source_cached_init zoxide init --cmd cd zsh
