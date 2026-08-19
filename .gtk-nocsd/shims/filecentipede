@@ -1,0 +1,48 @@
+# gtk-nocsd-shim managed
+#!/usr/bin/env sh
+set -eu
+cmd="filecentipede"
+link_dir="/home/mikepadiernos/.local/bin"
+old_ifs=$IFS
+IFS=:
+real_cmd=""
+case "$cmd" in
+  filec|filecentipede)
+    real_cmd="/home/mikepadiernos/Library/.library/.apps/filecentipede/lib/filec"
+    ;;
+  fileu)
+    real_cmd="/home/mikepadiernos/Library/.library/.apps/filecentipede/fileu"
+    ;;
+esac
+for d in $PATH; do
+  [ -n "$real_cmd" ] && break
+  [ "$d" = "$link_dir" ] && continue
+  [ -x "$d/$cmd" ] || continue
+  real_cmd="$d/$cmd"
+  break
+done
+IFS=$old_ifs
+if [ -z "$real_cmd" ]; then
+  echo "gtk-nocsd shim: unable to locate real command '$cmd' in PATH" >&2
+  exit 127
+fi
+unset LD_PRELOAD
+case "$cmd" in
+  filec|filecentipede)
+    export QT_QPA_PLATFORM=xcb
+    ;;
+  fileu)
+    export QT_QPA_PLATFORM=xcb
+    ;;
+esac
+case "$cmd" in
+  filec|filecentipede|fileu)
+    tmp_stderr="$(mktemp "/tmp/gtk-nocsd.XXXXXX")"
+    "$real_cmd" "$@" 2>"$tmp_stderr"
+    status=$?
+    sed -E '/^(QFont::fromString: Invalid description|Fontconfig (error|warning):|qt\.qpa\.plugin: Could not find the Qt platform plugin "wayland")/d' "$tmp_stderr" >&2 || true
+    rm -f "$tmp_stderr"
+    exit "$status"
+    ;;
+esac
+exec "$real_cmd" "$@"

@@ -3,25 +3,71 @@
 autoload -Uz add-zsh-hook colors
 colors
 
-typeset -g ZSH_PROMPT_LAYOUT="${ZSH_PROMPT_LAYOUT:-${TYPEWRITTEN_PROMPT_LAYOUT:-singleline}}"
-typeset -g ZSH_PROMPT_RELATIVE_PATH="${ZSH_PROMPT_RELATIVE_PATH:-${TYPEWRITTEN_RELATIVE_PATH:-adaptive}}"
-typeset -g ZSH_PROMPT_CURSOR="${ZSH_PROMPT_CURSOR:-${TYPEWRITTEN_CURSOR:-terminal}}"
-typeset -g ZSH_PROMPT_SYMBOL="${ZSH_PROMPT_SYMBOL:-${TYPEWRITTEN_SYMBOL:-❯}}"
-typeset -g ZSH_PROMPT_ARROW_SYMBOL="${ZSH_PROMPT_ARROW_SYMBOL:-${TYPEWRITTEN_ARROW_SYMBOL:-}}"
-typeset -g ZSH_PROMPT_DISABLE_RETURN_CODE="${ZSH_PROMPT_DISABLE_RETURN_CODE:-${TYPEWRITTEN_DISABLE_RETURN_CODE:-false}}"
-typeset -g ZSH_PROMPT_LEFT_PREFIX="${ZSH_PROMPT_LEFT_PREFIX:-${TYPEWRITTEN_LEFT_PROMPT_PREFIX:-}}"
-typeset -g ZSH_PROMPT_LEFT_PREFIX_FUNCTION="${ZSH_PROMPT_LEFT_PREFIX_FUNCTION:-${TYPEWRITTEN_LEFT_PROMPT_PREFIX_FUNCTION:-}}"
-typeset -g ZSH_PROMPT_RIGHT_PREFIX="${ZSH_PROMPT_RIGHT_PREFIX:-${TYPEWRITTEN_RIGHT_PROMPT_PREFIX:-}}"
-typeset -g ZSH_PROMPT_RIGHT_PREFIX_FUNCTION="${ZSH_PROMPT_RIGHT_PREFIX_FUNCTION:-${TYPEWRITTEN_RIGHT_PROMPT_PREFIX_FUNCTION:-}}"
+typeset -g ZSH_PROMPT_LAYOUT="${ZSH_PROMPT_LAYOUT:-singleline}"
+typeset -g ZSH_PROMPT_RELATIVE_PATH="${ZSH_PROMPT_RELATIVE_PATH:-adaptive}"
+typeset -g ZSH_PROMPT_CURSOR="${ZSH_PROMPT_CURSOR:-terminal}"
+typeset -g ZSH_PROMPT_GLYPH_MODE="${ZSH_PROMPT_GLYPH_MODE:-unicode}"
+typeset -g ZSH_PROMPT_SYMBOL_ASCII="${ZSH_PROMPT_SYMBOL_ASCII:->}"
+typeset -g ZSH_PROMPT_SYMBOL_UNICODE="${ZSH_PROMPT_SYMBOL_UNICODE:-›}"
+typeset -g ZSH_PROMPT_ARROW_ASCII="${ZSH_PROMPT_ARROW_ASCII:->}"
+typeset -g ZSH_PROMPT_ARROW_UNICODE="${ZSH_PROMPT_ARROW_UNICODE:-🠞 }"
+typeset -g ZSH_PROMPT_SYMBOL="${ZSH_PROMPT_SYMBOL:-}"
+typeset -g ZSH_PROMPT_ARROW_SYMBOL="${ZSH_PROMPT_ARROW_SYMBOL:-}"
+typeset -g ZSH_PROMPT_DISABLE_RETURN_CODE="${ZSH_PROMPT_DISABLE_RETURN_CODE:-false}"
+typeset -g ZSH_PROMPT_LEFT_PREFIX="${ZSH_PROMPT_LEFT_PREFIX:-}"
+typeset -g ZSH_PROMPT_LEFT_PREFIX_FUNCTION="${ZSH_PROMPT_LEFT_PREFIX_FUNCTION:-}"
+typeset -g ZSH_PROMPT_RIGHT_PREFIX="${ZSH_PROMPT_RIGHT_PREFIX:-}"
+typeset -g ZSH_PROMPT_RIGHT_PREFIX_FUNCTION="${ZSH_PROMPT_RIGHT_PREFIX_FUNCTION:-}"
+typeset -g ZSH_PROMPT_ENABLE_STATUS_STYLING="${ZSH_PROMPT_ENABLE_STATUS_STYLING:-true}"
+typeset -g ZSH_PROMPT_USE_THEME_COLORS="${ZSH_PROMPT_USE_THEME_COLORS:-false}"
+typeset -g ZSH_PROMPT_SYMBOL_JOBS_COLOR="${ZSH_PROMPT_SYMBOL_JOBS_COLOR:-yellow}"
 
 typeset -g ZSH_PROMPT_BREAK_LINE=$'\n'
 typeset -g __ZSH_PROMPT_LAST_STATE=""
 typeset -g __ZSH_PROMPT_HAS_THEME_COLORS=0
+typeset -g ZSH_PROMPT_ASYNC_GIT="${ZSH_PROMPT_ASYNC_GIT:-true}"
+typeset -g __ZSH_PROMPT_ASYNC_ENABLED=0
+typeset -g __ZSH_PROMPT_ASYNC_WORKER="zsh_prompt_worker"
+typeset -gA __ZSH_PROMPT_DATA
+typeset -gi __ZSH_PROMPT_LAST_EXIT_CODE=0
+typeset -gi __ZSH_PROMPT_BG_JOBS_COUNT=0
+typeset -g ZSH_PROMPT_MAGIC_ENTER_PRETTY="${ZSH_PROMPT_MAGIC_ENTER_PRETTY:-true}"
+typeset -gi ZSH_PROMPT_MAGIC_ENTER_COOLDOWN_SECONDS="${ZSH_PROMPT_MAGIC_ENTER_COOLDOWN_SECONDS:-1}"
+typeset -gi __ZSH_PROMPT_MAGIC_ENTER_LAST_RUN=0
 
-[[ -z "$ZSH_PROMPT_ARROW_SYMBOL" ]] && ZSH_PROMPT_ARROW_SYMBOL='->'
+if (( ! ${+ZSH_PROMPT_MAGIC_ENTER_ACTIONS} )); then
+	typeset -ga ZSH_PROMPT_MAGIC_ENTER_ACTIONS
+	ZSH_PROMPT_MAGIC_ENTER_ACTIONS=( __zsh_prompt_magic_dashboard_action )
+fi
+
+__zsh_prompt_effective_symbol() {
+	if [[ -n "$ZSH_PROMPT_SYMBOL" ]]; then
+		print -r -- "$ZSH_PROMPT_SYMBOL"
+		return 0
+	fi
+
+	if [[ "$ZSH_PROMPT_GLYPH_MODE" == "ascii" ]]; then
+		print -r -- "$ZSH_PROMPT_SYMBOL_ASCII"
+	else
+		print -r -- "$ZSH_PROMPT_SYMBOL_UNICODE"
+	fi
+}
+
+__zsh_prompt_effective_arrow() {
+	if [[ -n "$ZSH_PROMPT_ARROW_SYMBOL" ]]; then
+		print -r -- "$ZSH_PROMPT_ARROW_SYMBOL"
+		return 0
+	fi
+
+	if [[ "$ZSH_PROMPT_GLYPH_MODE" == "ascii" ]]; then
+		print -r -- "$ZSH_PROMPT_ARROW_ASCII"
+	else
+		print -r -- "$ZSH_PROMPT_ARROW_UNICODE"
+	fi
+}
 
 __zsh_prompt_use_theme_colors() {
-	if typeset -p tw_colors >/dev/null 2>&1; then
+	if [[ "$ZSH_PROMPT_USE_THEME_COLORS" == true ]] && typeset -p tw_colors >/dev/null 2>&1; then
 		__ZSH_PROMPT_HAS_THEME_COLORS=1
 	else
 		__ZSH_PROMPT_HAS_THEME_COLORS=0
@@ -73,11 +119,11 @@ __zsh_prompt_prefix() {
 }
 
 __zsh_prompt_left_prefix() {
-	__zsh_prompt_prefix "$ZSH_PROMPT_LEFT_PREFIX" "$ZSH_PROMPT_LEFT_PREFIX_FUNCTION" "$(__zsh_prompt_color_escape left_prompt_prefix magenta)"
+	__zsh_prompt_prefix "$ZSH_PROMPT_LEFT_PREFIX" "$ZSH_PROMPT_LEFT_PREFIX_FUNCTION" "$(__zsh_prompt_color_escape left_prompt_prefix default)"
 }
 
 __zsh_prompt_right_prefix() {
-	__zsh_prompt_prefix "$ZSH_PROMPT_RIGHT_PREFIX" "$ZSH_PROMPT_RIGHT_PREFIX_FUNCTION" "$(__zsh_prompt_color_escape right_prompt_prefix magenta)"
+	__zsh_prompt_prefix "$ZSH_PROMPT_RIGHT_PREFIX" "$ZSH_PROMPT_RIGHT_PREFIX_FUNCTION" "$(__zsh_prompt_color_escape right_prompt_prefix default)"
 }
 
 __zsh_prompt_virtual_env() {
@@ -91,7 +137,7 @@ __zsh_prompt_virtual_env() {
 		fi
 
 		if [[ -n "$virtual_env" ]]; then
-			print -r -- "$(__zsh_prompt_color_escape virtual_env magenta)$virtual_env"
+			print -r -- "$(__zsh_prompt_color_escape virtual_env default)$virtual_env"
 		fi
 	fi
 }
@@ -202,7 +248,7 @@ __zsh_prompt_git_status() {
 	status_response="$(command git status --porcelain -b 2>/dev/null)"
 
 	if grep -q '^## HEAD (no branch)' <<< "$status_response"; then
-		print -r -- "$(__zsh_prompt_color_escape git_rebasing blue)rebasing"
+		print -r -- "$(__zsh_prompt_color_escape git_rebasing magenta)rebasing"
 		return
 	fi
 
@@ -211,7 +257,7 @@ __zsh_prompt_git_status() {
 	fi
 
 	if grep -q '^?? ' <<< "$status_response"; then
-		status_display+=" $(__zsh_prompt_color_escape git_status_new cyan)?"
+		status_display+=" $(__zsh_prompt_color_escape git_status_new blue)?"
 	fi
 
 	if grep -q '^.M ' <<< "$status_response"; then
@@ -236,11 +282,11 @@ __zsh_prompt_git_status() {
 	grep -q '^## .*behind' <<< "$status_response" && is_behind=1
 
 	if [[ "$is_ahead" -eq 1 && "$is_behind" -eq 1 ]]; then
-		status_display+=" $(__zsh_prompt_color_escape git_status_diverged cyan)~"
+		status_display+=" $(__zsh_prompt_color_escape git_status_diverged blue)~"
 	elif [[ "$is_ahead" -eq 1 ]]; then
-		status_display+=" $(__zsh_prompt_color_escape git_status_ahead cyan)|•"
+		status_display+=" $(__zsh_prompt_color_escape git_status_ahead blue)|•"
 	elif [[ "$is_behind" -eq 1 ]]; then
-		status_display+=" $(__zsh_prompt_color_escape git_status_behind cyan)•|"
+		status_display+=" $(__zsh_prompt_color_escape git_status_behind blue)•|"
 	fi
 
 	local stash_count
@@ -279,18 +325,140 @@ __zsh_prompt_context() {
 	PROMPT_GIT_REPO_NAME="$git_repo_name"
 }
 
-__zsh_prompt_displayed_wd() {
-	local home_relative_wd="%~"
-	local git_relative_wd="%c"
-	local displayed_wd="$git_relative_wd"
+__zsh_prompt_apply_async_context() {
+	PROMPT_GIT_TIP="${__ZSH_PROMPT_DATA[git_toplevel]}"
+	PROMPT_GIT_BRANCH="${__ZSH_PROMPT_DATA[git_branch]}"
+	PROMPT_GIT_STATUS="${__ZSH_PROMPT_DATA[git_status]}"
+	PROMPT_GIT_HOME="${__ZSH_PROMPT_DATA[git_home]}"
+	PROMPT_GIT_REPO_NAME="${__ZSH_PROMPT_DATA[git_repo_name]}"
+}
 
-	if [[ "$ZSH_PROMPT_RELATIVE_PATH" = "home" ]]; then
-		displayed_wd="$home_relative_wd"
-	elif [[ "$ZSH_PROMPT_RELATIVE_PATH" = "adaptive" && -z "$PROMPT_GIT_BRANCH" ]]; then
-		displayed_wd="$home_relative_wd"
-	elif [[ "$ZSH_PROMPT_LAYOUT" = pure* && -z "$ZSH_PROMPT_RELATIVE_PATH" ]]; then
-		displayed_wd="$home_relative_wd"
+__zsh_prompt_async_supported() {
+	whence -w async_start_worker >/dev/null 2>&1 && \
+	whence -w async_register_callback >/dev/null 2>&1 && \
+	whence -w async_worker_eval >/dev/null 2>&1 && \
+	whence -w async_job >/dev/null 2>&1 && \
+	whence -w async_flush_jobs >/dev/null 2>&1
+}
+
+__zsh_prompt_async_git_home() {
+	__zsh_prompt_git_home "$1" "$2"
+}
+
+__zsh_prompt_async_git_branch() {
+	__zsh_prompt_git_branch
+}
+
+__zsh_prompt_async_git_status() {
+	__zsh_prompt_git_status
+}
+
+__zsh_prompt_async_git_repo_name() {
+	__zsh_prompt_git_remote_repo
+}
+
+__zsh_prompt_async_start_worker() {
+	(( __ZSH_PROMPT_ASYNC_ENABLED )) || return 0
+
+	async_stop_worker "$__ZSH_PROMPT_ASYNC_WORKER" >/dev/null 2>&1 || true
+	async_start_worker "$__ZSH_PROMPT_ASYNC_WORKER" -n
+	async_register_callback "$__ZSH_PROMPT_ASYNC_WORKER" __zsh_prompt_async_callback
+}
+
+__zsh_prompt_async_callback() {
+	local job_name="$1"
+	local job_code="$2"
+	local job_output="$3"
+
+	if (( job_code == 2 || job_code == 3 || job_code == 130 )); then
+		__zsh_prompt_async_start_worker
+		__zsh_prompt_async_schedule
+		return 0
 	fi
+
+	(( job_code == 0 )) || return 0
+
+	case "$job_name" in
+		zsh_prompt_git_home)
+			__ZSH_PROMPT_DATA[git_home]="$job_output"
+			;;
+		zsh_prompt_git_branch)
+			__ZSH_PROMPT_DATA[git_branch]="$job_output"
+			;;
+		zsh_prompt_git_status)
+			__ZSH_PROMPT_DATA[git_status]="$job_output"
+			;;
+		zsh_prompt_git_repo_name)
+			__ZSH_PROMPT_DATA[git_repo_name]="$job_output"
+			;;
+		*)
+			return 0
+			;;
+	esac
+
+	__zsh_prompt_apply_async_context
+	__ZSH_PROMPT_LAST_STATE=""
+	__zsh_prompt_refresh
+}
+
+__zsh_prompt_async_schedule() {
+	(( __ZSH_PROMPT_ASYNC_ENABLED )) || return 0
+
+	local current_pwd="$PWD"
+	local git_toplevel=""
+	local git_hide_status
+
+	git_hide_status="$(command git config --get oh-my-zsh.hide-status 2>/dev/null)"
+	if [[ "$git_hide_status" == "1" ]]; then
+		__ZSH_PROMPT_DATA[git_toplevel]=""
+		__ZSH_PROMPT_DATA[git_branch]=""
+		__ZSH_PROMPT_DATA[git_status]=""
+		__ZSH_PROMPT_DATA[git_home]=""
+		__ZSH_PROMPT_DATA[git_repo_name]=""
+		__zsh_prompt_apply_async_context
+		return 0
+	fi
+
+	git_toplevel="$(command git rev-parse --show-toplevel 2>/dev/null)"
+
+	if [[ "$current_pwd" != "${__ZSH_PROMPT_DATA[current_pwd]}" ]]; then
+		async_flush_jobs "$__ZSH_PROMPT_ASYNC_WORKER"
+		__ZSH_PROMPT_DATA[git_home]=""
+	fi
+
+	if [[ "$git_toplevel" != "${__ZSH_PROMPT_DATA[git_toplevel]}" ]]; then
+		async_flush_jobs "$__ZSH_PROMPT_ASYNC_WORKER"
+		__ZSH_PROMPT_DATA[git_branch]=""
+		__ZSH_PROMPT_DATA[git_status]=""
+		__ZSH_PROMPT_DATA[git_repo_name]=""
+	fi
+
+	__ZSH_PROMPT_DATA[current_pwd]="$current_pwd"
+	__ZSH_PROMPT_DATA[git_toplevel]="$git_toplevel"
+
+	if [[ -z "$git_toplevel" ]]; then
+		__ZSH_PROMPT_DATA[git_branch]=""
+		__ZSH_PROMPT_DATA[git_status]=""
+		__ZSH_PROMPT_DATA[git_home]=""
+		__ZSH_PROMPT_DATA[git_repo_name]=""
+		__zsh_prompt_apply_async_context
+		return 0
+	fi
+
+	async_worker_eval "$__ZSH_PROMPT_ASYNC_WORKER" builtin cd -q "$current_pwd"
+
+	if [[ "$ZSH_PROMPT_RELATIVE_PATH" == "git" || "$ZSH_PROMPT_RELATIVE_PATH" == "adaptive" ]]; then
+		async_job "$__ZSH_PROMPT_ASYNC_WORKER" zsh_prompt_git_home __zsh_prompt_async_git_home "$current_pwd" "$git_toplevel"
+	fi
+
+	async_job "$__ZSH_PROMPT_ASYNC_WORKER" zsh_prompt_git_branch __zsh_prompt_async_git_branch
+	async_job "$__ZSH_PROMPT_ASYNC_WORKER" zsh_prompt_git_status __zsh_prompt_async_git_status
+	async_job "$__ZSH_PROMPT_ASYNC_WORKER" zsh_prompt_git_repo_name __zsh_prompt_async_git_repo_name
+}
+
+__zsh_prompt_displayed_wd() {
+	# Show only the current directory segment in RPROMPT.
+	local displayed_wd="%1~"
 
 	print -r -- "%F{#efe100}$displayed_wd"
 }
@@ -303,6 +471,109 @@ __zsh_prompt_fix_cursor() {
 		cursor="\e[5 q"
 	fi
 	echo -ne "$cursor"
+}
+
+__zsh_prompt_capture_line_state() {
+	local current_exit_code="$?"
+	local jobs_count
+
+	jobs_count="$(jobs -p 2>/dev/null | wc -l)"
+	jobs_count="${jobs_count//[[:space:]]/}"
+	[[ -n "$jobs_count" ]] || jobs_count=0
+
+	typeset -g __ZSH_PROMPT_LAST_EXIT_CODE="$current_exit_code"
+	typeset -g __ZSH_PROMPT_BG_JOBS_COUNT="$jobs_count"
+}
+
+__zsh_prompt_zle_line_init() {
+	__zsh_prompt_capture_line_state
+
+	if whence -w __zsh_prompt_orig_zle_line_init >/dev/null 2>&1; then
+		zle __zsh_prompt_orig_zle_line_init -- "$@"
+	else
+		zle reset-prompt
+	fi
+}
+
+__zsh_prompt_bind_status_widgets() {
+	case "${widgets[zle-line-init]:-}" in
+		user:__zsh_prompt_zle_line_init)
+			;;
+		user:*)
+			if ! whence -w __zsh_prompt_orig_zle_line_init >/dev/null 2>&1; then
+				zle -N __zsh_prompt_orig_zle_line_init "${widgets[zle-line-init]#user:}"
+			fi
+			zle -N zle-line-init __zsh_prompt_zle_line_init
+			;;
+		*)
+			zle -N zle-line-init __zsh_prompt_zle_line_init
+			;;
+	esac
+}
+
+__zsh_prompt_separator() {
+	if whence -w _separator >/dev/null 2>&1; then
+		_separator
+		return 0
+	fi
+
+	local width="${COLUMNS:-80}"
+	(( width > 1 )) && width=$((width - 1))
+	local sep="${(pl:${width}::═:)}"
+
+	print -r -- "\033[1;30m${sep}\033[0m"
+}
+
+__zsh_prompt_magic_dashboard_action() {
+	if ! whence -w _magic_dashboard >/dev/null 2>&1; then
+		return 0
+	fi
+
+	if [[ "$ZSH_PROMPT_MAGIC_ENTER_PRETTY" == true ]]; then
+		print
+		__zsh_prompt_separator
+	fi
+
+	_magic_dashboard
+
+	if [[ "$ZSH_PROMPT_MAGIC_ENTER_PRETTY" == true ]]; then
+		__zsh_prompt_separator
+	fi
+}
+
+__zsh_prompt_magic_enter_run_actions() {
+	local action
+	local action_name
+
+	for action in "${ZSH_PROMPT_MAGIC_ENTER_ACTIONS[@]}"; do
+		[[ -n "$action" ]] || continue
+		action_name="${action%% *}"
+
+		if [[ "$action_name" == "$action" ]] && ! whence -w "$action_name" >/dev/null 2>&1; then
+			continue
+		fi
+
+		eval "$action"
+	done
+}
+
+__zsh_prompt_buffer_empty() {
+	local now="$EPOCHSECONDS"
+
+	if [[ -z "$BUFFER" ]]; then
+		if (( ZSH_PROMPT_MAGIC_ENTER_COOLDOWN_SECONDS > 0 )); then
+			if (( now - __ZSH_PROMPT_MAGIC_ENTER_LAST_RUN < ZSH_PROMPT_MAGIC_ENTER_COOLDOWN_SECONDS )); then
+				zle redisplay
+				return 0
+			fi
+		fi
+
+		__ZSH_PROMPT_MAGIC_ENTER_LAST_RUN="$now"
+		__zsh_prompt_magic_enter_run_actions
+		zle redisplay
+	else
+		zle accept-line
+	fi
 }
 
 __zsh_prompt_refresh() {
@@ -321,12 +592,21 @@ __zsh_prompt_refresh() {
 	local git_branch_info
 	local git_right_info=""
 	local git_dirty_suffix=""
+	local git_connector_color
 	local layout
+	local exit_code
+	local bg_jobs
+	local prompt_symbol
+	local prompt_arrow
 
 	__zsh_prompt_use_theme_colors
-	__zsh_prompt_context
+	if (( __ZSH_PROMPT_ASYNC_ENABLED )); then
+		__zsh_prompt_apply_async_context
+	else
+		__zsh_prompt_context
+	fi
 
-	state="$PWD|$PROMPT_GIT_TIP|$ZSH_PROMPT_LAYOUT|$ZSH_PROMPT_RELATIVE_PATH|$VIRTUAL_ENV|$CONDA_PROMPT_MODIFIER"
+	state="$PWD|$PROMPT_GIT_TIP|$PROMPT_GIT_BRANCH|$PROMPT_GIT_STATUS|$PROMPT_GIT_REPO_NAME|$ZSH_PROMPT_LAYOUT|$ZSH_PROMPT_RELATIVE_PATH|$VIRTUAL_ENV|$CONDA_PROMPT_MODIFIER|$__ZSH_PROMPT_LAST_EXIT_CODE|$__ZSH_PROMPT_BG_JOBS_COUNT|$ZSH_PROMPT_GLYPH_MODE|$ZSH_PROMPT_SYMBOL|$ZSH_PROMPT_ARROW_SYMBOL|$ZSH_PROMPT_SYMBOL_ASCII|$ZSH_PROMPT_SYMBOL_UNICODE|$ZSH_PROMPT_ARROW_ASCII|$ZSH_PROMPT_ARROW_UNICODE"
 	[[ "$state" == "$__ZSH_PROMPT_LAST_STATE" ]] && return 0
 	typeset -g __ZSH_PROMPT_LAST_STATE="$state"
 
@@ -338,11 +618,25 @@ __zsh_prompt_refresh() {
 	git_info="${PROMPT_GIT_BRANCH}${PROMPT_GIT_STATUS}"
 	git_branch_info="${PROMPT_GIT_BRANCH}"
 	[[ -n "$PROMPT_GIT_STATUS" ]] && git_dirty_suffix=" !"
+	git_connector_color="$(__zsh_prompt_color_escape arrow white)"
+	prompt_symbol="$(__zsh_prompt_effective_symbol)"
+	prompt_arrow="$(__zsh_prompt_effective_arrow)"
 	layout="$ZSH_PROMPT_LAYOUT"
+
+	exit_code="$__ZSH_PROMPT_LAST_EXIT_CODE"
+	bg_jobs="$__ZSH_PROMPT_BG_JOBS_COUNT"
 
 	prompt_color="$(__zsh_prompt_color_escape symbol green)"
 	if [[ $(id -u) -eq 0 ]]; then
 		prompt_color="$(__zsh_prompt_color_escape symbol_root red)"
+	fi
+
+	if [[ "$ZSH_PROMPT_ENABLE_STATUS_STYLING" == true ]]; then
+		if (( exit_code != 0 )); then
+			prompt_color="$(__zsh_prompt_color_escape symbol_error red)"
+		elif (( bg_jobs > 0 )); then
+			prompt_color="$(__zsh_prompt_color_escape symbol_jobs "$ZSH_PROMPT_SYMBOL_JOBS_COLOR")"
+		fi
 	fi
 	error_code_color="$(__zsh_prompt_color_escape error_code red)"
 	return_code="%(?,,${error_code_color}%? )"
@@ -350,18 +644,18 @@ __zsh_prompt_refresh() {
 		return_code=""
 	fi
 
-	user_host="$(__zsh_prompt_color_escape host yellow)%n$(__zsh_prompt_color_escape host_user_connector magenta)@$(__zsh_prompt_color_escape user yellow)%m"
-	prompt_body="${virtual_env_prefix}$(__zsh_prompt_color_escape git_branch blue)${compressed_pwd} ${prompt_color}${return_code}${ZSH_PROMPT_SYMBOL} $(__zsh_prompt_color_escape prompt blue)"
+	user_host="$(__zsh_prompt_color_escape host yellow)%n$(__zsh_prompt_color_escape host_user_connector default)@$(__zsh_prompt_color_escape user yellow)%m"
+	prompt_body="${virtual_env_prefix}$(__zsh_prompt_color_escape current_directory magenta)${compressed_pwd} ${prompt_color}${return_code}${prompt_symbol} $(__zsh_prompt_color_escape prompt default)"
 
 	if [[ -n "$PROMPT_GIT_BRANCH" ]]; then
-		git_right_info=" $(__zsh_prompt_color_escape arrow yellow)| %F{green}${PROMPT_GIT_REPO_NAME} $(__zsh_prompt_color_escape arrow yellow)-> $(__zsh_prompt_color_escape git_branch blue)${git_branch_info}${git_dirty_suffix}"
+		git_right_info=" ${git_connector_color}| %F{blue}${PROMPT_GIT_REPO_NAME} ${git_connector_color}${prompt_arrow} $(__zsh_prompt_color_escape git_branch magenta)${git_branch_info}${git_dirty_suffix}"
 	fi
 
 	PROMPT="${left_prefix}${prompt_body}"
 	RPROMPT="${right_prefix}${displayed_wd}${git_right_info}"
 
 	if [[ "$layout" = "half_pure" ]]; then
-		PROMPT="${ZSH_PROMPT_BREAK_LINE}${__zsh_prompt_color_escape git_branch blue}${git_info}${ZSH_PROMPT_BREAK_LINE}${PROMPT}"
+		PROMPT="${ZSH_PROMPT_BREAK_LINE}${__zsh_prompt_color_escape git_branch magenta}${git_info}${ZSH_PROMPT_BREAK_LINE}${PROMPT}"
 		RPROMPT="${right_prefix}${displayed_wd}"
 	elif [[ "$layout" = "pure" ]]; then
 		PROMPT="${ZSH_PROMPT_BREAK_LINE}${left_prefix}${prompt_body}${git_right_info}"
@@ -383,27 +677,30 @@ __zsh_prompt_refresh() {
 
 __zsh_prompt_setup() {
 	if [[ -o interactive ]]; then
+		__zsh_prompt_capture_line_state
+
 		if whence -w add-zsh-hook >/dev/null 2>&1; then
 			add-zsh-hook -d precmd prompt_grml_precmd 2>/dev/null || true
 		fi
 
-		# Disable Typewritten's prompt redraw hooks if that theme was sourced for colors.
-		if whence -w add-zsh-hook >/dev/null 2>&1; then
-			add-zsh-hook -d precmd tw_fix_cursor 2>/dev/null || true
-			add-zsh-hook -d precmd tw_async_init_tasks 2>/dev/null || true
-		fi
-
-		if whence -w async_stop_worker >/dev/null 2>&1; then
-			async_stop_worker tw_worker >/dev/null 2>&1 || true
+		if [[ "$ZSH_PROMPT_ASYNC_GIT" == true ]] && __zsh_prompt_async_supported; then
+			__ZSH_PROMPT_ASYNC_ENABLED=1
+			__zsh_prompt_async_start_worker
+			add-zsh-hook precmd __zsh_prompt_async_schedule
+			add-zsh-hook chpwd __zsh_prompt_async_schedule
 		fi
 
 		add-zsh-hook precmd __zsh_prompt_refresh
 		add-zsh-hook chpwd __zsh_prompt_refresh
+		__zsh_prompt_bind_status_widgets
 		if [[ "$ZSH_PROMPT_CURSOR" != "terminal" ]]; then
 			add-zsh-hook precmd __zsh_prompt_fix_cursor
 		fi
+		zle -N buffer-empty __zsh_prompt_buffer_empty
+		bindkey -M main '^M' buffer-empty
+		bindkey -M vicmd '^M' buffer-empty
 		__zsh_prompt_refresh
-		zle_highlight=( default:fg=$(__zsh_prompt_color_name prompt blue) )
+		zle_highlight=( default:fg=$(__zsh_prompt_color_name prompt default) )
 	fi
 }
 

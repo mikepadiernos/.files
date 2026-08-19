@@ -1,0 +1,25 @@
+[Desktop Entry]
+Type=Application
+Name=filec
+Terminal=false
+StartupNotify=true
+Icon=/home/mikepadiernos/Library/.library/.apps/filecentipede/icons/icon.png
+Exec=env -u LD_PRELOAD QT_QPA_PLATFORM=xcb "/home/mikepadiernos/Library/.library/.apps/filecentipede/lib/filec" %u
+X-GNOME-FullName=filec
+GenericName=filec
+MimeType=x-scheme-handler/filec;
+NoDisplay=true
+
+Actions=SoftwareRender;NvidiaRender;IntegratedRender;
+
+[Desktop Action SoftwareRender]
+Name=Software Render
+Exec=env -u LD_PRELOAD QT_QPA_PLATFORM=xcb SoftwareRender "/home/mikepadiernos/Library/.library/.apps/filecentipede/lib/filec" %u
+
+[Desktop Action NvidiaRender]
+Name=Nvidia Render
+Exec=env -u LD_PRELOAD QT_QPA_PLATFORM=xcb NvidiaRender "/home/mikepadiernos/Library/.library/.apps/filecentipede/lib/filec" %u
+
+[Desktop Action IntegratedRender]
+Name=Integrated Render
+Exec=env -u LD_PRELOAD QT_QPA_PLATFORM=xcb IntegratedRender "/home/mikepadiernos/Library/.library/.apps/filecentipede/lib/filec" %u

@@ -31,3 +31,17 @@ function yazi() {
 		fi
 }
 alias yz='yazi'
+
+# terminal line wrapping toggles
+nowrap() {
+	printf '\e[?7l'
+}
+
+wrapon() {
+	printf '\e[?7h'
+}
+
+if [[ -d "$HOME/.apps/filecentipede" ]]; then
+	alias -- fileu='env -u LD_PRELOAD QT_QPA_PLATFORM=xcb "$HOME/.apps/filecentipede/fileu"'
+	alias -- filec='env -u LD_PRELOAD QT_QPA_PLATFORM=xcb "$HOME/.apps/filecentipede/lib/filec"'
+fi

@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ "$#" -lt 1 ]; then
+  echo "Usage: gtk-nocsd-run <binary-or-path> [args...]" >&2
+  exit 2
+fi
+
+unset LD_PRELOAD
+exec "$@"

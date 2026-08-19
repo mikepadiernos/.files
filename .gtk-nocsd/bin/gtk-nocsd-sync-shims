@@ -1,0 +1,131 @@
+#!/usr/bin/env sh
+set -eu
+
+BLACKLIST_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-nocsd-blacklist"
+DOTFILES_GTK_DIR="${GTK_NOCSD_HOME:-$HOME/.files/.gtk-nocsd}"
+SHIM_DIR="${GTK_NOCSD_SHIM_DIR:-$DOTFILES_GTK_DIR/shims}"
+LINK_DIR="${GTK_NOCSD_LINK_DIR:-$HOME/.local/bin}"
+MANAGED_TAG="# gtk-nocsd-shim managed"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/gtk-nocsd"
+MANIFEST_FILE="$STATE_DIR/managed-shims.list"
+
+mkdir -p "$SHIM_DIR"
+mkdir -p "$LINK_DIR"
+mkdir -p "$STATE_DIR"
+
+if [ ! -r "$BLACKLIST_FILE" ]; then
+  echo "gtk-nocsd: blacklist file not found: $BLACKLIST_FILE" >&2
+  exit 1
+fi
+
+# Remove previously managed shims from last run.
+if [ -r "$MANIFEST_FILE" ]; then
+  while IFS='|' read -r old_shim old_link; do
+    [ -n "$old_shim" ] && rm -f "$old_shim"
+    [ -n "$old_link" ] && rm -f "$old_link"
+  done < "$MANIFEST_FILE"
+fi
+
+: > "$MANIFEST_FILE"
+
+while IFS= read -r raw; do
+  app="$(printf '%s' "$raw" | sed 's/[[:space:]]*$//')"
+  case "$app" in
+    ''|'#'*) continue ;;
+  esac
+
+  # Only plain command names are shimmed globally.
+  case "$app" in
+    */*)
+      echo "gtk-nocsd: skipped path entry '$app' (use gtk-nocsd-run for paths)" >&2
+      continue
+      ;;
+  esac
+
+  case "$app" in
+    *[!A-Za-z0-9._+-]*)
+      echo "gtk-nocsd: skipped invalid command '$app'" >&2
+      continue
+      ;;
+  esac
+
+  shim="$SHIM_DIR/$app"
+  link="$LINK_DIR/$app"
+
+  if [ -e "$shim" ]; then
+    first_line="$(head -n 1 "$shim" 2>/dev/null || true)"
+    if [ "$first_line" != "$MANAGED_TAG" ]; then
+      echo "gtk-nocsd: not overwriting existing unmanaged file: $shim" >&2
+      continue
+    fi
+  fi
+
+  if [ -e "$link" ] && [ ! -L "$link" ]; then
+    echo "gtk-nocsd: not overwriting existing unmanaged file: $link" >&2
+    continue
+  fi
+
+  if [ -L "$link" ]; then
+    current_link="$(readlink "$link" || true)"
+    if [ -n "$current_link" ] && [ "$current_link" != "$shim" ]; then
+      echo "gtk-nocsd: not overwriting existing unmanaged symlink: $link -> $current_link" >&2
+      continue
+    fi
+  fi
+
+  cat > "$shim" <<EOF
+$MANAGED_TAG
+#!/usr/bin/env sh
+set -eu
+cmd="$app"
+link_dir="$LINK_DIR"
+old_ifs=\$IFS
+IFS=:
+real_cmd=""
+case "\$cmd" in
+  filec|filecentipede)
+    real_cmd="/home/mikepadiernos/Library/.library/.apps/filecentipede/lib/filec"
+    ;;
+  fileu)
+    real_cmd="/home/mikepadiernos/Library/.library/.apps/filecentipede/fileu"
+    ;;
+esac
+for d in \$PATH; do
+  [ -n "\$real_cmd" ] && break
+  [ "\$d" = "\$link_dir" ] && continue
+  [ -x "\$d/\$cmd" ] || continue
+  real_cmd="\$d/\$cmd"
+  break
+done
+IFS=\$old_ifs
+if [ -z "\$real_cmd" ]; then
+  echo "gtk-nocsd shim: unable to locate real command '\$cmd' in PATH" >&2
+  exit 127
+fi
+unset LD_PRELOAD
+case "\$cmd" in
+  filec|filecentipede)
+    export QT_QPA_PLATFORM=xcb
+    ;;
+  fileu)
+    export QT_QPA_PLATFORM=xcb
+    ;;
+esac
+case "\$cmd" in
+  filec|filecentipede|fileu)
+    tmp_stderr="\$(mktemp "${TMPDIR:-/tmp}/gtk-nocsd.XXXXXX")"
+    "\$real_cmd" "\$@" 2>"\$tmp_stderr"
+    status=\$?
+    sed -E '/^(QFont::fromString: Invalid description|Fontconfig (error|warning):|qt\.qpa\.plugin: Could not find the Qt platform plugin "wayland")/d' "\$tmp_stderr" >&2 || true
+    rm -f "\$tmp_stderr"
+    exit "\$status"
+    ;;
+esac
+exec "\$real_cmd" "\$@"
+EOF
+  chmod +x "$shim"
+  ln -sfn "$shim" "$link"
+  printf '%s|%s\n' "$shim" "$link" >> "$MANIFEST_FILE"
+done < "$BLACKLIST_FILE"
+
+echo "gtk-nocsd: shims synced in $SHIM_DIR with links in $LINK_DIR"

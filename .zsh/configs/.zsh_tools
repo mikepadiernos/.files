@@ -45,6 +45,7 @@ tools() {
 	local run_grub=1
 	local run_flatpak=1
 	local run_plasma=1
+	local plasma_strict_rate_limit=0
 	local run_firmware=1
 	local run_vscode=1
 	local dry_run=0
@@ -58,6 +59,7 @@ tools() {
 	local sudo_keepalive_pid=""
 	local sudo_askpass_script=""
 	local sudo_askpass_secret_file=""
+	local -a plasmoid_args=()
 	local arg
 
 	for arg in "$@"; do
@@ -99,6 +101,9 @@ tools() {
 			--no-plasma)
 				run_plasma=0
 				;;
+			--plasma-strict-rate-limit)
+				plasma_strict_rate_limit=1
+				;;
 			--no-firmware)
 				run_firmware=0
 				;;
@@ -114,13 +119,14 @@ tools() {
 				;;
 			--help|-h)
 				cat <<'EOF'
-tools --update [--mise-only|--brew-only|--system-only] [--no-brew|--no-mise|--no-paru|--no-grub|--no-flatpak|--no-plasma|--no-firmware|--no-vscode] [--dry-run]
+	tools --update [--mise-only|--brew-only|--system-only] [--no-brew|--no-mise|--no-paru|--no-grub|--no-flatpak|--no-plasma|--plasma-strict-rate-limit|--no-firmware|--no-vscode] [--dry-run]
 
 Examples:
 	tools --update
 	tools --update --mise-only
 	tools --update --system-only
 	tools --update --no-grub
+	tools --update --plasma-strict-rate-limit
 	tools --update --no-firmware
 	tools --update --no-vscode
 	tools --update --dry-run
@@ -334,17 +340,18 @@ EOF
 	fi
 
 	if (( run_plasma )); then
-		if command -v kpackagetool6 >/dev/null 2>&1; then
-			if (( dry_run )); then
-				echo "[dry-run] kpackagetool6 --type Plasma/Applet --list"
-				echo "[dry-run] plasma widgets installed via paru/pacman/flatpak are already covered by earlier update steps"
-			else
-				kpackagetool6 --type Plasma/Applet --list >/dev/null 2>&1 || true
-				echo "tools: plasma widgets installed via paru/pacman/flatpak were updated in terminal-only mode"
-				echo "tools: skipped Discover GUI/KNS dialog to keep this command fully terminal-based"
-			fi
+		if (( plasma_strict_rate_limit )); then
+			plasmoid_args+=(--strict-rate-limit)
+		fi
+
+		if (( dry_run )); then
+			plasmoid_args+=(--dry-run)
+			plasmoids "${plasmoid_args[@]}"
 		else
-			echo "tools: skipping plasma widgets check (kpackagetool6 not found)"
+			if ! plasmoids "${plasmoid_args[@]}"; then
+				echo "tools: plasmoid update step failed"
+				return 1
+			fi
 		fi
 	fi
 
@@ -374,5 +381,238 @@ EOF
 		fi
 	fi
 }
+
+	plasmoids() {
+		local dry_run=0
+		local prune_retired=0
+		local strict_rate_limit=0
+		local arg
+		local registry_file="$HOME/.local/share/knewstuff3/plasmoids.knsregistry"
+		local applet_root="$HOME/.local/share/plasma/plasmoids/"
+		local tmp_dir=""
+		local registry_dump=""
+		local request_spacing_seconds=1
+		local processed_count=0
+		local updated_count=0
+		local failed_count=0
+		local skipped_count=0
+		local pruned_count=0
+		local rate_limited_count=0
+		local -a retired_indexes=()
+
+		for arg in "$@"; do
+			case "$arg" in
+				--dry-run)
+					dry_run=1
+					;;
+				--prune-retired)
+					prune_retired=1
+					;;
+				--strict-rate-limit)
+					strict_rate_limit=1
+					;;
+				--help|-h)
+					cat <<-'EOF'
+	plasmoids [--dry-run] [--prune-retired] [--strict-rate-limit]
+
+	Download and upgrade installed Plasma applets from the local KNewStuff registry.
+	This stays terminal-only and does not open Discover.
+	Use --prune-retired to remove entries whose payload URLs return HTTP 404/410.
+	HTTP 429 is treated as deferred by default; use --strict-rate-limit to fail on it.
+EOF
+					return 0
+					;;
+				*)
+					echo "plasmoids: unknown flag '$arg'"
+					echo "try: plasmoids --help"
+					return 1
+					;;
+			esac
+		done
+
+		if [[ ! -r "$registry_file" ]]; then
+			echo "plasmoids: registry not found: $registry_file"
+			return 1
+		fi
+
+		if ! command -v kpackagetool6 >/dev/null 2>&1; then
+			echo "plasmoids: kpackagetool6 not found"
+			return 1
+		fi
+
+		if ! command -v curl >/dev/null 2>&1; then
+			echo "plasmoids: curl not found"
+			return 1
+		fi
+
+		tmp_dir="$(mktemp -d)"
+		registry_dump="$(mktemp)"
+		python - "$registry_file" >"$registry_dump" <<'PY'
+import sys
+import xml.etree.ElementTree as ET
+
+registry_file = sys.argv[1]
+root = ET.parse(registry_file).getroot()
+
+for idx, stuff in enumerate(root.findall('./stuff')):
+    payload = (stuff.findtext('payload') or '').strip()
+    installed_file = (stuff.findtext('installedfile') or '').strip()
+    status = (stuff.findtext('status') or '').strip().lower()
+    name = (stuff.findtext('name') or '').strip()
+    if status != 'installed':
+        continue
+    if not payload or not installed_file:
+        continue
+    print(f'{idx}\t{name}\t{payload}\t{installed_file}')
+PY
+
+		if (( dry_run && prune_retired )); then
+			echo "plasmoids: note --prune-retired has no effect with --dry-run"
+		fi
+
+		while IFS=$'\t' read -r stuff_index package_name payload_url installed_file; do
+			[[ -n "$payload_url" && -n "$installed_file" ]] || continue
+			local installed_dir="${installed_file%/}"
+			local metadata_file="$installed_dir/metadata.json"
+
+			# Keep to true Plasma applets at the standard metadata location.
+			[[ "$installed_dir" == "$applet_root"* ]] || continue
+			[[ "$installed_dir" == *"/contents/"* ]] && continue
+			[[ "$installed_dir" == *".disabled."* ]] && continue
+			[[ -f "$metadata_file" ]] || continue
+
+			local payload_name="${payload_url##*/}"
+			local payload_path="$tmp_dir/$payload_name"
+			local http_code=""
+			local curl_exit=0
+			local attempt=0
+			local max_attempts=3
+			local sleep_seconds=2
+
+			if (( dry_run )); then
+				echo "[dry-run] curl -L --fail --output '$payload_path' '$payload_url' && kpackagetool6 --type Plasma/Applet --upgrade '$payload_path'"
+				continue
+			fi
+
+			if (( processed_count > 0 )); then
+				sleep "$request_spacing_seconds"
+			fi
+			processed_count=$((processed_count + 1))
+
+			while (( attempt < max_attempts )); do
+				attempt=$((attempt + 1))
+				http_code="$(curl -L --silent --show-error --output "$payload_path" --write-out '%{http_code}' "$payload_url")"
+				curl_exit=$?
+
+				if (( curl_exit == 0 )) && [[ "$http_code" != "429" ]]; then
+					break
+				fi
+
+				if (( attempt < max_attempts )); then
+					if [[ "$http_code" == "429" ]]; then
+						echo "plasmoids: rate limited for $package_name (HTTP 429), retrying in ${sleep_seconds}s (attempt $attempt/$max_attempts)"
+					else
+						echo "plasmoids: temporary download error for $package_name, retrying in ${sleep_seconds}s (attempt $attempt/$max_attempts)"
+					fi
+					sleep "$sleep_seconds"
+					sleep_seconds=$((sleep_seconds * 2))
+				fi
+			done
+
+			if (( curl_exit != 0 )); then
+				if [[ "$http_code" == "429" ]]; then
+					echo "plasmoids: deferred $package_name due to HTTP 429 after $max_attempts attempts"
+					rate_limited_count=$((rate_limited_count + 1))
+					if (( strict_rate_limit )); then
+						failed_count=$((failed_count + 1))
+					fi
+					rm -f "$payload_path"
+					continue
+				fi
+
+				echo "plasmoids: download failed for $package_name"
+				failed_count=$((failed_count + 1))
+				continue
+			fi
+
+			if [[ "$http_code" == "410" || "$http_code" == "404" ]]; then
+				echo "plasmoids: skipped retired package $package_name (HTTP $http_code)"
+				skipped_count=$((skipped_count + 1))
+				if (( prune_retired )) && [[ -n "$stuff_index" ]]; then
+					retired_indexes+=("$stuff_index")
+				fi
+				rm -f "$payload_path"
+				continue
+			fi
+
+			if [[ "$http_code" == "429" ]]; then
+				echo "plasmoids: deferred $package_name due to HTTP 429 after $max_attempts attempts"
+				rate_limited_count=$((rate_limited_count + 1))
+				if (( strict_rate_limit )); then
+					failed_count=$((failed_count + 1))
+				fi
+				rm -f "$payload_path"
+				continue
+			fi
+
+			if [[ "$http_code" != 2* ]]; then
+				echo "plasmoids: download failed for $package_name (HTTP $http_code)"
+				failed_count=$((failed_count + 1))
+				rm -f "$payload_path"
+				continue
+			fi
+
+			if ! kpackagetool6 --type Plasma/Applet --upgrade "$payload_path" >/dev/null 2>&1; then
+				echo "plasmoids: upgrade failed for $package_name"
+				failed_count=$((failed_count + 1))
+				continue
+			fi
+
+			updated_count=$((updated_count + 1))
+		done < "$registry_dump"
+
+		if (( prune_retired && ! dry_run && ${#retired_indexes[@]} > 0 )); then
+			python - "$registry_file" "${retired_indexes[@]}" <<'PY'
+import sys
+import xml.etree.ElementTree as ET
+
+registry_file = sys.argv[1]
+to_remove = {int(x) for x in sys.argv[2:] if x.isdigit()}
+if not to_remove:
+    raise SystemExit(0)
+
+tree = ET.parse(registry_file)
+root = tree.getroot()
+stuff_nodes = root.findall('./stuff')
+
+for idx in sorted(to_remove, reverse=True):
+    if 0 <= idx < len(stuff_nodes):
+        root.remove(stuff_nodes[idx])
+
+tree.write(registry_file, encoding='utf-8', xml_declaration=True)
+PY
+			pruned_count=${#retired_indexes[@]}
+			echo "plasmoids: pruned $pruned_count retired registry entr$( (( pruned_count == 1 )) && echo 'y' || echo 'ies' )"
+		fi
+
+		if [[ -n "$tmp_dir" && -d "$tmp_dir" ]]; then
+			rm -rf "$tmp_dir"
+		fi
+
+		if [[ -n "$registry_dump" && -f "$registry_dump" ]]; then
+			rm -f "$registry_dump"
+		fi
+
+		if (( failed_count > 0 )); then
+			echo "plasmoids: updated $updated_count package(s), $skipped_count skipped, $pruned_count pruned, $rate_limited_count rate-limited, $failed_count failed"
+			return 1
+		fi
+
+		if (( rate_limited_count > 0 )); then
+			echo "plasmoids: note $rate_limited_count package(s) were deferred due to HTTP 429; rerun later to retry"
+		fi
+
+		echo "plasmoids: updated $updated_count package(s), $skipped_count skipped, $pruned_count pruned, $rate_limited_count rate-limited"
+	}
 
 # END TOOLS

@@ -135,4 +135,71 @@ if command -v pacman >/dev/null 2>&1 && ! _has_completion_file _pacman; then
   compdef _gnu_generic pacman
 fi
 
+# COMPLETIONS: Custom shell helpers
+_zsh_theme_names() {
+  local theme_dir="${ZSH_THEMES:-}"
+  local -a themes
+
+  [[ -d "$theme_dir" ]] || return 0
+  themes=("$theme_dir"/*.zsh-theme(N:t:r))
+  _values 'theme' $themes
+}
+
+_zsh_themes_completion() {
+  _arguments -s \
+    '(-h --help)'{-h,--help}'[show help]' \
+    '(-l --list)'{-l,--list}'[list available themes]' \
+    '(-t --theme)'{-t,--theme}'[select theme by name]:theme:_zsh_theme_names' \
+    '*:theme:_zsh_theme_names'
+}
+
+_zsh_setup_completion() {
+  local -a setup_flags
+  setup_flags=(
+    '--setup-all:clone repos and prepare virtualenv'
+    '--setup-venv:prepare virtualenv only'
+    '--pull-repos:clone repos only'
+    '--help:show help'
+    '-h:show help'
+  )
+
+  if (( CURRENT == 2 )); then
+    _describe 'command' setup_flags
+    return
+  fi
+
+  case "${words[2]}" in
+    --setup-all)
+      if (( CURRENT == 3 )); then
+        _files
+      elif (( CURRENT == 4 )); then
+        _command_names -e
+      fi
+      ;;
+    --setup-venv)
+      if (( CURRENT == 3 )); then
+        _command_names -e
+      fi
+      ;;
+    --pull-repos)
+      if (( CURRENT == 3 )); then
+        _files
+      fi
+      ;;
+  esac
+}
+
+_zsh_python_completion() {
+  _arguments -s \
+    '(-h --help)'{-h,--help}'[show help]' \
+    '--enable-auto-venv[enable automatic project virtualenv activation]' \
+    '--disable-auto-venv[disable automatic project virtualenv activation]' \
+    '--deactivate[deactivate currently active virtualenv]' \
+    '--status[show auto-venv status]'
+}
+
+compdef _zsh_themes_completion zsh_themes
+compdef _zsh_setup_completion zsh_setup zsh-setup
+compdef _zsh_python_completion zsh_python
+
 # END COMPLETIONS

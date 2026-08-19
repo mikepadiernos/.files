@@ -16,19 +16,13 @@ To add a new theme: drop a NAME.zsh-theme file into $ZSH_THEMES, then use --list
 To set a default: export ZSH_THEME=NAME in .zshrc before sourcing .zsh_themes.
 
 Examples:
-	zsh_themes --theme typewritten
-	zsh_themes --theme minimal
-	zsh_themes --list python.terminal.shellIntegration.enabled by modifying PYTHONSTARTUP and PYTHON_BASIC_REPL
-Python Debugger: Enables use of no-config debugging, debugpy <script.py>, in the terminal.
- The following extensions want to relaunch the terminal to contribute to its environment:
-
-Mise VSCode: Provi
+	zsh_themes --theme none
 	zsh_themes --help
 EOF
 }
 
 zsh_themes() {
-	local theme_name="${ZSH_THEME:-typewritten}"
+	local theme_name="${ZSH_THEME:-none}"
 	local arg
 
 	while (( $# )); do
@@ -43,7 +37,7 @@ zsh_themes() {
 				theme_name="${arg#*=}"
 				;;
 			--list|-l)
-				printf '%s\n' minimal typewritten
+				printf '%s\n' none
 				return 0
 				;;
 			--help|-h)
@@ -60,6 +54,17 @@ zsh_themes() {
 		return 0
 	fi
 
+	case "$theme_name" in
+		none|off|disabled)
+			ZSH_THEME="none"
+			return 0
+			;;
+		typewritten|minimal)
+			ZSH_THEME="none"
+			return 0
+			;;
+	esac
+
 	local theme_file="$ZSH_THEMES/$theme_name.zsh-theme"
 	if [[ ! -f "$theme_file" ]]; then
 		echo "zsh_themes: theme '$theme_name' not found in $ZSH_THEMES"
@@ -71,4 +76,4 @@ zsh_themes() {
 	_zsh_themes_source_if_exists "$theme_file"
 }
 
-zsh_themes --theme "${ZSH_THEME:-typewritten}"
+zsh_themes --theme "${ZSH_THEME:-none}"

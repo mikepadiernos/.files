@@ -1,0 +1,8 @@
+# One command per line. Lines starting with # are ignored.
+# Commands listed here run with LD_PRELOAD unset.
+# Plain command names are auto-shimmed for non-interactive shells/scripts.
+# For explicit paths (for example ./filec), use: gtk-nocsd-run ./filec
+
+filecentipede
+filec
+fileu

@@ -17,8 +17,11 @@
 
 [credential]
   helper =
-  helper = /home/padiernos/.files/.gitenv/git-credential-pass
+  helper = /home/mikepadiernos/.files/.gitenv/git-credential-pass
+  credentialStore = gpg
   useHttpPath = true
+	helper = 
+	helper = /usr/bin/git-credential-manager
 
 [credential "https://github.com"]
   useHttpPath = true
