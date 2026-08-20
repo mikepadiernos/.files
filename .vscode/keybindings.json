@@ -49,10 +49,6 @@
         "command": "-lazygit-vscode.toggle"
     },
     {
-        "key": "ctrl+meta+[",
-        "command": "docker-lazydocker.launch"
-    },
-    {
         "key": "ctrl+meta+\\",
         "command": "yazi-vscode.toggle"
     },
@@ -73,5 +69,13 @@
         "key": "ctrl+l",
         "command": "-workbench.action.browser.focusUrlInput",
         "when": "activeEditor == 'workbench.editor.browser'"
+    },
+    {
+        "key": "ctrl+meta+[",
+        "command": "mikepadiernos.lazydockerEditor.openLazydocker"
+    },
+    {
+        "key": "ctrl+g d",
+        "command": "mikepadiernos.lazydockerEditor.openLazydocker"
     }
 ]

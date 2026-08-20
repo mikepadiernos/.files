@@ -1,27 +1,61 @@
 # .files
 
-Includes config files for the following apps:
+Personal Linux dotfiles and app configs.
 
-- aerc              [https://aerc-mail.org](https://aerc-mail.org)
-- asdf              [https://asdf-vm.com](https://asdf-vm.com)
-- atuin             [https://atuin.sh](https://atuin.sh)
-- cmus              [https://cmus.github.io](https://cmus.github.io)
-- direnv            [https://direnv.net](https://direnv.net)
-- fzf               [https://junegunn.github.io/fzf](https://junegunn.github.io/fzf)
-- goto              [https://github.com/grafviktor/goto](https://github.com/grafviktor/goto)
-- kde               [https://kde.org/](https://kde.org/)
-- khard             [https://khard.readthedocs.io/en/latest/](https://khard.readthedocs.io/en/latest/)
-- konsave           [https://github.com/Prayag2/konsave](https://github.com/Prayag2/konsave)
-- mbsync            [https://isync.sourceforge.io/mbsync.html](https://isync.sourceforge.io/mbsync.html)
-- msmtp             [https://marlam.de/msmtp/](https://marlam.de/msmtp/)
-- neomutt           [https://neomutt.org/](https://neomutt.org/)
-- notmuch           [https://notmuchmail.org/](https://notmuchmail.org/)
-- pass              [https://www.passwordstore.org/](https://www.passwordstore.org/)
-- qutebrowser       [https://www.qutebrowser.org/](https://www.qutebrowser.org/)
-- tabby             [https://tabby.sh/](https://tabby.sh/)
-- tmux              [https://github.com/tmux/tmux](https://github.com/tmux/tmux)
-- yazi              [https://yazi-rs.github.io](https://yazi-rs.github.io)
-- zsh               [https://zsh.sourceforge.io](https://zsh.sourceforge.io)
+## Apps in this repo
 
-Utilized method to batch git clone with the following gist:
-[https://gist.github.com/Lukas238/8d9abbeabfcd7225e3a254d40eb0c080](https://gist.github.com/Lukas238/8d9abbeabfcd7225e3a254d40eb0c080)
+Top-level folders are grouped by app/tool. Current configs include:
+
+- abook
+- aerc
+- asdf
+- atuin
+- browsers
+- cmus
+- copyq
+- ddev
+- direnv
+- feishin
+- fzf
+- gitenv
+- goto
+- gtk-nocsd
+- haruna
+- kde
+- khard
+- konsave
+- lazydocker
+- lazygit
+- mbsync
+- mise
+- mpd
+- msmtp
+- nc
+- ncmpcpp
+- neomutt
+- notmuch
+- qute
+- retroarch
+- rmpc
+- smug
+- tabby
+- termusic
+- tmux
+- tridactyl
+- vivaldi
+- vscode
+- yazi
+- zsh
+
+Also tracked here are supporting directories such as `.gnupg` and `.local`.
+
+## Main workflow
+
+1. Keep this repo at `~/.files`.
+2. Use app-specific folders (for example `.zsh`, `.tmux`, `.yazi`) as the source of truth for your config.
+3. Bootstrap shell behavior from `.zsh/.zshrc`, which sets `FILES="$HOME/.files"` and sources the zsh modules/configs from this repo.
+4. Use `zsh_setup` when needed:
+	- `zsh_setup --pull-repos [path/to/git_repos.txt]` clones listed repos.
+	- `zsh_setup --setup-venv [python-executable]` creates a local `.venv` and installs required Python dependency.
+	- `zsh_setup --setup-all [path/to/git_repos.txt] [python-executable]` runs both.
+5. Iterate normally: edit configs, test in the target app, then commit and push.

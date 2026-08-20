@@ -96,7 +96,6 @@ KZones: Activate layout 7=Ctrl+Alt+Num+Home\tMeta+Num+Home,none,KZones: Activate
 KZones: Activate layout 8=Meta+Num+Up\tCtrl+Alt+Num+Up,none,KZones: Activate layout 8
 KZones: Activate layout 9=Ctrl+Alt+Num+PgUp\tMeta+Num+PgUp,none,KZones: Activate layout 9
 KZones: Cycle layouts=Ctrl+Alt+D\tMeta+],none,KZones: Cycle layouts
-KZones: Cycle layouts (reversed)=Ctrl+Alt+Shift+D\tMeta+[,none,KZones: Cycle layouts (reversed)
 KZones: Move active window down=none,none,KZones: Move active window down
 KZones: Move active window left=none,none,KZones: Move active window left
 KZones: Move active window right=none,none,KZones: Move active window right

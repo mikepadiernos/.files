@@ -1,0 +1,28 @@
+{
+  "name": "lazydocker-editor",
+  "displayName": "Lazydocker Editor",
+  "description": "Open Lazydocker in the editor area and close terminal on exit.",
+  "version": "0.1.1",
+  "publisher": "mikepadiernos",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://example.com/local/lazydocker-editor"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mikepadiernos.lazydockerEditor.openLazydocker",
+        "title": "Open Lazydocker in Editor",
+        "category": "Docker"
+      }
+    ]
+  }
+}
