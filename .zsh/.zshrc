@@ -20,6 +20,8 @@ export ZSH_THEMES="$ZSH/themes"
 
 # Tool paths
 export CARGO="$HOME/.cargo/bin"
+export GOPATH="$HOME/.go"
+export GOBIN="$HOME/.go/bin"
 export PASSWORD_STORE_DIR="$HOME/.pass"
 export GPG_PASSPHRASE_PASS_ENTRY="gpg/passphrase"
 
@@ -27,6 +29,8 @@ export GPG_PASSPHRASE_PASS_ENTRY="gpg/passphrase"
 [[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.local/share/pnpm" ]] && export PATH="$HOME/.local/share/pnpm:$PATH"
 [[ -d "$CARGO" ]] && export PATH="$PATH:$CARGO"
+[[ -d "$GOBIN" ]] && export PATH="$PATH:$GOBIN"
+[[ -d "$GOPATH/bin" ]] && export PATH="$PATH:$GOPATH/bin"
 
 # Shell bootstrap
 source "${ZSH_CONFIGS}/.zsh_bootstrap"
