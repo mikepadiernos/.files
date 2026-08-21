@@ -517,11 +517,7 @@ __zsh_prompt_separator() {
 		return 0
 	fi
 
-	local width="${COLUMNS:-80}"
-	(( width > 1 )) && width=$((width - 1))
-	local sep="${(pl:${width}::═:)}"
-
-	print -r -- "\033[1;30m${sep}\033[0m"
+	print -r -- " "
 }
 
 __zsh_prompt_magic_dashboard_action() {
@@ -529,16 +525,7 @@ __zsh_prompt_magic_dashboard_action() {
 		return 0
 	fi
 
-	if [[ "$ZSH_PROMPT_MAGIC_ENTER_PRETTY" == true ]]; then
-		print
-		__zsh_prompt_separator
-	fi
-
 	_magic_dashboard
-
-	if [[ "$ZSH_PROMPT_MAGIC_ENTER_PRETTY" == true ]]; then
-		__zsh_prompt_separator
-	fi
 }
 
 __zsh_prompt_magic_enter_run_actions() {
@@ -648,7 +635,10 @@ __zsh_prompt_refresh() {
 	prompt_body="${virtual_env_prefix}$(__zsh_prompt_color_escape current_directory magenta)${compressed_pwd} ${prompt_color}${return_code}${prompt_symbol} $(__zsh_prompt_color_escape prompt default)"
 
 	if [[ -n "$PROMPT_GIT_BRANCH" ]]; then
-		git_right_info=" ${git_connector_color}| %F{blue}${PROMPT_GIT_REPO_NAME} ${git_connector_color}${prompt_arrow} $(__zsh_prompt_color_escape git_branch magenta)${git_branch_info}${git_dirty_suffix}"
+		local git_repo_label
+		git_repo_label="${PROMPT_GIT_REPO_NAME:-repo}"
+		git_repo_label="${git_repo_label:0:20}"
+		git_right_info=" ${git_connector_color}| %F{blue}${git_repo_label}${git_connector_color} ${prompt_arrow} $(__zsh_prompt_color_escape git_branch magenta)${git_branch_info}${git_dirty_suffix}"
 	fi
 
 	PROMPT="${left_prefix}${prompt_body}"
