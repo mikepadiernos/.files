@@ -31,7 +31,7 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "//": "Last update at 8/18/2026, 10:13:20 PM",
+    "//": "Last update at 8/24/2026, 5:33:51 PM",
     ".agent": ".agent, .claude, .cline, .codebuddy, .codex, .commandcode, .continue, .crush, .cursor, .factory, .gemini, .goose, .junie, .kilocode, .kiro, .kode, .mcpjam, .mux, .neovate, .opencode, .openhands, .pi, .pochi, .qoder, .qwen, .roo, .trae, .windsurf, .zencoder",
     ".clang-tidy": ".clang-format, .clangd, compile_commands.json",
     ".env": "*.env, .env.*, .envrc, env.d.ts",
@@ -363,12 +363,13 @@
   "tabTree.followActiveFile": true,
   "workbench.editor.enablePreview": true,
   "editor.largeFileOptimizations": false,
-  "workbench.colorTheme": "A Mole Name Ed",
   "workbench.productIconTheme": "jetbrains-product-icon-theme",
   "qt-core.additionalQtPaths": [
     {
       "name": "Qt-5.15.19-linux-g++-x86_64_from_PATH",
       "path": "/usr/bin/qmake"
     }
-  ]
+  ],
+  "workbench.colorTheme": "A Mole Name Ed",
+  "chat.mcp.gallery.enabled": true
 }
