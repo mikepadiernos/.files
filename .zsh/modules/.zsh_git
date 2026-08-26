@@ -34,6 +34,7 @@ _zsh_git_disable_broken_vscode_askpass() {
 		unset SSH_ASKPASS
 		unset VSCODE_GIT_ASKPASS_NODE
 		unset VSCODE_GIT_ASKPASS_MAIN
+		unset VSCODE_GIT_ASKPASS_EXTRA_ARGS
 		unset VSCODE_GIT_IPC_HANDLE
 		export GIT_TERMINAL_PROMPT=1
 		[[ -n "$GIT_SETUP_VERBOSE" ]] && echo "zsh_git: disabled stale VS Code askpass env"

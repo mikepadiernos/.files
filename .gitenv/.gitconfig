@@ -16,14 +16,11 @@
 #	useHttpPath = true
 
 [credential]
-  helper =
   helper = /home/mikepadiernos/.files/.gitenv/git-credential-pass
-  credentialStore = gpg
   useHttpPath = true
-	helper = 
-	helper = /usr/bin/git-credential-manager
 
 [credential "https://github.com"]
+  helper = /home/mikepadiernos/.files/.gitenv/git-credential-pass
   useHttpPath = true
 
 [credential "https://dev.azure.com"]

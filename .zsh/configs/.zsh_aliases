@@ -20,7 +20,7 @@ sudo() {
 			return $?
 		fi
 	done
-
+w
 	if command -v pass >/dev/null 2>&1; then
 		for askpass_entry in \
 			"local/sudo/mikepadiernos" \
@@ -57,7 +57,25 @@ EOF
 	command sudo "$@"
 }
 
-# lazygit
+# lazygit — clear VS Code askpass env vars so lazygit uses the pass-backed
+# Git credential helper instead of browser-based auth in editor sessions.
+lazygit() {
+	local lazygit_bin="${commands[lazygit]}"
+	if [[ -z "$lazygit_bin" ]]; then
+		print -u2 "lazygit binary not found in PATH"
+		return 127
+	fi
+
+	unset GIT_ASKPASS
+	unset SSH_ASKPASS
+	unset VSCODE_GIT_ASKPASS_NODE
+	unset VSCODE_GIT_ASKPASS_MAIN
+	unset VSCODE_GIT_ASKPASS_EXTRA_ARGS
+	unset VSCODE_GIT_IPC_HANDLE
+	export GIT_TERMINAL_PROMPT=1
+
+	"$lazygit_bin" "$@"
+}
 alias lzg='lazygit'
 
 # neomutt
