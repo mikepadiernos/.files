@@ -206,7 +206,8 @@ EOF
 				return 1
 			fi
 
-			printf '%s\n' "$pass_line" | sudo -S -p '' -v >/dev/null 2>&1 || {
+			local sudo_bin="$(command -v sudo)"
+			printf '%s\n' "$pass_line" | env -u SUDO_ASKPASS "$sudo_bin" -S -p '' -v >/dev/null 2>&1 || {
 				echo "tools: sudo validation failed using pass entry $pass_entry_path"
 				return 1
 			}
@@ -254,7 +255,7 @@ EOF
 			if (( dry_run )); then
 				echo "[dry-run] sudo pacman -Syu"
 			else
-				sudo pacman -Syu
+				command sudo pacman -Syu
 			fi
 		else
 			echo "tools: skipping arch update (paru, yay, and pacman not found)"
@@ -286,17 +287,17 @@ EOF
 					if [[ -n "$grub_cfg" ]]; then
 						echo "tools: grub updated ($grub_version_before -> $grub_version_after), regenerating $grub_cfg"
 						if [[ -n "$sudo_askpass_script" ]]; then
-							SUDO_ASKPASS="$sudo_askpass_script" sudo -A -v || {
+							SUDO_ASKPASS="$sudo_askpass_script" command sudo -A -v || {
 								echo "tools: sudo validation failed before grub config refresh"
 								return 1
 							}
-							SUDO_ASKPASS="$sudo_askpass_script" sudo -A grub-mkconfig -o "$grub_cfg"
+							SUDO_ASKPASS="$sudo_askpass_script" command sudo -A grub-mkconfig -o "$grub_cfg"
 						else
-							sudo -v || {
+							command sudo -v || {
 								echo "tools: sudo validation failed before grub config refresh"
 								return 1
 							}
-							sudo grub-mkconfig -o "$grub_cfg"
+							command sudo grub-mkconfig -o "$grub_cfg"
 						fi
 					else
 						echo "tools: grub updated ($grub_version_before -> $grub_version_after), but no grub.cfg path found"

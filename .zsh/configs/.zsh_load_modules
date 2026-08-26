@@ -15,7 +15,7 @@ zsh_module_files=(
 	"${ZSH_MODULES}/.zsh_nvidia"
 	"${ZSH_MODULES}/.zsh_openaudible"
 )
-
+	
 for zsh_module_file in "${zsh_module_files[@]}"; do
 	source_if_exists "$zsh_module_file"
 done
