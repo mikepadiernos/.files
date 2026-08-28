@@ -19,3 +19,9 @@ fi
 unset __mise_setup_script
 unset __mise_local_bin
 
+# Activate mise last so its PATH entries take precedence over brew/system tools
+source_if_exists "$ZSH_PLUGINS/zsh-mise/zsh-mise.plugin.zsh"
+
+# Activate mise last so its PATH entries take precedence over brew/system tools
+source_if_exists "$ZSH_PLUGINS/zsh-mise/zsh-mise.plugin.zsh"
+

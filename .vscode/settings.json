@@ -24,9 +24,9 @@
   "terminal.integrated.lineHeight": 1.75,
   "terminal.integrated.fontSize": 12,
   "terminal.integrated.fontFamily": "'GohuFont 14 Nerd Font', 'Symbols Nerd Font Mono', 'Droid Sans Mono', monospace",
-    "zsh": {
-      "path": "/usr/bin/zsh"
-    },
+  "zsh": {
+    "path": "/usr/bin/zsh"
+  },
   "terminal.integrated.defaultProfile.linux": "zsh",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,

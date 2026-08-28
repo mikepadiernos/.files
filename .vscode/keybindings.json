@@ -78,4 +78,35 @@
         "key": "ctrl+g d",
         "command": "mikepadiernos.lazydockerEditor.openLazydocker"
     }
+    ,
+    {
+        "key": "ctrl+alt+1",
+        "command": "workbench.action.chat.open",
+        "args": {
+            "query": "Use Rally MCP only. Pull latest discussion posts for all user stories in this workspace and update each discussion/README.md with only new comments (skip exact duplicates).",
+            "isPartialQuery": false,
+            "execute": true
+        },
+        "when": "workspaceFolderCount > 0 && !terminalFocus"
+    },
+    {
+        "key": "ctrl+alt+2",
+        "command": "workbench.action.chat.open",
+        "args": {
+            "query": "Use Rally MCP only. Scan local discussion/README.md files and post new local comments to Rally. If an exact comment already exists in Rally, skip it.",
+            "isPartialQuery": false,
+            "execute": true
+        },
+        "when": "workspaceFolderCount > 0 && !terminalFocus"
+    },
+    {
+        "key": "ctrl+alt+3",
+        "command": "workbench.action.chat.open",
+        "args": {
+            "query": "Use Rally MCP only. Full sync discussions: pull latest Rally comments to local files, then post local-only comments to Rally, skipping exact duplicates both directions.",
+            "isPartialQuery": false,
+            "execute": true
+        },
+        "when": "workspaceFolderCount > 0 && !terminalFocus"
+    }
 ]

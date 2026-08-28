@@ -37,7 +37,6 @@ source_plugin "zsh-fzf-git-branches"                                            
 source_plugin "zsh-fzf-plugin"                                                                    # zsh-fzf-plugin
 source_plugin "zsh-fzf-tab"                                                                       # zsh-fzf-tab
 source_plugin "zsh-magic-dashboard"                                                               # zsh-magic-dashboard
-source_plugin "zsh-mise"                                                                          # zsh-mise
 source_plugin "zsh-ssh"                                                                           # zsh-ssh
 source_plugin "zsh-you-should-use"                                                                # zsh-you-should-use
 

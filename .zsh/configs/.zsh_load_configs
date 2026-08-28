@@ -1,7 +1,7 @@
 # shellcheck shell=bash disable=SC1090,SC1091
 
 zsh_config_files=(
-	"${ZSH_MODULES}/.zsh_mise"
+
 	"${ZSH_CONFIGS}/.zsh_themes"
 	"${ZSH_CONFIGS}/.zsh_plugins"
 	"${ZSH_CONFIGS}/.zsh_bindkeys"

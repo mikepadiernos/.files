@@ -29,6 +29,10 @@
 [url "https://github.com/"]
   insteadOf = git@github.com:
 
+# Repos under ~/Library/Projects/work authenticate as the 570006541_aero github account
+[includeIf "gitdir:~/Library/Projects/work/"]
+  path = ~/.gitconfig-work
+
 [core]
   autocrlf = input                        # keep newlines as in input
   compression = 9                         # trade cpu for network

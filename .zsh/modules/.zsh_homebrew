@@ -19,6 +19,11 @@ if [[ -n "$_brew_bin" ]]; then
     export XDG_DATA_DIRS="${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
   fi
 
+    # mysql-client is keg-only; brew doesn't link it onto PATH by default
+    if command -v mysql >/dev/null 2>&1 || [[ -d "$(brew --prefix mysql-client 2>/dev/null)" ]]; then
+      export PATH="$(brew --prefix mysql-client)/bin:$PATH"
+    fi
+
   # Apply tap-trust bypass only for force-bottle upgrades.
   brew() {
     if [[ "$1" == "upgrade" ]]; then

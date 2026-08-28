@@ -557,7 +557,8 @@ __zsh_prompt_buffer_empty() {
 
 		__ZSH_PROMPT_MAGIC_ENTER_LAST_RUN="$now"
 		__zsh_prompt_magic_enter_run_actions
-		zle redisplay
+		__ZSH_PROMPT_LAST_STATE=""
+		__zsh_prompt_refresh
 	else
 		zle accept-line
 	fi
