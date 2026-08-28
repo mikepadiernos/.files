@@ -1,0 +1,7 @@
+[user]
+	name = 570006541_aero
+	email = michael.padiernos@geaerospace.com
+
+[credential "https://github.com"]
+  helper =
+  helper = !~/.local/bin/git-credential-gh-account 570006541_aero

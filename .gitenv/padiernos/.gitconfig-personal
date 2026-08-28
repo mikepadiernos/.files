@@ -1,0 +1,6 @@
+[user]
+	name = mikepadiernos
+	email = mike@padiernos.me
+
+[core]
+	sshCommand = ssh -i ~/.ssh/id_ed25519_github_personal -o IdentitiesOnly=yes -o HostName=ssh.github.com -o User=git -p 443 -o ConnectTimeout=10 -o ConnectionAttempts=1

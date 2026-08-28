@@ -6,8 +6,12 @@ _zsh_git_symlink() {
 	local src="$1"
 	local dest="$2"
 
+	[[ -e "$src" ]] || return 0
+
 	if [[ -L "$dest" ]]; then
-		return 0
+		# Repoint stale links (e.g. left over from another profile/home).
+		[[ "$(readlink "$dest")" == "$src" ]] && return 0
+		rm -f "$dest"
 	elif [[ -e "$dest" ]]; then
 		mv "$dest" "${dest}.bak"
 		echo "zsh_git: backup ${dest} -> ${dest}.bak"
@@ -23,7 +27,19 @@ _zsh_git_setup_gitenv() {
 
 	[[ -d "$gitenv" ]] || return 0
 
-	_zsh_git_symlink "${gitenv}/.gitconfig" "${HOME}/.gitconfig"
+	# Configs live in a per-user profile dir because credential helper paths
+	# are absolute and therefore home-specific.
+	local profile="${GITENV_PROFILE:-${USER:-$(id -un)}}"
+	local dir="${gitenv}/${profile}"
+	if [[ ! -d "$dir" ]]; then
+		[[ -d "${gitenv}/mikepadiernos" ]] || return 0
+		dir="${gitenv}/mikepadiernos"
+	fi
+
+	local name
+	for name in .gitconfig .gitconfig-personal .gitconfig-work; do
+		_zsh_git_symlink "${dir}/${name}" "${HOME}/${name}"
+	done
 }
 
 _zsh_git_disable_broken_vscode_askpass() {
