@@ -74,6 +74,10 @@ lazygit() {
 	unset VSCODE_GIT_IPC_HANDLE
 	export GIT_TERMINAL_PROMPT=1
 
+	# lazygit reads ~/.gitconfig once at startup, so refresh the gitenv
+	# profile links and repo identity before launching.
+	whence -w git-env-sync >/dev/null 2>&1 && git-env-sync
+
 	"$lazygit_bin" "$@"
 }
 alias lzg='lazygit'

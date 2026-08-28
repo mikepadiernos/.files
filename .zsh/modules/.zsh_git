@@ -89,7 +89,7 @@ _zsh_git_setup_pass_entries() {
 _zsh_git_disable_broken_vscode_askpass
 _zsh_git_setup_gitenv
 _zsh_git_setup_pass_entries
-unset -f _zsh_git_symlink _zsh_git_setup_gitenv _zsh_git_disable_broken_vscode_askpass _zsh_git_setup_pass_entries
+unset -f _zsh_git_setup_pass_entries
 
 # --- mergetool ----------------------------------------------------------------
 
@@ -241,5 +241,14 @@ if [[ -o interactive ]] && whence -w add-zsh-hook >/dev/null 2>&1; then
 	add-zsh-hook precmd _zsh_git_sync_identity
 	_zsh_git_sync_identity
 fi
+
+# Reusable entry point for tools launched outside the zsh hooks (lazygit, etc.)
+git-env-sync() {
+	_zsh_git_disable_broken_vscode_askpass
+	_zsh_git_setup_gitenv
+	_zsh_git_sync_identity
+	[[ -t 0 ]] && export GPG_TTY="$(tty)"
+	return 0
+}
 
 # END GIT
