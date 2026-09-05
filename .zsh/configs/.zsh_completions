@@ -10,6 +10,18 @@ fpath+=(
   "${ZSH_PLUGINS}/zsh-completions/src"
 )
 
+if [[ -o interactive ]]; then
+  autoload -Uz compinit
+  export ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
+  mkdir -p "${ZSH_COMPDUMP:h}" 2>/dev/null
+
+  if [[ -s "$ZSH_COMPDUMP" ]]; then
+    compinit -d "$ZSH_COMPDUMP" -C
+  else
+    compinit -d "$ZSH_COMPDUMP"
+  fi
+fi
+
 # ============================================================================
 # Tool-Specific Completions
 # ============================================================================
@@ -67,13 +79,7 @@ _use_system_or_generated_completion() {
 }
 
 # COMPLETIONS: NVM
-export NVM_DIR="$HOME/.nvm"
-
-# shellcheck source=/dev/null
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  													        # This loads nvm
-
-# shellcheck source=/dev/null
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  								# This loads nvm bash_completion
+# NVM is loaded lazily in the Node module when a project requires it.
 
 # COMPLETIONS: Docker
 _lazy_load_zsh_completion docker _docker completion zsh

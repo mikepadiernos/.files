@@ -12,7 +12,7 @@ elif command -v brew >/dev/null 2>&1; then
 fi
 
 if [[ -n "$_brew_bin" ]]; then
-  echo -e "\e[30;42m HOMEBREW [$_brew_platform] \e[0m" "\e[32minstalled\e[0m"
+  zsh_startup_log "\e[30;42m HOMEBREW [$_brew_platform] \e[0m" "\e[32minstalled\e[0m"
   eval "$("$_brew_bin" shellenv)"
 
   if [[ "$_brew_platform" == "Linux" ]]; then

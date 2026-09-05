@@ -1,6 +1,9 @@
 # shellcheck shell=bash disable=SC1090,SC1091
 
 export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+typeset -gi ZSH_NODE_STATUS_DEBOUNCE_SECONDS="${ZSH_NODE_STATUS_DEBOUNCE_SECONDS:-2}"
+typeset -g __ZSH_NODE_LAST_PWD=""
+typeset -gi __ZSH_NODE_LAST_CHECK_EPOCH=0
 
 _zsh_node_find_project_root() {
   local dir="$PWD"
@@ -56,11 +59,30 @@ _zsh_node_load_nvm() {
   return 0
 }
 
+_zsh_node_should_refresh() {
+  local now="${EPOCHSECONDS:-0}"
+
+  if [[ "$PWD" != "$__ZSH_NODE_LAST_PWD" ]]; then
+    __ZSH_NODE_LAST_PWD="$PWD"
+    __ZSH_NODE_LAST_CHECK_EPOCH="$now"
+    return 0
+  fi
+
+  if (( now - __ZSH_NODE_LAST_CHECK_EPOCH >= ZSH_NODE_STATUS_DEBOUNCE_SECONDS )); then
+    __ZSH_NODE_LAST_CHECK_EPOCH="$now"
+    return 0
+  fi
+
+  return 1
+}
+
 _zsh_node_status() {
   local project_root
   local needs_nvm=0
   local mise_for_node=0
   local state
+
+  _zsh_node_should_refresh || return 0
 
   project_root="$(_zsh_node_find_project_root)" || {
     typeset -g __ZSH_NODE_LAST_STATE=""
@@ -88,13 +110,13 @@ _zsh_node_status() {
   (( needs_nvm )) || return 0
 
   if _zsh_node_load_nvm; then
-    echo -e '\e[30;42m NODE \e[0m' "\e[32mproject uses nvm\e[0m"
+    zsh_startup_log '\e[30;42m NODE \e[0m' "\e[32mproject uses nvm\e[0m"
   else
-    echo -e '\e[31;41m NVM \e[0m' 'is' "\e[31mrequired but not loaded\e[0m"
+    zsh_startup_log '\e[31;41m NVM \e[0m' 'is' "\e[31mrequired but not loaded\e[0m"
   fi
 
   if (( mise_for_node )); then
-    echo -e '\e[30;43m MISE \e[0m' "\e[33mnode config detected; npm can be provided by mise\e[0m"
+    zsh_startup_log '\e[30;43m MISE \e[0m' "\e[33mnode config detected; npm can be provided by mise\e[0m"
   fi
 }
 

@@ -20,7 +20,7 @@ sudo() {
 			return $?
 		fi
 	done
-w
+
 	if command -v pass >/dev/null 2>&1; then
 		for askpass_entry in \
 			"local/sudo/mikepadiernos" \

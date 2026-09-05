@@ -2,13 +2,14 @@
 # If gh is missing but mise is available, install gh and set it globally.
 __gh_activate_completion=1
 __gh_in_repo=0
+typeset -g ZSH_STARTUP_ALLOW_INSTALLS="${ZSH_STARTUP_ALLOW_INSTALLS:-false}"
 
 if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     __gh_in_repo=1
 fi
 
 if ! command -v gh >/dev/null 2>&1; then
-    if command -v mise >/dev/null 2>&1; then
+    if zsh_startup_is_truthy "$ZSH_STARTUP_ALLOW_INSTALLS" && command -v mise >/dev/null 2>&1; then
         mise install gh >/dev/null 2>&1 && mise use --global gh >/dev/null 2>&1
         # Refresh command lookup after mise updates shims.
         hash -r
@@ -17,7 +18,7 @@ fi
 
 if command -v gh >/dev/null 2>&1; then
     if [ "${__gh_in_repo}" -eq 1 ]; then
-        echo -e "\e[30;42m Github CLI \e[0m" "\e[32minstalled\e[0m"
+        zsh_startup_log "\e[30;42m Github CLI \e[0m" "\e[32minstalled\e[0m"
     fi
 else
     __gh_activate_completion=0

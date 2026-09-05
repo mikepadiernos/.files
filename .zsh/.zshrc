@@ -26,11 +26,12 @@ export PASSWORD_STORE_DIR="$HOME/.pass"
 export GPG_PASSPHRASE_PASS_ENTRY="gpg/passphrase"
 
 # PATH setup
-[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
-[[ -d "$HOME/.local/share/pnpm" ]] && export PATH="$HOME/.local/share/pnpm:$PATH"
-[[ -d "$CARGO" ]] && export PATH="$PATH:$CARGO"
-[[ -d "$GOBIN" ]] && export PATH="$PATH:$GOBIN"
-[[ -d "$GOPATH/bin" ]] && export PATH="$PATH:$GOPATH/bin"
+typeset -U path PATH
+[[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
+[[ -d "$HOME/.local/share/pnpm" ]] && path=("$HOME/.local/share/pnpm" $path)
+[[ -d "$CARGO" ]] && path=($path "$CARGO")
+[[ -d "$GOBIN" ]] && path=($path "$GOBIN")
+[[ -d "$GOPATH/bin" ]] && path=($path "$GOPATH/bin")
 
 # Shell bootstrap
 source "${ZSH_CONFIGS}/.zsh_bootstrap"

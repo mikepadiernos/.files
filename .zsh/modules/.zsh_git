@@ -117,7 +117,7 @@ _zsh_git_setup_mergetool() {
 	git config --global mergetool.keepBackup false
 
 	[[ -n "$GIT_SETUP_VERBOSE" ]] && \
-		echo -e "\e[30;42m GIT \e[0m" "\e[32mmerge.tool set to $selected_tool\e[0m"
+		zsh_startup_log "\e[30;42m GIT \e[0m" "\e[32mmerge.tool set to $selected_tool\e[0m"
 }
 
 _zsh_git_setup_mergetool
@@ -216,9 +216,21 @@ _zsh_git_sync_identity() {
 	command -v git >/dev/null 2>&1 || return 0
 	git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return 0
 
-	local repo_root remote_url target_name target_email
+	local repo_root remote_url state now
+	now="${EPOCHSECONDS:-0}"
+
 	repo_root="$(git rev-parse --show-toplevel 2>/dev/null)"
 	remote_url="$(git config --get remote.origin.url 2>/dev/null)"
+	state="$repo_root|$remote_url"
+
+	if [[ "$state" == "$__ZSH_GIT_SYNC_LAST_STATE" ]] && (( now - ${__ZSH_GIT_SYNC_LAST_EPOCH:-0} < ${ZSH_GIT_SYNC_DEBOUNCE_SECONDS:-3} )); then
+		return 0
+	fi
+
+	typeset -g __ZSH_GIT_SYNC_LAST_STATE="$state"
+	typeset -gi __ZSH_GIT_SYNC_LAST_EPOCH="$now"
+
+	local target_name target_email
 
 	if [[ "$repo_root" == "$HOME/Library/Projects/work"/* ]] || [[ "$remote_url" == *"ge-aero/"* ]]; then
 		target_name="570006541_aero"
@@ -237,8 +249,12 @@ _zsh_git_sync_identity() {
 }
 
 if [[ -o interactive ]] && whence -w add-zsh-hook >/dev/null 2>&1; then
+	typeset -gi ZSH_GIT_SYNC_DEBOUNCE_SECONDS="${ZSH_GIT_SYNC_DEBOUNCE_SECONDS:-3}"
+	typeset -g ZSH_GIT_SYNC_ON_PRECMD="${ZSH_GIT_SYNC_ON_PRECMD:-false}"
 	add-zsh-hook chpwd _zsh_git_sync_identity
-	add-zsh-hook precmd _zsh_git_sync_identity
+	if zsh_startup_is_truthy "$ZSH_GIT_SYNC_ON_PRECMD"; then
+		add-zsh-hook precmd _zsh_git_sync_identity
+	fi
 	_zsh_git_sync_identity
 fi
 
