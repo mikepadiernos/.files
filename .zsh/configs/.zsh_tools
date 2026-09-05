@@ -149,9 +149,31 @@ EOF
 
 	if (( run_mise )); then
 		if (( dry_run )); then
-			echo "[dry-run] mise self-update -y && mise upgrade --bump && mise use --global ${_zsh_tools_mise_packages[*]}"
+			echo "[dry-run] mise self-update -y"
+			echo "[dry-run] mise upgrade --bump"
+			echo "[dry-run] for tool in ${_zsh_tools_mise_packages[*]}; do mise use --global \"\$tool\" || echo SKIP: \"\$tool\"; done"
 		else
-			mise self-update -y && mise upgrade --bump && mise use --global "${_zsh_tools_mise_packages[@]}"
+			local -a mise_failed_packages=()
+
+			if ! mise self-update -y; then
+				echo "tools: mise self-update failed, continuing"
+			fi
+
+			if ! mise upgrade --bump; then
+				echo "tools: mise upgrade --bump failed, continuing"
+			fi
+
+			local mise_tool
+			for mise_tool in "${_zsh_tools_mise_packages[@]}"; do
+				if ! mise use --global "$mise_tool"; then
+					echo "tools: skipping problematic mise install: $mise_tool"
+					mise_failed_packages+=("$mise_tool")
+				fi
+			done
+
+			if (( ${#mise_failed_packages[@]} > 0 )); then
+				echo "tools: mise failed installs (${#mise_failed_packages[@]}): ${mise_failed_packages[*]}"
+			fi
 		fi
 	fi
 
