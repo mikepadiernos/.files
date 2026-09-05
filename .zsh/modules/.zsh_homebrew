@@ -1,6 +1,13 @@
 # HOMEBREW
 # Set HOMEBREW_VERBOSE=1 to print startup status.
-if [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+# Homebrew is not supported as root; skip init in root shells.
+if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
+  unset _brew_bin _brew_platform
+  brew() {
+    echo "Homebrew is disabled for root. Use a non-root user."
+    return 1
+  }
+elif [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
   _brew_bin="/home/linuxbrew/.linuxbrew/bin/brew"
   _brew_platform="Linux"
 elif [[ -x "/usr/local/bin/brew" ]]; then
@@ -44,6 +51,7 @@ fi
 
 # HOMEBREW PHP
 # Optional pin, example: export HOMEBREW_PHP_FORMULA="php@8.4"
+if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
 _php_formula="${HOMEBREW_PHP_FORMULA:-}"
 
 # Prefer the currently active php command when available.
@@ -89,6 +97,7 @@ if [ -n "$_php_formula" ] && command -v brew >/dev/null 2>&1; then
       *) export PATH="$_php_prefix/sbin:$PATH" ;;
     esac
   fi
+fi
 fi
 
 unset _brew_bin _brew_platform

@@ -15,11 +15,20 @@ if [[ -o interactive ]]; then
   export ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
   mkdir -p "${ZSH_COMPDUMP:h}" 2>/dev/null
 
-  if [[ -s "$ZSH_COMPDUMP" ]]; then
-    compinit -d "$ZSH_COMPDUMP" -C
-  else
-    compinit -d "$ZSH_COMPDUMP"
+  local -a _compinit_opts
+  _compinit_opts=(-d "$ZSH_COMPDUMP")
+
+  # Root shells often see ownership/mode warnings on shared completion paths.
+  if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
+    _compinit_opts+=(-u)
   fi
+
+  if [[ -s "$ZSH_COMPDUMP" ]]; then
+    _compinit_opts+=(-C)
+  fi
+
+  compinit "${_compinit_opts[@]}"
+  unset _compinit_opts
 fi
 
 # ============================================================================
@@ -120,7 +129,11 @@ fi
 # Uses system completion files when available.
 
 # COMPLETIONS: AWS CLI
-command -v aws_completer >/dev/null 2>&1 && complete -C aws_completer aws
+if command -v aws_completer >/dev/null 2>&1 && whence -w complete >/dev/null 2>&1; then
+  complete -C aws_completer aws
+elif command -v aws >/dev/null 2>&1 && ! _has_completion_file _aws; then
+  compdef _gnu_generic aws
+fi
 
 # COMPLETIONS: Flatpak and Arch helpers
 # Most package-manager-installed completions are auto-loaded from fpath

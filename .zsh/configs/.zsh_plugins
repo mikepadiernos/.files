@@ -7,9 +7,26 @@ source_if_exists() {
 	[[ -f "$file" ]] && source "$file"
 }
 
+_zsh_is_root_shell() {
+    if [[ "${ZSH_FORCE_ROOT_MODE:-false}" == "true" ]]; then
+        return 0
+    fi
+
+    [[ "${EUID:-$(id -u)}" -eq 0 ]]
+}
+
 source_plugin() {
     local plugin="$1"
     local plugin_file="$ZSH_PLUGINS/$plugin/$plugin.plugin.zsh"
+
+    # Root shells on VPS are kept minimal to avoid plugin side effects/noise.
+    if _zsh_is_root_shell && [[ "${ZSH_ROOT_LOAD_ALL_PLUGINS:-false}" != "true" ]]; then
+        case "$plugin" in
+            zsh-autocompletion|zsh-drupal|zsh-fzf-git-branches|zsh-fzf-plugin|zsh-fzf-tab|zsh-magic-dashboard|zsh-you-should-use)
+    			return 0
+    			;;
+    	esac
+    fi
 
     source_if_exists "$plugin_file"
 }
