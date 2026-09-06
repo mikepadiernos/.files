@@ -372,5 +372,6 @@
   ],
   "workbench.colorTheme": "A Mole Name Ed",
   "chat.mcp.gallery.enabled": true,
-  "chat.viewSessions.orientation": "stacked"
+  "chat.viewSessions.orientation": "stacked",
+  "colima.colimaPath": "/home/mikepadiernos/.local/share/mise/shims/colima"
 }

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+#ddev-generated
+## Description: Run artisan CLI inside the web container
+## Usage: artisan [flags] [args]
+## Example: "ddev artisan list" or "ddev artisan cache:clear"
+## Aliases: art
+## ProjectTypes: laravel
+## ExecRaw: true
+## MutagenSync: true
+
+cd "${DDEV_COMPOSER_ROOT:-/var/www/html}" || exit 1
+php ./artisan "$@"

@@ -1,6 +1,6 @@
 # shellcheck shell=bash disable=SC1090,SC1091
 
-export GPG_TTY="$(tty)"
+export GPG_TTY="${TTY:-$(tty)}"
 
 _gpg_preset_from_pass_once() {
   local script_path runtime_dir stamp_file agent_socket

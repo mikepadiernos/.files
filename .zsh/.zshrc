@@ -5,9 +5,24 @@
 
 # Core environment
 export LC_ALL=en_US.UTF-8
-export SHELL="/usr/bin/zsh"
+export SHELL="$(command -v zsh 2>/dev/null || print -r -- "${SHELL:-/bin/zsh}")"
 export EDITOR=nvim
 export DIRENV_SKIP_TIMEOUT=TRUE
+
+# Optional portability overrides (uncomment and edit per machine/user)
+# export ZSH_RUNTIME_USER="your-username"
+# export ZSH_SUDO_PASS_ENTRY="local/sudo/your-username"
+# export ZSH_TOOLS_SUDO_PASS_ENTRY="pass.local.sudo.your-username"
+# export ZSH_TOOLS_SUDO_PASS_ENTRY_ALT="local/sudo/your-username"
+# export ZSH_PLUGINS_FORK_OWNERS="your-forks,team-forks"
+# export ZSH_PLUGINS_FORK_OWNER_REGEX='(fork|forks)$'
+# export ZSH_PLUGINS_FORK_URL_REGEX='github.com[:/](your-user|your-org-forks)/'
+# export ZSH_GIT_DEFAULT_NAME="Your Name"
+# export ZSH_GIT_DEFAULT_EMAIL="you@example.com"
+# export ZSH_GIT_PERSONAL_NAME="Your Personal Name"
+# export ZSH_GIT_PERSONAL_EMAIL="you@personal.example"
+# export ZSH_GIT_WORK_NAME="Your Work Name"
+# export ZSH_GIT_WORK_EMAIL="you@work.example"
 
 # Project paths
 export FILES="$HOME/.files"

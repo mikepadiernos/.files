@@ -12,7 +12,7 @@ _zsh_is_root_shell() {
         return 0
     fi
 
-    [[ "${EUID:-$(id -u)}" -eq 0 ]]
+    (( EUID == 0 ))
 }
 
 source_plugin() {

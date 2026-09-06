@@ -1,1 +1,0 @@
-root        1924       1  0 Mar13 ?        00:00:20 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock

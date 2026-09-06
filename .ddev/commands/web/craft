@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+#ddev-generated
+## Description: Run Craft CMS command inside the web container
+## Usage: craft [flags] [args]
+## Example: "ddev craft db/backup" or "ddev craft db/backup ./my-backups" (see https://craftcms.com/docs/5.x/reference/cli.html)
+## ProjectTypes: craftcms
+## ExecRaw: true
+## MutagenSync: true
+
+cd "${CRAFT_CMD_ROOT:-"${DDEV_COMPOSER_ROOT:-/var/www/html}"}" || exit 1
+php ./craft "$@"

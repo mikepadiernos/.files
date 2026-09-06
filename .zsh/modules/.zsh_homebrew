@@ -1,7 +1,7 @@
 # HOMEBREW
 # Set HOMEBREW_VERBOSE=1 to print startup status.
 # Homebrew is not supported as root; skip init in root shells.
-if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
+if (( EUID == 0 )); then
   unset _brew_bin _brew_platform
   brew() {
     echo "Homebrew is disabled for root. Use a non-root user."
@@ -13,6 +13,9 @@ elif [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
 elif [[ -x "/usr/local/bin/brew" ]]; then
   _brew_bin="/usr/local/bin/brew"
   _brew_platform="MacOS"
+elif [[ -x "/opt/homebrew/bin/brew" ]]; then
+  _brew_bin="/opt/homebrew/bin/brew"
+  _brew_platform="MacOS"
 elif command -v brew >/dev/null 2>&1; then
   _brew_bin="$(command -v brew)"
   _brew_platform="Detected"
@@ -20,16 +23,21 @@ fi
 
 if [[ -n "$_brew_bin" ]]; then
   zsh_startup_log "\e[30;42m HOMEBREW [$_brew_platform] \e[0m" "\e[32minstalled\e[0m"
-  eval "$("$_brew_bin" shellenv)"
+  source_cached_init brew shellenv
 
   if [[ "$_brew_platform" == "Linux" ]]; then
     export XDG_DATA_DIRS="${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
   fi
 
-    # mysql-client is keg-only; brew doesn't link it onto PATH by default
-    if command -v mysql >/dev/null 2>&1 || [[ -d "$(brew --prefix mysql-client 2>/dev/null)" ]]; then
-      export PATH="$(brew --prefix mysql-client)/bin:$PATH"
-    fi
+  # mysql-client is keg-only; brew doesn't link it onto PATH by default.
+  if [[ -n "$HOMEBREW_PREFIX" && -d "$HOMEBREW_PREFIX/opt/mysql-client/bin" ]]; then
+    case ":$PATH:" in
+      *":$HOMEBREW_PREFIX/opt/mysql-client/bin:"*) ;;
+      *) export PATH="$HOMEBREW_PREFIX/opt/mysql-client/bin:$PATH" ;;
+    esac
+  elif command -v mysql >/dev/null 2>&1 || [[ -d "$(command brew --prefix mysql-client 2>/dev/null)" ]]; then
+    export PATH="$(command brew --prefix mysql-client)/bin:$PATH"
+  fi
 
   # Apply tap-trust bypass only for force-bottle upgrades.
   brew() {
@@ -51,7 +59,7 @@ fi
 
 # HOMEBREW PHP
 # Optional pin, example: export HOMEBREW_PHP_FORMULA="php@8.4"
-if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
+if (( EUID != 0 )); then
 _php_formula="${HOMEBREW_PHP_FORMULA:-}"
 
 # Prefer the currently active php command when available.
@@ -72,8 +80,14 @@ fi
 if [ -z "$_php_formula" ] && command -v brew >/dev/null 2>&1; then
   if [[ -n "$HOMEBREW_PREFIX" && -d "$HOMEBREW_PREFIX/opt/php" ]]; then
     _php_formula="php"
+  elif [[ -n "$HOMEBREW_PREFIX" ]]; then
+    typeset -a _php_versions
+    _php_versions=("$HOMEBREW_PREFIX"/opt/php@*(N:t))
+    if (( ${#_php_versions[@]} > 0 )); then
+      _php_formula="${_php_versions[-1]}"
+    fi
   else
-    _php_formula="$(brew list --formula 2>/dev/null | grep -E '^php@[0-9]+\.[0-9]+$' | sort -V | tail -n 1)"
+    _php_formula="$(command brew list --formula 2>/dev/null | grep -E '^php@[0-9]+\.[0-9]+$' | sort -V | tail -n 1)"
   fi
 fi
 

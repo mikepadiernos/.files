@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+
+## #ddev-generated: If you want to edit and own this file, remove this line.
+## Description: Launch a browser with the current site
+## Usage: launch [path] [-m|--mailpit]
+## Example: "ddev launch" or "ddev launch /admin/reports/status/php" or "ddev launch phpinfo.php" or "ddev launch https://your.ddev.site" or "ddev launch :3000", for Mailpit "ddev launch -m"
+## Flags: [{"Name":"mailpit","Shorthand":"m","Usage":"ddev launch -m launches the mailpit UI"}]
+
+if [ "${DDEV_PROJECT_STATUS}" != "running" ] && [ -z "$no_recursion" ]; then
+  echo "Project ${DDEV_PROJECT} is not running, starting it"
+  ddev start
+  start_exit_code=$?
+  if [ $start_exit_code -ne 0 ]; then
+    exit $start_exit_code
+  fi
+  # run this script again, as the environment is updated after "ddev start"
+  no_recursion=true ddev "$(basename "$0")" "$@"
+  exit $?
+fi
+FULLURL=${DDEV_PRIMARY_URL}
+HTTPS=""
+if [ "${DDEV_PRIMARY_URL%://*}" = "https" ]; then HTTPS=true; fi
+IN_CLOUD=""
+if [[ "${CODESPACES}" == "true" ]]; then IN_CLOUD=true; fi
+
+get_docker_binary() {
+  if command -v docker >/dev/null 2>&1; then
+    echo "docker"
+  elif command -v podman >/dev/null 2>&1; then
+    echo "podman"
+  else
+    echo "docker"
+  fi
+}
+
+get_fullurl_port() {
+  "$(get_docker_binary)" run -i --rm ddev/ddev-utilities sh -c "echo '${FULLURL}' | grep -o ':[0-9]\+' | awk -F':' '{print \$2}' | head -1" 2>/dev/null
+}
+replace_port_in_cloud() {
+  replace_port="${1}"
+  if [[ $("$(get_docker_binary)" run -i --rm ddev/ddev-utilities sh -c "echo '${FULLURL}' | sed -E 's/:([0-9]+)//' | awk -F'/' '{print \$1\"//\"\$3}' | grep -E '\b${DDEV_HOST_WEBSERVER_PORT}\b'" 2>/dev/null) != "" ]]; then
+    # remove any port from ${FULLURL}
+    fullurl_without_port=$("$(get_docker_binary)" run -i --rm ddev/ddev-utilities sh -c "echo '${FULLURL}' | sed -E 's/:[0-9]+//'" 2>/dev/null)
+    # and replace ${DDEV_HOST_WEBSERVER_PORT} with provided port.
+    "$(get_docker_binary)" run -i --rm ddev/ddev-utilities sh -c "echo '${fullurl_without_port}' | sed -E 's/\b${DDEV_HOST_WEBSERVER_PORT}\b/${replace_port}/'" 2>/dev/null
+  else
+    # if ${DDEV_HOST_WEBSERVER_PORT} is not found in ${FULLURL}, leave it as is.
+    echo "${FULLURL}"
+  fi
+}
+
+while :; do
+  case ${1:-} in
+  -p | --phpmyadmin)
+    echo "phpMyAdmin is no longer built into DDEV, please 'ddev add-on get ddev/ddev-phpmyadmin' and use 'ddev phpmyadmin' to launch phpMyAdmin" && exit 2
+    ;;
+  -m | --mailpit | --mailhog)
+    if [ "${IN_CLOUD}" != "" ]; then
+      FULLURL=$(replace_port_in_cloud "${DDEV_HOST_MAILPIT_PORT}")
+    else
+      if [ "${HTTPS}" = "" ]; then
+        FULLURL="${FULLURL%:[0-9]*}:${DDEV_MAILPIT_PORT}"
+      else
+        FULLURL="${FULLURL%:[0-9]*}:${DDEV_MAILPIT_HTTPS_PORT}"
+      fi
+    fi
+    ;;
+
+  --) # End of all options.
+    shift
+    break
+    ;;
+  -?*)
+    printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
+    ;;
+  *) # Default case: No more options, so break out of the loop.
+    break ;;
+  esac
+
+  shift
+done
+
+if [ -n "${1:-}" ]; then
+  if [[ $1 =~ ^https?:// ]]; then
+    # full url
+    FULLURL="${1}"
+  elif [[ $1 =~ ^: ]]; then
+    # specific port
+    FULLURL="${FULLURL%:[0-9]*}${1}"
+    if [[ "${IN_CLOUD}" == "" ]]; then
+      # check if the port is running on https or http
+      port="$(get_fullurl_port)"
+      if [[ "${port}" != "" ]] && ddev describe -j | "$(get_docker_binary)" run -i --rm ddev/ddev-utilities sh -c "jq -r '.raw' | grep -w ${port} | grep -q https" 2>/dev/null; then
+        FULLURL="${FULLURL/http:/https:}"
+      elif [[ "${port}" != "" ]] && ddev describe -j | "$(get_docker_binary)" run -i --rm ddev/ddev-utilities sh -c "jq -r '.raw' | grep -w ${port} | grep -q http" 2>/dev/null; then
+        FULLURL="${FULLURL/https:/http:}"
+      fi
+    fi
+  else
+    # relative path
+    FULLURL="${FULLURL%/}/${1#/}"
+  fi
+  # handle Codespaces
+  if [[ "${IN_CLOUD}" != "" ]]; then
+    port="$(get_fullurl_port)"
+    if [[ "${port}" != "" ]]; then
+      FULLURL=$(replace_port_in_cloud "${port}")
+    fi
+  fi
+fi
+
+if [[ "${FULLURL}" =~ ^http:// ]]; then
+  echo "HTTP may redirect to HTTPS in your browser"
+  echo "See https://docs.ddev.com/en/stable/users/usage/commands/#launch"
+fi
+
+if [ "${DDEV_DEBUG:-}" = "true" ] || [ "${DDEV_VERBOSE:-}" = "true" ]; then
+    printf "FULLURL %s\n" "$FULLURL"
+    exit 0
+fi
+
+case $OSTYPE in
+  "linux"*)
+    if command -v explorer.exe >/dev/null; then explorer.exe ${FULLURL} || true;
+    elif command -v xdg-open >/dev/null; then xdg-open ${FULLURL};
+    else
+        echo "No technique found to open URL: ${FULLURL}; please install xdg-utils."
+        exit 1
+    fi
+    ;;
+  "darwin"*)
+    open ${FULLURL}
+    ;;
+  "win"* | "msys"* | "cygwin")
+    start ${FULLURL}
+    ;;
+  *)
+    echo "OS type '$OSTYPE' not identified, known types: linux*, darwin*, win*, msys*, cygwin."
+    exit 1
+    ;;
+esac

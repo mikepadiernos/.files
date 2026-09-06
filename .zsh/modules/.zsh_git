@@ -32,8 +32,10 @@ _zsh_git_setup_gitenv() {
 	local profile="${GITENV_PROFILE:-${USER:-$(id -un)}}"
 	local dir="${gitenv}/${profile}"
 	if [[ ! -d "$dir" ]]; then
-		[[ -d "${gitenv}/mikepadiernos" ]] || return 0
-		dir="${gitenv}/mikepadiernos"
+		local -a profile_candidates
+		profile_candidates=("$gitenv"/*(/N))
+		(( ${#profile_candidates[@]} > 0 )) || return 0
+		dir="${profile_candidates[1]}"
 	fi
 
 	local name
@@ -232,12 +234,18 @@ _zsh_git_sync_identity() {
 
 	local target_name target_email
 
+	local default_user
+	local default_email
+	default_user="${ZSH_RUNTIME_USER:-${USER:-$(id -un 2>/dev/null || print -r -- user)}}"
+	default_email="$(git config --global --get user.email 2>/dev/null)"
+	[[ -n "$default_email" ]] || default_email="${default_user}@localhost"
+
 	if [[ "$repo_root" == "$HOME/Library/Projects/work"/* ]] || [[ "$remote_url" == *"ge-aero/"* ]]; then
-		target_name="570006541_aero"
-		target_email="michael.padiernos@geaerospace.com"
+		target_name="${ZSH_GIT_WORK_NAME:-${ZSH_GIT_DEFAULT_NAME:-$default_user}}"
+		target_email="${ZSH_GIT_WORK_EMAIL:-${ZSH_GIT_DEFAULT_EMAIL:-$default_email}}"
 	else
-		target_name="mikepadiernos"
-		target_email="mike@padiernos.me"
+		target_name="${ZSH_GIT_PERSONAL_NAME:-${ZSH_GIT_DEFAULT_NAME:-$default_user}}"
+		target_email="${ZSH_GIT_PERSONAL_EMAIL:-${ZSH_GIT_DEFAULT_EMAIL:-$default_email}}"
 	fi
 
 	local current_name current_email

@@ -1,0 +1,94 @@
+#ddev-generated
+# If you remove the ddev-generated line above you
+# are responsible for maintaining this file. DDEV will not then
+# update it, for example if you add `additional_hostnames`, etc.
+
+http:
+  routers:
+    padiernos-xhgui-80-http:
+      entrypoints:
+        - http-8143
+      rule: HostRegexp(`^padiernos\.ddev\.site$`)
+      
+      service: "padiernos-xhgui-80"
+      tls: false
+      # middlewares:
+      #   - "padiernos-redirectHttps"
+    padiernos-web-80-http:
+      entrypoints:
+        - http-80
+      rule: HostRegexp(`^padiernos\.ddev\.site$`)
+      
+      service: "padiernos-web-80"
+      tls: false
+      # middlewares:
+      #   - "padiernos-redirectHttps"
+    padiernos-web-8025-http:
+      entrypoints:
+        - http-8025
+      rule: HostRegexp(`^padiernos\.ddev\.site$`)
+      
+      service: "padiernos-web-8025"
+      tls: false
+      # middlewares:
+      #   - "padiernos-redirectHttps"
+    
+    
+    padiernos-xhgui-80-https:
+      entrypoints:
+        - http-8142
+      rule: HostRegexp(`^padiernos\.ddev\.site$`)
+      
+      service: "padiernos-xhgui-80"
+      
+      tls: true
+      
+    
+    
+    padiernos-web-80-https:
+      entrypoints:
+        - http-443
+      rule: HostRegexp(`^padiernos\.ddev\.site$`)
+      
+      service: "padiernos-web-80"
+      
+      tls: true
+      
+    padiernos-web-8025-https:
+      entrypoints:
+        - http-8026
+      rule: HostRegexp(`^padiernos\.ddev\.site$`)
+      
+      service: "padiernos-web-8025"
+      
+      tls: true
+      
+    
+
+  middlewares:
+    padiernos-redirectHttps:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+  services:
+    padiernos-xhgui-80:
+      loadbalancer:
+        servers:
+          - url: http://ddev-padiernos-xhgui:80
+        
+    
+    padiernos-web-80:
+      loadbalancer:
+        servers:
+          - url: http://ddev-padiernos-web:80
+        
+    padiernos-web-8025:
+      loadbalancer:
+        servers:
+          - url: http://ddev-padiernos-web:8025
+        
+    
+    
+    
+

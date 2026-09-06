@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+#ddev-generated
+## Description: Run drush CLI inside the web container
+## Usage: drush [flags] [args]
+## Example: "ddev drush uli" or "ddev drush sql-cli" or "ddev drush --version"
+## ProjectTypes: drupal,drupal12,drupal11,drupal10,drupal9,drupal8,drupal7,backdrop
+## ExecRaw: true
+## MutagenSync: true
+
+if ! command -v drush >/dev/null; then
+  echo "drush is not available. You may need to 'ddev composer require drush/drush'"
+  exit 1
+fi
+drush "$@"

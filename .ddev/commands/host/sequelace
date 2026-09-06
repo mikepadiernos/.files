@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+#ddev-generated
+## Description: Run sequelace with current project database
+## Usage: sequelace
+## Example: "ddev sequelace" or "ddev sequelace database2" to open a database named "database2".
+## OSTypes: darwin
+## HostBinaryExists: /Applications/Sequel Ace.app
+## DBTypes: mysql,mariadb
+
+DATABASE="${1:-db}"
+
+if [ "${DDEV_PROJECT_STATUS}" != "running" ] && [ -z "$no_recursion" ]; then
+  echo "Project ${DDEV_PROJECT} is not running, starting it"
+  ddev start
+  start_exit_code=$?
+  if [ $start_exit_code -ne 0 ]; then
+    exit $start_exit_code
+  fi
+  # run this script again, as the environment is updated after "ddev start"
+  no_recursion=true ddev "$(basename "$0")" "$@"
+  exit $?
+fi
+query="mysql://root:root@${DDEV_PROJECT}.${DDEV_TLD}:${DDEV_HOST_DB_PORT}/${DATABASE}"
+
+set -x
+open "$query" -a "/Applications/Sequel Ace.app/Contents/MacOS/Sequel Ace"

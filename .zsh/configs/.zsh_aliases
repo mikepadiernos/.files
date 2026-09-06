@@ -4,7 +4,7 @@ alias li='la --icons=always'
 # lazydocker
 alias lzd='lazydocker'
 
-# sudo: use the pass entry "local/sudo/mikepadiernos" (and legacy dotfile form)
+# sudo: use the pass entry "local/sudo/<user>" (and legacy dotfile form)
 # as the askpass source for normal sudo invocations, while explicitly bypassing
 # the wrapper when stdin validation or any other sudo flags are already provided.
 sudo() {
@@ -12,6 +12,8 @@ sudo() {
 	local askpass_file=""
 	local askpass_script=""
 	local secret=""
+	local runtime_user="${ZSH_RUNTIME_USER:-${USER:-$(id -un 2>/dev/null || whoami 2>/dev/null || print -r -- unknown)}}"
+	local pass_entry_primary="${ZSH_SUDO_PASS_ENTRY:-local/sudo/${runtime_user}}"
 	local arg
 
 	for arg in "$@"; do
@@ -23,9 +25,9 @@ sudo() {
 
 	if command -v pass >/dev/null 2>&1; then
 		for askpass_entry in \
-			"local/sudo/mikepadiernos" \
-			"pass.local.sudo.mikepadiernos" \
-			"pass/local/sudo/mikepadiernos"; do
+			"$pass_entry_primary" \
+			"pass.local.sudo.${runtime_user}" \
+			"pass/local/sudo/${runtime_user}"; do
 			if pass show "$askpass_entry" >/dev/null 2>&1; then
 				break
 			fi

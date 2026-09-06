@@ -19,7 +19,7 @@ if [[ -o interactive ]]; then
   _compinit_opts=(-d "$ZSH_COMPDUMP")
 
   # Root shells often see ownership/mode warnings on shared completion paths.
-  if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
+  if (( EUID == 0 )); then
     _compinit_opts+=(-u)
   fi
 
@@ -217,8 +217,44 @@ _zsh_python_completion() {
     '--status[show auto-venv status]'
 }
 
+_zsh_plugins_completion() {
+  _arguments -s \
+    '(-h --help)'{-h,--help}'[show help]' \
+    '--install[clone missing plugin repos listed in git_repos.txt]' \
+    '--update[fetch and fast-forward pull plugin repos]' \
+    '--check-forks[warn for forked repos missing upstream or behind upstream]' \
+    '--no-fetch[skip fetch before checks and updates]' \
+    '--dry-run[print actions without changing repos]' \
+    '--repos-file=[override repo list file]:repo list:_files' \
+    '--plugins-dir=[override plugin directory]:plugin dir:_files -/'
+}
+
+_zsh_tools_completion() {
+  _arguments -s \
+    '(-h --help)'{-h,--help}'[show help]' \
+    '--list-tools[list managed tools and command availability]' \
+    '--list-links[list custom symlink source/target/status entries]' \
+    '--setup-links[symlink .files dot-config entries to HOME]' \
+    '--update[run tool and system update flow]' \
+    '--mise-only[update only mise-managed tools]' \
+    '--brew-only[update only brew-managed tools]' \
+    '--system-only[skip mise and brew updates]' \
+    '--no-brew[skip brew updates]' \
+    '--no-mise[skip mise updates]' \
+    '--no-paru[skip paru/yay/pacman/apt update stage]' \
+    '--no-grub[skip grub refresh check]' \
+    '--no-flatpak[skip flatpak updates]' \
+    '--no-plasma[skip plasmoid updates]' \
+    '--plasma-strict-rate-limit[treat plasmoid HTTP 429 as failure]' \
+    '--no-firmware[skip fwupdmgr updates]' \
+    '--no-vscode[skip VS Code extension updates]' \
+    '--dry-run[print actions without making changes]'
+}
+
 compdef _zsh_themes_completion zsh_themes
 compdef _zsh_setup_completion zsh_setup zsh-setup
 compdef _zsh_python_completion zsh_python
+compdef _zsh_plugins_completion zsh_plugins zsh-plugins
+compdef _zsh_tools_completion tools
 
 # END COMPLETIONS
