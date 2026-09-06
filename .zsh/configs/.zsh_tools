@@ -168,7 +168,7 @@ _zsh_tools_setup_links() {
 	for source_path in "$files_root"/.*(N); do
 		entry_name="${source_path:t}"
 		case "$entry_name" in
-			.|..|.git|.gitignore)
+			.|..|.git|.gitignore|.local)
 				continue
 				;;
 		esac
@@ -614,7 +614,7 @@ _zsh_tools_list_links() {
 	for source_path in "$files_root"/.*(N); do
 		entry_name="${source_path:t}"
 		case "$entry_name" in
-			.|..|.git|.gitignore)
+			.|..|.git|.gitignore|.local)
 				continue
 				;;
 		esac
@@ -651,7 +651,7 @@ _zsh_tools_list_links() {
 	for source_path in "$files_root"/.*(N); do
 		entry_name="${source_path:t}"
 		case "$entry_name" in
-			.|..|.git|.gitignore)
+			.|..|.git|.gitignore|.local)
 				continue
 				;;
 		esac
