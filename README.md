@@ -17,7 +17,7 @@ Top-level folders are grouped by app/tool. Below is a quick map of the main appl
 | `.direnv` | direnv | Per-directory environment loading rules and allowlist behavior. | Repo: https://github.com/direnv/direnv<br>Site: https://direnv.net/ |
 | `.feishin` | Feishin | Desktop music client state and local runtime-related settings. | Repo: https://github.com/jeffvli/feishin |
 | `.fzf` | fzf | Fuzzy finder defaults, shell integration, and key bindings. | Repo: https://github.com/junegunn/fzf<br>Site: https://junegunn.github.io/fzf/ |
-| `.gtk-nocsd` | gtk-nocsd tooling | GTK CSD compatibility wrappers, shims, and blacklist handling. | Package repo: https://aur.archlinux.org/packages/gtk3-nocsd-git |
+| `.gtk-nocsd` | gtk-nocsd tooling | GTK CSD compatibility wrappers, shims, and blacklist handling. | Repo: https://codeberg.org/MorsMortium/gtk-nocsd |
 | `.haruna` | Haruna | KDE video player preferences and playback behavior settings. | Repo: https://github.com/KDE/haruna<br>Site: https://apps.kde.org/haruna/ |
 | `.khard` | khard | CardDAV/contact lookup settings for terminal mail setups. | Repo: https://github.com/lucc/khard<br>Docs: https://khard.readthedocs.io/ |
 | `.konsave` | konsave | KDE layout/profile export and restore presets. | Repo: https://github.com/Prayag2/konsave |
